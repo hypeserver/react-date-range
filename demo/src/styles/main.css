@@ -1,0 +1,49 @@
+:local(.Main) {
+  width: 800px;
+  margin: 40px auto;
+}
+
+:local(.Title) {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 200;
+  padding: 0;
+  margin: 0 0 24px;
+}
+
+:local(.Section) {
+  padding: 20px 0;
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+  clear: both;
+}
+
+:local(.Section ~ .Section) {
+  margin-top: 24px;
+}
+
+:local(.Demo-description) {
+  float : left;
+  width: 240px;
+}
+
+:local(.Demo-description) h2 {
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+
+:local(.Demo) {
+  width: 560px;
+  float: left;
+}
+
+:local(.Demo-inputs) input {
+  display: block;
+  width: 90%;
+  height: 44px;
+  padding: 0 10px;
+  margin: 0 0 6px;
+  outline: 0;
+  border: 1px solid #dadada;
+  border-radius: 2px;
+  font-size: 1.2rem;
+}
