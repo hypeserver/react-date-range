@@ -95,7 +95,7 @@ class DateRange extends Component {
     const { styles } = this;
 
     return (
-      <div style={{ ...styles['DateRange'], ...style }}>
+      <div style={{ ...styles['DateRange'], ...style }} className='rdr-DateRange'>
         { ranges && (
           <PredefinedRanges
             format={ format }

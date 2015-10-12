@@ -84,15 +84,21 @@ class Calendar extends Component {
     const { styles } = this;
 
     return (
-      <div style={styles['MonthAndYear']}>
+      <div style={styles['MonthAndYear']} className='rdr-MonthAndYear-innerWrapper'>
         <button
           style={{ ...styles['MonthButton'], float : 'left' }}
+          className='rdr-MonthAndYear-button prev'
           onClick={this.changeMonth.bind(this, -1, false)}>
           <i style={{ ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
         </button>
-        <span>{month} - {year}</span>
+        <span>
+          <span className='rdr-MonthAndYear-month'>{month}</span>
+          <span className='rdr-MonthAndYear-divider'> - </span>
+          <span className='rdr-MonthAndYear-year'>{year}</span>
+        </span>
         <button
           style={{ ...styles['MonthButton'], float : 'right' }}
+          className='rdr-MonthAndYear-button next'
           onClick={this.changeMonth.bind(this, +1, false)}>
           <i style={{ ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
         </button>
@@ -109,7 +115,7 @@ class Calendar extends Component {
       const day = moment.weekdaysMin(i);
 
       weekdays.push(
-        <span style={styles['Weekday']} key={day}>{day}</span>
+        <span style={styles['Weekday']} className='rdr-WeekDay' key={day}>{day}</span>
       );
     }
 
@@ -181,10 +187,10 @@ class Calendar extends Component {
     const { styles } = this;
 
     return (
-      <div style={{ ...styles['Calendar'], ...this.props.style }}>
-        <div>{ this.renderMonthAndYear() }</div>
-        <div>{ this.renderWeekdays() }</div>
-        <div>{ this.renderDays() }</div>
+      <div style={{ ...styles['Calendar'], ...this.props.style }} className='rdr-Calendar'>
+        <div className='rdr-MonthAndYear'>{ this.renderMonthAndYear() }</div>
+        <div className='rdr-WeekDays'>{ this.renderWeekdays() }</div>
+        <div className='rdr-Days'>{ this.renderDays() }</div>
       </div>
     )
   }

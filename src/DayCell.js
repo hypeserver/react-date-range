@@ -67,10 +67,23 @@ class DayCell extends Component {
     };
   }
 
+  getClassNames() {
+    const { isSelected, isInRange, isPassive } = this.props;
+
+    let classNames = 'rdr-Day ';
+
+    classNames = (isSelected) ? classNames + 'is-selected ' : classNames;
+    classNames = (isInRange) ? classNames + 'is-inRange ' : classNames;
+    classNames = (isPassive) ? classNames + 'is-passive ' : classNames;
+
+    return classNames;
+  }
+
   render() {
     const { styles }    = this;
     const { dayMoment } = this.props;
     const stateStyle    = this.getStateStyles();
+    const classNames    = this.getClassNames();
 
     return (
       <span
@@ -79,6 +92,7 @@ class DayCell extends Component {
         onMouseDown={ this.handleMouseEvent.bind(this) }
         onMouseUp={ this.handleMouseEvent.bind(this) }
         onClick={ this.handleSelect.bind(this) }
+        className={ classNames }
         style={{...styles['Day'], ...stateStyle}}>
         { dayMoment.date() }
       </span>
