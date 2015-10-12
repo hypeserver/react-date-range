@@ -31,6 +31,7 @@ class PredefinedRanges extends Component {
         <a
           href='#'
           key={'range-' + name}
+          className='rdr-PredefinedRangeItem'
           style={styles['PredefinedRangeItem']}
           onClick={this.handleSelect.bind(this, name)}>
           {name}
@@ -44,7 +45,7 @@ class PredefinedRanges extends Component {
     const { styles } = this;
 
     return (
-      <div style={{ ...styles['PredefinedRanges'], ...style }}>
+      <div style={{ ...styles['PredefinedRanges'], ...style }} className='rdr-PredefinedRanges'>
         {this.renderRangeList()}
       </div>
     );
