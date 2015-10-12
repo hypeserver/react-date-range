@@ -12,9 +12,9 @@ var config = {
   },
 
   output                : {
-    path                : path.join(__dirname, '/dist/assets'),
+    path                : path.join(__dirname, '/dist'),
     filename            : '[name].js',
-    publicPath          : './assets/'
+    publicPath          : '/'
   },
 
   devtool               : ((NODE_ENV==='development') ? 'source-map' : false),
@@ -24,7 +24,7 @@ var config = {
       title             : '',
       template          : path.join(__dirname, '/src/index.html'),
       inject            : true,
-      filename          : '../index.html'
+      filename          : 'index.html'
     }),
 
     new webpack.DefinePlugin({
@@ -77,7 +77,7 @@ if (NODE_ENV === 'development') {
     quiet: false,
     lazy: false,
     hot: true,
-    publicPath: './assets/',
+    publicPath: '/',
     stats: {
       colors: true,
       chunks: false
