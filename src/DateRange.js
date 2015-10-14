@@ -89,6 +89,21 @@ class DateRange extends Component {
     });
   }
 
+  componentWillReceiveProps(newProps) {
+    // Whenever date props changes, update state with parsed variant
+    if (newProps.startDate || newProps.endDate) {
+      const startDate = newProps.startDate ? parseInput(newProps.startDate, format) : this.props.startDate;
+      const endDate   = newProps.endDate ? parseInput(newProps.endDate, format) : this.props.endDate;
+
+      this.setState({
+        range: {
+          startDate: startDate,
+          endDate: endDate
+        }
+      });
+    }
+  }
+
   render() {
     const { ranges, format, linkedCalendars, style, calendars } = this.props;
     const { range, link } = this.state;
