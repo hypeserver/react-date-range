@@ -92,6 +92,7 @@ class DateRange extends Component {
   componentWillReceiveProps(newProps) {
     // Whenever date props changes, update state with parsed variant
     if (newProps.startDate || newProps.endDate) {
+      const format    = newProps.format || this.props.format;
       const startDate = newProps.startDate ? parseInput(newProps.startDate, format) : this.props.startDate;
       const endDate   = newProps.endDate ? parseInput(newProps.endDate, format) : this.props.endDate;
 
