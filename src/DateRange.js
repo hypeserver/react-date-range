@@ -41,13 +41,14 @@ class DateRange extends Component {
     }
   }
 
-  setRange(range) {
+  setRange(range, {silent = false}={}) {
     const { onChange } = this.props;
     range = this.orderRange(range);
 
     this.setState({ range });
 
-    onChange && onChange(range);
+    if (!silent)
+      onChange && onChange(range);
   }
 
   handleSelect(date) {
@@ -99,7 +100,7 @@ class DateRange extends Component {
       this.setRange({
         startDate: startDate,
         endDate: endDate
-      });
+      }, {silent: true});
     }
   }
 
