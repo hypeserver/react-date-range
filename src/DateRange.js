@@ -18,7 +18,7 @@ class DateRange extends Component {
     this.state = {
       range     : { startDate, endDate },
       link      : linkedCalendars && endDate,
-    };
+    }
 
     this.step = 0;
     this.styles = getTheme(theme);
@@ -41,14 +41,13 @@ class DateRange extends Component {
     }
   }
 
-  setRange(range, {silent = false}={}) {
-    const { onChange } = this.props;
+  setRange(range) {
+    const { onChange } = this.props
     range = this.orderRange(range);
 
     this.setState({ range });
 
-    if (!silent)
-      onChange && onChange(range);
+    onChange && onChange(range);
   }
 
   handleSelect(date) {
@@ -89,7 +88,7 @@ class DateRange extends Component {
       link : link.clone().add(direction, 'months')
     });
   }
-
+  
   componentWillReceiveProps(newProps) {
     // Whenever date props changes, update state with parsed variant
     if (newProps.startDate || newProps.endDate) {
@@ -150,7 +149,7 @@ DateRange.defaultProps = {
   theme           : {},
   format          : 'DD/MM/YYYY',
   calendars       : 2
-};
+}
 
 DateRange.propTypes = {
   format    : PropTypes.string,
@@ -165,6 +164,6 @@ DateRange.propTypes = {
   theme     : PropTypes.object,
   onInit    : PropTypes.func,
   onChange  : PropTypes.func,
-};
+}
 
 export default DateRange;
