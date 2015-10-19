@@ -88,6 +88,24 @@ class DateRange extends Component {
       link : link.clone().add(direction, 'months')
     });
   }
+  
+  componentWillReceiveProps(newProps) {
+    // Whenever date props changes, update state with parsed variant
+    if (newProps.startDate || newProps.endDate) {
+      const format       = newProps.format || this.props.format;
+      const startDate    = newProps.startDate   && parseInput(newProps.startDate, format);
+      const endDate      = newProps.endDate     && parseInput(newProps.endDate, format);
+      const oldStartDate = this.props.startDate && parseInput(this.props.startDate, format);
+      const oldEndDate   = this.props.endDate   && parseInput(this.props.endDate, format);
+
+      if (!startDate.isSame(oldStartDate) || !endDate.isSame(oldEndDate)) {
+        this.setRange({
+          startDate: startDate || oldStartDate,
+          endDate: endDate || oldEndDate
+        }, {silent: true});
+      }
+    }
+  }
 
   render() {
     const { ranges, format, linkedCalendars, style, calendars } = this.props;
