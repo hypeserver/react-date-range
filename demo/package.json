@@ -13,8 +13,7 @@
   "dependencies": {
     "normalize.css": "^3.0.3",
     "react": "^0.14.0",
-    "react-dom": "^0.14.0",
-    "react-date-range": "^0.1.0"
+    "react-dom": "^0.14.0"
   },
   "devDependencies": {
     "babel-core": "^5.8.25",
