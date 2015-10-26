@@ -88,7 +88,7 @@ class DateRange extends Component {
       link : link.clone().add(direction, 'months')
     });
   }
-  
+
   componentWillReceiveProps(newProps) {
     // Whenever date props changes, update state with parsed variant
     if (newProps.startDate || newProps.endDate) {
@@ -108,7 +108,7 @@ class DateRange extends Component {
   }
 
   render() {
-    const { ranges, format, linkedCalendars, style, calendars } = this.props;
+    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek } = this.props;
     const { range, link } = this.state;
     const { styles } = this;
 
@@ -133,6 +133,7 @@ class DateRange extends Component {
                 linkCB={ this.handleLinkChange.bind(this) }
                 range={ range }
                 format={ format }
+                firstDayOfWeek={ firstDayOfWeek }
                 theme={ styles }
                 onChange={ this.handleSelect.bind(this) }  />
             );
@@ -152,18 +153,19 @@ DateRange.defaultProps = {
 }
 
 DateRange.propTypes = {
-  format    : PropTypes.string,
-  calendars : PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  startDate : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  endDate   : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  minDate   : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  maxDate   : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  dateLimit : PropTypes.func,
-  ranges    : PropTypes.object,
+  format          : PropTypes.string,
+  firstDayOfWeek  : PropTypes.number,
+  calendars       : PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  startDate       : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  endDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  minDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  maxDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  dateLimit       : PropTypes.func,
+  ranges          : PropTypes.object,
   linkedCalendars : PropTypes.bool,
-  theme     : PropTypes.object,
-  onInit    : PropTypes.func,
-  onChange  : PropTypes.func,
+  theme           : PropTypes.object,
+  onInit          : PropTypes.func,
+  onChange        : PropTypes.func,
 }
 
 export default DateRange;

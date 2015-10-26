@@ -25,13 +25,13 @@ class Calendar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, range, theme, offset } = props;
+    const { format, range, theme, offset, firstDayOfWeek } = props;
 
     const date = parseInput(props.date, format)
-
     const state = {
       date,
       shownDate : (range && range['endDate'] || date).clone().add(offset, 'months'),
+      firstDayOfWeek: (firstDayOfWeek || moment.localeData().firstDayOfWeek()),
     }
 
     this.state  = state;
@@ -107,7 +107,7 @@ class Calendar extends Component {
   }
 
   renderWeekdays() {
-    const dow        = moment.localeData().firstDayOfWeek();
+    const dow        = this.state.firstDayOfWeek;
     const weekdays   = [];
     const { styles } = this;
 
@@ -124,30 +124,31 @@ class Calendar extends Component {
 
   renderDays() {
     // TODO: Split this logic into smaller chunks
-    const { styles }        = this;
+    const { styles }               = this;
 
-    const { range }         = this.props;
+    const { range }                = this.props;
 
-    const shownDate         = this.getShownDate();
-    const { date }          = this.state;
-    const dateUnix          = date.unix();
+    const shownDate                = this.getShownDate();
+    const { date, firstDayOfWeek } = this.state;
+    const dateUnix                 = date.unix();
 
-    const monthNumber       = shownDate.month();
-    const dayCount          = shownDate.daysInMonth();
-    const startOfMonth      = shownDate.clone().startOf('month').weekday();
+    const monthNumber              = shownDate.month();
+    const dayCount                 = shownDate.daysInMonth();
+    const startOfMonth             = shownDate.clone().startOf('month').isoWeekday();
 
-    const lastMonth         = shownDate.clone().month(monthNumber - 1);
-    const lastMonthNumber   = lastMonth.month();
-    const lastMonthDayCount = lastMonth.daysInMonth();
+    const lastMonth                = shownDate.clone().month(monthNumber - 1);
+    const lastMonthNumber          = lastMonth.month();
+    const lastMonthDayCount        = lastMonth.daysInMonth();
 
-    const nextMonth         = shownDate.clone().month(monthNumber + 1);
-    const nextMonthNumber   = nextMonth.month();
+    const nextMonth                = shownDate.clone().month(monthNumber + 1);
+    const nextMonthNumber          = nextMonth.month();
 
-    const days              = [];
+    const days                     = [];
 
     // Previous month's days
-    for (let i = startOfMonth; i >= 1; i--) {
-      const dayMoment  = lastMonth.clone().date(lastMonthDayCount + 1 - i);
+    const diff = (Math.abs(firstDayOfWeek - (startOfMonth + 7)) % 7);
+    for (let i = diff; i >= 1; i--) {
+      const dayMoment  = lastMonth.clone().date(lastMonthDayCount - i);
       days.push({ dayMoment, isPassive : true });
     }
 
@@ -202,21 +203,22 @@ Calendar.defaultProps = {
 }
 
 Calendar.propTypes = {
-  sets          : PropTypes.string,
-  range         : PropTypes.shape({
-    startDate   : PropTypes.object,
-    endDate     : PropTypes.object
+  sets           : PropTypes.string,
+  range          : PropTypes.shape({
+    startDate    : PropTypes.object,
+    endDate      : PropTypes.object
   }),
-  date          : PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.func]),
-  format        : PropTypes.string.isRequired,
-  onChange      : PropTypes.func,
-  onInit        : PropTypes.func,
-  link          : PropTypes.oneOfType([PropTypes.shape({
-    startDate   : PropTypes.object,
-    endDate     : PropTypes.object,
+  date           : PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.func]),
+  format         : PropTypes.string.isRequired,
+  firstDayOfWeek : PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onChange       : PropTypes.func,
+  onInit         : PropTypes.func,
+  link           : PropTypes.oneOfType([PropTypes.shape({
+    startDate    : PropTypes.object,
+    endDate      : PropTypes.object,
   }), PropTypes.bool]),
-  linkCB        : PropTypes.func,
-  theme         : PropTypes.object,
+  linkCB         : PropTypes.func,
+  theme          : PropTypes.object,
 }
 
 export default Calendar;

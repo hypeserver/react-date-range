@@ -14,6 +14,7 @@ export default class Main extends Component {
       'rangePicker' : {},
       'linked' : {},
       'datePicker' : null,
+      'firstDayOfWeek' : null,
       'predefined' : {},
     }
   }
@@ -25,7 +26,7 @@ export default class Main extends Component {
   }
 
   render() {
-    const { rangePicker, linked, datePicker, predefined } = this.state;
+    const { rangePicker, linked, datePicker, firstDayOfWeek, predefined} = this.state;
     const format = 'dddd, D MMMM YYYY';
 
     return (
@@ -95,6 +96,22 @@ export default class Main extends Component {
             date={ now => { return now.add(-4, 'days') } }
             onInit={ this.handleChange.bind(this, 'datePicker') }
             onChange={ this.handleChange.bind(this, 'datePicker') }
+          />
+        </Section>
+
+        <Section title='Date Picker (Monday First)'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ firstDayOfWeek && firstDayOfWeek.format(format).toString() }
+            />
+          </div>
+          <Calendar
+            firstDayOfWeek={ 1 }
+            date={ now => { return now.add(-4, 'days') } }
+            onInit={ this.handleChange.bind(this, 'firstDayOfWeek') }
+            onChange={ this.handleChange.bind(this, 'firstDayOfWeek') }
           />
         </Section>
 
