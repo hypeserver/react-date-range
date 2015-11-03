@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "moment": "^2.10.6",
-    "react": ">0.13.0 <0.14.1"
+    "react": ">=0.13.0"
   },
   "devDependencies": {
     "babel": "^5.8.23"
