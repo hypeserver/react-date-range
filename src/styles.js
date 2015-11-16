@@ -1,3 +1,5 @@
+import * as themingUtils from './utils/theming'
+
 const defaultTheme = {
   DateRange : {
     display       : 'block',
@@ -127,11 +129,8 @@ const defaultTheme = {
 
 export default (customTheme = {}) => {
 
-  const calendarWidth = (customTheme.Calendar && customTheme.Calendar.width) ||
-                        (defaultTheme.Calendar && defaultTheme.Calendar.width);
-
-  const calendarPaddding = (customTheme.Calendar && customTheme.Calendar.padding) ||
-                           (defaultTheme.Calendar && defaultTheme.Calendar.padding);
+  const calendarWidth = themingUtils.getStyleValue(customTheme.Calendar, defaultTheme.Calendar, 'width', 'number');
+  const calendarPaddding = themingUtils.getStyleValue(customTheme.Calendar, defaultTheme.Calendar, 'padding', 'number');
 
   const cellSize = ( calendarWidth - calendarPaddding * 2 ) / 7;
 
