@@ -127,13 +127,18 @@ const defaultTheme = {
 
 export default (customTheme = {}) => {
 
-  const calendarWidth = (customTheme.Calendar && customTheme.Calendar.width) ||
-                        (defaultTheme.Calendar && defaultTheme.Calendar.width);
+  let calendarWidth   = defaultTheme.Calendar.width;
+  let calendarPadding = defaultTheme.Calendar.padding;
 
-  const calendarPaddding = (customTheme.Calendar && customTheme.Calendar.padding) ||
-                           (defaultTheme.Calendar && defaultTheme.Calendar.padding);
+  if ( customTheme.Calendar && customTheme.Calendar.hasOwnProperty('width') ) {
+    calendarWidth = customTheme.Calendar.width;
+  }
 
-  const cellSize = ( calendarWidth - calendarPaddding * 2 ) / 7;
+  if ( customTheme.Calendar && customTheme.Calendar.hasOwnProperty('padding') ) {
+    calendarPadding = customTheme.Calendar.padding;
+  }
+
+  const cellSize = ( parseInt(calendarWidth) - parseInt(calendarPadding) * 2 ) / 7;
 
   return {
     DateRange : { ...defaultTheme.DateRange, ...customTheme.DateRange },
