@@ -62,7 +62,8 @@ class Calendar extends Component {
     }
   }
 
-  changeMonth(direction) {
+  changeMonth(direction, event) {
+    event.preventDefault();
     const { link, linkCB } = this.props;
 
     if (link && linkCB) {
@@ -88,7 +89,7 @@ class Calendar extends Component {
         <button
           style={{ ...styles['MonthButton'], float : 'left' }}
           className='rdr-MonthAndYear-button prev'
-          onClick={this.changeMonth.bind(this, -1, false)}>
+          onClick={this.changeMonth.bind(this, -1)}>
           <i style={{ ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
         </button>
         <span>
@@ -99,7 +100,7 @@ class Calendar extends Component {
         <button
           style={{ ...styles['MonthButton'], float : 'right' }}
           className='rdr-MonthAndYear-button next'
-          onClick={this.changeMonth.bind(this, +1, false)}>
+          onClick={this.changeMonth.bind(this, +1)}>
           <i style={{ ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
         </button>
       </div>
