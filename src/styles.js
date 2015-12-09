@@ -17,6 +17,15 @@ const defaultTheme = {
     color         : '#000000',
   },
 
+  CalendarDropdown: {
+    width         : 280,
+    borderRadius  : '2px',
+    display       : 'inline-block',
+    boxSizing     : 'border-box',
+    letterSpacing : 0,
+    color         : '#000000',
+  },
+
   Day : {
     boxSizing     : 'border-box',
     display       : 'inline-block',
@@ -50,6 +59,35 @@ const defaultTheme = {
   DayInRange : {
     background    : '#34495e',
     color         : '#95a5a6',
+  },
+
+  DropdownButton: {
+    position      : 'relative',
+    left          : '0px',
+  },
+
+  DropdownCalendar: {
+    marginTop     : '5px',
+    position      : 'absolute',
+    top           : '100%',
+    left          : 0,
+    right         : 0,
+  },
+
+  DropdownContainer: {
+    position      : 'relative',
+    display       : 'flex',
+  },
+
+  DropdownInput: {
+    flexGrow      : 1,
+    display       : 'block',
+    width         : '100%',
+    height        : '34px',
+    padding       : '6px 12px',
+    border        : '1px solid #dadada',
+    borderRadius  : '2px',
+    fontSize      : '1.2rem',
   },
 
   Weekday : {
@@ -145,6 +183,8 @@ export default (customTheme = {}) => {
 
     Calendar : { ...defaultTheme.Calendar, ...customTheme.Calendar },
 
+    CalendarDropdown : { ...defaultTheme.CalendarDropdown, ...customTheme.CalendarDropdown },
+
     Day : {
       width         : cellSize,
       height        : cellSize,
@@ -162,6 +202,14 @@ export default (customTheme = {}) => {
     DaySelected : { ...defaultTheme.DaySelected, ...customTheme.DaySelected },
 
     DayInRange : { ...defaultTheme.DayInRange, ...customTheme.DayInRange },
+
+    DropdownButton: { ...defaultTheme.DropdownButton, ...customTheme.DropdownButton },
+
+    DropdownCalendar: { ...defaultTheme.DropdownCalendar, ...customTheme.DropdownCalendar },
+
+    DropdownContainer: { ...defaultTheme.DropdownContainer, ...customTheme.DropdownContainer },
+
+    DropdownInput: { ...defaultTheme.DropdownInput, ...customTheme.DropdownInput },
 
     Weekday : {
       width         : cellSize,

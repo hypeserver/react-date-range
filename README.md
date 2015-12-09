@@ -85,3 +85,37 @@ class MyComponent extends Component {
 * **linkedCalendars:** *(Boolean)* default: false
 * **calendars:** *(Number)* default: 2
 * **ranges:** *(Object)* default: none
+
+### Date Picker Dropdown
+```javascript
+import React, { Component } from 'react';
+import { CalendarDropdown } from 'react-date-range';
+
+class MyComponent extends Component {
+	handleSelect(date){
+		console.log(date); // Momentjs object
+	}
+
+	render(){
+		return (
+			<div>
+				<CalendarDropdown
+					onInit={this.handleSelect}
+					onChange={this.handleSelect}
+					>
+					Button Text
+				<CalendarDropdown />
+			</div>
+		)
+	}
+}
+
+```
+
+###### Available Options (props)
+* **date:** *(String, Moment.js object, Function)* - default: today
+* **format:** *(String)* - default: DD/MM/YYY
+* **firstDayOfWeek** *(Number)* - default: [moment.localeData().firstDayOfWeek()](http://momentjs.com/docs/#/i18n/locale-data/)
+* **theme:** *(Object)* see [Demo's source](https://github.com/Adphorus/react-date-range/blob/master/demo/src/components/Main.js#L130)
+* **onInit:** *(Function)* default: none
+* **onChange:** *(Function)* default: none
