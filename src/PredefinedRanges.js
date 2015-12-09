@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 
 import parseInput from './utils/parseInput.js';
-import { defaultStyle } from './styles.js';
+import { defaultClasses } from './styles.js';
 
 class PredefinedRanges extends Component {
 

@@ -13,7 +13,7 @@ export const defaultClasses = {
   dayInRange           : 'is-inRange',
   monthAndYearWrapper  : 'rdr-MonthAndYear-innerWrapper',
   prevButton           : 'rdr-MonthAndYear-button prev',
-  nextButton           : 'rdr-MonthAndYear-button next'
+  nextButton           : 'rdr-MonthAndYear-button next',
   month                : 'rdr-MonthAndYear-month',
   monthAndYearDivider  : 'rdr-MonthAndYear-divider',
   year                 : 'rdr-MonthAndYear-year'
