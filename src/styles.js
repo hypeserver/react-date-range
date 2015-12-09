@@ -1,19 +1,22 @@
 export const defaultClasses = {
-  calendar            : 'rdr-Calendar',
-  monthAndYear        : 'rdr-MonthAndYear',
-  weekDays            : 'rdr-WeekDays',
-  weekDay             : 'rdr-WeekDay',
-  days                : 'rdr-Days',
-  day                 : 'rdr-Day',
-  dayActive           : 'is-selected',
-  dayPassive          : 'is-passive',
-  dayInRange          : 'is-inRange',
-  monthAndYearWrapper : 'rdr-MonthAndYear-innerWrapper',
-  prevButton          : 'rdr-MonthAndYear-button prev',
-  nextButton          : 'rdr-MonthAndYear-button next'
-  month               : 'rdr-MonthAndYear-month',
-  monthAndYearDivider : 'rdr-MonthAndYear-divider',
-  year                : 'rdr-MonthAndYear-year',
+  calendar             : 'rdr-Calendar',
+  dateRange            : 'rdr-DateRange',
+  predefinedRanges     : 'rdr-PredefinedRanges',
+  predefinedRangesItem : 'rdr-PredefinedRangeItem',
+  monthAndYear         : 'rdr-MonthAndYear',
+  weekDays             : 'rdr-WeekDays',
+  weekDay              : 'rdr-WeekDay',
+  days                 : 'rdr-Days',
+  day                  : 'rdr-Day',
+  dayActive            : 'is-selected',
+  dayPassive           : 'is-passive',
+  dayInRange           : 'is-inRange',
+  monthAndYearWrapper  : 'rdr-MonthAndYear-innerWrapper',
+  prevButton           : 'rdr-MonthAndYear-button prev',
+  nextButton           : 'rdr-MonthAndYear-button next'
+  month                : 'rdr-MonthAndYear-month',
+  monthAndYearDivider  : 'rdr-MonthAndYear-divider',
+  year                 : 'rdr-MonthAndYear-year'
 };
 
 const defaultTheme = {

@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import parseInput from './utils/parseInput.js';
 import moment from 'moment';
+
+import parseInput from './utils/parseInput.js';
+import { defaultStyle } from './styles.js';
 
 class PredefinedRanges extends Component {
 
@@ -22,7 +24,7 @@ class PredefinedRanges extends Component {
     });
   }
 
-  renderRangeList() {
+  renderRangeList(classes) {
     const { ranges } = this.props;
     const { styles } = this;
 
@@ -31,7 +33,7 @@ class PredefinedRanges extends Component {
         <a
           href='#'
           key={'range-' + name}
-          className='rdr-PredefinedRangeItem'
+          className={classes.predefinedRangeItem}
           style={styles['PredefinedRangeItem']}
           onClick={this.handleSelect.bind(this, name)}>
           {name}
@@ -41,19 +43,28 @@ class PredefinedRanges extends Component {
   }
 
   render() {
-    const { style } = this.props;
+    const { style, onlyClasses, classNames } = this.props;
     const { styles } = this;
 
+    const classes = { ...defaultClasses, ...classNames };
+
     return (
-      <div style={{ ...styles['PredefinedRanges'], ...style }} className='rdr-PredefinedRanges'>
-        {this.renderRangeList()}
+      <div style={!onlyClasses && { ...styles['PredefinedRanges'], ...style }} className={classes.predefinedRanges}>
+        {this.renderRangeList(classes)}
       </div>
     );
   }
 }
 
+PredefinedRanges.defaultProps = {
+  onlyClasses : false,
+  classNames  : {}
+};
+
 PredefinedRanges.propTypes = {
-  ranges : PropTypes.object.isRequired
+  ranges      : PropTypes.object.isRequired,
+  onlyClasses : PropTypes.bool,
+  classNames  : PropTypes.object
 }
 
 export default PredefinedRanges;
