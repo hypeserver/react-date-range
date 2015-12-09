@@ -99,6 +99,39 @@ export default class Main extends Component {
           />
         </Section>
 
+        <Section title='Min and Max Dates'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ datePicker && datePicker.format(format).toString() }
+            />
+          </div>
+          <Calendar
+            date={now => (now.add(-4, 'd'))}
+            minDate={now => now}
+            maxDate={now => (now.add(5, 'd'))}
+            onInit={ this.handleChange.bind(this, 'datePicker') }
+            onChange={ this.handleChange.bind(this, 'datePicker') }
+          />
+        </Section>
+
+        <Section title='Disable Arbitrary Days'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ datePicker && datePicker.format(format).toString() }
+            />
+          </div>
+          <Calendar
+            date={now => (now.add(-4, 'd'))}
+            onInit={ this.handleChange.bind(this, 'datePicker') }
+            onChange={ this.handleChange.bind(this, 'datePicker') }
+            disableDay={(day) => (day.toDate().getDay() % 2 === 0)}
+          />
+        </Section>
+
         <Section title='Date Picker (Monday First)'>
           <div>
             <input

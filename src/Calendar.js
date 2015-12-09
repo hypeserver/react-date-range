@@ -129,14 +129,14 @@ class Calendar extends Component {
 
     return (day) => {
 
-      let { disableDay, minDate, maxDate } = this.props;
+      let { disableDay, minDate, maxDate, format } = this.props;
 
       if(disableDay && typeof disableDay === 'function') {
         return disableDay(day);
       }
 
-      minDate = minDate || monthStart;
-      maxDate = maxDate || monthEnd;
+      minDate = minDate && parseInput(minDate, format) || monthStart;
+      maxDate = maxDate && parseInput(maxDate, format) || monthEnd;
 
       if(minDate && day.isBefore(minDate)) {
         return true;
@@ -243,6 +243,8 @@ Calendar.propTypes = {
   onChange       : PropTypes.func,
   onInit         : PropTypes.func,
   disableDay     : PropTypes.func,
+  minDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  maxDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   link           : PropTypes.oneOfType([PropTypes.shape({
     startDate    : PropTypes.object,
     endDate      : PropTypes.object,
