@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
-import { calendarImageSrc } from './images';
+import { calendarImage } from './images';
 import parseInput from './utils/parseInput';
 import getTheme from './styles.js';
 import Calendar from './Calendar';
@@ -15,7 +15,6 @@ class CalendarDropdown extends Component {
     const date = parseInput(props.date, format);
     const state = {
       date,
-      buttonImage: buttonImage ? buttonImage : calendarImageSrc,
       isHidden: true
     };
 
@@ -40,8 +39,8 @@ class CalendarDropdown extends Component {
   }
 
   render() {
-    const { isHidden, date, buttonImage } = this.state;
-    const { format } = this.props;
+    const { isHidden, date } = this.state;
+    const { format, buttonImage } = this.props;
     const { styles } = this;
     return (
       <div style={{ ...styles['CalendarDropdown'], ...this.props.style }} className='rdr-CalendarDropdown'>
@@ -60,8 +59,29 @@ class CalendarDropdown extends Component {
 }
 
 CalendarDropdown.defaultProps = {
-  format    : 'DD/MM/YYYY',
-  theme     : {},
+  format        : 'DD/MM/YYYY',
+  theme         : {},
+  buttonImage   : calendarImage
+}
+
+Calendar.propTypes = {
+  sets           : PropTypes.string,
+  range          : PropTypes.shape({
+    startDate    : PropTypes.object,
+    endDate      : PropTypes.object
+  }),
+  date           : PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.func]),
+  format         : PropTypes.string.isRequired,
+  firstDayOfWeek : PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onChange       : PropTypes.func,
+  onInit         : PropTypes.func,
+  link           : PropTypes.oneOfType([PropTypes.shape({
+    startDate    : PropTypes.object,
+    endDate      : PropTypes.object,
+  }), PropTypes.bool]),
+  linkCB         : PropTypes.func,
+  theme          : PropTypes.object,
+  buttonImage    : PropTypes.string,
 }
 
 export default CalendarDropdown;

@@ -199,9 +199,8 @@ export default class Main extends Component {
             date={ now => { return now.add(-4, 'days') } }
             format={format}
             onInit={ this.handleChange.bind(this, 'datePicker') }
-            onChange={ this.handleChange.bind(this, 'datePicker') }>
-            Select
-          </CalendarDropdown>
+            onChange={ this.handleChange.bind(this, 'datePicker') }
+          />
         </Section>
       </main>
     )

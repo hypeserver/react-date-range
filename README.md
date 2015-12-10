@@ -102,9 +102,7 @@ class MyComponent extends Component {
 				<CalendarDropdown
 					onInit={this.handleSelect}
 					onChange={this.handleSelect}
-					>
-					Button Text
-				<CalendarDropdown />
+					/>
 			</div>
 		)
 	}
@@ -117,5 +115,7 @@ class MyComponent extends Component {
 * **format:** *(String)* - default: DD/MM/YYY
 * **firstDayOfWeek** *(Number)* - default: [moment.localeData().firstDayOfWeek()](http://momentjs.com/docs/#/i18n/locale-data/)
 * **theme:** *(Object)* see [Demo's source](https://github.com/Adphorus/react-date-range/blob/master/demo/src/components/Main.js#L130)
+* **buttonImage:** *(String)* - default: Calendar Image raw string
 * **onInit:** *(Function)* default: none
 * **onChange:** *(Function)* default: none
+
