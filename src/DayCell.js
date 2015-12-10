@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
+
+import { defaultClasses } from './styles.js';
 
 class DayCell extends Component {
 
@@ -67,23 +70,24 @@ class DayCell extends Component {
     };
   }
 
-  getClassNames() {
+  getClassNames(classes) {
     const { isSelected, isInRange, isPassive } = this.props;
 
-    let classNames = 'rdr-Day ';
+    return classnames({
+      [classes.day]       : true,
+      [classes.dayActive] : isSelected,
+      [classes.dayPassive]: isPassive,
+      [classes.dayInRange]: isInRange
+    });
 
-    classNames = (isSelected) ? classNames + 'is-selected ' : classNames;
-    classNames = (isInRange) ? classNames + 'is-inRange ' : classNames;
-    classNames = (isPassive) ? classNames + 'is-passive ' : classNames;
-
-    return classNames;
   }
 
   render() {
-    const { styles }    = this;
-    const { dayMoment } = this.props;
-    const stateStyle    = this.getStateStyles();
-    const classNames    = this.getClassNames();
+    const { dayMoment, onlyClasses, classNames } = this.props;
+
+    const { styles } = this;
+    const stateStyle = this.getStateStyles();
+    const classes    = this.getClassNames(classNames);
 
     return (
       <span
@@ -92,8 +96,8 @@ class DayCell extends Component {
         onMouseDown={ this.handleMouseEvent.bind(this) }
         onMouseUp={ this.handleMouseEvent.bind(this) }
         onClick={ this.handleSelect.bind(this) }
-        className={ classNames }
-        style={{...styles['Day'], ...stateStyle}}>
+        className={ classes }
+        style={onlyClasses ? undefined : {...styles['Day'], ...stateStyle}}>
         { dayMoment.date() }
       </span>
     );
@@ -101,18 +105,21 @@ class DayCell extends Component {
 }
 
 DayCell.defaultProps = {
-  theme      : { 'Day' : {} }
+  theme       : { 'Day' : {} },
+  onlyClasses : false
 }
 
 DayCell.propTypes = {
-  dayMoment  : PropTypes.object.isRequired,
-  onSelect   : PropTypes.func,
-  isSelected : PropTypes.bool,
-  isInRange  : PropTypes.bool,
-  isPassive  : PropTypes.bool,
-  theme      : PropTypes.shape({
-    Day      : PropTypes.object.isRequired
+  dayMoment   : PropTypes.object.isRequired,
+  onSelect    : PropTypes.func,
+  isSelected  : PropTypes.bool,
+  isInRange   : PropTypes.bool,
+  isPassive   : PropTypes.bool,
+  theme       : PropTypes.shape({
+    Day       : PropTypes.object.isRequired
   }).isRequired,
+  onlyClasses : PropTypes.bool,
+  classNames  : PropTypes.object
 }
 
 export default DayCell;
