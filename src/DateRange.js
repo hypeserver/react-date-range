@@ -115,7 +115,7 @@ class DateRange extends Component {
     const classes = { ...defaultClasses, ...classNames };
 
     return (
-      <div style={!onlyClasses && { ...styles['DateRange'], ...style }} className={classes.dateRange}>
+      <div style={onlyClasses ? undefined : { ...styles['DateRange'], ...style }} className={classes.dateRange}>
         { ranges && (
           <PredefinedRanges
             format={ format }

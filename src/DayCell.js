@@ -97,7 +97,7 @@ class DayCell extends Component {
         onMouseUp={ this.handleMouseEvent.bind(this) }
         onClick={ this.handleSelect.bind(this) }
         className={ classes }
-        style={!onlyClasses && {...styles['Day'], ...stateStyle}}>
+        style={onlyClasses ? undefined : {...styles['Day'], ...stateStyle}}>
         { dayMoment.date() }
       </span>
     );

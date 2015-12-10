@@ -49,7 +49,7 @@ class PredefinedRanges extends Component {
     const classes = { ...defaultClasses, ...classNames };
 
     return (
-      <div style={!onlyClasses && { ...styles['PredefinedRanges'], ...style }} className={classes.predefinedRanges}>
+      <div style={onlyClasses ? undefined : { ...styles['PredefinedRanges'], ...style }} className={classes.predefinedRanges}>
         {this.renderRangeList(classes)}
       </div>
     );

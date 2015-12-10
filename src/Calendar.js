@@ -86,9 +86,9 @@ class Calendar extends Component {
     const { onlyClasses } = this.props;
 
     return (
-      <div style={!onlyClasses && styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
+      <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
         <button
-          style={!onlyClasses && { ...styles['MonthButton'], float : 'left' }}
+          style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'left' }}
           className={classes.prevButton}
           onClick={this.changeMonth.bind(this, -1)}>
           <i style={{ ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
@@ -99,7 +99,7 @@ class Calendar extends Component {
           <span className={classes.year}>{year}</span>
         </span>
         <button
-          style={!onlyClasses && { ...styles['MonthButton'], float : 'right' }}
+          style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'right' }}
           className={classes.nextButton}
           onClick={this.changeMonth.bind(this, +1)}>
           <i style={{ ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
@@ -118,7 +118,7 @@ class Calendar extends Component {
       const day = moment.weekdaysMin(i);
 
       weekdays.push(
-        <span style={!onlyClasses && styles['Weekday']} className={classes.weekDay} key={day}>{day}</span>
+        <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={day}>{day}</span>
       );
     }
 
@@ -196,7 +196,7 @@ class Calendar extends Component {
     const classes = { ...defaultClasses, ...classNames };
 
     return (
-      <div style={ !onlyClasses && { ...styles['Calendar'], ...this.props.style }} className={classes.calendar}>
+      <div style={onlyClasses ? undefined : { ...styles['Calendar'], ...this.props.style }} className={classes.calendar}>
         <div className={classes.monthAndYear}>{ this.renderMonthAndYear(classes) }</div>
         <div className={classes.weekDays}>{ this.renderWeekdays(classes) }</div>
         <div className={classes.days}>{ this.renderDays(classes) }</div>
