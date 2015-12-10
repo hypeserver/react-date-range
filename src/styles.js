@@ -62,8 +62,16 @@ const defaultTheme = {
   },
 
   DropdownButton: {
-    position      : 'relative',
-    left          : '0px',
+    position      : 'absolute',
+    margin        : 'auto',
+    right          : '0',
+    height        : '34px',
+    width         : '34px'
+  },
+
+  DropdownButtonImage: {
+    maxWidth      : '100%',
+    maxHeight     : '100%'
   },
 
   DropdownCalendar: {
@@ -72,6 +80,7 @@ const defaultTheme = {
     top           : '100%',
     left          : 0,
     right         : 0,
+    zIndex        : 1,
   },
 
   DropdownContainer: {
@@ -81,10 +90,11 @@ const defaultTheme = {
 
   DropdownInput: {
     flexGrow      : 1,
+    flexShrink    : 0,
     display       : 'block',
     width         : '100%',
     height        : '34px',
-    padding       : '6px 12px',
+    padding       : '6px 34px 6px 12px',
     border        : '1px solid #dadada',
     borderRadius  : '2px',
     fontSize      : '1.2rem',
@@ -204,6 +214,8 @@ export default (customTheme = {}) => {
     DayInRange : { ...defaultTheme.DayInRange, ...customTheme.DayInRange },
 
     DropdownButton: { ...defaultTheme.DropdownButton, ...customTheme.DropdownButton },
+
+    DropdownButtonImage: { ...defaultTheme.DropdownButtonImage, ...customTheme.DropdownButtonImage },
 
     DropdownCalendar: { ...defaultTheme.DropdownCalendar, ...customTheme.DropdownCalendar },
 
