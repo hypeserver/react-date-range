@@ -22,11 +22,6 @@ class CalendarDropdown extends Component {
     this.styles = getTheme(theme);
   }
 
-  componentDidMount() {
-    const { onInit } = this.props;
-    onInit && onInit(this.state.date);
-  }
-
   onChange(newDate) {
     this.setState({date: newDate});
     this.props.onChange(newDate);
