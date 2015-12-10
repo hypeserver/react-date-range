@@ -13,7 +13,8 @@ var config = {
 
   output                : {
     path                : path.join(__dirname, '/dist'),
-    filename            : '[name].js'
+    filename            : '[name].js',
+    publicPath          : '/'
   },
 
   devtool               : ((NODE_ENV==='development') ? 'source-map' : false),
