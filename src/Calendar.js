@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import parseInput from './utils/parseInput.js';
 import DayCell from './DayCell.js';
-import getTheme, { defaultClasses } from './styles.js';
+import getTheme from './styles.js';
 
 function checkRange(dayMoment, range) {
   return (
@@ -78,29 +78,28 @@ class Calendar extends Component {
     });
   }
 
-  renderMonthAndYear(classes) {
-    const shownDate       = this.getShownDate();
-    const month           = moment.months(shownDate.month());
-    const year            = shownDate.year();
-    const { styles }      = this;
-    const { onlyClasses } = this.props;
+  renderMonthAndYear() {
+    const shownDate  = this.getShownDate();
+    const month      = moment.months(shownDate.month());
+    const year       = shownDate.year();
+    const { styles } = this;
 
     return (
-      <div style={!onlyClasses && styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
+      <div style={styles['MonthAndYear']} className='rdr-MonthAndYear-innerWrapper'>
         <button
-          style={!onlyClasses && { ...styles['MonthButton'], float : 'left' }}
-          className={classes.prevButton}
+          style={{ ...styles['MonthButton'], float : 'left' }}
+          className='rdr-MonthAndYear-button prev'
           onClick={this.changeMonth.bind(this, -1)}>
           <i style={{ ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
         </button>
         <span>
-          <span className={classes.month}>{month}</span>
-          <span className={classes.monthAndYearDivider}> - </span>
-          <span className={classes.year}>{year}</span>
+          <span className='rdr-MonthAndYear-month'>{month}</span>
+          <span className='rdr-MonthAndYear-divider'> - </span>
+          <span className='rdr-MonthAndYear-year'>{year}</span>
         </span>
         <button
-          style={!onlyClasses && { ...styles['MonthButton'], float : 'right' }}
-          className={classes.nextButton}
+          style={{ ...styles['MonthButton'], float : 'right' }}
+          className='rdr-MonthAndYear-button next'
           onClick={this.changeMonth.bind(this, +1)}>
           <i style={{ ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
         </button>
@@ -108,28 +107,27 @@ class Calendar extends Component {
     )
   }
 
-  renderWeekdays(classes) {
-    const dow             = this.state.firstDayOfWeek;
-    const weekdays        = [];
-    const { styles }      = this;
-    const { onlyClasses } = this.props;
+  renderWeekdays() {
+    const dow        = this.state.firstDayOfWeek;
+    const weekdays   = [];
+    const { styles } = this;
 
     for (let i = dow; i < 7 + dow; i++) {
       const day = moment.weekdaysMin(i);
 
       weekdays.push(
-        <span style={!onlyClasses && styles['Weekday']} className={classes.weekDay} key={day}>{day}</span>
+        <span style={styles['Weekday']} className='rdr-WeekDay' key={day}>{day}</span>
       );
     }
 
     return weekdays;
   }
 
-  renderDays(classes) {
+  renderDays() {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, onlyClasses }   = this.props;
+    const { range }                = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -182,34 +180,27 @@ class Calendar extends Component {
           isSelected={ isSelected || isEdge }
           isInRange={ isInRange }
           key={ index }
-          onlyClasses = { onlyClasses }
-          classNames = { classes }
         />
       );
     })
   }
 
   render() {
-    const { styles, classNames } = this;
-    const { onlyClasses }        = this.props;
-
-    const classes = { ...defaultClasses, ...classNames };
+    const { styles } = this;
 
     return (
-      <div style={ !onlyClasses && { ...styles['Calendar'], ...this.props.style }} className={classes.calendar}>
-        <div className={classes.monthAndYear}>{ this.renderMonthAndYear(classes) }</div>
-        <div className={classes.weekDays}>{ this.renderWeekdays(classes) }</div>
-        <div className={classes.days}>{ this.renderDays(classes) }</div>
+      <div style={{ ...styles['Calendar'], ...this.props.style }} className='rdr-Calendar'>
+        <div className='rdr-MonthAndYear'>{ this.renderMonthAndYear() }</div>
+        <div className='rdr-WeekDays'>{ this.renderWeekdays() }</div>
+        <div className='rdr-Days'>{ this.renderDays() }</div>
       </div>
     )
   }
 }
 
 Calendar.defaultProps = {
-  format      : 'DD/MM/YYYY',
-  theme       : {},
-  onlyClasses : false,
-  classNames  : {}
+  format    : 'DD/MM/YYYY',
+  theme     : {},
 }
 
 Calendar.propTypes = {
@@ -229,8 +220,6 @@ Calendar.propTypes = {
   }), PropTypes.bool]),
   linkCB         : PropTypes.func,
   theme          : PropTypes.object,
-  onlyClasses    : PropTypes.bool,
-  classNames     : PropTypes.object
 }
 
 export default Calendar;
