@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { defaultRanges, Calendar, DateRange } from 'react-date-range';
+import { defaultRanges, Calendar, DateRange } from '../../../lib/';
 import Section from 'components/Section';
 
 import 'normalize.css';
