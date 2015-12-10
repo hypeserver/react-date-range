@@ -163,7 +163,7 @@ DateRange.propTypes = {
   endDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   minDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   maxDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  dateLimit       : PropTypes.func,
+  disableDay      : PropTypes.func,
   ranges          : PropTypes.object,
   linkedCalendars : PropTypes.bool,
   theme           : PropTypes.object,
