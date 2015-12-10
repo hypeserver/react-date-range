@@ -173,7 +173,7 @@ class Calendar extends Component {
 
     const days                     = [];
 
-    const diff         = (Math.abs(firstDayOfWeek - (startOfMonth + 7)) % 7);
+    const diff         = (Math.abs(firstDayOfWeek - (startOfMonth.isoWeekday() + 7)) % 7);
     const startDate    = startOfMonth.clone().add(-diff, 'd');
     const isDayPassive = this.isDayPassive(
       startOfMonth,
