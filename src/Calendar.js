@@ -180,7 +180,7 @@ class Calendar extends Component {
       shownDate.clone().endOf('month')
     );
 
-    for(let i = 0; i < 43; i++) {
+    for(let i = 0; i < 42; i++) {
       const dayMoment = startDate.clone().add(i, 'd');
       days.push({ dayMoment, isPassive: isDayPassive(dayMoment)})
     }
