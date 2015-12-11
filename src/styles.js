@@ -8,6 +8,7 @@ export const defaultClasses = {
   weekDay              : 'rdr-WeekDay',
   days                 : 'rdr-Days',
   day                  : 'rdr-Day',
+  dayToday             : 'is-today',
   dayActive            : 'is-selected',
   dayPassive           : 'is-passive',
   dayInRange           : 'is-inRange',
@@ -55,6 +56,9 @@ const defaultTheme = {
 
   DayHover : {
     background    : '#bdc3c7',
+  },
+
+  DayToday : {
   },
 
   DayActive : {
@@ -177,6 +181,8 @@ export default (customTheme = {}) => {
     DayPassive : { ...defaultTheme.DayPassive, ...customTheme.DayPassive },
 
     DayHover : { ...defaultTheme.DayHover, ...customTheme.DayHover },
+
+    DayToday : { ...defaultTheme.DayToday, ...customTheme.DayToday },
 
     DayActive : { ...defaultTheme.DayActive, ...customTheme.DayActive },
 
