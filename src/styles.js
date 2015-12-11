@@ -11,6 +11,8 @@ export const defaultClasses = {
   dayActive            : 'is-selected',
   dayPassive           : 'is-passive',
   dayInRange           : 'is-inRange',
+  dayStartEdge          : 'is-startEdge',
+  dayEndEdge         : 'is-rightEdge',
   monthAndYearWrapper  : 'rdr-MonthAndYear-innerWrapper',
   prevButton           : 'rdr-MonthAndYear-button prev',
   nextButton           : 'rdr-MonthAndYear-button next',
@@ -66,6 +68,14 @@ const defaultTheme = {
   DaySelected : {
     background    : '#e74c3c',
     color         : '#ffffff',
+  },
+
+  DayStartEdge : {
+    borderLeft : '2px solid #000'
+  },
+
+  DayEndEdge : {
+    borderRight : '2px solid #000'
   },
 
   DayInRange : {
@@ -181,6 +191,10 @@ export default (customTheme = {}) => {
     DayActive : { ...defaultTheme.DayActive, ...customTheme.DayActive },
 
     DaySelected : { ...defaultTheme.DaySelected, ...customTheme.DaySelected },
+
+    DayStartEdge : { ...defaultTheme.DayStartEdge, ...customTheme.DayStartEdge },
+
+    DayEndEdge : { ...defaultTheme.DayEndEdge, ...customTheme.DayEndEdge },
 
     DayInRange : { ...defaultTheme.DayInRange, ...customTheme.DayInRange },
 
