@@ -56,8 +56,6 @@ export default class Main extends Component {
             }}
             onInit={ this.handleChange.bind(this, 'rangePicker') }
             onChange={ this.handleChange.bind(this, 'rangePicker') }
-            maxDate={ moment().startOf('day').add(2, 'months') }
-            minDate={ moment().startOf('day').add(-2, 'months') }
           />
         </Section>
 
