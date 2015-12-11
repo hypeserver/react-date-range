@@ -20,6 +20,13 @@ function checkEdges(dayMoment, range) {
   )
 }
 
+function isOusideMinMax(dayMoment, minDate, maxDate) {
+  return (
+    (minDate && dayMoment.isBefore(minDate)) ||
+    (maxDate && dayMoment.isAfter(maxDate))
+  )
+}
+
 class Calendar extends Component {
 
   constructor(props, context) {
@@ -129,7 +136,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, onlyClasses }   = this.props;
+    const { range, onlyClasses, minDate, maxDate }   = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -173,6 +180,7 @@ class Calendar extends Component {
       const isSelected    = !range && (dayMoment.unix() === dateUnix);
       const isInRange     = range && checkRange(dayMoment, range);
       const isEdge        = range && checkEdges(dayMoment, range);
+      const isOutsideMinMax = isOusideMinMax(dayMoment, minDate, maxDate);
 
       return (
         <DayCell
@@ -184,6 +192,7 @@ class Calendar extends Component {
           key={ index }
           onlyClasses = { onlyClasses }
           classNames = { classes }
+          isPassive = { isPassive || isOutsideMinMax }
         />
       );
     })
@@ -218,6 +227,8 @@ Calendar.propTypes = {
     startDate    : PropTypes.object,
     endDate      : PropTypes.object
   }),
+  minDate        : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
+  maxDate        : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   date           : PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.func]),
   format         : PropTypes.string.isRequired,
   firstDayOfWeek : PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

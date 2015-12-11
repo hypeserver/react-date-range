@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { defaultRanges, Calendar, DateRange } from '../../../lib/';
 import Section from 'components/Section';
+import moment from 'moment';
 
 import 'normalize.css';
 import 'styles/global'
@@ -55,6 +56,8 @@ export default class Main extends Component {
             }}
             onInit={ this.handleChange.bind(this, 'rangePicker') }
             onChange={ this.handleChange.bind(this, 'rangePicker') }
+            maxDate={ moment().startOf('day').add(2, 'months') }
+            minDate={ moment().startOf('day').add(-2, 'months') }
           />
         </Section>
 
