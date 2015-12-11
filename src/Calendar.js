@@ -190,8 +190,8 @@ class Calendar extends Component {
   }
 
   render() {
-    const { styles, classNames } = this;
-    const { onlyClasses }        = this.props;
+    const { styles } = this;
+    const { onlyClasses, classNames } = this.props;
 
     const classes = { ...defaultClasses, ...classNames };
 
