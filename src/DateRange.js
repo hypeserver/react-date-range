@@ -3,7 +3,7 @@ import moment from 'moment';
 import parseInput from './utils/parseInput.js';
 import Calendar from './Calendar.js';
 import PredefinedRanges from './PredefinedRanges.js';
-import getTheme, { defaultClasses } from './styles.js';
+import getTheme from './styles.js';
 
 class DateRange extends Component {
 
@@ -108,22 +108,18 @@ class DateRange extends Component {
   }
 
   render() {
-    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, classNames, onlyClasses, minDate, maxDate } = this.props;
+    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate } = this.props;
     const { range, link } = this.state;
     const { styles } = this;
 
-    const classes = { ...defaultClasses, ...classNames };
-
     return (
-      <div style={!onlyClasses && { ...styles['DateRange'], ...style }} className={classes.dateRange}>
+      <div style={{ ...styles['DateRange'], ...style }} className='rdr-DateRange'>
         { ranges && (
           <PredefinedRanges
             format={ format }
             ranges={ ranges }
             theme={ styles }
-            onSelect={this.handleSelect.bind(this)}
-            onlyClasses={ onlyClasses }
-            classNames={ classes } />
+            onSelect={this.handleSelect.bind(this)} />
         )}
 
         {()=>{
@@ -139,11 +135,9 @@ class DateRange extends Component {
                 format={ format }
                 firstDayOfWeek={ firstDayOfWeek }
                 theme={ styles }
-                onChange={ this.handleSelect.bind(this) }
-                onlyClasses={ onlyClasses }
-                classNames={ classes }
                 minDate={ minDate }
-                maxDate={ maxDate }  />
+                maxDate={ maxDate }		
+                onChange={ this.handleSelect.bind(this) }  />
             );
           }
           return _calendars;
@@ -157,17 +151,15 @@ DateRange.defaultProps = {
   linkedCalendars : false,
   theme           : {},
   format          : 'DD/MM/YYYY',
-  calendars       : 2,
-  onlyClasses     : false,
-  classNames      : {}
+  calendars       : 2
 }
 
 DateRange.propTypes = {
   format          : PropTypes.string,
   firstDayOfWeek  : PropTypes.number,
   calendars       : PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  startDate       : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  endDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  startDate       : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
+  endDate         : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   minDate         : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   maxDate         : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   dateLimit       : PropTypes.func,
@@ -176,8 +168,6 @@ DateRange.propTypes = {
   theme           : PropTypes.object,
   onInit          : PropTypes.func,
   onChange        : PropTypes.func,
-  onlyClasses     : PropTypes.bool,
-  classNames      : PropTypes.object
 }
 
 export default DateRange;
