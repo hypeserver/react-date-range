@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { defaultRanges, Calendar, DateRange } from 'react-date-range';
+import { defaultRanges, Calendar, CalendarDropdown, DateRange } from 'react-date-range';
 import Section from 'components/Section';
 
 import 'normalize.css';
@@ -190,6 +190,16 @@ export default class Main extends Component {
                 boxShadow    : '0 2px 4px rgba(0, 0, 0, 0.4)'
               }
             }}
+          />
+        </Section>
+
+        <Section title='Date Picker Dropdown'>
+          <div />
+          <CalendarDropdown
+            date={ now => { return now.add(-4, 'days') } }
+            format={format}
+            onInit={ this.handleChange.bind(this, 'datePicker') }
+            onChange={ this.handleChange.bind(this, 'datePicker') }
           />
         </Section>
       </main>
