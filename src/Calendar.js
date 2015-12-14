@@ -11,13 +11,16 @@ function checkRange(dayMoment, range) {
   )
 }
 
-function checkEdges(dayMoment, range) {
-  const { endDate, startDate } = range;
+function checkStartEdge(dayMoment, range) {
+  const { startDate } = range;
 
-  return (
-    dayMoment.isSame(endDate) ||
-    dayMoment.isSame(startDate)
-  )
+  return dayMoment.isSame(startDate);
+}
+
+function checkEndEdge(dayMoment, range) {
+  const { endDate } = range;
+
+  return dayMoment.isSame(endDate);
 }
 
 class Calendar extends Component {
@@ -170,13 +173,17 @@ class Calendar extends Component {
       const { dayMoment, isPassive } = data;
       const isSelected    = !range && (dayMoment.unix() === dateUnix);
       const isInRange     = range && checkRange(dayMoment, range);
-      const isEdge        = range && checkEdges(dayMoment, range);
+      const isStartEdge    = range && checkStartEdge(dayMoment, range);
+      const isEndEdge   = range && checkEndEdge(dayMoment, range);
+      const isEdge        = isStartEdge || isEndEdge;
 
       return (
         <DayCell
           onSelect={ this.handleSelect.bind(this) }
           { ...data }
           theme={ styles }
+          isStartEdge = { isStartEdge }
+          isEndEdge = { isEndEdge }
           isSelected={ isSelected || isEdge }
           isInRange={ isInRange }
           key={ index }

@@ -49,14 +49,16 @@ class DayCell extends Component {
 
   getStateStyles() {
     const { hover, active } = this.state;
-    const { isSelected, isInRange, isPassive } = this.props;
+    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge } = this.props;
     const { styles } = this;
 
-    const hoverStyle    = hover ? styles['DayHover'] : {};
-    const activeStyle   = active ? styles['DayActive'] : {};
-    const passiveStyle  = isPassive ? styles['DayPassive'] : {};
-    const selectedStyle = isSelected ? styles['DaySelected'] : {};
-    const inRangeStyle  = isInRange ? styles['DayInRange'] : {};
+    const hoverStyle     = hover ? styles['DayHover'] : {};
+    const activeStyle    = active ? styles['DayActive'] : {};
+    const passiveStyle   = isPassive ? styles['DayPassive'] : {};
+    const startEdgeStyle = isStartEdge ? styles['DayStartEdge'] : {};
+    const endEdgeStyle   = isEndEdge ? styles['DayEndEdge'] : {};
+    const selectedStyle  = isSelected ? styles['DaySelected'] : {};
+    const inRangeStyle   = isInRange ? styles['DayInRange'] : {};
 
     return {
       ...inRangeStyle,
@@ -64,14 +66,17 @@ class DayCell extends Component {
       ...passiveStyle,
       ...activeStyle,
       ...selectedStyle,
+      ...startEdgeStyle,
+      ...endEdgeStyle
     };
   }
 
   getClassNames() {
-    const { isSelected, isInRange, isPassive } = this.props;
+    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge } = this.props;
 
     let classNames = 'rdr-Day ';
-
+    classNames = (isStartEdge) ? classNames + 'is-startEdge ' : classNames;
+    classNames = (isEndEdge) ? classNames + 'is-endEdge ' : classNames;
     classNames = (isSelected) ? classNames + 'is-selected ' : classNames;
     classNames = (isInRange) ? classNames + 'is-inRange ' : classNames;
     classNames = (isPassive) ? classNames + 'is-passive ' : classNames;

@@ -47,6 +47,12 @@ const defaultTheme = {
     color         : '#ffffff',
   },
 
+  DayStartEdge : {
+  },
+
+  DayEndEdge : {
+  },
+
   DayInRange : {
     background    : '#34495e',
     color         : '#95a5a6',
@@ -160,6 +166,10 @@ export default (customTheme = {}) => {
     DayActive : { ...defaultTheme.DayActive, ...customTheme.DayActive },
 
     DaySelected : { ...defaultTheme.DaySelected, ...customTheme.DaySelected },
+
+    DayStartEdge : { ...defaultTheme.DayStartEdge, ...customTheme.DayStartEdge },
+
+    DayEndEdge : { ...defaultTheme.DayEndEdge, ...customTheme.DayEndEdge },
 
     DayInRange : { ...defaultTheme.DayInRange, ...customTheme.DayInRange },
 
