@@ -159,7 +159,11 @@ class Calendar extends Component {
     // Current month's days
     for (let i = 1; i <= dayCount; i++) {
       const dayMoment  = shownDate.clone().date(i);
-      days.push({ dayMoment });
+      if (this.props.disableFutureSelect && moment().valueOf() < dayMoment.valueOf()) {
+        days.push({dayMoment: dayMoment, isPassive: true});
+      } else {
+        days.push({dayMoment: dayMoment});
+      }
     }
 
     // Next month's days
@@ -208,6 +212,7 @@ class Calendar extends Component {
 Calendar.defaultProps = {
   format    : 'DD/MM/YYYY',
   theme     : {},
+  disableFutureSelect: true
 }
 
 Calendar.propTypes = {
@@ -227,6 +232,7 @@ Calendar.propTypes = {
   }), PropTypes.bool]),
   linkCB         : PropTypes.func,
   theme          : PropTypes.object,
+  disableFutureSelect: PropTypes.bool
 }
 
 export default Calendar;

@@ -135,6 +135,7 @@ class DateRange extends Component {
                 format={ format }
                 firstDayOfWeek={ firstDayOfWeek }
                 theme={ styles }
+                disableFutureSelect= {this.props.disableFutureSelect}
                 onChange={ this.handleSelect.bind(this) }  />
             );
           }
@@ -149,7 +150,8 @@ DateRange.defaultProps = {
   linkedCalendars : false,
   theme           : {},
   format          : 'DD/MM/YYYY',
-  calendars       : 2
+  calendars       : 2,
+  disableFutureSelect: true
 }
 
 DateRange.propTypes = {
@@ -166,6 +168,7 @@ DateRange.propTypes = {
   theme           : PropTypes.object,
   onInit          : PropTypes.func,
   onChange        : PropTypes.func,
+  disableFutureSelect: PropTypes.bool
 }
 
 export default DateRange;
