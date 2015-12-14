@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { defaultRanges, Calendar, DateRange } from 'react-date-range';
+import { defaultRanges, Calendar, DateRange } from '../../../lib';
 import Section from 'components/Section';
 
 import 'normalize.css';
@@ -16,6 +16,10 @@ export default class Main extends Component {
       'datePicker' : null,
       'firstDayOfWeek' : null,
       'predefined' : {},
+      'minmaxPicker': null,
+      'disablePicker': null,
+      'minmaxRange': {},
+      'disableRange': {}
     }
   }
 
@@ -26,13 +30,26 @@ export default class Main extends Component {
   }
 
   render() {
-    const { rangePicker, linked, datePicker, firstDayOfWeek, predefined} = this.state;
+    const {
+      rangePicker,
+      linked,
+      datePicker,
+      firstDayOfWeek,
+      predefined,
+      minmaxPicker,
+      disablePicker,
+      minmaxRange,
+      disableRange
+    } = this.state;
+
     const format = 'dddd, D MMMM YYYY';
 
     return (
       <main className={styles['Main']}>
 
         <h1 className={styles['Title']}>React-date-range</h1>
+
+        <h2 className={styles['Title']}>Range Picker</h2>
 
         <Section title='Range Picker'>
           <div>
@@ -84,6 +101,53 @@ export default class Main extends Component {
           />
         </Section>
 
+        <Section title='Min and Max Dates'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ minmaxRange['startDate'] && minmaxRange['startDate'].format(format).toString() }
+            />
+            <input
+              type='text'
+              readOnly
+              value={ minmaxRange['endDate'] && minmaxRange['endDate'].format(format).toString() }
+            />
+          </div>
+          <DateRange
+            startDate={ now => now }
+            endDate={ now => now.add(5, 'd') }
+            minDate={ now => now }
+            maxDate={ now => now.add(10, 'd') }
+            onInit={ this.handleChange.bind(this, 'minmaxRange') }
+            onChange={ this.handleChange.bind(this, 'minmaxRange') }
+          />
+        </Section>
+
+        <Section title='Disable Arbitrary Days'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ disableRange['startDate'] && disableRange['startDate'].format(format).toString() }
+            />
+            <input
+              type='text'
+              readOnly
+              value={ disableRange['endDate'] && disableRange['endDate'].format(format).toString() }
+            />
+          </div>
+          <DateRange
+            startDate={ now => now }
+            endDate={ now => now.add(3, 'd') }
+            onInit={ this.handleChange.bind(this, 'disableRange') }
+            onChange={ this.handleChange.bind(this, 'disableRange') }
+            disableDay={ day => day.toDate().getDate() % 5 === 0 }
+          />
+        </Section>
+
+        <h2 className={styles['Title']}>Date Picker</h2>
+
         <Section title='Date Picker'>
           <div>
             <input
@@ -93,9 +157,42 @@ export default class Main extends Component {
             />
           </div>
           <Calendar
-            date={ now => { return now.add(-4, 'days') } }
+            date={ now => now.add(-4, 'days') }
             onInit={ this.handleChange.bind(this, 'datePicker') }
             onChange={ this.handleChange.bind(this, 'datePicker') }
+          />
+        </Section>
+
+        <Section title='Min and Max Dates'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ minmaxPicker && minmaxPicker.format(format).toString() }
+            />
+          </div>
+          <Calendar
+            date={ now => now.add(-4, 'd') }
+            minDate={ now => now }
+            maxDate={ now => now.add(5, 'd') }
+            onInit={ this.handleChange.bind(this, 'minmaxPicker') }
+            onChange={ this.handleChange.bind(this, 'minmaxPicker') }
+          />
+        </Section>
+
+        <Section title='Disable Arbitrary Days'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ disablePicker && disablePicker.format(format).toString() }
+            />
+          </div>
+          <Calendar
+            date={ now => now.add(-4, 'd') }
+            onInit={ this.handleChange.bind(this, 'disablePicker') }
+            onChange={ this.handleChange.bind(this, 'disablePicker') }
+            disableDay={ day => day.toDate().getDay() % 2 === 0 }
           />
         </Section>
 
@@ -109,7 +206,7 @@ export default class Main extends Component {
           </div>
           <Calendar
             firstDayOfWeek={ 1 }
-            date={ now => { return now.add(-4, 'days') } }
+            date={ now => now.add(-4, 'days') }
             onInit={ this.handleChange.bind(this, 'firstDayOfWeek') }
             onChange={ this.handleChange.bind(this, 'firstDayOfWeek') }
           />

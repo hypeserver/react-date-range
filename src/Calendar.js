@@ -126,6 +126,33 @@ class Calendar extends Component {
     return weekdays;
   }
 
+  isDayPassive(monthStart, monthEnd) {
+
+    return (day) => {
+
+      let { disableDay, minDate, maxDate, format } = this.props;
+
+      if(disableDay && typeof disableDay === 'function') {
+        return disableDay(day);
+      }
+
+      minDate = minDate && parseInput(minDate, format) || monthStart;
+      maxDate = maxDate && parseInput(maxDate, format) || monthEnd;
+
+      if(minDate && day.isBefore(minDate)) {
+        return true;
+      }
+
+      if(maxDate && day.isAfter(maxDate)) {
+        return true;
+      }
+
+      return false;
+
+    }
+
+  }
+
   renderDays() {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
@@ -138,7 +165,7 @@ class Calendar extends Component {
 
     const monthNumber              = shownDate.month();
     const dayCount                 = shownDate.daysInMonth();
-    const startOfMonth             = shownDate.clone().startOf('month').isoWeekday();
+    const startOfMonth             = shownDate.clone().startOf('month');
 
     const lastMonth                = shownDate.clone().month(monthNumber - 1);
     const lastMonthNumber          = lastMonth.month();
@@ -149,24 +176,16 @@ class Calendar extends Component {
 
     const days                     = [];
 
-    // Previous month's days
-    const diff = (Math.abs(firstDayOfWeek - (startOfMonth + 7)) % 7);
-    for (let i = diff-1; i >= 0; i--) {
-      const dayMoment  = lastMonth.clone().date(lastMonthDayCount - i);
-      days.push({ dayMoment, isPassive : true });
-    }
+    const diff         = (Math.abs(firstDayOfWeek - (startOfMonth.isoWeekday() + 7)) % 7);
+    const startDate    = startOfMonth.clone().add(-diff, 'd');
+    const isDayPassive = this.isDayPassive(
+      startOfMonth,
+      shownDate.clone().endOf('month')
+    );
 
-    // Current month's days
-    for (let i = 1; i <= dayCount; i++) {
-      const dayMoment  = shownDate.clone().date(i);
-      days.push({ dayMoment });
-    }
-
-    // Next month's days
-    const remainingCells = 42 - days.length; // 42cells = 7days * 6rows
-    for (let i = 1; i <= remainingCells; i++ ) {
-      const dayMoment  = nextMonth.clone().date(i);
-      days.push({ dayMoment, isPassive : true });
+    for(let i = 0; i < 42; i++) {
+      const dayMoment = startDate.clone().add(i, 'd');
+      days.push({ dayMoment, isPassive: isDayPassive(dayMoment)})
     }
 
     return days.map((data, index) => {
@@ -221,6 +240,9 @@ Calendar.propTypes = {
   firstDayOfWeek : PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange       : PropTypes.func,
   onInit         : PropTypes.func,
+  disableDay     : PropTypes.func,
+  minDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  maxDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   link           : PropTypes.oneOfType([PropTypes.shape({
     startDate    : PropTypes.object,
     endDate      : PropTypes.object,
