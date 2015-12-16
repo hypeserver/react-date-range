@@ -82,6 +82,13 @@ var DayCell = (function (_Component) {
       var isSelected = _props.isSelected;
       var isInRange = _props.isInRange;
       var isPassive = _props.isPassive;
+<<<<<<< HEAD
+      var isStartEdge = _props.isStartEdge;
+      var isEndEdge = _props.isEndEdge;
+=======
+      var dayMoment = _props.dayMoment;
+      var isToday = _props.isToday;
+>>>>>>> 05fd3e6c48f511660417806a573948f7ffe40e25
       var styles = this.styles;
 
       var hoverStyle = hover ? styles['DayHover'] : {};
@@ -93,7 +100,11 @@ var DayCell = (function (_Component) {
       var inRangeStyle = isInRange ? styles['DayInRange'] : {};
       var todayStyle = isToday ? styles['DayToday'] : {};
 
-      return _extends({}, inRangeStyle, hoverStyle, passiveStyle, activeStyle, selectedStyle);
+<<<<<<< HEAD
+      return _extends({}, inRangeStyle, hoverStyle, passiveStyle, activeStyle, selectedStyle, startEdgeStyle, endEdgeStyle);
+=======
+      return _extends({}, todayStyle, inRangeStyle, hoverStyle, passiveStyle, activeStyle, selectedStyle);
+>>>>>>> 05fd3e6c48f511660417806a573948f7ffe40e25
     }
   }, {
     key: 'getClassNames',
@@ -102,9 +113,20 @@ var DayCell = (function (_Component) {
       var isSelected = _props2.isSelected;
       var isInRange = _props2.isInRange;
       var isPassive = _props2.isPassive;
+<<<<<<< HEAD
+      var isStartEdge = _props2.isStartEdge;
+      var isEndEdge = _props2.isEndEdge;
+
+      var classNames = 'rdr-Day ';
+      classNames = isStartEdge ? classNames + 'is-startEdge ' : classNames;
+      classNames = isEndEdge ? classNames + 'is-endEdge ' : classNames;
+=======
+      var isToday = _props2.isToday;
 
       var classNames = 'rdr-Day ';
 
+      classNames = isToday ? classNames + 'is-today ' : classNames;
+>>>>>>> 05fd3e6c48f511660417806a573948f7ffe40e25
       classNames = isSelected ? classNames + 'is-selected ' : classNames;
       classNames = isInRange ? classNames + 'is-inRange ' : classNames;
       classNames = isPassive ? classNames + 'is-passive ' : classNames;

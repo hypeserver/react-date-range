@@ -251,8 +251,14 @@ var Calendar = (function (_Component) {
 
         var isSelected = !range && dayMoment.unix() === dateUnix;
         var isInRange = range && checkRange(dayMoment, range);
+<<<<<<< HEAD
+        var isStartEdge = range && checkStartEdge(dayMoment, range);
+        var isEndEdge = range && checkEndEdge(dayMoment, range);
+        var isEdge = isStartEdge || isEndEdge;
+=======
         var isEdge = range && checkEdges(dayMoment, range);
         var isToday = today.isSame(dayMoment);
+>>>>>>> 05fd3e6c48f511660417806a573948f7ffe40e25
 
         return _react2['default'].createElement(_DayCellJs2['default'], _extends({
           onSelect: _this.handleSelect.bind(_this)

@@ -36,6 +36,9 @@ const defaultTheme = {
     background    : '#bdc3c7',
   },
 
+  DayToday : {
+  },
+
   DayActive : {
     background    : '#95a5a6',
     color         : '#ffffff',
@@ -162,6 +165,8 @@ export default (customTheme = {}) => {
     DayPassive : { ...defaultTheme.DayPassive, ...customTheme.DayPassive },
 
     DayHover : { ...defaultTheme.DayHover, ...customTheme.DayHover },
+
+    DayToday : { ...defaultTheme.DayToday, ...customTheme.DayToday },
 
     DayActive : { ...defaultTheme.DayActive, ...customTheme.DayActive },
 

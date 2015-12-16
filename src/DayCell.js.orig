@@ -49,17 +49,28 @@ class DayCell extends Component {
 
   getStateStyles() {
     const { hover, active } = this.state;
-    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, dayMoment, isToday } = this.props;
+<<<<<<< HEAD
+    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge } = this.props;
+    const { styles } = this;
+
+    const hoverStyle     = hover ? styles['DayHover'] : {};
+    const activeStyle    = active ? styles['DayActive'] : {};
+    const passiveStyle   = isPassive ? styles['DayPassive'] : {};
+    const startEdgeStyle = isStartEdge ? styles['DayStartEdge'] : {};
+    const endEdgeStyle   = isEndEdge ? styles['DayEndEdge'] : {};
+    const selectedStyle  = isSelected ? styles['DaySelected'] : {};
+    const inRangeStyle   = isInRange ? styles['DayInRange'] : {};
+=======
+    const { isSelected, isInRange, isPassive, dayMoment, isToday } = this.props;
     const { styles } = this;
 
     const hoverStyle    = hover ? styles['DayHover'] : {};
     const activeStyle   = active ? styles['DayActive'] : {};
     const passiveStyle  = isPassive ? styles['DayPassive'] : {};
-    const startEdgeStyle = isStartEdge ? styles['DayStartEdge'] : {};
-    const endEdgeStyle   = isEndEdge ? styles['DayEndEdge'] : {};
     const selectedStyle = isSelected ? styles['DaySelected'] : {};
     const inRangeStyle  = isInRange ? styles['DayInRange'] : {};
     const todayStyle    = isToday ? styles['DayToday'] : {};
+>>>>>>> 05fd3e6c48f511660417806a573948f7ffe40e25
 
     return {
       ...todayStyle,
@@ -74,12 +85,19 @@ class DayCell extends Component {
   }
 
   getClassNames() {
-    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, isToday } = this.props;
+<<<<<<< HEAD
+    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge } = this.props;
 
     let classNames = 'rdr-Day ';
     classNames = (isStartEdge) ? classNames + 'is-startEdge ' : classNames;
     classNames = (isEndEdge) ? classNames + 'is-endEdge ' : classNames;
+=======
+    const { isSelected, isInRange, isPassive, isToday } = this.props;
+
+    let classNames = 'rdr-Day ';
+
     classNames = (isToday) ? classNames + 'is-today ' : classNames;
+>>>>>>> 05fd3e6c48f511660417806a573948f7ffe40e25
     classNames = (isSelected) ? classNames + 'is-selected ' : classNames;
     classNames = (isInRange) ? classNames + 'is-inRange ' : classNames;
     classNames = (isPassive) ? classNames + 'is-passive ' : classNames;

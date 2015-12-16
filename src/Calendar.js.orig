@@ -174,10 +174,14 @@ class Calendar extends Component {
       const { dayMoment, isPassive } = data;
       const isSelected    = !range && (dayMoment.unix() === dateUnix);
       const isInRange     = range && checkRange(dayMoment, range);
-      const isStartEdge   = range && checkStartEdge(dayMoment, range);
-      const isEndEdge     = range && checkEndEdge(dayMoment, range);
+<<<<<<< HEAD
+      const isStartEdge    = range && checkStartEdge(dayMoment, range);
+      const isEndEdge   = range && checkEndEdge(dayMoment, range);
       const isEdge        = isStartEdge || isEndEdge;
+=======
+      const isEdge        = range && checkEdges(dayMoment, range);
       const isToday       = today.isSame(dayMoment);
+>>>>>>> 05fd3e6c48f511660417806a573948f7ffe40e25
 
       return (
         <DayCell
