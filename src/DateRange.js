@@ -108,7 +108,7 @@ class DateRange extends Component {
   }
 
   render() {
-    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek } = this.props;
+    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate } = this.props;
     const { range, link } = this.state;
     const { styles } = this;
 
@@ -135,6 +135,8 @@ class DateRange extends Component {
                 format={ format }
                 firstDayOfWeek={ firstDayOfWeek }
                 theme={ styles }
+                minDate={ minDate }
+                maxDate={ maxDate }		
                 onChange={ this.handleSelect.bind(this) }  />
             );
           }
@@ -158,8 +160,8 @@ DateRange.propTypes = {
   calendars       : PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   startDate       : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   endDate         : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
-  minDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  maxDate         : PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  minDate         : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
+  maxDate         : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   dateLimit       : PropTypes.func,
   ranges          : PropTypes.object,
   linkedCalendars : PropTypes.bool,
