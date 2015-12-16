@@ -3,7 +3,7 @@ import moment from 'moment';
 import parseInput from './utils/parseInput.js';
 import Calendar from './Calendar.js';
 import PredefinedRanges from './PredefinedRanges.js';
-import getTheme from './styles.js';
+import getTheme, { defaultClasses } from './styles.js';
 
 class DateRange extends Component {
 
@@ -108,18 +108,22 @@ class DateRange extends Component {
   }
 
   render() {
-    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate } = this.props;
+    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses } = this.props;
     const { range, link } = this.state;
     const { styles } = this;
 
+    const classes = { ...defaultClasses, ...classNames };
+
     return (
-      <div style={{ ...styles['DateRange'], ...style }} className='rdr-DateRange'>
+      <div style={onlyClasses ? undefined : { ...styles['DateRange'], ...style }} className={classes.dateRange}>
         { ranges && (
           <PredefinedRanges
             format={ format }
             ranges={ ranges }
             theme={ styles }
-            onSelect={this.handleSelect.bind(this)} />
+            onSelect={this.handleSelect.bind(this)}
+            onlyClasses={ onlyClasses }
+            classNames={ classes } />
         )}
 
         {()=>{
@@ -136,7 +140,9 @@ class DateRange extends Component {
                 firstDayOfWeek={ firstDayOfWeek }
                 theme={ styles }
                 minDate={ minDate }
-                maxDate={ maxDate }		
+                maxDate={ maxDate }
+		onlyClasses={ onlyClasses }
+                classNames={ classes }
                 onChange={ this.handleSelect.bind(this) }  />
             );
           }
@@ -151,7 +157,9 @@ DateRange.defaultProps = {
   linkedCalendars : false,
   theme           : {},
   format          : 'DD/MM/YYYY',
-  calendars       : 2
+  calendars       : 2,
+  onlyClasses     : false,
+  classNames      : {}
 }
 
 DateRange.propTypes = {
@@ -168,6 +176,8 @@ DateRange.propTypes = {
   theme           : PropTypes.object,
   onInit          : PropTypes.func,
   onChange        : PropTypes.func,
+  onlyClasses     : PropTypes.bool,
+  classNames      : PropTypes.object
 }
 
 export default DateRange;

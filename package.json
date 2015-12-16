@@ -26,6 +26,7 @@
     "url": "http://github.com/Adphorus/react-date-range/issues"
   },
   "dependencies": {
+    "classnames": "^2.2.1",
     "moment": "^2.10.6",
     "react": ">=0.13.0"
   },
