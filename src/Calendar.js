@@ -65,7 +65,7 @@ class Calendar extends Component {
     const { link, onChange } = this.props;
     const { date } = this.state;
 
-    onChange && onChange(newDate);
+    onChange && onChange(newDate, Calendar);
 
     if (!link) {
       this.setState({ date : newDate });

@@ -19,7 +19,7 @@ class PredefinedRanges extends Component {
     this.props.onSelect({
       startDate : parseInput(range['startDate']),
       endDate   : parseInput(range['endDate']),
-    });
+    }, PredefinedRanges);
   }
 
   renderRangeList(classes) {

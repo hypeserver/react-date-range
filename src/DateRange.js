@@ -41,21 +41,19 @@ class DateRange extends Component {
     }
   }
 
-  setRange(range) {
+  setRange(range, source) {
     const { onChange } = this.props
     range = this.orderRange(range);
 
     this.setState({ range });
 
-    onChange && onChange(range);
+    onChange && onChange(range, source);
   }
 
-  handleSelect(date) {
-    //TODO: Improve this logic.
-
+  handleSelect(date, source) {
     if (date.startDate && date.endDate) {
       this.step = 0;
-      return this.setRange(date);
+      return this.setRange(date, source);
     }
 
     const { startDate, endDate } = this.state.range;
@@ -78,7 +76,7 @@ class DateRange extends Component {
         break;
     }
 
-    this.setRange(range);
+    this.setRange(range, source);
   }
 
   handleLinkChange(direction) {
@@ -102,7 +100,7 @@ class DateRange extends Component {
         this.setRange({
           startDate: startDate || oldStartDate,
           endDate: endDate || oldEndDate
-        }, {silent: true});
+        });
       }
     }
   }
