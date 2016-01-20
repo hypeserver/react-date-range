@@ -120,6 +120,7 @@ class DateRange extends Component {
           <PredefinedRanges
             format={ format }
             ranges={ ranges }
+            range={ range }
             theme={ styles }
             onSelect={this.handleSelect.bind(this)}
             onlyClasses={ onlyClasses }

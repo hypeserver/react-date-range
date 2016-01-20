@@ -2,7 +2,7 @@ export const defaultClasses = {
   calendar             : 'rdr-Calendar',
   dateRange            : 'rdr-DateRange',
   predefinedRanges     : 'rdr-PredefinedRanges',
-  predefinedRangesItem : 'rdr-PredefinedRangeItem',
+  predefinedRangesItem : 'rdr-PredefinedRangesItem',
   monthAndYear         : 'rdr-MonthAndYear',
   weekDays             : 'rdr-WeekDays',
   weekDay              : 'rdr-WeekDay',
@@ -143,7 +143,7 @@ const defaultTheme = {
     verticalAlign : 'top',
   },
 
-  PredefinedRangeItem : {
+  PredefinedRangesItem : {
     display       : 'block',
     fontSize      : 12,
     color         : '#2c3e50',
@@ -152,8 +152,12 @@ const defaultTheme = {
     background    : '#ecf0f1',
     textDecoration: 'none',
     marginBottom  : 6,
-  }
-}
+  },
+
+  PredefinedRangesItemActive : {
+    color         : '#E74C3C',
+  },
+};
 
 export default (customTheme = {}) => {
 
@@ -219,6 +223,8 @@ export default (customTheme = {}) => {
 
     PredefinedRanges : { ...defaultTheme.PredefinedRanges, ...customTheme.PredefinedRanges },
 
-    PredefinedRangeItem : { ...defaultTheme.PredefinedRangeItem, ...customTheme.PredefinedRangeItem }
+    PredefinedRangesItem : { ...defaultTheme.PredefinedRangesItem, ...customTheme.PredefinedRangesItem },
+
+    PredefinedRangesItemActive : { ...defaultTheme.PredefinedRangesItemActive, ...customTheme.PredefinedRangesItemActive }
   }
 }

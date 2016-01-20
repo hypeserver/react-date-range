@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
-
 import parseInput from './utils/parseInput.js';
 import { defaultClasses } from './styles.js';
 
@@ -17,7 +16,6 @@ class PredefinedRanges extends Component {
 
     const range = this.props.ranges[name];
 
-    // BECAUSE FUCK MOMENT
     this.props.onSelect({
       startDate : parseInput(range['startDate']),
       endDate   : parseInput(range['endDate']),
@@ -25,17 +23,28 @@ class PredefinedRanges extends Component {
   }
 
   renderRangeList(classes) {
-    const { ranges } = this.props;
+    const { ranges, range } = this.props;
     const { styles } = this;
 
     return Object.keys(ranges).map(name => {
+      const active = (
+        parseInput(ranges[name].startDate).isSame(range.startDate) &&
+        parseInput(ranges[name].endDate).isSame(range.endDate)
+      );
+
+      const style = {
+        ...styles['PredefinedRangesItem'],
+        ...(active ? styles['PredefinedRangesItemActive'] : {}),
+      };
+
       return (
         <a
           href='#'
           key={'range-' + name}
-          className={classes.predefinedRangeItem}
-          style={styles['PredefinedRangeItem']}
-          onClick={this.handleSelect.bind(this, name)}>
+          className={classes.predefinedRangesItem + (active ? ' active' : '')}
+          style={ style }
+          onClick={this.handleSelect.bind(this, name)}
+        >
           {name}
         </a>
       );
@@ -49,8 +58,11 @@ class PredefinedRanges extends Component {
     const classes = { ...defaultClasses, ...classNames };
 
     return (
-      <div style={onlyClasses ? undefined : { ...styles['PredefinedRanges'], ...style }} className={classes.predefinedRanges}>
-        {this.renderRangeList(classes)}
+      <div
+        style={onlyClasses ? undefined : { ...styles['PredefinedRanges'], ...style }}
+        className={ classes.predefinedRanges }
+      >
+        { this.renderRangeList(classes) }
       </div>
     );
   }
