@@ -163,6 +163,7 @@ export default (customTheme = {}) => {
 
   let calendarWidth   = defaultTheme.Calendar.width;
   let calendarPadding = defaultTheme.Calendar.padding;
+  let cellMargin      = defaultTheme.Day.margin || 0;
 
   if ( customTheme.Calendar && customTheme.Calendar.hasOwnProperty('width') ) {
     calendarWidth = customTheme.Calendar.width;
@@ -172,7 +173,11 @@ export default (customTheme = {}) => {
     calendarPadding = customTheme.Calendar.padding;
   }
 
-  const cellSize = ( parseInt(calendarWidth) - parseInt(calendarPadding) * 2 ) / 7;
+  if ( customTheme.Day && customTheme.Day.hasOwnProperty('margin') ) {
+      cellMargin = customTheme.Day.margin;
+  }
+
+  const cellSize = (( parseInt(calendarWidth) - parseInt(calendarPadding) * 2 ) / 7 ) - ( parseInt(cellMargin) * 2 );
 
   return {
     DateRange : { ...defaultTheme.DateRange, ...customTheme.DateRange },
