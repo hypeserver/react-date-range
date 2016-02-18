@@ -42,7 +42,7 @@ class PredefinedRanges extends Component {
           href='#'
           key={'range-' + name}
           className={classes.predefinedRangesItem + (active ? ' active' : '')}
-          style={ style }
+          style={ onlyClasses ? undefined : style }
           onClick={this.handleSelect.bind(this, name)}
         >
           {name}
