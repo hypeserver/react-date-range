@@ -23,7 +23,7 @@ class PredefinedRanges extends Component {
   }
 
   renderRangeList(classes) {
-    const { ranges, range } = this.props;
+    const { ranges, range, onlyClasses } = this.props;
     const { styles } = this;
 
     return Object.keys(ranges).map(name => {
