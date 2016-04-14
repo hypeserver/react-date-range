@@ -97,17 +97,25 @@ class DayCell extends Component {
     const { styles } = this;
     const stateStyle = this.getStateStyles();
     const classes    = this.getClassNames(classNames);
+    const dayWrapperStyles = {
+      width: styles['Day'].width,
+      height: styles['Day'].height,
+      display: styles['Day'].display
+    };
 
     return (
       <span
-        onMouseEnter={ this.handleMouseEvent.bind(this) }
-        onMouseLeave={ this.handleMouseEvent.bind(this) }
-        onMouseDown={ this.handleMouseEvent.bind(this) }
-        onMouseUp={ this.handleMouseEvent.bind(this) }
-        onClick={ this.handleSelect.bind(this) }
-        className={ classes }
-        style={onlyClasses ? undefined : {...styles['Day'], ...stateStyle}}>
-        { dayMoment.date() }
+        style={dayWrapperStyles}
+        onClick={ this.handleSelect.bind(this) }>
+        <span
+          onMouseEnter={ this.handleMouseEvent.bind(this) }
+          onMouseLeave={ this.handleMouseEvent.bind(this) }
+          onMouseDown={ this.handleMouseEvent.bind(this) }
+          onMouseUp={ this.handleMouseEvent.bind(this) }
+          className={ classes }
+          style={onlyClasses ? undefined : {...styles['Day'], ...stateStyle}}>
+          { dayMoment.date() }
+        </span>
       </span>
     );
   }
