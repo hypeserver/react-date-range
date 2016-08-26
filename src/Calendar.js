@@ -14,19 +14,19 @@ function checkRange(dayMoment, range) {
 function checkStartEdge(dayMoment, range) {
   const { startDate } = range;
 
-  return dayMoment.isSame(startDate);
+  return dayMoment.startOf('day').isSame(startDate.startOf('day'));
 }
 
 function checkEndEdge(dayMoment, range) {
   const { endDate } = range;
 
-  return dayMoment.isSame(endDate);
+  return dayMoment.endOf('day').isSame(endDate.endOf('day'));
 }
 
 function isOusideMinMax(dayMoment, minDate, maxDate, format) {
   return (
-    (minDate && dayMoment.isBefore(parseInput(minDate, format))) ||
-    (maxDate && dayMoment.isAfter(parseInput(maxDate, format)))
+    (minDate && dayMoment.isBefore(parseInput(minDate, format, 'startOf'))) ||
+    (maxDate && dayMoment.isAfter(parseInput(maxDate, format, 'endOf')))
   )
 }
 
@@ -37,7 +37,7 @@ class Calendar extends Component {
 
     const { format, range, theme, offset, firstDayOfWeek } = props;
 
-    const date = parseInput(props.date, format)
+    const date = parseInput(props.date, format, 'startOf')
     const state = {
       date,
       shownDate : (range && range['endDate'] || date).clone().add(offset, 'months'),
@@ -178,7 +178,7 @@ class Calendar extends Component {
       days.push({ dayMoment, isPassive : true });
     }
 
-    const today = moment().startOf('day');
+    const today = moment().endOf('day');
     return days.map((data, index) => {
       const { dayMoment, isPassive } = data;
       const isSelected    = !range && (dayMoment.unix() === dateUnix);
