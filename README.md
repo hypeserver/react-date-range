@@ -48,6 +48,8 @@ class MyComponent extends Component {
 * **theme:** *(Object)* see [Demo's source](https://github.com/Adphorus/react-date-range/blob/master/demo/src/components/Main.js#L130)
 * **onInit:** *(Function)* default: none
 * **onChange:** *(Function)* default: none
+* **minDate:** *(String, Moment.js object, Function)* default: none
+* **maxDate:** *(String, Moment.js object, Function)* default: none
 
 ### Range Picker
 ```javascript
@@ -86,3 +88,5 @@ class MyComponent extends Component {
 * **linkedCalendars:** *(Boolean)* default: false
 * **calendars:** *(Number)* default: 2
 * **ranges:** *(Object)* default: none
+* **minDate:** *(String, Moment.js object, Function)* default: none
+* **maxDate:** *(String, Moment.js object, Function)* default: none
