@@ -10,7 +10,7 @@ export default function parseInput(input, format) {
   } else if (typeof input === 'function') {
     output = parseInput( input(moment().startOf('day')) , format);
   } else if (input._isAMomentObject) {
-    output = input.startOf('day').clone();
+    output = input.clone().startOf('day');
   }
 
   return output;

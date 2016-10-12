@@ -12,8 +12,13 @@ class DateRange extends Component {
 
     const { format, linkedCalendars, theme } = props;
 
-    const startDate = parseInput(props.startDate, format);
-    const endDate   = parseInput(props.endDate, format);
+    let startDate = parseInput(props.startDate, format);
+    let endDate   = parseInput(props.endDate, format);
+    // Allows to select no date at all.
+    if (props.startDate === null && props.endDate === null) {
+      startDate = null;
+      endDate = null;
+    }
 
     this.state = {
       range     : { startDate, endDate },
@@ -88,6 +93,11 @@ class DateRange extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    // Allows to select no date at all.
+    // TODO Trigger onChange() through setRange()?
+    if (props.startDate === null && props.endDate === null) {
+      this.setState({ range: { startDate: null, endDate: null } });
+    }
     // Whenever date props changes, update state with parsed variant
     if (newProps.startDate || newProps.endDate) {
       const format       = newProps.format || this.props.format;
