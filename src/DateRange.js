@@ -95,7 +95,7 @@ class DateRange extends Component {
   componentWillReceiveProps(newProps) {
     // Allows to select no date at all.
     // TODO Trigger onChange() through setRange()?
-    if (props.startDate === null && props.endDate === null) {
+    if (newProps.startDate === null && newProps.endDate === null) {
       this.setState({ range: { startDate: null, endDate: null } });
     }
     // Whenever date props changes, update state with parsed variant
