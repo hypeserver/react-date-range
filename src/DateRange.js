@@ -36,7 +36,7 @@ class DateRange extends Component {
 
   orderRange(range) {
     const { startDate, endDate } = range;
-    const swap = startDate.isAfter(endDate);
+    const swap = startDate !== null && startDate.isAfter(endDate);
 
     if (!swap) return range;
 
