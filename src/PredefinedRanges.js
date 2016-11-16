@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
+import classnames from 'classnames';
 import parseInput from './utils/parseInput.js';
 import { defaultClasses } from './styles.js';
 
@@ -37,11 +38,16 @@ class PredefinedRanges extends Component {
         ...(active ? styles['PredefinedRangesItemActive'] : {}),
       };
 
+      const predefinedRangeClass = classnames({
+        [classes.predefinedRangesItem]: true,
+        [classes.predefinedRangesItemActive]: active
+      });
+
       return (
         <a
           href='#'
           key={'range-' + name}
-          className={classes.predefinedRangesItem + (active ? ' active' : '')}
+          className={predefinedRangeClass}
           style={ onlyClasses ? undefined : style }
           onClick={this.handleSelect.bind(this, name)}
         >
