@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { defaultRanges, Calendar, DateRange } from '../../../lib';
 import Section from 'components/Section';
 
@@ -208,6 +209,34 @@ export default class Main extends Component {
               }
             }}
           />
+        </Section>
+
+        <Section title='Mobile Datepicker'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ rangePicker['startDate'] && rangePicker['startDate'].format(format).toString() }
+            />
+            <input
+              type='text'
+              readOnly
+              value={ rangePicker['endDate'] && rangePicker['endDate'].format(format).toString() }
+            />
+          </div>
+          <div className={styles['Mobile-Container']}>
+            <DateRange
+              startDate={ now => {return now.add(1,'month')}}
+              endDate={ now => {return now.add(1,'month').add(3,'days')}}
+              shownDate={moment()}
+              offsetPositive={true}
+              disableDaysBeforeToday={true}
+              showMonthArrow={false}
+              calendars={4}
+              onInit={ this.handleChange.bind(this, 'rangePicker') }
+              onChange={ this.handleChange.bind(this, 'rangePicker') }
+            />
+          </div>
         </Section>
       </main>
     )
