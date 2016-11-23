@@ -99,6 +99,23 @@ export default class Main extends Component {
           />
         </Section>
 
+        <Section title='Date Picker, chinese.'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ datePicker && datePicker.format(format).toString() }
+            />
+          </div>
+          <Calendar
+            disableDaysBeforeToday={true}
+            lang={'jp'}
+            date={ now => { return now } }
+            onInit={ this.handleChange.bind(this, 'datePicker') }
+            onChange={ this.handleChange.bind(this, 'datePicker') }
+          />
+        </Section>
+
         <Section title='Date Picker (Monday First)'>
           <div>
             <input

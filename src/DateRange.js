@@ -106,7 +106,7 @@ class DateRange extends Component {
   }
 
   render() {
-    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses } = this.props;
+    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses, lang, disableDaysBeforeToday } = this.props;
     const { range, link } = this.state;
     const { styles } = this;
 
@@ -130,6 +130,8 @@ class DateRange extends Component {
           for (var i = Number(calendars) - 1; i >= 0; i--) {
             _calendars.push(
               <Calendar
+                disableDaysBeforeToday={ disableDaysBeforeToday }
+                lang={ lang }
                 key={i}
                 offset={ -i }
                 link={ linkedCalendars && link }
@@ -140,7 +142,7 @@ class DateRange extends Component {
                 theme={ styles }
                 minDate={ minDate }
                 maxDate={ maxDate }
-		onlyClasses={ onlyClasses }
+		            onlyClasses={ onlyClasses }
                 classNames={ classes }
                 onChange={ this.handleSelect.bind(this) }  />
             );

@@ -6,7 +6,9 @@
   "scripts": {
     "build": "node build.js",
     "start-dev": "NODE_ENV=development npm run build",
-    "build-prod": "NODE_ENV=production npm run build"
+    "start-dev-windows": "set NODE_ENV=development & npm run build",
+    "build-prod": "NODE_ENV=production npm run build",
+    "build-prod-windows": "set NODE_ENV=production & npm run build"
   },
   "keywords": [],
   "author": "Burak Can <neoberg@gmail.com>",
