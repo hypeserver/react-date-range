@@ -36,7 +36,11 @@ class Calendar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, range, theme, offset, firstDayOfWeek, shownDate } = props;
+    const { format, range, theme, offset, firstDayOfWeek, locale, shownDate } = props;
+
+    if(locale) {
+      moment.locale(locale);
+    }
 
     const date = parseInput(props.date, format, 'startOf')
     const state = {
@@ -279,7 +283,8 @@ Calendar.propTypes = {
   linkCB         : PropTypes.func,
   theme          : PropTypes.object,
   onlyClasses    : PropTypes.bool,
-  classNames     : PropTypes.object
+  classNames     : PropTypes.object,
+  locale         : PropTypes.string
 }
 
 export default Calendar;
