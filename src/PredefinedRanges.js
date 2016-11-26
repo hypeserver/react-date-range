@@ -17,8 +17,8 @@ class PredefinedRanges extends Component {
     const range = this.props.ranges[name];
 
     this.props.onSelect({
-      startDate : parseInput(range['startDate']),
-      endDate   : parseInput(range['endDate']),
+      startDate : parseInput(range['startDate'], null, 'startOf'),
+      endDate   : parseInput(range['endDate'], null, 'endOf'),
     }, PredefinedRanges);
   }
 
@@ -28,8 +28,8 @@ class PredefinedRanges extends Component {
 
     return Object.keys(ranges).map(name => {
       const active = (
-        parseInput(ranges[name].startDate).isSame(range.startDate) &&
-        parseInput(ranges[name].endDate).isSame(range.endDate)
+        parseInput(ranges[name].startDate, null, 'startOf').isSame(range.startDate) &&
+        parseInput(ranges[name].endDate, null, 'endOf').isSame(range.endDate)
       );
 
       const style = {

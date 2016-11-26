@@ -12,8 +12,8 @@ class DateRange extends Component {
 
     const { format, linkedCalendars, theme } = props;
 
-    const startDate = parseInput(props.startDate, format);
-    const endDate   = parseInput(props.endDate, format);
+    const startDate = parseInput(props.startDate, format, 'startOf');
+    const endDate   = parseInput(props.endDate, format, 'endOf');
 
     this.state = {
       range     : { startDate, endDate },
@@ -91,10 +91,10 @@ class DateRange extends Component {
     // Whenever date props changes, update state with parsed variant
     if (newProps.startDate || newProps.endDate) {
       const format       = newProps.format || this.props.format;
-      const startDate    = newProps.startDate   && parseInput(newProps.startDate, format);
-      const endDate      = newProps.endDate     && parseInput(newProps.endDate, format);
-      const oldStartDate = this.props.startDate && parseInput(this.props.startDate, format);
-      const oldEndDate   = this.props.endDate   && parseInput(this.props.endDate, format);
+      const startDate    = newProps.startDate   && parseInput(newProps.startDate, format, 'startOf');
+      const endDate      = newProps.endDate     && parseInput(newProps.endDate, format, 'endOf');
+      const oldStartDate = this.props.startDate && parseInput(this.props.startDate, format, 'startOf');
+      const oldEndDate   = this.props.endDate   && parseInput(this.props.endDate, format, 'endOf');
 
       if (!startDate.isSame(oldStartDate) || !endDate.isSame(oldEndDate)) {
         this.setRange({
