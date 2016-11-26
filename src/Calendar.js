@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import parseInput from './utils/parseInput.js';
 import DayCell from './DayCell.js';
+import LangDic from './LangDic.js';
 import getTheme, { defaultClasses } from './styles.js';
 
 function checkRange(dayMoment, range) {
@@ -35,12 +36,12 @@ class Calendar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, range, theme, offset, firstDayOfWeek } = props;
+    const { format, range, theme, offset, firstDayOfWeek, shownDate } = props;
 
     const date = parseInput(props.date, format, 'startOf')
     const state = {
       date,
-      shownDate : (range && range['endDate'] || date).clone().add(offset, 'months'),
+      shownDate : (shownDate || range && range['endDate'] || date).clone().add(offset, 'months'),
       firstDayOfWeek: (firstDayOfWeek || moment.localeData().firstDayOfWeek()),
     }
 
@@ -98,30 +99,38 @@ class Calendar extends Component {
 
   renderMonthAndYear(classes) {
     const shownDate       = this.getShownDate();
-    const month           = moment.months(shownDate.month());
+    let month           = moment.months(shownDate.month());
     const year            = shownDate.year();
     const { styles }      = this;
-    const { onlyClasses } = this.props;
+    const { onlyClasses, lang, showMonthArrow} = this.props;
+
+    month = lang ? LangDic[lang][month.toLowerCase()] : month;
 
     return (
       <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
-        <button
-          style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'left' }}
-          className={classes.prevButton}
-          onClick={this.changeMonth.bind(this, -1)}>
-          <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
-        </button>
+        {
+          showMonthArrow ?
+          <button
+            style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'left' }}
+            className={classes.prevButton}
+            onClick={this.changeMonth.bind(this, -1)}>
+            <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
+          </button> : null
+        }
         <span>
           <span className={classes.month}>{month}</span>
           <span className={classes.monthAndYearDivider}> - </span>
           <span className={classes.year}>{year}</span>
         </span>
-        <button
-          style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'right' }}
-          className={classes.nextButton}
-          onClick={this.changeMonth.bind(this, +1)}>
-          <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
-        </button>
+        {
+          showMonthArrow ?
+          <button
+            style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'right' }}
+            className={classes.nextButton}
+            onClick={this.changeMonth.bind(this, +1)}>
+            <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
+          </button> : null
+        }
       </div>
     )
   }
@@ -130,11 +139,11 @@ class Calendar extends Component {
     const dow             = this.state.firstDayOfWeek;
     const weekdays        = [];
     const { styles }      = this;
-    const { onlyClasses } = this.props;
+    const { onlyClasses, lang } = this.props;
 
     for (let i = dow; i < 7 + dow; i++) {
-      const day = moment.weekdaysMin(i);
-
+      let day = moment.weekdaysMin(i);
+      day = lang ? LangDic[lang][day.toLowerCase()] : day;
       weekdays.push(
         <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={day}>{day}</span>
       );
@@ -147,7 +156,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses } = this.props;
+    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday } = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -176,7 +185,13 @@ class Calendar extends Component {
     // Current month's days
     for (let i = 1; i <= dayCount; i++) {
       const dayMoment  = shownDate.clone().date(i);
-      days.push({ dayMoment });
+      // set days before today to isPassive
+      var _today = moment()
+      if (disableDaysBeforeToday && Number(dayMoment.diff(_today,"days")) <= -1) {
+        days.push({ dayMoment ,isPassive:true});
+      } else {
+        days.push({ dayMoment });
+      }
     }
 
     // Next month's days
@@ -235,11 +250,16 @@ class Calendar extends Component {
 Calendar.defaultProps = {
   format      : 'DD/MM/YYYY',
   theme       : {},
+  showMonthArrow: true,
+  disableDaysBeforeToday: false,
   onlyClasses : false,
   classNames  : {}
 }
 
 Calendar.propTypes = {
+  showMonthArrow : PropTypes.bool,
+  disableDaysBeforeToday : PropTypes.bool,
+  lang           : PropTypes.string,
   sets           : PropTypes.string,
   range          : PropTypes.shape({
     startDate    : PropTypes.object,
