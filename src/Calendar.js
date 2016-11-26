@@ -214,6 +214,7 @@ class Calendar extends Component {
       const isEndEdge     = range && checkEndEdge(dayMoment, range);
       const isEdge        = isStartEdge || isEndEdge;
       const isToday       = today.isSame(dayMoment);
+      const isSunday      = dayMoment.day() === 0;
       const isOutsideMinMax = isOusideMinMax(dayMoment, minDate, maxDate, format);
 
       return (
@@ -225,6 +226,7 @@ class Calendar extends Component {
           isEndEdge = { isEndEdge }
           isSelected={ isSelected || isEdge }
           isInRange={ isInRange }
+          isSunday={ isSunday }
           isToday={ isToday }
           key={ index }
           isPassive = { isPassive || isOutsideMinMax }
