@@ -63,8 +63,6 @@ const defaultTheme = {
   },
 
   DaySunday: {
-    background: "#FF274E",
-    color: "white",
   },
 
   DayActive : {
