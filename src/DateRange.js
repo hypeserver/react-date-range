@@ -76,7 +76,7 @@ class DateRange extends Component {
         break;
     }
 
-    const triggerChange = this.step === 0 && this.props.twoStepChange;
+    const triggerChange = !this.props.twoStepChange || this.step === 0 && this.props.twoStepChange;
 
     this.setRange(range, source, triggerChange);
   }
