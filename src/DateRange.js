@@ -47,7 +47,7 @@ class DateRange extends Component {
 
     this.setState({ range });
 
-    onChange && onChange(range, source);
+    onChange && onChange(range, source, this.step);
   }
 
   handleSelect(date, source) {
