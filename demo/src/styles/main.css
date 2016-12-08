@@ -51,6 +51,6 @@
 :local(.Mobile-Container) {
   height: 500px;
   overflow-y: scroll;
-  width: 296px;
+  width: 400px;
   margin: 0 auto;
 }

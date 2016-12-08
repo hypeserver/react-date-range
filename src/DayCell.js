@@ -92,7 +92,7 @@ class DayCell extends Component {
   }
 
   render() {
-    const { dayMoment, onlyClasses, classNames } = this.props;
+    const { dayMoment, dayText, onlyClasses, classNames, showText } = this.props;
 
     const { styles } = this;
     const stateStyle = this.getStateStyles();
@@ -100,26 +100,40 @@ class DayCell extends Component {
 
     return (
       <span
-        onMouseEnter={ this.handleMouseEvent.bind(this) }
-        onMouseLeave={ this.handleMouseEvent.bind(this) }
-        onMouseDown={ this.handleMouseEvent.bind(this) }
-        onMouseUp={ this.handleMouseEvent.bind(this) }
-        onClick={ this.handleSelect.bind(this) }
-        className={ classes }
-        style={onlyClasses ? undefined : {...styles['Day'], ...stateStyle}}>
-        { dayMoment.date() }
+        style={{...styles['DayCell']}}>
+        <span
+          onMouseEnter={ this.handleMouseEvent.bind(this) }
+          onMouseLeave={ this.handleMouseEvent.bind(this) }
+          onMouseDown={ this.handleMouseEvent.bind(this) }
+          onMouseUp={ this.handleMouseEvent.bind(this) }
+          onClick={ this.handleSelect.bind(this) }
+          className={ classes }
+          style={onlyClasses ? undefined : {...styles['Day'], ...stateStyle}}>
+          { dayMoment.date() }
+        </span>
+        {
+          showText ?
+          <span
+            style={{...styles['DayText']}}>
+            { dayText }
+          </span>
+          : null
+        }
       </span>
-    );
+    )
   }
 }
 
 DayCell.defaultProps = {
   theme       : { 'Day' : {} },
+  showText    : false,
   onlyClasses : false
 }
 
 DayCell.propTypes = {
   dayMoment   : PropTypes.object.isRequired,
+  dayText     : PropTypes.string,
+  showText    : PropTypes.bool,
   onSelect    : PropTypes.func,
   isSelected  : PropTypes.bool,
   isInRange   : PropTypes.bool,

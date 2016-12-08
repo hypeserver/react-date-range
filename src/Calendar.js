@@ -36,7 +36,7 @@ class Calendar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, range, theme, offset, firstDayOfWeek, shownDate } = props;
+    const { format, range, theme, offset, firstDayOfWeek, shownDate, dayText } = props;
 
     const date = parseInput(props.date, format)
     const state = {
@@ -47,6 +47,24 @@ class Calendar extends Component {
 
     this.state  = state;
     this.styles = getTheme(theme);
+    this.showText = dayText ? true : false;
+    this.dayText = dayText && dayText.slice(0); // to avoid changing dayText in parent
+  }
+
+  getDayText(dayMoment) {
+    const len = this.dayText.length;
+    for (let i = 0 ; i < len; i++) {
+      const _m = moment(this.dayText[i].ts,'x');
+      if (dayMoment.isSame(_m,'day')) {
+        return this.dayText.splice(i,1)[0].text;
+      }
+    }
+    return null;
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { dayText } = newProps;
+    this.dayText = dayText && dayText.slice(0);
   }
 
   componentDidMount() {
@@ -97,7 +115,6 @@ class Calendar extends Component {
     const { onlyClasses, lang, showMonthArrow} = this.props;
 
     month = lang ? LangDic[lang][month.toLowerCase()] : month;
-
     return (
       <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
         {
@@ -148,7 +165,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday } = this.props;
+    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, dayText } = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -171,18 +188,20 @@ class Calendar extends Component {
     const diff = (Math.abs(firstDayOfWeek - (startOfMonth + 7)) % 7);
     for (let i = diff-1; i >= 0; i--) {
       const dayMoment  = lastMonth.clone().date(lastMonthDayCount - i);
-      days.push({ dayMoment, isPassive : true });
+      const dayText = (this.showText && this.getDayText(dayMoment)) || null;
+      days.push({ dayMoment, dayText, isPassive : true });
     }
 
     // Current month's days
     for (let i = 1; i <= dayCount; i++) {
       const dayMoment  = shownDate.clone().date(i);
+      const dayText = (this.showText && this.getDayText(dayMoment)) || null;
       // set days before today to isPassive
       var _today = moment()
       if (disableDaysBeforeToday && Number(dayMoment.diff(_today,"days")) <= -1) {
-        days.push({ dayMoment ,isPassive:true});
+        days.push({ dayMoment, dayText, isPassive:true});
       } else {
-        days.push({ dayMoment });
+        days.push({ dayMoment, dayText });
       }
     }
 
@@ -190,7 +209,8 @@ class Calendar extends Component {
     const remainingCells = 42 - days.length; // 42cells = 7days * 6rows
     for (let i = 1; i <= remainingCells; i++ ) {
       const dayMoment  = nextMonth.clone().date(i);
-      days.push({ dayMoment, isPassive : true });
+      const dayText = (this.showText && this.getDayText(dayMoment)) || null;
+      days.push({ dayMoment, dayText, isPassive : true });
     }
 
     const today = moment().startOf('day');
@@ -208,6 +228,7 @@ class Calendar extends Component {
         <DayCell
           onSelect={ this.handleSelect.bind(this) }
           { ...data }
+          showText = { this.showText ? true : false }
           theme={ styles }
           isStartEdge = { isStartEdge }
           isEndEdge = { isEndEdge }
@@ -271,7 +292,8 @@ Calendar.propTypes = {
   linkCB         : PropTypes.func,
   theme          : PropTypes.object,
   onlyClasses    : PropTypes.bool,
-  classNames     : PropTypes.object
+  classNames     : PropTypes.object,
+  dayText        : PropTypes.array
 }
 
 export default Calendar;

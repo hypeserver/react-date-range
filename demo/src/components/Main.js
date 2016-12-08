@@ -7,11 +7,22 @@ import 'normalize.css';
 import 'styles/global'
 import styles from 'styles/main';
 
+function getDayText() {
+  let _dayText = [];
+  for (let i = 0; i < 40; i++) {
+    _dayText.push({
+      ts: moment().add(i,"days").format('x'),
+      text: '¥100'
+    })
+  }
+  return _dayText;
+}
+
 export default class Main extends Component {
   constructor(props, context) {
     super(props, context);
-
     this.state = {
+      'dayText' : getDayText(),
       'rangePicker' : {},
       'linked' : {},
       'datePicker' : null,
@@ -110,7 +121,7 @@ export default class Main extends Component {
           </div>
           <Calendar
             disableDaysBeforeToday={true}
-            lang={'jp'}
+            lang={'cn'}
             date={ now => { return now } }
             onInit={ this.handleChange.bind(this, 'datePicker') }
             onChange={ this.handleChange.bind(this, 'datePicker') }
@@ -211,7 +222,7 @@ export default class Main extends Component {
           />
         </Section>
 
-        <Section title='Mobile Datepicker'>
+        <Section title='Mobile Datepicker with text'>
           <div>
             <input
               type='text'
@@ -226,6 +237,7 @@ export default class Main extends Component {
           </div>
           <div className={styles['Mobile-Container']}>
             <DateRange
+              dayText={this.state.dayText}
               startDate={ now => {return now.add(1,'month')}}
               endDate={ now => {return now.add(1,'month').add(3,'days')}}
               shownDate={moment()}
@@ -235,6 +247,10 @@ export default class Main extends Component {
               calendars={4}
               onInit={ this.handleChange.bind(this, 'rangePicker') }
               onChange={ this.handleChange.bind(this, 'rangePicker') }
+              theme={{
+                Calendar : {
+                  width: 400,
+                }}}
             />
           </div>
         </Section>
