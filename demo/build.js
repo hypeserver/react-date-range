@@ -4,7 +4,7 @@ var UglifyJsPlugin      = webpack.optimize.UglifyJsPlugin;
 var path                = require('path');
 var DefinePlugin        = webpack.DefinePlugin;
 var WebpackDevServer    = require("webpack-dev-server");
-var NODE_ENV            = process.env.NODE_ENV || 'production';
+var NODE_ENV            = process.env.NODE_ENV.trim() || 'production';
 
 var config = {
   entry                 : {
@@ -34,7 +34,7 @@ var config = {
   ],
 
   resolve               : {
-    extensions          : ['', '.js', '.css'],
+    extensions          : ['', '.js', '.css', '.scss'],
     alias               : {
       'root'            : path.join(__dirname, '/src'),
       'components'      : path.join(__dirname, '/src/components'),
@@ -48,8 +48,8 @@ var config = {
         loaders         : ['react-hot', 'babel-loader'],
         include         : path.join(__dirname, '/src')
       }, {
-        test            : /\.css$/,
-        loaders         : ['style', 'css']
+        test            : /\.s?css$/,
+        loader        : 'style!css!sass'
       }
     ]
   }

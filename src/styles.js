@@ -17,7 +17,8 @@ export const defaultClasses = {
   nextButton                 : 'rdr-MonthAndYear-button next',
   month                      : 'rdr-MonthAndYear-month',
   monthAndYearDivider        : 'rdr-MonthAndYear-divider',
-  year                       : 'rdr-MonthAndYear-year'
+  year                       : 'rdr-MonthAndYear-year',
+  daySunday                  : 'rdr-Sunday',
 };
 
 const defaultTheme = {
@@ -59,6 +60,9 @@ const defaultTheme = {
   },
 
   DayToday : {
+  },
+
+  DaySunday: {
   },
 
   DayActive : {
@@ -198,6 +202,7 @@ export default (customTheme = {}) => {
     DayHover : { ...defaultTheme.DayHover, ...customTheme.DayHover },
 
     DayToday : { ...defaultTheme.DayToday, ...customTheme.DayToday },
+    DaySunday: { ...defaultTheme.DaySunday, ...customTheme.DaySunday },
 
     DayActive : { ...defaultTheme.DayActive, ...customTheme.DayActive },
 

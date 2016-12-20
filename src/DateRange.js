@@ -12,8 +12,8 @@ class DateRange extends Component {
 
     const { format, linkedCalendars, theme } = props;
 
-    const startDate = parseInput(props.startDate, format);
-    const endDate   = parseInput(props.endDate, format);
+    const startDate = parseInput(props.startDate, format, 'startOf');
+    const endDate   = parseInput(props.endDate, format, 'endOf');
 
     this.state = {
       range     : { startDate, endDate },
@@ -91,10 +91,10 @@ class DateRange extends Component {
     // Whenever date props changes, update state with parsed variant
     if (newProps.startDate || newProps.endDate) {
       const format       = newProps.format || this.props.format;
-      const startDate    = newProps.startDate   && parseInput(newProps.startDate, format);
-      const endDate      = newProps.endDate     && parseInput(newProps.endDate, format);
-      const oldStartDate = this.props.startDate && parseInput(this.props.startDate, format);
-      const oldEndDate   = this.props.endDate   && parseInput(this.props.endDate, format);
+      const startDate    = newProps.startDate   && parseInput(newProps.startDate, format, 'startOf');
+      const endDate      = newProps.endDate     && parseInput(newProps.endDate, format, 'endOf');
+      const oldStartDate = this.props.startDate && parseInput(this.props.startDate, format, 'startOf');
+      const oldEndDate   = this.props.endDate   && parseInput(this.props.endDate, format, 'endOf');
 
       if (!startDate.isSame(oldStartDate) || !endDate.isSame(oldEndDate)) {
         this.setRange({
@@ -106,7 +106,7 @@ class DateRange extends Component {
   }
 
   render() {
-    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses } = this.props;
+    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses, lang, disableDaysBeforeToday, offsetPositive, shownDate, showMonthArrow } = this.props;
     const { range, link } = this.state;
     const { styles } = this;
 
@@ -127,11 +127,16 @@ class DateRange extends Component {
 
         {()=>{
           const _calendars = [];
+          const _method = offsetPositive ? 'unshift' : 'push';
           for (var i = Number(calendars) - 1; i >= 0; i--) {
-            _calendars.push(
+            _calendars[_method](
               <Calendar
+                showMonthArrow={ showMonthArrow }
+                shownDate={ shownDate }
+                disableDaysBeforeToday={ disableDaysBeforeToday }
+                lang={ lang }
                 key={i}
-                offset={ -i }
+                offset={ offsetPositive ? i : -i }
                 link={ linkedCalendars && link }
                 linkCB={ this.handleLinkChange.bind(this) }
                 range={ range }
@@ -140,7 +145,7 @@ class DateRange extends Component {
                 theme={ styles }
                 minDate={ minDate }
                 maxDate={ maxDate }
-		onlyClasses={ onlyClasses }
+		            onlyClasses={ onlyClasses }
                 classNames={ classes }
                 onChange={ this.handleSelect.bind(this) }  />
             );
@@ -158,6 +163,7 @@ DateRange.defaultProps = {
   format          : 'DD/MM/YYYY',
   calendars       : 2,
   onlyClasses     : false,
+  offsetPositive  : false,
   classNames      : {}
 }
 
@@ -176,6 +182,7 @@ DateRange.propTypes = {
   onInit          : PropTypes.func,
   onChange        : PropTypes.func,
   onlyClasses     : PropTypes.bool,
+  offsetPositive  : PropTypes.bool,
   classNames      : PropTypes.object
 }
 

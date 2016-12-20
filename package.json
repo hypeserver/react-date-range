@@ -1,6 +1,6 @@
 {
   "name": "react-date-range",
-  "version": "0.2.4",
+  "version": "0.9.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "lib/index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "rangepicker"
   ],
   "author": "Burak Can <neoberg@gmail.com>",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "http://github.com/Adphorus/react-date-range"
@@ -28,7 +28,7 @@
   "dependencies": {
     "classnames": "^2.2.1",
     "moment": "^2.10.6",
-    "react": ">=0.13.0"
+    "react": "^0.14.8"
   },
   "devDependencies": {
     "babel": "^5.8.23"

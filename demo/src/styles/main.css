@@ -47,3 +47,10 @@
   border-radius: 2px;
   font-size: 1.2rem;
 }
+
+:local(.Mobile-Container) {
+  height: 500px;
+  overflow-y: scroll;
+  width: 296px;
+  margin: 0 auto;
+}

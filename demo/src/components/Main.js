@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { defaultRanges, Calendar, DateRange } from '../../../lib';
 import Section from 'components/Section';
 
 import 'normalize.css';
 import 'styles/global'
 import styles from 'styles/main';
+import '../../../src/styles.scss'
 
 export default class Main extends Component {
   constructor(props, context) {
@@ -94,6 +96,23 @@ export default class Main extends Component {
           </div>
           <Calendar
             date={ now => { return now.add(-4, 'days') } }
+            onInit={ this.handleChange.bind(this, 'datePicker') }
+            onChange={ this.handleChange.bind(this, 'datePicker') }
+          />
+        </Section>
+
+        <Section title='Date Picker, chinese.'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ datePicker && datePicker.format(format).toString() }
+            />
+          </div>
+          <Calendar
+            disableDaysBeforeToday={true}
+            lang={'jp'}
+            date={ now => { return now } }
             onInit={ this.handleChange.bind(this, 'datePicker') }
             onChange={ this.handleChange.bind(this, 'datePicker') }
           />
@@ -191,6 +210,34 @@ export default class Main extends Component {
               }
             }}
           />
+        </Section>
+
+        <Section title='Mobile Datepicker'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ rangePicker['startDate'] && rangePicker['startDate'].format(format).toString() }
+            />
+            <input
+              type='text'
+              readOnly
+              value={ rangePicker['endDate'] && rangePicker['endDate'].format(format).toString() }
+            />
+          </div>
+          <div className={styles['Mobile-Container']}>
+            <DateRange
+              startDate={ now => {return now.add(1,'month')}}
+              endDate={ now => {return now.add(1,'month').add(3,'days')}}
+              shownDate={moment()}
+              offsetPositive={true}
+              disableDaysBeforeToday={true}
+              showMonthArrow={false}
+              calendars={4}
+              onInit={ this.handleChange.bind(this, 'rangePicker') }
+              onChange={ this.handleChange.bind(this, 'rangePicker') }
+            />
+          </div>
         </Section>
       </main>
     )

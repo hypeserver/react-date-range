@@ -1,16 +1,16 @@
 import moment from 'moment';
 
-export default function parseInput(input, format) {
+export default function parseInput(input, format, timeOfDay) {
   let output = null;
 
   if (typeof input === 'undefined' ||  typeof input === 'null' || !input || input === '') {
-    output = moment().startOf('day');
+    output = moment()[timeOfDay]('day');
   } else if (typeof input === 'string') {
-    output = moment(input, format).startOf('day');
+    output = moment(input, format)[timeOfDay]('day');
   } else if (typeof input === 'function') {
-    output = parseInput( input(moment().startOf('day')) , format);
+    output = parseInput( input(moment()[timeOfDay]('day')) , format, timeOfDay);
   } else if (input._isAMomentObject) {
-    output = input.startOf('day').clone();
+    output = input[timeOfDay]('day').clone();
   }
 
   return output;
