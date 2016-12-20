@@ -106,11 +106,15 @@ class DateRange extends Component {
   }
 
   render() {
-    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses, lang, disableDaysBeforeToday, offsetPositive, shownDate, showMonthArrow } = this.props;
+    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses, lang, disableDaysBeforeToday, offsetPositive, shownDate, showMonthArrow, rangedCalendars } = this.props;
     const { range, link } = this.state;
     const { styles } = this;
 
     const classes = { ...defaultClasses, ...classNames };
+    const yearsDiff = range.endDate.year() - range.startDate.year();
+    const monthsDiff = range.endDate.month() - range.startDate.month();
+    const diff = yearsDiff * 12 + monthsDiff;
+    const calendarsCount = Number(calendars) - 1;
 
     return (
       <div style={onlyClasses ? undefined : { ...styles['DateRange'], ...style }} className={classes.dateRange}>
@@ -128,7 +132,11 @@ class DateRange extends Component {
         {()=>{
           const _calendars = [];
           const _method = offsetPositive ? 'unshift' : 'push';
-          for (var i = Number(calendars) - 1; i >= 0; i--) {
+          for (var i = calendarsCount; i >= 0; i--) {
+            const offset = offsetPositive ? i : -i;
+            const realDiff = offsetPositive ? diff : -diff;
+            const realOffset = (rangedCalendars && i == calendarsCount && diff != 0) ? realDiff : offset;
+
             _calendars[_method](
               <Calendar
                 showMonthArrow={ showMonthArrow }
@@ -136,7 +144,7 @@ class DateRange extends Component {
                 disableDaysBeforeToday={ disableDaysBeforeToday }
                 lang={ lang }
                 key={i}
-                offset={ offsetPositive ? i : -i }
+                offset={ realOffset }
                 link={ linkedCalendars && link }
                 linkCB={ this.handleLinkChange.bind(this) }
                 range={ range }
@@ -164,7 +172,8 @@ DateRange.defaultProps = {
   calendars       : 2,
   onlyClasses     : false,
   offsetPositive  : false,
-  classNames      : {}
+  classNames      : {},
+  rangedCalendars : false,
 }
 
 DateRange.propTypes = {
@@ -183,7 +192,8 @@ DateRange.propTypes = {
   onChange        : PropTypes.func,
   onlyClasses     : PropTypes.bool,
   offsetPositive  : PropTypes.bool,
-  classNames      : PropTypes.object
+  classNames      : PropTypes.object,
+  rangedCalendars : PropTypes.bool,
 }
 
 export default DateRange;
