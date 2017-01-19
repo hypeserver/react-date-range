@@ -36,8 +36,8 @@ class Calendar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, range, theme, offset, firstDayOfWeek, locale, shownDate } = props;
-
+    const { format, range, theme, offset, firstDayOfWeek, locale, shownDate, specialDays } = props;
+    
     if(locale) {
       moment.locale(locale);
     }
@@ -160,8 +160,8 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday } = this.props;
-
+    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
+    
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
     const dateUnix                 = date.unix();
@@ -232,6 +232,7 @@ class Calendar extends Component {
           isPassive = { isPassive || isOutsideMinMax }
           onlyClasses = { onlyClasses }
           classNames = { classes }
+          specialDays = { specialDays }
         />
       );
     })
@@ -284,6 +285,7 @@ Calendar.propTypes = {
   }), PropTypes.bool]),
   linkCB         : PropTypes.func,
   theme          : PropTypes.object,
+  specialDays    : PropTypes.array,
   onlyClasses    : PropTypes.bool,
   classNames     : PropTypes.object,
   locale         : PropTypes.string
