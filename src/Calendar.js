@@ -115,6 +115,7 @@ class Calendar extends Component {
         {
           showMonthArrow ?
           <button
+            type="button"
             style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'left' }}
             className={classes.prevButton}
             onClick={this.changeMonth.bind(this, -1)}>
@@ -129,6 +130,7 @@ class Calendar extends Component {
         {
           showMonthArrow ?
           <button
+            type="button"
             style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'right' }}
             className={classes.nextButton}
             onClick={this.changeMonth.bind(this, +1)}>
