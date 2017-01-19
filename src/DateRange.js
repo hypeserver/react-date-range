@@ -9,9 +9,9 @@ class DateRange extends Component {
 
   constructor(props, context) {
     super(props, context);
-    
+
     const { format, linkedCalendars, theme, specialDays } = props;
-    
+
     const startDate = parseInput(props.startDate, format, 'startOf');
     const endDate   = parseInput(props.endDate, format, 'endOf');
 

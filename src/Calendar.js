@@ -37,7 +37,7 @@ class Calendar extends Component {
     super(props, context);
 
     const { format, range, theme, offset, firstDayOfWeek, locale, shownDate, specialDays } = props;
-    
+
     if(locale) {
       moment.locale(locale);
     }
@@ -161,7 +161,7 @@ class Calendar extends Component {
     const { styles }               = this;
 
     const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
-    
+
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
     const dateUnix                 = date.unix();
