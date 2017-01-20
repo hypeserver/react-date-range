@@ -151,7 +151,7 @@ class Calendar extends Component {
       let day = moment.weekdaysMin(i);
       day = lang ? LangDic[lang][day.toLowerCase()] : day;
       weekdays.push(
-        <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={day}>{day}</span>
+        <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
       );
     }
 
