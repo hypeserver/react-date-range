@@ -91,3 +91,4 @@ class MyComponent extends Component {
 * **minDate:** *(String, Moment.js object, Function)* default: none
 * **maxDate:** *(String, Moment.js object, Function)* default: none
 * **twoStepChange:** *(Boolean)* default: false
+* **rangedCalendars** *(Boolean)* default: false
