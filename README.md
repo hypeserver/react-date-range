@@ -90,3 +90,4 @@ class MyComponent extends Component {
 * **ranges:** *(Object)* default: none
 * **minDate:** *(String, Moment.js object, Function)* default: none
 * **maxDate:** *(String, Moment.js object, Function)* default: none
+* **twoStepChange:** *(Boolean)* default: false

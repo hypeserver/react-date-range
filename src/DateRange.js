@@ -41,19 +41,19 @@ class DateRange extends Component {
     }
   }
 
-  setRange(range, source) {
+  setRange(range, source, triggerChange) {
     const { onChange } = this.props
     range = this.orderRange(range);
 
     this.setState({ range });
 
-    onChange && onChange(range, source);
+    if(triggerChange && onChange) onChange(range, source);
   }
 
   handleSelect(date, source) {
     if (date.startDate && date.endDate) {
       this.step = 0;
-      return this.setRange(date, source);
+      return this.setRange(date, source, true);
     }
 
     const { startDate, endDate } = this.state.range;
@@ -76,7 +76,9 @@ class DateRange extends Component {
         break;
     }
 
-    this.setRange(range, source);
+    const triggerChange = !this.props.twoStepChange || this.step === 0 && this.props.twoStepChange;
+
+    this.setRange(range, source, triggerChange);
   }
 
   handleLinkChange(direction) {
@@ -164,7 +166,8 @@ DateRange.defaultProps = {
   calendars       : 2,
   onlyClasses     : false,
   offsetPositive  : false,
-  classNames      : {}
+  classNames      : {},
+  twoStepChange   : false,
 }
 
 DateRange.propTypes = {
@@ -178,6 +181,7 @@ DateRange.propTypes = {
   dateLimit       : PropTypes.func,
   ranges          : PropTypes.object,
   linkedCalendars : PropTypes.bool,
+  twoStepChange   : PropTypes.bool,
   theme           : PropTypes.object,
   onInit          : PropTypes.func,
   onChange        : PropTypes.func,
