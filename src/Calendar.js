@@ -207,7 +207,7 @@ class Calendar extends Component {
       days.push({ dayMoment, isPassive : true });
     }
 
-    const today = moment().endOf('day');
+    const today = moment().startOf('day');
     return days.map((data, index) => {
       const { dayMoment, isPassive } = data;
       const isSelected    = !range && (dayMoment.unix() === dateUnix);
