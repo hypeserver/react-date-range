@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
+import moment from 'moment'
 
 import { defaultClasses } from './styles.js';
 
@@ -8,12 +9,42 @@ class DayCell extends Component {
   constructor(props, context) {
     super(props, context);
 
+    var specialColors = []
+    var _this = this
+    if (this.props.specialDays) {
+      this.props.specialDays.forEach(function(specialDay) {
+        var dayInQuestion = _this.props.dayMoment.startOf('day')
+        var rangeStart = moment(new Date(specialDay.start)).startOf('day')
+        var rangeEnd = moment(new Date(specialDay.end)).startOf('day')
+        if (dayInQuestion.isSameOrAfter(rangeStart) && dayInQuestion.isSameOrBefore(rangeEnd)) {
+          specialColors.push(specialDay.color)
+        }
+      })
+    }
+
     this.state = {
-      hover     : false,
-      active    : false
+      hover         : false,
+      active        : false,
+      specialColors : specialColors
     }
 
     this.styles = this.props.theme;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    var nextSpecialColors = []
+    var _this = this
+    if (this.props.specialDays) {
+      this.props.specialDays.forEach(function(specialDay) {
+        var dayInQuestion = _this.props.dayMoment.startOf('day')
+        var rangeStart = moment(new Date(specialDay.start)).startOf('day')
+        var rangeEnd = moment(new Date(specialDay.end)).startOf('day')
+        if (dayInQuestion.isSameOrAfter(rangeStart) && dayInQuestion.isSameOrBefore(rangeEnd)) {
+          nextSpecialColors.push(specialDay.color)
+        }
+      })
+    }
+    this.setState({specialColors: nextSpecialColors})
   }
 
   handleMouseEvent(event) {
@@ -57,7 +88,12 @@ class DayCell extends Component {
 
     const hoverStyle    = hover ? styles['DayHover'] : {};
     const activeStyle   = active ? styles['DayActive'] : {};
-    const passiveStyle  = isPassive ? styles['DayPassive'] : {};
+    var passiveStyle
+    if (this.state.specialColors && this.state.specialColors > 0) {
+      passiveStyle  = { background: this.state.specialColors[0] };
+    } else {
+      passiveStyle  = isPassive ? styles['DayPassive'] : {};
+    }
     const startEdgeStyle = isStartEdge ? styles['DayStartEdge'] : {};
     const endEdgeStyle   = isEndEdge ? styles['DayEndEdge'] : {};
     const selectedStyle = isSelected ? styles['DaySelected'] : {};
@@ -139,7 +175,8 @@ DayCell.propTypes = {
     Day       : PropTypes.object.isRequired
   }).isRequired,
   onlyClasses : PropTypes.bool,
-  classNames  : PropTypes.object
+  classNames  : PropTypes.object,
+  specialDays : PropTypes.array
 }
 
 export default DayCell;
