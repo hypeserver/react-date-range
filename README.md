@@ -50,6 +50,7 @@ class MyComponent extends Component {
 * **onChange:** *(Function)* default: none
 * **minDate:** *(String, Moment.js object, Function)* default: none
 * **maxDate:** *(String, Moment.js object, Function)* default: none
+* **lang:** *(String, 'cn' or 'jp' for Chinese or Japanese)* default: none
 
 ### Range Picker
 ```javascript
@@ -92,3 +93,4 @@ class MyComponent extends Component {
 * **maxDate:** *(String, Moment.js object, Function)* default: none
 * **twoStepChange:** *(Boolean)* default: false
 * **rangedCalendars** *(Boolean)* default: false
+* **lang:** *(String, 'cn' or 'jp' for Chinese or Japanese)* default: none
