@@ -108,7 +108,7 @@ class DateRange extends Component {
   }
 
   render() {
-    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses, lang, disableDaysBeforeToday, offsetPositive, shownDate, showMonthArrow, rangedCalendars } = this.props;
+    const { ranges, format, linkedCalendars, style, calendars, firstDayOfWeek, minDate, maxDate, classNames, onlyClasses, specialDays, lang, disableDaysBeforeToday, offsetPositive, shownDate, showMonthArrow, rangedCalendars } = this.props;
     const { range, link } = this.state;
     const { styles } = this;
 
@@ -131,7 +131,7 @@ class DateRange extends Component {
             classNames={ classes } />
         )}
 
-        {()=>{
+        {(()=>{
           const _calendars = [];
           const _method = offsetPositive ? 'unshift' : 'push';
           for (var i = calendarsCount; i >= 0; i--) {
@@ -156,12 +156,13 @@ class DateRange extends Component {
                 minDate={ minDate }
                 maxDate={ maxDate }
 		            onlyClasses={ onlyClasses }
+		            specialDays={ specialDays }
                 classNames={ classes }
                 onChange={ this.handleSelect.bind(this) }  />
             );
           }
           return _calendars;
-        }()}
+        })()}
       </div>
     );
   }
@@ -175,6 +176,7 @@ DateRange.defaultProps = {
   onlyClasses     : false,
   offsetPositive  : false,
   classNames      : {},
+  specialDays     : [],
   rangedCalendars : false,
   twoStepChange   : false,
 }
@@ -195,6 +197,7 @@ DateRange.propTypes = {
   onInit          : PropTypes.func,
   onChange        : PropTypes.func,
   onlyClasses     : PropTypes.bool,
+  specialDays     : PropTypes.array,
   offsetPositive  : PropTypes.bool,
   classNames      : PropTypes.object,
   rangedCalendars : PropTypes.bool,
