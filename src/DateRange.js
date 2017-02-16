@@ -45,9 +45,7 @@ class DateRange extends Component {
     const { onChange } = this.props
     range = this.orderRange(range);
 
-    this.setState({ range });
-
-    if(triggerChange && onChange) onChange(range, source);
+    this.setState({ range }, () => triggerChange && onChange && onChange(range, source));
   }
 
   handleSelect(date, source) {
