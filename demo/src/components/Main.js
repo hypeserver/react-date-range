@@ -101,7 +101,7 @@ export default class Main extends Component {
           />
         </Section>
 
-        <Section title='Date Picker, chinese.'>
+        <Section title='Date Picker, Internationalization - Chinese.'>
           <div>
             <input
               type='text'
@@ -111,7 +111,7 @@ export default class Main extends Component {
           </div>
           <Calendar
             disableDaysBeforeToday={true}
-            lang={'jp'}
+            lang={'cn'}
             date={ now => { return now } }
             onInit={ this.handleChange.bind(this, 'datePicker') }
             onChange={ this.handleChange.bind(this, 'datePicker') }

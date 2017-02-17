@@ -115,6 +115,7 @@ class Calendar extends Component {
         {
           showMonthArrow ?
           <button
+            type="button"
             style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'left' }}
             className={classes.prevButton}
             onClick={this.changeMonth.bind(this, -1)}>
@@ -129,6 +130,7 @@ class Calendar extends Component {
         {
           showMonthArrow ?
           <button
+            type="button"
             style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'right' }}
             className={classes.nextButton}
             onClick={this.changeMonth.bind(this, +1)}>
@@ -149,7 +151,7 @@ class Calendar extends Component {
       let day = moment.weekdaysMin(i);
       day = lang ? LangDic[lang][day.toLowerCase()] : day;
       weekdays.push(
-        <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={day}>{day}</span>
+        <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
       );
     }
 
@@ -205,7 +207,7 @@ class Calendar extends Component {
       days.push({ dayMoment, isPassive : true });
     }
 
-    const today = moment().endOf('day');
+    const today = moment().startOf('day');
     return days.map((data, index) => {
       const { dayMoment, isPassive } = data;
       const isSelected    = !range && (dayMoment.unix() === dateUnix);
