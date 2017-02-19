@@ -110,7 +110,7 @@ class Calendar extends Component {
     const { onlyClasses, lang, showMonthArrow} = this.props;
 
     let monthLower = month.toLowerCase()
-    month = (lang && LangDic[lang] && LangDif[lang][monthLower]) ? LangDic[lang][monthlower] : month;
+    month = (lang && LangDic[lang] && LangDic[lang][monthLower]) ? LangDic[lang][monthLower] : month;
 
     return (
       <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>

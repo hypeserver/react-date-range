@@ -45,7 +45,7 @@ var config = {
   module                : {
     loaders             : [
       { test            : /\.js$/,
-        loaders         : ['react-hot', 'babel-loader'],
+        loaders         : ['babel-loader'],
         include         : path.join(__dirname, '/src')
       }, {
         test            : /\.s?css$/,
@@ -61,10 +61,6 @@ if (NODE_ENV === 'production') {
     sourcemap : false,
     mangle    : true
   }));
-} else if (NODE_ENV === 'development') {
-  config.entry.main.unshift('webpack/hot/only-dev-server');
-  config.entry.main.unshift('webpack-dev-server/client?http://0.0.0.0:3000');
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
 const compiler = webpack(config);
@@ -75,7 +71,6 @@ if (NODE_ENV === 'development') {
     noInfo: false,
     quiet: false,
     lazy: false,
-    hot: true,
     publicPath: '/',
     stats: {
       colors: true,
