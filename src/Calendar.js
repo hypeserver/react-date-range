@@ -60,8 +60,9 @@ class Calendar extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { range, offset } = nextProps;
+    const oldRange = this.props.oldRange;
 
-    if(range && range['endDate'] && !range['endDate'].isSame(range['startDate'], 'day')) {
+    if ((range && range['endDate'] && !range['endDate'].isSame(range['startDate'], "day")) || (oldRange && !oldRange["startDate"].isSame(range["startDate"]))) {
       this.setState({ shownDate : range['endDate'].clone().add(offset, 'months') })
     }
   }
@@ -164,7 +165,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday } = this.props;
+    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -219,6 +220,9 @@ class Calendar extends Component {
       const isEdge        = isStartEdge || isEndEdge;
       const isToday       = today.isSame(dayMoment);
       const isSunday      = dayMoment.day() === 0;
+      const isSpecialDay  = specialDays && specialDays.some((specialDay) => {
+        return dayMoment.endOf('day').isSame(specialDay.date.endOf('day'));
+      });
       const isOutsideMinMax = isOusideMinMax(dayMoment, minDate, maxDate, format);
 
       return (
@@ -231,6 +235,7 @@ class Calendar extends Component {
           isSelected={ isSelected || isEdge }
           isInRange={ isInRange }
           isSunday={ isSunday }
+          isSpecialDay={ isSpecialDay }
           isToday={ isToday }
           key={ index }
           isPassive = { isPassive || isOutsideMinMax }
@@ -263,7 +268,8 @@ Calendar.defaultProps = {
   showMonthArrow: true,
   disableDaysBeforeToday: false,
   onlyClasses : false,
-  classNames  : {}
+  classNames  : {},
+  specialDays : [],
 }
 
 Calendar.propTypes = {
@@ -289,6 +295,7 @@ Calendar.propTypes = {
   linkCB         : PropTypes.func,
   theme          : PropTypes.object,
   onlyClasses    : PropTypes.bool,
+  specialDays    : PropTypes.array,
   classNames     : PropTypes.object,
   locale         : PropTypes.string
 }
