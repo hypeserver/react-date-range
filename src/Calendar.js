@@ -108,7 +108,8 @@ class Calendar extends Component {
     const { styles }      = this;
     const { onlyClasses, lang, showMonthArrow} = this.props;
 
-    month = lang ? LangDic[lang][month.toLowerCase()] : month;
+    let monthLower = month.toLowerCase()
+    month = (lang && LangDic[lang] && LangDif[lang][monthLower]) ? LangDic[lang][monthlower] : month;
 
     return (
       <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
@@ -149,7 +150,8 @@ class Calendar extends Component {
 
     for (let i = dow; i < 7 + dow; i++) {
       let day = moment.weekdaysMin(i);
-      day = lang ? LangDic[lang][day.toLowerCase()] : day;
+      let dayLower = day.toLowerCase();
+      day = (lang && LangDic[lang] && LangDic[lang][dayLower]) ? LangDic[lang][dayLower] : day;
       weekdays.push(
         <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
       );
