@@ -165,7 +165,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
+    const { range, maxRange, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -224,6 +224,7 @@ class Calendar extends Component {
         return dayMoment.endOf('day').isSame(specialDay.date.endOf('day'));
       });
       const isOutsideMinMax = isOusideMinMax(dayMoment, minDate, maxDate, format);
+      const isDisabled = maxRange && dayMoment.startOf('day').isAfter(range.startDate.clone().add(maxRange));
 
       return (
         <DayCell
@@ -239,6 +240,7 @@ class Calendar extends Component {
           isToday={ isToday }
           key={ index }
           isPassive = { isPassive || isOutsideMinMax }
+          isDisabled = { isDisabled }
           onlyClasses = { onlyClasses }
           classNames = { classes }
         />
