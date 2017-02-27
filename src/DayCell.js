@@ -19,7 +19,9 @@ class DayCell extends Component {
   handleMouseEvent(event) {
     event.preventDefault();
 
-    if (this.props.isPassive) return null;
+    const { isPassive, isDisabled } = this.props;
+
+    if (isPassive || isDisabled) return null;
 
     const newState = {};
 
@@ -45,9 +47,11 @@ class DayCell extends Component {
   handleSelect(event) {
     event.preventDefault();
 
-    if (this.props.isPassive) return null;
+    const { isPassive, isDisabled, onSelect, dayMoment } = this.props;
 
-    this.props.onSelect(this.props.dayMoment);
+    if (isPassive || isDisabled) return null;
+
+    onSelect(dayMoment);
   }
 
   getStateStyles() {
@@ -79,7 +83,7 @@ class DayCell extends Component {
   }
 
   getClassNames(classes) {
-    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, isToday, isSunday } = this.props;
+    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, isToday, isSunday, isDisabled } = this.props;
 
     return classnames({
       [classes.day]       : true,
@@ -90,6 +94,7 @@ class DayCell extends Component {
       [classes.dayEndEdge] : isEndEdge,
       [classes.dayToday] : isToday,
       [classes.daySunday]: isSunday,
+      [classes.dayDisabled]: isDisabled,
     });
 
   }
