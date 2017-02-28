@@ -54,13 +54,13 @@ export default {
     'october':'octobre',
     'november':'novembre',
     'december':'décembre',
-    'su':'Dimanche',
-    'mo':'Lundi',
-    'tu':'Mardi',
-    'we':'Mercredi',
-    'th':'Jeudi',
-    'fr':'Vendredi',
-    'sa':'Samedi'
+    'su':'Di',
+    'mo':'Lu',
+    'tu':'Ma',
+    'we':'Me',
+    'th':'Je',
+    'fr':'Ve',
+    'sa':'Sa'
   },
   'it' : { // Italian
     'january':'gennaio',
@@ -75,13 +75,13 @@ export default {
     'october':'ottobre',
     'november':'novembre',
     'december':'dicembre',
-    'su':'Domenica',
-    'mo':'Lunedì',
-    'tu':'Mardi',
-    'we':'Mercoledì',
-    'th':'Giovedì',
-    'fr':'Venerdì',
-    'sa':'Sabato'
+    'su':'Do',
+    'mo':'Lu',
+    'tu':'Ma',
+    'we':'Me',
+    'th':'Gi',
+    'fr':'Ve',
+    'sa':'Sa'
   },
   'de' : { // German
     'january':'Januar',
@@ -96,12 +96,12 @@ export default {
     'october':'Oktober',
     'november':'November',
     'december':'Dezember',
-    'su':'Sonntag',
-    'mo':'Montag',
-    'tu':'Dienstag',
-    'we':'Mittwoch',
-    'th':'Donnerstag',
-    'fr':'Freitag',
-    'sa':'Samstag'
+    'su':'So',
+    'mo':'Mo',
+    'tu':'Di',
+    'we':'Mi',
+    'th':'Do',
+    'fr':'Fr',
+    'sa':'Sa'
   }
 }
