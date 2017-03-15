@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import parseInput from './utils/parseInput.js';
 import DayCell from './DayCell.js';
-import LangDic from './LangDic.js';
 import getTheme, { defaultClasses } from './styles.js';
 
 function checkRange(dayMoment, range) {
@@ -103,14 +102,11 @@ class Calendar extends Component {
   }
 
   renderMonthAndYear(classes) {
+    const { onlyClasses, lang, showMonthArrow } = this.props;
     const shownDate       = this.getShownDate();
-    let month           = moment.months(shownDate.month());
+    const month           = moment.localeData(lang).months()[shownDate.month()];
     const year            = shownDate.year();
     const { styles }      = this;
-    const { onlyClasses, lang, showMonthArrow} = this.props;
-
-    let monthLower = month.toLowerCase()
-    month = (lang && LangDic[lang] && LangDic[lang][monthLower]) ? LangDic[lang][monthLower] : month;
 
     return (
       <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
@@ -150,9 +146,7 @@ class Calendar extends Component {
     const { onlyClasses, lang } = this.props;
 
     for (let i = dow; i < 7 + dow; i++) {
-      let day = moment.weekdaysMin(i);
-      let dayLower = day.toLowerCase();
-      day = (lang && LangDic[lang] && LangDic[lang][dayLower]) ? LangDic[lang][dayLower] : day;
+      let day = moment.localeData(lang).weekdaysMin()[i];
       weekdays.push(
         <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
       );

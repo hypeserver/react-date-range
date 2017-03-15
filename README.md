@@ -93,4 +93,4 @@ class MyComponent extends Component {
 * **maxDate:** *(String, Moment.js object, Function)* default: none
 * **twoStepChange:** *(Boolean)* default: false
 * **rangedCalendars** *(Boolean)* default: false
-* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German)* default: none
+* **lang:** *(String, [Moment.js](https://momentjs.com) locale for i18n)* default: none
