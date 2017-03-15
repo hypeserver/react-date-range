@@ -140,19 +140,18 @@ class Calendar extends Component {
   }
 
   renderWeekdays(classes) {
-    const dow             = this.state.firstDayOfWeek;
-    const weekdays        = [];
-    const { styles }      = this;
+    const { styles } = this;
     const { onlyClasses, locale } = this.props;
+    const localeData = moment.localeData(locale);
+    const firstDayOfWeek = this.state.firstDayOfWeek;
 
-    for (let i = dow; i < 7 + dow; i++) {
-      let day = moment.localeData(locale).weekdaysMin()[i];
-      weekdays.push(
-        <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
-      );
-    }
+    let weekdays = [...localeData.weekdaysMin()];
+    const firstDays = weekdays.splice(0, firstDayOfWeek);
+    weekdays = weekdays.concat(firstDays);
 
-    return weekdays;
+    return weekdays.map(day =>
+      <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
+    );
   }
 
   renderDays(classes) {
