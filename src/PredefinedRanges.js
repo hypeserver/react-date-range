@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import moment from 'moment';
 import classnames from 'classnames';
 import parseInput from './utils/parseInput.js';
 import { defaultClasses } from './styles.js';

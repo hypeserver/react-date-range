@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import moment from 'moment';
 import parseInput from './utils/parseInput.js';
 import Calendar from './Calendar.js';
 import PredefinedRanges from './PredefinedRanges.js';
@@ -132,7 +131,7 @@ class DateRange extends Component {
         {(()=>{
           const _calendars = [];
           const _method = offsetPositive ? 'unshift' : 'push';
-          for (var i = calendarsCount; i >= 0; i--) {
+          for (let i = calendarsCount; i >= 0; i--) {
             const offset = offsetPositive ? i : -i;
             const realDiff = offsetPositive ? diff : -diff;
             const realOffset = (rangedCalendars && i == calendarsCount && diff != 0) ? realDiff : offset;

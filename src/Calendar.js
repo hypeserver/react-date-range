@@ -77,7 +77,6 @@ class Calendar extends Component {
 
   handleSelect(newDate) {
     const { link, onChange } = this.props;
-    const { date } = this.state;
 
     onChange && onChange(newDate, Calendar);
 
@@ -94,7 +93,6 @@ class Calendar extends Component {
       return linkCB(direction);
     }
 
-    const current  = this.state.shownDate.month();
     const newMonth = this.state.shownDate.clone().add(direction, 'months');
 
     this.setState({
@@ -109,7 +107,7 @@ class Calendar extends Component {
     const { styles }      = this;
     const { onlyClasses, lang, showMonthArrow} = this.props;
 
-    let monthLower = month.toLowerCase()
+    const monthLower = month.toLowerCase()
     month = (lang && LangDic[lang] && LangDic[lang][monthLower]) ? LangDic[lang][monthLower] : month;
 
     return (
@@ -151,7 +149,7 @@ class Calendar extends Component {
 
     for (let i = dow; i < 7 + dow; i++) {
       let day = moment.weekdaysMin(i);
-      let dayLower = day.toLowerCase();
+      const dayLower = day.toLowerCase();
       day = (lang && LangDic[lang] && LangDic[lang][dayLower]) ? LangDic[lang][dayLower] : day;
       weekdays.push(
         <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
@@ -176,11 +174,9 @@ class Calendar extends Component {
     const startOfMonth             = shownDate.clone().startOf('month').isoWeekday();
 
     const lastMonth                = shownDate.clone().month(monthNumber - 1);
-    const lastMonthNumber          = lastMonth.month();
     const lastMonthDayCount        = lastMonth.daysInMonth();
 
     const nextMonth                = shownDate.clone().month(monthNumber + 1);
-    const nextMonthNumber          = nextMonth.month();
 
     const days                     = [];
 
@@ -195,7 +191,7 @@ class Calendar extends Component {
     for (let i = 1; i <= dayCount; i++) {
       const dayMoment  = shownDate.clone().date(i);
       // set days before today to isPassive
-      var _today = moment()
+      const _today = moment();
       if (disableDaysBeforeToday && Number(dayMoment.diff(_today,"days")) <= -1) {
         days.push({ dayMoment ,isPassive:true});
       } else {
