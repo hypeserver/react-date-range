@@ -148,7 +148,7 @@ class Calendar extends Component {
     const firstDays = weekdays.splice(0, firstDayOfWeek);
     weekdays = weekdays.concat(firstDays);
 
-    return weekdays.map(day =>
+    return weekdays.map((day, i) =>
       <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
     );
   }
