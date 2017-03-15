@@ -82,7 +82,6 @@ class MyComponent extends Component {
 * **startDate:** *(String, Moment.js object, Function)* - default: today
 * **endDate:** *(String, Moment.js object, Function)* - default: today
 * **format:** *(String)* - default: DD/MM/YYY
-* **firstDayOfWeek** *(Number)* - default: [moment.localeData().firstDayOfWeek()](http://momentjs.com/docs/#/i18n/locale-data/)
 * **theme:** *(Object)* see [Demo's source](https://github.com/Adphorus/react-date-range/blob/master/demo/src/components/Main.js#L143)
 * **onInit:** *(Function)* default: none
 * **onChange:** *(Function)* default: none
@@ -93,4 +92,4 @@ class MyComponent extends Component {
 * **maxDate:** *(String, Moment.js object, Function)* default: none
 * **twoStepChange:** *(Boolean)* default: false
 * **rangedCalendars** *(Boolean)* default: false
-* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German)* default: none
+* **locale:** *(String, [Moment.js](https://momentjs.com) locale for translations)* default: 'en'

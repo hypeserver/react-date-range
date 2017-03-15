@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import parseInput from './utils/parseInput.js';
 import DayCell from './DayCell.js';
-import LangDic from './LangDic.js';
 import getTheme, { defaultClasses } from './styles.js';
 
 function checkRange(dayMoment, range) {
@@ -36,7 +35,7 @@ class Calendar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, range, theme, offset, firstDayOfWeek, locale, shownDate } = props;
+    const { format, range, theme, offset, locale, shownDate } = props;
 
     if(locale) {
       moment.locale(locale);
@@ -46,7 +45,6 @@ class Calendar extends Component {
     const state = {
       date,
       shownDate : (shownDate || range && range['endDate'] || date).clone().add(offset, 'months'),
-      firstDayOfWeek: (firstDayOfWeek || moment.localeData().firstDayOfWeek()),
     }
 
     this.state  = state;
@@ -103,14 +101,11 @@ class Calendar extends Component {
   }
 
   renderMonthAndYear(classes) {
+    const { onlyClasses, locale, showMonthArrow } = this.props;
     const shownDate       = this.getShownDate();
-    let month           = moment.months(shownDate.month());
+    const month           = moment.localeData(locale).months()[shownDate.month()];
     const year            = shownDate.year();
     const { styles }      = this;
-    const { onlyClasses, lang, showMonthArrow} = this.props;
-
-    let monthLower = month.toLowerCase()
-    month = (lang && LangDic[lang] && LangDic[lang][monthLower]) ? LangDic[lang][monthLower] : month;
 
     return (
       <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
@@ -144,31 +139,29 @@ class Calendar extends Component {
   }
 
   renderWeekdays(classes) {
-    const dow             = this.state.firstDayOfWeek;
-    const weekdays        = [];
-    const { styles }      = this;
-    const { onlyClasses, lang } = this.props;
+    const { styles } = this;
+    const { onlyClasses, locale } = this.props;
+    const localeData = moment.localeData(locale);
+    const firstDayOfWeek = localeData.firstDayOfWeek();
 
-    for (let i = dow; i < 7 + dow; i++) {
-      let day = moment.weekdaysMin(i);
-      let dayLower = day.toLowerCase();
-      day = (lang && LangDic[lang] && LangDic[lang][dayLower]) ? LangDic[lang][dayLower] : day;
-      weekdays.push(
-        <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
-      );
-    }
+    let weekdays = [...localeData.weekdaysMin()];
+    const firstDays = weekdays.splice(0, firstDayOfWeek);
+    weekdays = weekdays.concat(firstDays);
 
-    return weekdays;
+    return weekdays.map((day, i) =>
+      <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
+    );
   }
 
   renderDays(classes) {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
+    const { range, minDate, maxDate, locale, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
 
+    const firstDayOfWeek           = moment.localeData(locale).firstDayOfWeek();
     const shownDate                = this.getShownDate();
-    const { date, firstDayOfWeek } = this.state;
+    const { date }                 = this.state;
     const dateUnix                 = date.unix();
 
     const monthNumber              = shownDate.month();
@@ -275,7 +268,6 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   showMonthArrow : PropTypes.bool,
   disableDaysBeforeToday : PropTypes.bool,
-  lang           : PropTypes.string,
   sets           : PropTypes.string,
   range          : PropTypes.shape({
     startDate    : PropTypes.object,
@@ -285,7 +277,6 @@ Calendar.propTypes = {
   maxDate        : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   date           : PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.func]),
   format         : PropTypes.string.isRequired,
-  firstDayOfWeek : PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange       : PropTypes.func,
   onInit         : PropTypes.func,
   link           : PropTypes.oneOfType([PropTypes.shape({
