@@ -35,7 +35,7 @@ class Calendar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, range, theme, offset, firstDayOfWeek, locale, shownDate } = props;
+    const { format, range, theme, offset, locale, shownDate } = props;
 
     if(locale) {
       moment.locale(locale);
@@ -45,7 +45,6 @@ class Calendar extends Component {
     const state = {
       date,
       shownDate : (shownDate || range && range['endDate'] || date).clone().add(offset, 'months'),
-      firstDayOfWeek: (firstDayOfWeek || moment.localeData().firstDayOfWeek()),
     }
 
     this.state  = state;
@@ -143,7 +142,7 @@ class Calendar extends Component {
     const { styles } = this;
     const { onlyClasses, locale } = this.props;
     const localeData = moment.localeData(locale);
-    const firstDayOfWeek = this.state.firstDayOfWeek;
+    const firstDayOfWeek = localeData.firstDayOfWeek();
 
     let weekdays = [...localeData.weekdaysMin()];
     const firstDays = weekdays.splice(0, firstDayOfWeek);
@@ -158,10 +157,11 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
+    const { range, minDate, maxDate, locale, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
 
+    const firstDayOfWeek           = moment.localeData(locale).firstDayOfWeek();
     const shownDate                = this.getShownDate();
-    const { date, firstDayOfWeek } = this.state;
+    const { date }                 = this.state;
     const dateUnix                 = date.unix();
 
     const monthNumber              = shownDate.month();
@@ -277,7 +277,6 @@ Calendar.propTypes = {
   maxDate        : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   date           : PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.func]),
   format         : PropTypes.string.isRequired,
-  firstDayOfWeek : PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange       : PropTypes.func,
   onInit         : PropTypes.func,
   link           : PropTypes.oneOfType([PropTypes.shape({
