@@ -102,9 +102,9 @@ class Calendar extends Component {
   }
 
   renderMonthAndYear(classes) {
-    const { onlyClasses, lang, showMonthArrow } = this.props;
+    const { onlyClasses, locale, showMonthArrow } = this.props;
     const shownDate       = this.getShownDate();
-    const month           = moment.localeData(lang).months()[shownDate.month()];
+    const month           = moment.localeData(locale).months()[shownDate.month()];
     const year            = shownDate.year();
     const { styles }      = this;
 
@@ -143,10 +143,10 @@ class Calendar extends Component {
     const dow             = this.state.firstDayOfWeek;
     const weekdays        = [];
     const { styles }      = this;
-    const { onlyClasses, lang } = this.props;
+    const { onlyClasses, locale } = this.props;
 
     for (let i = dow; i < 7 + dow; i++) {
-      let day = moment.localeData(lang).weekdaysMin()[i];
+      let day = moment.localeData(locale).weekdaysMin()[i];
       weekdays.push(
         <span style={onlyClasses ? undefined : styles['Weekday']} className={classes.weekDay} key={i + day}>{day}</span>
       );
@@ -269,7 +269,6 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   showMonthArrow : PropTypes.bool,
   disableDaysBeforeToday : PropTypes.bool,
-  lang           : PropTypes.string,
   sets           : PropTypes.string,
   range          : PropTypes.shape({
     startDate    : PropTypes.object,
