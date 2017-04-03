@@ -103,5 +103,26 @@ export default {
     'th':'Donnerstag',
     'fr':'Freitag',
     'sa':'Samstag'
+  },
+ 'ko' : { // Korean
+    'january':'1월',
+    'february':'2월',
+    'march':'3월',
+    'april':'4월',
+    'may':'5월',
+    'june':'6월',
+    'july':'7월',
+    'august':'8월',
+    'september':'9월',
+    'october':'10월',
+    'november':'11월',
+    'december':'12월',
+    'su':'일',
+    'mo':'월',
+    'tu':'화',
+    'we':'수',
+    'th':'목',
+    'fr':'금',
+    'sa':'토'
   }
 }
