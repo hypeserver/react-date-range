@@ -94,3 +94,4 @@ class MyComponent extends Component {
 * **twoStepChange:** *(Boolean)* default: false
 * **rangedCalendars** *(Boolean)* default: false
 * **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German)* default: none
+* **specialDays:** *(Array [{date: Moment.js object}])* default: none
