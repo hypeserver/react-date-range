@@ -42,10 +42,10 @@ class Calendar extends Component {
       moment.locale(locale);
     }
 
-    const date = parseInput(props.date, format, 'startOf')
+    const date = props.date && parseInput(props.date, format, 'startOf');
     const state = {
       date,
-      shownDate : (shownDate || range && range['endDate'] || date).clone().add(offset, 'months'),
+      shownDate : (shownDate || range && range['endDate'] || date || moment().startOf('day')).clone().add(offset, 'months'),
       firstDayOfWeek: (firstDayOfWeek || moment.localeData().firstDayOfWeek()),
     }
 
@@ -77,7 +77,6 @@ class Calendar extends Component {
 
   handleSelect(newDate) {
     const { link, onChange } = this.props;
-    const { date } = this.state;
 
     onChange && onChange(newDate, Calendar);
 
@@ -169,7 +168,7 @@ class Calendar extends Component {
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
-    const dateUnix                 = date.unix();
+    const dateUnix                 = date && date.unix();
 
     const monthNumber              = shownDate.month();
     const dayCount                 = shownDate.daysInMonth();
