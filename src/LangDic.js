@@ -103,5 +103,26 @@ export default {
     'th':'Donnerstag',
     'fr':'Freitag',
     'sa':'Samstag'
-  }
+  },
+  'es' : { // Spanish
+    'january':'Enero',
+    'february':'Febrero',
+    'march':'Marzo',
+    'april':'Abril',
+    'may':'Mayo',
+    'june':'Junio',
+    'july':'Julio',
+    'august':'Agosto',
+    'september':'Septiembre',
+    'october':'Octubre',
+    'november':'Noviembre',
+    'december':'Diciembre',
+    'su':'Do',
+    'mo':'Lu',
+    'tu':'Ma',
+    'we':'Mi',
+    'th':'Ju',
+    'fr':'Vi',
+    'sa':'Sa'
+  },
 }
