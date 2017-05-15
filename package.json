@@ -1,6 +1,6 @@
 {
   "name": "react-date-range",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "A React component for choosing dates and date ranges.",
   "main": "lib/index.js",
   "scripts": {
@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.1",
-    "moment": "^2.10.6"
+    "moment": "^2.10.6",
+    "prop-types": "^15.5.10"
   },
   "peerDependencies": {
     "react": "^0.14 || ^15.0.0-rc || ^15.0"
