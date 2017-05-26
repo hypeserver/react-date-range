@@ -4,4 +4,4 @@ node_modules/
 dist/
 .idea
 *.orig
-
+lib/
