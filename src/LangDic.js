@@ -146,4 +146,25 @@ export default {
     'fr':'Пт',
     'sa':'Сб'
   },
+  'tr' : { // Turkish
+    'january':'Ocak',
+    'february':'Şubat',
+    'march':'Mart',
+    'april':'Nisan',
+    'may':'Mayıs',
+    'june':'Haziran',
+    'july':'Temmuz',
+    'august':'Ağustos',
+    'september':'Eylül',
+    'october':'Ekim',
+    'november':'Kasım',
+    'december':'Aralık',
+    'su':'Pz',
+    'mo':'Pts',
+    'tu':'Sa',
+    'we':'Ça',
+    'th':'Pe',
+    'fr':'Cu',
+    'sa':'Cts'
+  },
 }
