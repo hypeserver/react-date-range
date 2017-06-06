@@ -124,7 +124,7 @@ export default {
     'th':'목',
     'fr':'금',
     'sa':'토'
-  }
+  },
   'es' : { // Spanish
     'january':'Enero',
     'february':'Febrero',
@@ -188,4 +188,25 @@ export default {
     'fr':'Cu',
     'sa':'Cts'
   },
+  'fi': { // Finnish
+    'january':'Tammikuu',
+    'february':'Helmikuu',
+    'march': 'Maaliskuu',
+    'april':'Huhtikuu',
+    'may':'Toukokuu',
+    'june':'Kesäkuu',
+    'july':'Heinäkuu',
+    'august':'Elokuu',
+    'september':'Syyskuu',
+    'october':'Lokakuu',
+    'november':'Marraskuu',
+    'december':'Joulukuu',
+    'su':'Su',
+    'mo':'Ma',
+    'tu':'Ti',
+    'we':'Ke',
+    'th':'To',
+    'fr':'Pe',
+    'sa':'La'
+  }
 }

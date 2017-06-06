@@ -50,7 +50,7 @@ class MyComponent extends Component {
 * **onChange:** *(Function)* default: none
 * **minDate:** *(String, Moment.js object, Function)* default: none
 * **maxDate:** *(String, Moment.js object, Function)* default: none
-* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian)* default: none
+* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian, 'fi' - Finnish)* default: none
 
 ### Range Picker
 ```javascript
@@ -89,9 +89,18 @@ class MyComponent extends Component {
 * **linkedCalendars:** *(Boolean)* default: false
 * **calendars:** *(Number)* default: 2
 * **ranges:** *(Object)* default: none
+	* in the format:
+	```
+	{
+		"Name of range": {
+			startDate: (Moment.js object | String | Function),
+			endDate: (Moment.js object | String | Function)
+		}
+	}
+	```
 * **minDate:** *(String, Moment.js object, Function)* default: none
 * **maxDate:** *(String, Moment.js object, Function)* default: none
 * **twoStepChange:** *(Boolean)* default: false
 * **rangedCalendars** *(Boolean)* default: false
-* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian)* default: none
+* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian, 'fi' - Finnish)* default: none
 * **specialDays:** *(Array [{date: Moment.js object}])* default: none
