@@ -1,154 +1,250 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
+export const defaultClasses = {
+  calendar                   : 'rdr-Calendar',
+  dateRange                  : 'rdr-DateRange',
+  predefinedRanges           : 'rdr-PredefinedRanges',
+  predefinedRangesItem       : 'rdr-PredefinedRangesItem',
+  predefinedRangesItemActive : 'rdr-PredefinedRangesItemActive',
+  monthAndYear               : 'rdr-MonthAndYear',
+  weekDays                   : 'rdr-WeekDays',
+  weekDay                    : 'rdr-WeekDay',
+  days                       : 'rdr-Days',
+  day                        : 'rdr-Day',
+  dayActive                  : 'is-selected',
+  dayPassive                 : 'is-passive',
+  dayDisabled                 : 'is-disabled',
+  dayInRange                 : 'is-inRange',
+  monthAndYearWrapper        : 'rdr-MonthAndYear-innerWrapper',
+  prevButton                 : 'rdr-MonthAndYear-button prev',
+  nextButton                 : 'rdr-MonthAndYear-button next',
+  month                      : 'rdr-MonthAndYear-month',
+  monthAndYearDivider        : 'rdr-MonthAndYear-divider',
+  year                       : 'rdr-MonthAndYear-year',
+  daySunday                  : 'rdr-Sunday',
+  daySpecialDay               : 'rdr-SpecialDay',
+};
 
-import { defaultClasses } from './styles.js';
+const defaultTheme = {
+  DateRange : {
+    display       : 'block',
+    boxSizing     : 'border-box',
+    background    : '#ffffff',
+    borderRadius  : '2px',
+  },
 
-class DayCell extends Component {
+  Calendar        : {
+    width         : 280,
+    padding       : 10,
+    background    : '#ffffff',
+    borderRadius  : '2px',
+    display       : 'inline-block',
+    boxSizing     : 'border-box',
+    letterSpacing : 0,
+    color         : '#000000',
+  },
 
-  constructor(props, context) {
-    super(props, context);
+  Day : {
+    boxSizing     : 'border-box',
+    display       : 'inline-block',
+    letterSpacing : 'initial',
+    textAlign     : 'center',
+    fontSize      : 12,
+    cursor        : 'pointer',
+    transition    : 'transform .1s ease',
+  },
 
-    this.state = {
-      hover     : false,
-      active    : false
-    }
+  DayPassive : {
+    opacity       : 0.4,
+    cursor        : 'normal'
+  },
+  DayDisabled : {
+  },
 
-    this.styles = this.props.theme;
+  DayHover : {
+    background    : '#bdc3c7',
+  },
+
+  DayToday : {
+  },
+
+  DaySunday: {
+  },
+
+  DaySpecialDay: {
+  },
+
+  DayActive : {
+    background    : '#95a5a6',
+    color         : '#ffffff',
+    transform     : 'scale(0.9)',
+  },
+
+  DaySelected : {
+    background    : '#e74c3c',
+    color         : '#ffffff',
+  },
+
+  DayStartEdge : {
+  },
+
+  DayEndEdge : {
+  },
+
+  DayInRange : {
+    background    : '#34495e',
+    color         : '#95a5a6',
+  },
+
+  Weekday : {
+    boxSizing     : 'border-box',
+    display       : 'inline-block',
+    letterSpacing : 'initial',
+    textAlign     : 'center',
+    fontSize      : 12,
+    fontWeight    : '600',
+    marginBottom  : 1
+  },
+
+  MonthAndYear : {
+    textAlign     : 'center',
+    boxSizing     : 'border-box',
+    fontSize      : 12,
+    padding       : '10px 0',
+    height        : 38,
+    lineHeight    : '18px'
+  },
+
+  MonthButton : {
+    display       : 'block',
+    boxSizing     : 'border-box',
+    height        : 18,
+    width         : 18,
+    padding       : 0,
+    margin        : '0 10px',
+    border        : 'none',
+    background    : '#bdc3c7',
+    boxShadow     : 'none',
+    outline       : 'none',
+    borderRadius  : '50%',
+  },
+
+  MonthArrow : {
+    display       : 'block',
+    width         : 0,
+    height        : 0,
+    padding       : 0,
+    margin        : 0,
+    border        : '4px solid transparent',
+    textAlign     : 'center'
+  },
+
+  MonthArrowPrev : {
+    borderRightWidth : '6px',
+    borderRightColor : '#34495e',
+    marginLeft       : 1,
+  },
+
+  MonthArrowNext : {
+    borderLeftWidth  : '6px',
+    borderLeftColor  : '#34495e',
+    marginLeft       : 7,
+  },
+
+  PredefinedRanges : {
+    width         : 140,
+    display       : 'inline-block',
+    verticalAlign : 'top',
+  },
+
+  PredefinedRangesItem : {
+    display       : 'block',
+    fontSize      : 12,
+    color         : '#2c3e50',
+    padding       : '10px 14px',
+    borderRadius  : '2px',
+    background    : '#ecf0f1',
+    textDecoration: 'none',
+    marginBottom  : 6,
+  },
+
+  PredefinedRangesItemActive : {
+    color         : '#E74C3C',
+  },
+};
+
+export default (customTheme = {}) => {
+
+  let calendarWidth   = defaultTheme.Calendar.width;
+  let calendarPadding = defaultTheme.Calendar.padding;
+  let cellMargin      = defaultTheme.Day.margin || 0;
+
+  if ( customTheme.Calendar && customTheme.Calendar.hasOwnProperty('width') ) {
+    calendarWidth = customTheme.Calendar.width;
   }
 
-  handleMouseEvent(event) {
-    event.preventDefault();
-
-    if (this.props.isPassive) return null;
-
-    const newState = {};
-
-    switch (event.type) {
-      case 'mouseenter':
-        newState['hover'] = true;
-        break;
-
-      case 'mouseup':
-      case 'mouseleave':
-        newState['hover'] = false;
-        newState['active'] = false;
-        break;
-
-      case 'mousedown':
-        newState['active'] = true;
-        break;
-    }
-
-    this.setState(newState);
+  if ( customTheme.Calendar && customTheme.Calendar.hasOwnProperty('padding') ) {
+    calendarPadding = customTheme.Calendar.padding;
   }
 
-  handleSelect(event) {
-    event.preventDefault();
-
-    if (this.props.isPassive) return null;
-
-    this.props.onSelect(this.props.dayMoment);
+  if ( customTheme.Day && customTheme.Day.hasOwnProperty('margin') ) {
+      cellMargin = customTheme.Day.margin;
   }
 
-  getStateStyles() {
-    const { hover, active } = this.state;
-    const { isSelected, isInRange, isPassive, isDisabled, isStartEdge, isEndEdge, dayMoment, isToday, isSunday, isSpecialDay } = this.props;
-    const { styles } = this;
+  const cellSize = (( parseInt(calendarWidth) - parseInt(calendarPadding) * 2 ) / 7 ) - ( parseInt(cellMargin) * 2 );
 
-    const hoverStyle    = hover ? styles['DayHover'] : {};
-    const activeStyle   = active ? styles['DayActive'] : {};
-    const passiveStyle  = isPassive ? styles['DayPassive'] : {};
-    const disabledStyle  = isDisabled ? styles['DayDisabled'] : {};
-    const startEdgeStyle = isStartEdge ? styles['DayStartEdge'] : {};
-    const endEdgeStyle   = isEndEdge ? styles['DayEndEdge'] : {};
-    const selectedStyle = isSelected ? styles['DaySelected'] : {};
-    const inRangeStyle  = isInRange ? styles['DayInRange'] : {};
-    const todayStyle    = isToday ? styles['DayToday'] : {};
-    const sundayStyle = isSunday ? styles['DaySunday'] : {};
-    const specialDayStyle = isSpecialDay ? styles['DaySpecialDay'] : {};
+  return {
+    DateRange : { ...defaultTheme.DateRange, ...customTheme.DateRange },
 
-    return {
-      ...todayStyle,
-      ...sundayStyle,
-      ...specialDayStyle,
-      ...inRangeStyle,
-      ...hoverStyle,
-      ...passiveStyle,
-      ...disabledStyle,
-      ...activeStyle,
-      ...selectedStyle,
-      ...startEdgeStyle,
-      ...endEdgeStyle
-    };
-  }
+    Calendar : { ...defaultTheme.Calendar, ...customTheme.Calendar },
 
-  getClassNames(classes) {
-    const { isSelected, isInRange, isPassive, isDisabled, isStartEdge, isEndEdge, isToday, isSunday, isSpecialDay } = this.props;
+    Day : {
+      width         : cellSize,
+      height        : cellSize,
+      lineHeight    : cellSize + 'px',
+      ...defaultTheme.Day,
+      ...customTheme.Day,
+    },
 
-    return classnames({
-      [classes.day]       : true,
-      [classes.dayActive] : isSelected,
-      [classes.dayPassive]: isPassive,
-      [classes.dayDisabled]: isDisabled,
-      [classes.dayInRange]: isInRange,
-      [classes.dayStartEdge] : isStartEdge,
-      [classes.dayEndEdge] : isEndEdge,
-      [classes.dayToday] : isToday,
-      [classes.daySunday]: isSunday,
-      [classes.daySpecialDay]: isSpecialDay,
-    });
+    DayPassive : { ...defaultTheme.DayPassive, ...customTheme.DayPassive },
+    DayDisabled : { ...defaultTheme.DayDisabled, ...customTheme.DayDisabled },
 
-  }
+    DayHover : { ...defaultTheme.DayHover, ...customTheme.DayHover },
 
-  render() {
-    const { dayMoment, onlyClasses, classNames } = this.props;
+    DayToday : { ...defaultTheme.DayToday, ...customTheme.DayToday },
+    DaySunday: { ...defaultTheme.DaySunday, ...customTheme.DaySunday },
+    DaySpecialDay: { ...defaultTheme.DaySpecialDay, ...customTheme.DaySpecialDay },
 
-    const { styles } = this;
-    const stateStyle = this.getStateStyles();
-    const classes    = this.getClassNames(classNames);
-    const dayWrapperStyles = {
-      width: styles['Day'].width,
-      height: styles['Day'].height,
-      display: styles['Day'].display
-    };
+    DayActive : { ...defaultTheme.DayActive, ...customTheme.DayActive },
 
-    return (
-      <span
-        style={onlyClasses ? undefined : dayWrapperStyles}
-        onClick={ this.handleSelect.bind(this) }>
-        <span
-          onMouseEnter={ this.handleMouseEvent.bind(this) }
-          onMouseLeave={ this.handleMouseEvent.bind(this) }
-          onMouseDown={ this.handleMouseEvent.bind(this) }
-          onMouseUp={ this.handleMouseEvent.bind(this) }
-          className={ classes }
-          style={onlyClasses ? undefined : {...styles['Day'], ...stateStyle}}>
-          { dayMoment.date() }
-        </span>
-      </span>
-    );
+    DaySelected : { ...defaultTheme.DaySelected, ...customTheme.DaySelected },
+
+    DayStartEdge : { ...defaultTheme.DayStartEdge, ...customTheme.DayStartEdge },
+
+    DayEndEdge : { ...defaultTheme.DayEndEdge, ...customTheme.DayEndEdge },
+
+    DayInRange : { ...defaultTheme.DayInRange, ...customTheme.DayInRange },
+
+    Weekday : {
+      width         : cellSize,
+      height        : cellSize / 2,
+      lineHeight    : cellSize / 2 + 'px',
+      ...defaultTheme.Weekday,
+      ...customTheme.Weekday,
+    },
+
+    MonthAndYear : { ...defaultTheme.MonthAndYear, ...customTheme.MonthAndYear },
+
+    MonthButton : { ...defaultTheme.MonthButton, ...customTheme.MonthButton },
+
+    MonthArrow : { ...defaultTheme.MonthArrow, ...customTheme.MonthArrow },
+
+    MonthArrowPrev : { ...defaultTheme.MonthArrowPrev, ...customTheme.MonthArrowPrev },
+
+    MonthArrowNext : { ...defaultTheme.MonthArrowNext, ...customTheme.MonthArrowNext },
+
+    PredefinedRanges : { ...defaultTheme.PredefinedRanges, ...customTheme.PredefinedRanges },
+
+    PredefinedRangesItem : { ...defaultTheme.PredefinedRangesItem, ...customTheme.PredefinedRangesItem },
+
+    PredefinedRangesItemActive : { ...defaultTheme.PredefinedRangesItemActive, ...customTheme.PredefinedRangesItemActive }
   }
 }
-
-DayCell.defaultProps = {
-  theme       : { 'Day' : {} },
-  onlyClasses : false
-}
-
-DayCell.propTypes = {
-  dayMoment   : PropTypes.object.isRequired,
-  onSelect    : PropTypes.func,
-  isSelected  : PropTypes.bool,
-  isInRange   : PropTypes.bool,
-  isPassive   : PropTypes.bool,
-  isDisabled   : PropTypes.bool,
-  theme       : PropTypes.shape({
-    Day       : PropTypes.object.isRequired
-  }).isRequired,
-  onlyClasses : PropTypes.bool,
-  isSpecialDay: PropTypes.bool,
-  classNames  : PropTypes.object
-}
-
-export default DayCell;
