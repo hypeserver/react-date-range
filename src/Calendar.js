@@ -240,6 +240,7 @@ class Calendar extends Component {
           isToday={ isToday }
           key={ index }
           isPassive = { isPassive || isOutsideMinMax }
+          isDisabled = {isOutsideMinMax}
           onlyClasses = { onlyClasses }
           classNames = { classes }
         />
