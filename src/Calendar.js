@@ -166,7 +166,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
+    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays, showDatesFromOtherMonths = true } = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -189,7 +189,7 @@ class Calendar extends Component {
     const diff = (Math.abs(firstDayOfWeek - (startOfMonth + 7)) % 7);
     for (let i = diff-1; i >= 0; i--) {
       const dayMoment  = lastMonth.clone().date(lastMonthDayCount - i);
-      days.push({ dayMoment, isPassive : true });
+      days.push({ dayMoment, isPassive : true, isHidden: !showDatesFromOtherMonths });
     }
 
     // Current month's days
@@ -208,7 +208,7 @@ class Calendar extends Component {
     const remainingCells = 42 - days.length; // 42cells = 7days * 6rows
     for (let i = 1; i <= remainingCells; i++ ) {
       const dayMoment  = nextMonth.clone().date(i);
-      days.push({ dayMoment, isPassive : true });
+      days.push({ dayMoment, isPassive : true, isHidden: !showDatesFromOtherMonths });
     }
 
     const today = moment().startOf('day');
@@ -298,7 +298,8 @@ Calendar.propTypes = {
   onlyClasses    : PropTypes.bool,
   specialDays    : PropTypes.array,
   classNames     : PropTypes.object,
-  locale         : PropTypes.string
+  locale         : PropTypes.string,
+  showDatesFromOtherMonths: PropTypes.bool
 }
 
 export default Calendar;

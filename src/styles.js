@@ -11,6 +11,7 @@ export const defaultClasses = {
   day                        : 'rdr-Day',
   dayActive                  : 'is-selected',
   dayPassive                 : 'is-passive',
+  dayHidden                 : 'is-hidden',
   dayInRange                 : 'is-inRange',
   monthAndYearWrapper        : 'rdr-MonthAndYear-innerWrapper',
   prevButton                 : 'rdr-MonthAndYear-button prev',
@@ -54,6 +55,10 @@ const defaultTheme = {
   DayPassive : {
     opacity       : 0.4,
     cursor        : 'normal'
+  },
+  DayHidden : {
+    opacity: 0.0,
+    cursor: 'normal'
   },
 
   DayHover : {
@@ -202,6 +207,7 @@ export default (customTheme = {}) => {
     },
 
     DayPassive : { ...defaultTheme.DayPassive, ...customTheme.DayPassive },
+    DayHidden : { ...defaultTheme.DayHidden, ...customTheme.DayHidden },
 
     DayHover : { ...defaultTheme.DayHover, ...customTheme.DayHover },
 
