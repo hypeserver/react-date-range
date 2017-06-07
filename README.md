@@ -51,6 +51,7 @@ class MyComponent extends Component {
 * **minDate:** *(String, Moment.js object, Function)* default: none
 * **maxDate:** *(String, Moment.js object, Function)* default: none
 * **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian)* default: none
+* **showDatesFromOtherMonths:** *(Boolean)* - Shows or hides dates from next or previous months. default: true
 
 ### Range Picker
 ```javascript
@@ -95,3 +96,4 @@ class MyComponent extends Component {
 * **rangedCalendars** *(Boolean)* default: false
 * **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian)* default: none
 * **specialDays:** *(Array [{date: Moment.js object}])* default: none
+* **showDatesFromOtherMonths:** *(Boolean)* - Shows or hides dates from next or previous months. default: true

@@ -166,7 +166,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays, showDatesFromOtherMonths } = this.props;
+    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays, showDatesFromOtherMonths = true } = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
