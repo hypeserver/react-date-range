@@ -94,6 +94,9 @@ class MyComponent extends Component {
 	{
 		"Name of range": { // The object key will be displayed unless name is set.
 			name: (String), // optional string for name to display
+			lang: ({ en: String, fr: String, ...}), // optional translations for label. The one matching the `lang` prop of the DateRange
+																					  // will be used. If none is found, the `name` property will be used. If name is not
+																						// found, the object key will be used.
 			startDate: (Moment.js object | String | Function),
 			endDate: (Moment.js object | String | Function)
 		},

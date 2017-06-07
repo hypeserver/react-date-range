@@ -125,6 +125,7 @@ class DateRange extends Component {
             ranges={ ranges }
             range={ range }
             theme={ styles }
+            lang={ lang }
             onSelect={this.handleSelect.bind(this)}
             onlyClasses={ onlyClasses }
             classNames={ classes } />

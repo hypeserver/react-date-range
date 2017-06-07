@@ -25,14 +25,15 @@ class PredefinedRanges extends Component {
   }
 
   renderRangeList(classes) {
-    const { ranges, range, onlyClasses} = this.props;
+    const { ranges, range, onlyClasses, lang = ""} = this.props;
     const { styles } = this;
-    let displayName = "";
 
     return Object.keys(ranges).map(key => {
+      const currentRange = ranges[key];
+
       const active = (
-        parseInput(ranges[key].startDate, null, 'startOf').isSame(range.startDate) &&
-        parseInput(ranges[key].endDate, null, 'endOf').isSame(range.endDate)
+        parseInput(currentRange.startDate, null, 'startOf').isSame(range.startDate) &&
+        parseInput(currentRange.endDate, null, 'endOf').isSame(range.endDate)
       );
 
       const style = {
@@ -46,9 +47,19 @@ class PredefinedRanges extends Component {
       });
 
       // check for a name property to decide how to name the ranges.
-      displayName = key;
-      if (ranges[key].name !== undefined) {
-        displayName = ranges[key].name;
+      let displayName = "";
+      if (currentRange.name !== undefined) {
+        displayName = currentRange.name;
+      }
+      // if the currentRange has a lang property, check it for the current language.
+      if (lang && currentRange.lang !== undefined) {
+        if (currentRange.lang[lang]) {
+          displayName = currentRange.lang[lang];
+        }
+      }
+      // if nothing was set so far, use the key in the object.
+      if (displayName === "") {
+        displayName = key;
       }
 
       return (
@@ -90,7 +101,8 @@ PredefinedRanges.defaultProps = {
 PredefinedRanges.propTypes = {
   ranges      : PropTypes.object.isRequired,
   onlyClasses : PropTypes.bool,
-  classNames  : PropTypes.object
+  classNames  : PropTypes.object,
+  lang: PropTypes.string
 }
 
 export default PredefinedRanges;
