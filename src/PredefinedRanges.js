@@ -25,13 +25,22 @@ class PredefinedRanges extends Component {
   }
 
   renderRangeList(classes) {
-    const { ranges, range, onlyClasses } = this.props;
+    let rangeArray;
+    const { ranges, range, onlyClasses, lang = ""} = this.props;
     const { styles } = this;
 
-    return Object.keys(ranges).map(name => {
+    if (Array.isArray(ranges)) {
+      rangeArray = ranges;
+    } else {
+      // convert object into array where key is stored as a name property of each range.
+      rangeArray = Object.keys(ranges).map(key => Object.assign({name: key}, ranges[key]))
+    }
+
+    return rangeArray.map(currentRange => {
+
       const active = (
-        parseInput(ranges[name].startDate, null, 'startOf').isSame(range.startDate) &&
-        parseInput(ranges[name].endDate, null, 'endOf').isSame(range.endDate)
+        parseInput(currentRange.startDate, null, 'startOf').isSame(range.startDate) &&
+        parseInput(currentRange.endDate, null, 'endOf').isSame(range.endDate)
       );
 
       const style = {
@@ -44,15 +53,31 @@ class PredefinedRanges extends Component {
         [classes.predefinedRangesItemActive]: active
       });
 
+      // check for a name property to decide how to name the ranges.
+      let displayName = "";
+      if (currentRange.name !== undefined) {
+        displayName = currentRange.name;
+      }
+      // if the currentRange has a lang property, check it for the current language.
+      if (lang && currentRange.lang !== undefined) {
+        if (currentRange.lang[lang]) {
+          displayName = currentRange.lang[lang];
+        }
+      }
+      // if nothing was set so far, use the key in the object.
+      if (displayName === "") {
+        console.warn("You forgot to assign a `name` or valid `lang` property to one of your ranges.");
+      }
+
       return (
         <a
           href='#'
-          key={'range-' + name}
+          key={'range-' + displayName}
           className={predefinedRangeClass}
           style={ onlyClasses ? undefined : style }
-          onClick={this.handleSelect.bind(this, name)}
+          onClick={this.handleSelect.bind(this, displayName)}
         >
-          {name}
+          {displayName}
         </a>
       );
     }.bind(this));
@@ -81,9 +106,10 @@ PredefinedRanges.defaultProps = {
 };
 
 PredefinedRanges.propTypes = {
-  ranges      : PropTypes.object.isRequired,
+  ranges      : PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   onlyClasses : PropTypes.bool,
-  classNames  : PropTypes.object
+  classNames  : PropTypes.object,
+  lang: PropTypes.string
 }
 
 export default PredefinedRanges;
