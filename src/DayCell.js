@@ -53,12 +53,13 @@ class DayCell extends Component {
 
   getStateStyles() {
     const { hover, active } = this.state;
-    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, dayMoment, isToday, isSunday, isSpecialDay } = this.props;
+    const { isSelected, isInRange, isPassive, isDisabled, isStartEdge, isEndEdge, dayMoment, isToday, isSunday, isSpecialDay } = this.props;
     const { styles } = this;
 
     const hoverStyle    = hover ? styles['DayHover'] : {};
     const activeStyle   = active ? styles['DayActive'] : {};
     const passiveStyle  = isPassive ? styles['DayPassive'] : {};
+    const disabledStyle  = isDisabled ? styles['DayDisabled'] : {};
     const startEdgeStyle = isStartEdge ? styles['DayStartEdge'] : {};
     const endEdgeStyle   = isEndEdge ? styles['DayEndEdge'] : {};
     const selectedStyle = isSelected ? styles['DaySelected'] : {};
@@ -74,6 +75,7 @@ class DayCell extends Component {
       ...inRangeStyle,
       ...hoverStyle,
       ...passiveStyle,
+      ...disabledStyle,
       ...activeStyle,
       ...selectedStyle,
       ...startEdgeStyle,
@@ -82,12 +84,13 @@ class DayCell extends Component {
   }
 
   getClassNames(classes) {
-    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, isToday, isSunday, isSpecialDay } = this.props;
+    const { isSelected, isInRange, isPassive, isDisabled, isStartEdge, isEndEdge, isToday, isSunday, isSpecialDay } = this.props;
 
     return classnames({
       [classes.day]       : true,
       [classes.dayActive] : isSelected,
       [classes.dayPassive]: isPassive,
+      [classes.dayDisabled]: isDisabled,
       [classes.dayInRange]: isInRange,
       [classes.dayStartEdge] : isStartEdge,
       [classes.dayEndEdge] : isEndEdge,
@@ -139,6 +142,7 @@ DayCell.propTypes = {
   isSelected  : PropTypes.bool,
   isInRange   : PropTypes.bool,
   isPassive   : PropTypes.bool,
+  isDisabled   : PropTypes.bool,
   theme       : PropTypes.shape({
     Day       : PropTypes.object.isRequired
   }).isRequired,
