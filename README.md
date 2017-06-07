@@ -88,19 +88,28 @@ class MyComponent extends Component {
 * **onChange:** *(Function)* default: none
 * **linkedCalendars:** *(Boolean)* default: false
 * **calendars:** *(Number)* default: 2
-* **ranges:** *(Object)* default: none
-	* in the format:
+* **ranges:** *(Object, Array)* default: none
+	* Creates buttons within the component that select preset date ranges.
+	* Use one of the following formats...
 	```
 	{
-		"Name of range": { // The object key will be displayed unless name is set.
-			name: (String), // optional string for name to display
-			lang: ({ en: String, fr: String, ...}), // optional translations for label. The one matching the `lang` prop of the DateRange
-																					  // will be used. If none is found, the `name` property will be used. If name is not
-																						// found, the object key will be used.
-			startDate: (Moment.js object | String | Function),
-			endDate: (Moment.js object | String | Function)
-		},
-		"Another Range": { ... }
+		"Name of range": Range,
+		"Another Range": Range
+	}
+	or
+	[Range, Range, Range]
+	```
+	* Each range object should use this format:
+	```
+	{
+		startDate: (Moment.js object | String | Function),
+		endDate: (Moment.js object | String | Function),
+		name: (String), // optional string for name to display.
+		lang: ({ en: String, fr: String, ...}) // optional translations for label.  
+			// The one matching the `lang` prop of the DateRange
+			// will be used. If none is found, the `name` property will be used. If name is not
+			// found, the object key will be used. If you use an array for ranges, either `name`
+			// or `lang` must be set.
 	}
 	```
 * **minDate:** *(String, Moment.js object, Function)* default: none

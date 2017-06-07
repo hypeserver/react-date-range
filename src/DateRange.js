@@ -190,7 +190,7 @@ DateRange.propTypes = {
   minDate         : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   maxDate         : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   dateLimit       : PropTypes.func,
-  ranges          : PropTypes.object,
+  ranges          : PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   linkedCalendars : PropTypes.bool,
   twoStepChange   : PropTypes.bool,
   theme           : PropTypes.object,
