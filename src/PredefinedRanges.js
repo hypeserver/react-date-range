@@ -25,13 +25,14 @@ class PredefinedRanges extends Component {
   }
 
   renderRangeList(classes) {
-    const { ranges, range, onlyClasses } = this.props;
+    const { ranges, range, onlyClasses} = this.props;
     const { styles } = this;
+    let displayName = "";
 
-    return Object.keys(ranges).map(name => {
+    return Object.keys(ranges).map(key => {
       const active = (
-        parseInput(ranges[name].startDate, null, 'startOf').isSame(range.startDate) &&
-        parseInput(ranges[name].endDate, null, 'endOf').isSame(range.endDate)
+        parseInput(ranges[key].startDate, null, 'startOf').isSame(range.startDate) &&
+        parseInput(ranges[key].endDate, null, 'endOf').isSame(range.endDate)
       );
 
       const style = {
@@ -44,15 +45,21 @@ class PredefinedRanges extends Component {
         [classes.predefinedRangesItemActive]: active
       });
 
+      // check for a name property to decide how to name the ranges.
+      displayName = key;
+      if (ranges[key].name !== undefined) {
+        displayName = ranges[key].name;
+      }
+
       return (
         <a
           href='#'
-          key={'range-' + name}
+          key={'range-' + key}
           className={predefinedRangeClass}
           style={ onlyClasses ? undefined : style }
-          onClick={this.handleSelect.bind(this, name)}
+          onClick={this.handleSelect.bind(this, key)}
         >
-          {name}
+          {displayName}
         </a>
       );
     }.bind(this));
