@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import classnames from 'classnames';
 import parseInput from './utils/parseInput.js';
 import { defaultClasses } from './styles.js';
@@ -84,6 +83,6 @@ PredefinedRanges.propTypes = {
   ranges      : PropTypes.object.isRequired,
   onlyClasses : PropTypes.bool,
   classNames  : PropTypes.object
-}
+};
 
 export default PredefinedRanges;

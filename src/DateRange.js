@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import parseInput from './utils/parseInput.js';
 import Calendar from './Calendar.js';
 import PredefinedRanges from './PredefinedRanges.js';
@@ -19,7 +18,7 @@ class DateRange extends Component {
     this.state = {
       range     : { startDate, endDate },
       link      : linkedCalendars && endDate,
-    }
+    };
 
     this.step = 0;
     this.styles = getTheme(theme);
@@ -43,7 +42,7 @@ class DateRange extends Component {
   }
 
   setRange(range, source, triggerChange) {
-    const { onChange } = this.props
+    const { onChange } = this.props;
     range = this.orderRange(range);
 
     this.setState({ range }, () => triggerChange && onChange && onChange(range, source));
@@ -133,10 +132,10 @@ class DateRange extends Component {
         {(()=>{
           const _calendars = [];
           const _method = offsetPositive ? 'unshift' : 'push';
-          for (var i = calendarsCount; i >= 0; i--) {
+          for (let i = calendarsCount; i >= 0; i--) {
             const offset = offsetPositive ? i : -i;
             const realDiff = offsetPositive ? diff : -diff;
-            const realOffset = (rangedCalendars && i == calendarsCount && diff != 0) ? realDiff : offset;
+            const realOffset = (rangedCalendars && i === calendarsCount && diff !== 0) ? realDiff : offset;
 
             _calendars[_method](
               <Calendar
@@ -177,8 +176,8 @@ DateRange.defaultProps = {
   classNames      : {},
   specialDays     : [],
   rangedCalendars : false,
-  twoStepChange   : false,
-}
+  twoStepChange   : false
+};
 
 DateRange.propTypes = {
   format          : PropTypes.string,
@@ -199,7 +198,7 @@ DateRange.propTypes = {
   specialDays     : PropTypes.array,
   offsetPositive  : PropTypes.bool,
   classNames      : PropTypes.object,
-  rangedCalendars : PropTypes.bool,
-}
+  rangedCalendars : PropTypes.bool
+};
 
 export default DateRange;
