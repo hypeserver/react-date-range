@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { defaultClasses } from './styles.js';
-
 class DayCell extends Component {
 
   constructor(props, context) {
@@ -12,7 +10,7 @@ class DayCell extends Component {
     this.state = {
       hover     : false,
       active    : false
-    }
+    };
 
     this.styles = this.props.theme;
   }
@@ -53,7 +51,7 @@ class DayCell extends Component {
 
   getStateStyles() {
     const { hover, active } = this.state;
-    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, dayMoment, isToday, isSunday, isSpecialDay } = this.props;
+    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, isToday, isSunday, isSpecialDay } = this.props;
     const { styles } = this;
 
     const hoverStyle    = hover ? styles['DayHover'] : {};
@@ -131,7 +129,7 @@ class DayCell extends Component {
 DayCell.defaultProps = {
   theme       : { 'Day' : {} },
   onlyClasses : false
-}
+};
 
 DayCell.propTypes = {
   dayMoment   : PropTypes.object.isRequired,
@@ -145,6 +143,6 @@ DayCell.propTypes = {
   onlyClasses : PropTypes.bool,
   isSpecialDay: PropTypes.bool,
   classNames  : PropTypes.object
-}
+};
 
 export default DayCell;

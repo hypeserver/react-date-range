@@ -43,14 +43,13 @@ class Calendar extends Component {
       moment.locale(locale);
     }
 
-    const date = parseInput(props.date, format, 'startOf')
-    const state = {
-      date,
-      shownDate : (shownDate || range && range['endDate'] || date).clone().add(offset, 'months'),
-      firstDayOfWeek: (firstDayOfWeek || moment.localeData().firstDayOfWeek()),
-    }
+    const date = parseInput(props.date, format, 'startOf');
 
-    this.state  = state;
+    this.state  = {
+    	date,
+		shownDate : (shownDate || range && range['endDate'] || date).clone().add(offset, 'months'),
+		firstDayOfWeek: (firstDayOfWeek || moment.localeData().firstDayOfWeek()),
+	};
     this.styles = getTheme(theme);
   }
 
@@ -71,14 +70,11 @@ class Calendar extends Component {
   getShownDate() {
     const { link, offset } = this.props;
 
-    const shownDate = (link) ? link.clone().add(offset, 'months') : this.state.shownDate;
-
-    return shownDate;
+    return (link) ? link.clone().add(offset, 'months') : this.state.shownDate;
   }
 
   handleSelect(newDate) {
     const { link, onChange } = this.props;
-    const { date } = this.state;
 
     onChange && onChange(newDate, Calendar);
 
@@ -95,7 +91,6 @@ class Calendar extends Component {
       return linkCB(direction);
     }
 
-    const current  = this.state.shownDate.month();
     const newMonth = this.state.shownDate.clone().add(direction, 'months');
 
     this.setState({
@@ -110,7 +105,7 @@ class Calendar extends Component {
     const { styles }      = this;
     const { onlyClasses, lang, showMonthArrow} = this.props;
 
-    let monthLower = month.toLowerCase()
+    let monthLower = month.toLowerCase();
     month = (lang && LangDic[lang] && LangDic[lang][monthLower]) ? LangDic[lang][monthLower] : month;
 
     return (
@@ -122,7 +117,7 @@ class Calendar extends Component {
             style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'left' }}
             className={classes.prevButton}
             onClick={this.changeMonth.bind(this, -1)}>
-            <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
+            <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}/>
           </button> : null
         }
         <span>
@@ -137,11 +132,11 @@ class Calendar extends Component {
             style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'right' }}
             className={classes.nextButton}
             onClick={this.changeMonth.bind(this, +1)}>
-            <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
+            <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}/>
           </button> : null
         }
       </div>
-    )
+    );
   }
 
   renderWeekdays(classes) {
@@ -177,11 +172,9 @@ class Calendar extends Component {
     const startOfMonth             = shownDate.clone().startOf('month').isoWeekday();
 
     const lastMonth                = shownDate.clone().month(monthNumber - 1);
-    const lastMonthNumber          = lastMonth.month();
     const lastMonthDayCount        = lastMonth.daysInMonth();
 
     const nextMonth                = shownDate.clone().month(monthNumber + 1);
-    const nextMonthNumber          = nextMonth.month();
 
     const days                     = [];
 
@@ -196,7 +189,7 @@ class Calendar extends Component {
     for (let i = 1; i <= dayCount; i++) {
       const dayMoment  = shownDate.clone().date(i);
       // set days before today to isPassive
-      var _today = moment()
+      let _today = moment();
       if (disableDaysBeforeToday && Number(dayMoment.diff(_today,"days")) <= -1) {
         days.push({ dayMoment ,isPassive:true});
       } else {
@@ -259,7 +252,7 @@ class Calendar extends Component {
         <div className={classes.weekDays}>{ this.renderWeekdays(classes) }</div>
         <div className={classes.days}>{ this.renderDays(classes) }</div>
       </div>
-    )
+    );
   }
 }
 
@@ -270,8 +263,8 @@ Calendar.defaultProps = {
   disableDaysBeforeToday: false,
   onlyClasses : false,
   classNames  : {},
-  specialDays : [],
-}
+  specialDays : []
+};
 
 Calendar.propTypes = {
   showMonthArrow : PropTypes.bool,
@@ -299,6 +292,6 @@ Calendar.propTypes = {
   specialDays    : PropTypes.array,
   classNames     : PropTypes.object,
   locale         : PropTypes.string
-}
+};
 
 export default Calendar;
