@@ -4,6 +4,6 @@ node_modules/
 dist/
 .idea
 *.orig
-
+lib/
 # No yarn.lock for libs
 yarn.lock

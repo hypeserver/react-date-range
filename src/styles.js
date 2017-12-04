@@ -1,22 +1,25 @@
 export const defaultClasses = {
-  calendar             : 'rdr-Calendar',
-  dateRange            : 'rdr-DateRange',
-  predefinedRanges     : 'rdr-PredefinedRanges',
-  predefinedRangesItem : 'rdr-PredefinedRangesItem',
-  monthAndYear         : 'rdr-MonthAndYear',
-  weekDays             : 'rdr-WeekDays',
-  weekDay              : 'rdr-WeekDay',
-  days                 : 'rdr-Days',
-  day                  : 'rdr-Day',
-  dayActive            : 'is-selected',
-  dayPassive           : 'is-passive',
-  dayInRange           : 'is-inRange',
-  monthAndYearWrapper  : 'rdr-MonthAndYear-innerWrapper',
-  prevButton           : 'rdr-MonthAndYear-button prev',
-  nextButton           : 'rdr-MonthAndYear-button next',
-  month                : 'rdr-MonthAndYear-month',
-  monthAndYearDivider  : 'rdr-MonthAndYear-divider',
-  year                 : 'rdr-MonthAndYear-year'
+  calendar                   : 'rdr-Calendar',
+  dateRange                  : 'rdr-DateRange',
+  predefinedRanges           : 'rdr-PredefinedRanges',
+  predefinedRangesItem       : 'rdr-PredefinedRangesItem',
+  predefinedRangesItemActive : 'rdr-PredefinedRangesItemActive',
+  monthAndYear               : 'rdr-MonthAndYear',
+  weekDays                   : 'rdr-WeekDays',
+  weekDay                    : 'rdr-WeekDay',
+  days                       : 'rdr-Days',
+  day                        : 'rdr-Day',
+  dayActive                  : 'is-selected',
+  dayPassive                 : 'is-passive',
+  dayInRange                 : 'is-inRange',
+  monthAndYearWrapper        : 'rdr-MonthAndYear-innerWrapper',
+  prevButton                 : 'rdr-MonthAndYear-button prev',
+  nextButton                 : 'rdr-MonthAndYear-button next',
+  month                      : 'rdr-MonthAndYear-month',
+  monthAndYearDivider        : 'rdr-MonthAndYear-divider',
+  year                       : 'rdr-MonthAndYear-year',
+  daySunday                  : 'rdr-Sunday',
+  daySpecialDay               : 'rdr-SpecialDay',
 };
 
 const defaultTheme = {
@@ -58,6 +61,12 @@ const defaultTheme = {
   },
 
   DayToday : {
+  },
+
+  DaySunday: {
+  },
+
+  DaySpecialDay: {
   },
 
   DayActive : {
@@ -197,6 +206,8 @@ export default (customTheme = {}) => {
     DayHover : { ...defaultTheme.DayHover, ...customTheme.DayHover },
 
     DayToday : { ...defaultTheme.DayToday, ...customTheme.DayToday },
+    DaySunday: { ...defaultTheme.DaySunday, ...customTheme.DaySunday },
+    DaySpecialDay: { ...defaultTheme.DaySpecialDay, ...customTheme.DaySpecialDay },
 
     DayActive : { ...defaultTheme.DayActive, ...customTheme.DayActive },
 

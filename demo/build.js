@@ -4,7 +4,7 @@ var UglifyJsPlugin      = webpack.optimize.UglifyJsPlugin;
 var path                = require('path');
 var DefinePlugin        = webpack.DefinePlugin;
 var WebpackDevServer    = require("webpack-dev-server");
-var NODE_ENV            = process.env.NODE_ENV || 'production';
+var NODE_ENV            = process.env.NODE_ENV.trim() || 'production';
 
 var config = {
   entry                 : {
@@ -34,7 +34,7 @@ var config = {
   ],
 
   resolve               : {
-    extensions          : ['', '.js', '.css'],
+    extensions          : ['', '.js', '.css', '.scss'],
     alias               : {
       'root'            : path.join(__dirname, '/src'),
       'components'      : path.join(__dirname, '/src/components'),
@@ -45,11 +45,11 @@ var config = {
   module                : {
     loaders             : [
       { test            : /\.js$/,
-        loaders         : ['react-hot', 'babel-loader'],
+        loaders         : ['babel-loader'],
         include         : path.join(__dirname, '/src')
       }, {
-        test            : /\.css$/,
-        loaders         : ['style', 'css']
+        test            : /\.s?css$/,
+        loader        : 'style!css!sass'
       }
     ]
   }
@@ -61,10 +61,6 @@ if (NODE_ENV === 'production') {
     sourcemap : false,
     mangle    : true
   }));
-} else if (NODE_ENV === 'development') {
-  config.entry.main.unshift('webpack/hot/only-dev-server');
-  config.entry.main.unshift('webpack-dev-server/client?http://0.0.0.0:3000');
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
 const compiler = webpack(config);
@@ -75,7 +71,6 @@ if (NODE_ENV === 'development') {
     noInfo: false,
     quiet: false,
     lazy: false,
-    hot: true,
     publicPath: '/',
     stats: {
       colors: true,
