@@ -186,7 +186,7 @@ export default (customTheme = {}) => {
       cellMargin = customTheme.Day.margin;
   }
 
-  const cellSize = (( parseInt(calendarWidth) - parseInt(calendarPadding) * 2 ) / 7 ) - ( parseInt(cellMargin) * 2 );
+  const cellSize = Math.floor((( parseInt(calendarWidth) - parseInt(calendarPadding) * 2 ) / 7 ) - ( parseInt(cellMargin) * 2 ));
 
   return {
     DateRange : { ...defaultTheme.DateRange, ...customTheme.DateRange },
