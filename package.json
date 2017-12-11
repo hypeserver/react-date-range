@@ -31,7 +31,7 @@
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {
-    "react": "^0.14 || ^15.0.0-rc || ^15.0"
+    "react": "^0.14 || ^15.0.0-rc || ^15.0 || ^16.0"
   },
   "devDependencies": {
     "babel": "^5.8.23"
