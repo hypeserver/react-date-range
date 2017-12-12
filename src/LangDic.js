@@ -208,5 +208,5 @@ export default {
     'th':'Qui',
     'fr':'Sex',
     'sa':'Sab'
-  },
+  }
 }
