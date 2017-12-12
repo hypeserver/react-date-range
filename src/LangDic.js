@@ -124,7 +124,7 @@ export default {
     'th':'목',
     'fr':'금',
     'sa':'토'
-  }
+  },
   'es' : { // Spanish
     'january':'Enero',
     'february':'Febrero',
@@ -187,5 +187,5 @@ export default {
     'th':'Pe',
     'fr':'Cu',
     'sa':'Cts'
-  },
+  }
 }
