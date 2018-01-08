@@ -104,7 +104,7 @@ export default {
     'fr':'Freitag',
     'sa':'Samstag'
   },
- 'ko' : { // Korean
+  'ko' : { // Korean
     'january':'1월',
     'february':'2월',
     'march':'3월',
@@ -124,7 +124,7 @@ export default {
     'th':'목',
     'fr':'금',
     'sa':'토'
-  }
+  },
   'es' : { // Spanish
     'january':'Enero',
     'february':'Febrero',
@@ -187,5 +187,26 @@ export default {
     'th':'Pe',
     'fr':'Cu',
     'sa':'Cts'
+  },
+  'pt-br' : { // Português Brazil
+    'january':'Janeiro',
+    'february':'Fevereiro',
+    'march':'Março',
+    'april':'Abril',
+    'may':'Maio',
+    'june':'Junho',
+    'july':'Julho',
+    'august':'Agosto',
+    'september':'Setembro',
+    'october':'Outubro',
+    'november':'Novembro',
+    'december':'Dezembro',
+    'su':'Dom',
+    'mo':'Seg',
+    'tu':'Ter',
+    'we':'Qua',
+    'th':'Qui',
+    'fr':'Sex',
+    'sa':'Sab'
   },
 }
