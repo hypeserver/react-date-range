@@ -15,8 +15,8 @@
   "dependencies": {
     "moment": "^2.17.0",
     "normalize.css": "^3.0.3",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "babel-core": "^5.8.25",

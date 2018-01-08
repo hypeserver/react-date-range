@@ -14,8 +14,10 @@ export default class Main extends Component {
 
     this.state = {
       'rangePicker' : {},
+      'rangePickerMobile' : {},
       'linked' : {},
       'datePicker' : null,
+      'datePickerInternational': null,
       'firstDayOfWeek' : null,
       'predefined' : {},
     }
@@ -28,7 +30,16 @@ export default class Main extends Component {
   }
 
   render() {
-    const { rangePicker, linked, datePicker, firstDayOfWeek, predefined} = this.state;
+    const {
+        rangePicker,
+        rangePickerMobile,
+        linked,
+        datePicker,
+        firstDayOfWeek,
+        predefined,
+        datePickerInternational
+    } = this.state;
+
     const format = 'dddd, D MMMM YYYY';
 
     return (
@@ -52,7 +63,7 @@ export default class Main extends Component {
 
           <DateRange
             startDate='10/11/2015'
-            endDate={ now => {
+            endDate={ () => {
               return '11/12/2015';
             }}
             onInit={ this.handleChange.bind(this, 'rangePicker') }
@@ -74,10 +85,10 @@ export default class Main extends Component {
             />
           </div>
           <DateRange
-            startDate={ now => {
+            startDate={ () => {
               return '9/10/2015';
             }}
-            endDate={ now => {
+            endDate={ () => {
               return '13/11/2015';
             }}
             linkedCalendars={ true }
@@ -106,15 +117,15 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ datePicker && datePicker.format(format).toString() }
+              value={ datePickerInternational && datePickerInternational.format(format).toString() }
             />
           </div>
           <Calendar
             disableDaysBeforeToday={true}
             lang={'cn'}
-            date={ now => { return now } }
-            onInit={ this.handleChange.bind(this, 'datePicker') }
-            onChange={ this.handleChange.bind(this, 'datePicker') }
+            date={ now => now }
+            onInit={ this.handleChange.bind(this, 'datePickerInternational') }
+            onChange={ this.handleChange.bind(this, 'datePickerInternational') }
           />
         </Section>
 
@@ -217,12 +228,12 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ rangePicker['startDate'] && rangePicker['startDate'].format(format).toString() }
+              value={ rangePickerMobile['startDate'] && rangePickerMobile['startDate'].format(format).toString() }
             />
             <input
               type='text'
               readOnly
-              value={ rangePicker['endDate'] && rangePicker['endDate'].format(format).toString() }
+              value={ rangePickerMobile['endDate'] && rangePickerMobile['endDate'].format(format).toString() }
             />
           </div>
           <div className={styles['Mobile-Container']}>
@@ -234,8 +245,8 @@ export default class Main extends Component {
               disableDaysBeforeToday={true}
               showMonthArrow={false}
               calendars={4}
-              onInit={ this.handleChange.bind(this, 'rangePicker') }
-              onChange={ this.handleChange.bind(this, 'rangePicker') }
+              onInit={ this.handleChange.bind(this, 'rangePickerMobile') }
+              onChange={ this.handleChange.bind(this, 'rangePickerMobile') }
             />
           </div>
         </Section>
