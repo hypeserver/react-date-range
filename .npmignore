@@ -5,3 +5,7 @@ node_modules/
 .git/
 src/
 demo/
+webpack.config.js
+yarn.lock.js
+.postcssconfig
+.babelrc

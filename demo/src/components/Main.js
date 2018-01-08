@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { defaultRanges, Calendar, DateRange } from '../../../lib';
-import Section from 'components/Section';
+import { defaultRanges, Calendar, DateRange } from '../../../src';
+import Section from './Section';
 
 import 'normalize.css';
-import 'styles/global'
-import styles from 'styles/main';
-import '../../../src/styles.scss'
+import '../styles/global.css'
+import styles from '../styles/main.css';
 
 export default class Main extends Component {
   constructor(props, context) {
@@ -52,12 +51,12 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ rangePicker['startDate'] && rangePicker['startDate'].format(format).toString() }
+              value={ rangePicker['startDate'] && rangePicker['startDate'].format(format).toString() || ''}
             />
             <input
               type='text'
               readOnly
-              value={ rangePicker['endDate'] && rangePicker['endDate'].format(format).toString() }
+              value={ rangePicker['endDate'] && rangePicker['endDate'].format(format).toString() || ''}
             />
           </div>
 
@@ -76,12 +75,12 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ linked['startDate'] && linked['startDate'].format(format).toString() }
+              value={ linked['startDate'] && linked['startDate'].format(format).toString() || ''}
             />
             <input
               type='text'
               readOnly
-              value={ linked['endDate'] && linked['endDate'].format(format).toString() }
+              value={ linked['endDate'] && linked['endDate'].format(format).toString() || ''}
             />
           </div>
           <DateRange
@@ -102,7 +101,7 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ datePicker && datePicker.format(format).toString() }
+              value={ datePicker && datePicker.format(format).toString() || ''}
             />
           </div>
           <Calendar
@@ -117,7 +116,7 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ datePickerInternational && datePickerInternational.format(format).toString() }
+              value={ datePickerInternational && datePickerInternational.format(format).toString() || '' }
             />
           </div>
           <Calendar
@@ -134,7 +133,7 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ firstDayOfWeek && firstDayOfWeek.format(format).toString() }
+              value={ firstDayOfWeek && firstDayOfWeek.format(format).toString() || '' }
             />
           </div>
           <Calendar
@@ -150,12 +149,12 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ predefined['startDate'] && predefined['startDate'].format(format).toString() }
+              value={ predefined['startDate'] && predefined['startDate'].format(format).toString() || '' }
             />
             <input
               type='text'
               readOnly
-              value={ predefined['endDate'] && predefined['endDate'].format(format).toString() }
+              value={ predefined['endDate'] && predefined['endDate'].format(format).toString() || '' }
             />
           </div>
           <DateRange
@@ -228,12 +227,12 @@ export default class Main extends Component {
             <input
               type='text'
               readOnly
-              value={ rangePickerMobile['startDate'] && rangePickerMobile['startDate'].format(format).toString() }
+              value={ rangePickerMobile['startDate'] && rangePickerMobile['startDate'].format(format).toString() || '' }
             />
             <input
               type='text'
               readOnly
-              value={ rangePickerMobile['endDate'] && rangePickerMobile['endDate'].format(format).toString() }
+              value={ rangePickerMobile['endDate'] && rangePickerMobile['endDate'].format(format).toString() || '' }
             />
           </div>
           <div className={styles['Mobile-Container']}>

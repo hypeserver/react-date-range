@@ -1,5 +1,7 @@
-import DateRange from './DateRange.js';
-import Calendar from './Calendar.js';
-import defaultRanges from './defaultRanges.js';
+import DateRangeComp from './DateRange.js';
+import CalendarComp from './Calendar.js';
+import defaultRangesComp from './defaultRanges.js';
 
-export default { DateRange, Calendar, defaultRanges }
+export const DateRange = DateRangeComp;
+export const Calendar = CalendarComp;
+export const defaultRanges = defaultRangesComp;

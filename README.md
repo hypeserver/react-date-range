@@ -1,13 +1,22 @@
 # react-date-range
-![](https://badge.fury.io/js/react-date-range.svg)
-![](https://david-dm.org/Adphorus/react-date-range.svg)
-![](https://david-dm.org/Adphorus/react-date-range/dev-status.svg)
+[![npm](https://img.shields.io/npm/v/react-date-range.svg?style=flat-square)](https://www.npmjs.com/package/react-date-range)
+![](https://img.shields.io/bithound/dependencies/github/adphorus/react-date-range.svg?style=flat-square)
+
+[![npm](https://img.shields.io/npm/l/react-date-range.svg?style=flat-square)]()
+[![npm](https://img.shields.io/npm/dm/localeval.svg?style=flat-square)](https://www.npmjs.com/package/react-date-range)
+
 
 A React component for choosing dates and date ranges. Uses [Moment.js](http://momentjs.com/) for date operations.
 
 **Live Demo :** [http://adphorus.github.io/react-date-range](http://adphorus.github.io/react-date-range)
 
 ![](https://cdn.pbrd.co/images/1fjQlZzy.png)
+
+## React Range Picker v2 is coming!
+
+** Want to help us testing the next version? Let's go
+[next branch](https://github.com/adphorus/react-date-range/tree/next)!**
+This version will be depricated soon. 
 
 ## Getting Started
 ### Installation

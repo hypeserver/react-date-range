@@ -167,7 +167,7 @@ class DateRange extends Component {
 }
 
 DateRange.defaultProps = {
-  linkedCalendars : false,
+  linkedCalendars : true,
   theme           : {},
   format          : 'DD/MM/YYYY',
   calendars       : 2,

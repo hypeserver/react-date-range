@@ -1,0 +1,12 @@
+{
+  "presets": [
+    "env",
+    "react"
+  ],
+  "plugins": [
+    [
+      "transform-object-rest-spread",
+      "add-module-exports"
+    ]
+  ]
+}
