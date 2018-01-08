@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import parseInput from './utils/parseInput.js';
 import { defaultClasses } from './styles.js';
@@ -53,7 +54,7 @@ class PredefinedRanges extends Component {
           {name}
         </a>
       );
-    }.bind(this));
+    });
   }
 
   render() {
