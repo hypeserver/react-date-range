@@ -50,7 +50,7 @@ class MyComponent extends Component {
 * **onChange:** *(Function)* default: none
 * **minDate:** *(String, Moment.js object, Function)* default: none
 * **maxDate:** *(String, Moment.js object, Function)* default: none
-* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian, 'tr' - Turkish, 'pt'  - Portuguese)* default: none
+* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian, 'tr' - Turkish, 'pt'  - Portuguese, 'fi' - Finnish)* default: none
 
 ### Range Picker
 ```javascript
@@ -77,21 +77,3 @@ class MyComponent extends Component {
 }
 
 ```
-
-###### Available Options (props)
-* **startDate:** *(String, Moment.js object, Function)* - default: today
-* **endDate:** *(String, Moment.js object, Function)* - default: today
-* **format:** *(String)* - default: DD/MM/YYY
-* **firstDayOfWeek** *(Number)* - default: [moment.localeData().firstDayOfWeek()](http://momentjs.com/docs/#/i18n/locale-data/)
-* **theme:** *(Object)* see [Demo's source](https://github.com/Adphorus/react-date-range/blob/master/demo/src/components/Main.js#L143)
-* **onInit:** *(Function)* default: none
-* **onChange:** *(Function)* default: none
-* **linkedCalendars:** *(Boolean)* default: false
-* **calendars:** *(Number)* default: 2
-* **ranges:** *(Object)* default: none
-* **minDate:** *(String, Moment.js object, Function)* default: none
-* **maxDate:** *(String, Moment.js object, Function)* default: none
-* **twoStepChange:** *(Boolean)* default: false
-* **rangedCalendars** *(Boolean)* default: false
-* **lang:** *(String, 'cn' - Chinese, 'jp' - Japanese, 'fr' - French, 'it' - Italian, 'de' - German, 'es' - Spanish, 'ru' - Russian, 'tr' - Turkish, 'pt'  - Portuguese)* default: none
-* **specialDays:** *(Array [{date: Moment.js object}])* default: none

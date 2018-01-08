@@ -229,5 +229,26 @@ export default {
     'th':'Qui',
     'fr':'Sex',
     'sa':'Sab'
+  },
+  'fi': { // Finnish
+    'january':'Tammikuu',
+    'february':'Helmikuu',
+    'march': 'Maaliskuu',
+    'april':'Huhtikuu',
+    'may':'Toukokuu',
+    'june':'Kesäkuu',
+    'july':'Heinäkuu',
+    'august':'Elokuu',
+    'september':'Syyskuu',
+    'october':'Lokakuu',
+    'november':'Marraskuu',
+    'december':'Joulukuu',
+    'su':'Su',
+    'mo':'Ma',
+    'tu':'Ti',
+    'we':'Ke',
+    'th':'To',
+    'fr':'Pe',
+    'sa':'La'
   }
 }
