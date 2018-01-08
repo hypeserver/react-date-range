@@ -77,7 +77,7 @@ export default {
     'december':'dicembre',
     'su':'Domenica',
     'mo':'Lunedì',
-    'tu':'Mardi',
+    'tu':'Martedì',
     'we':'Mercoledì',
     'th':'Giovedì',
     'fr':'Venerdì',
