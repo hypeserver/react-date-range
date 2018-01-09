@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "NODE_ENV=development & webpack-dev-server --hot --inline",
     "prebuild": "rm -rf lib/*",
-    "build": "NODE_ENV=production & babel ./src --out-dir ./lib",
-    "prepublish": "npm run build"
+    "build": "NODE_ENV=production & babel ./src --out-dir ./lib & webpack -p",
+    "prepublish": "npm run build",
+    "lint": "eslint '**/*.js' --ignore-pattern 'lib/'"
   },
   "keywords": [
     "react",
@@ -36,16 +37,25 @@
   "devDependencies": {
     "autoprefixer": "^7.2.4",
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.1.2",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.8",
+    "eslint": "^4.15.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.5.1",
+    "html-webpack-plugin": "^2.30.1",
     "node-sass": "^4.7.2",
     "normalize.css": "^7.0.0",
     "postcss-loader": "^2.0.10",
     "postcss-modules": "^1.1.0",
     "precss": "^2.0.0",
+    "prettier": "^1.9.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^3.1.3",

@@ -5,7 +5,6 @@ import parseInput from './utils/parseInput.js';
 import { defaultClasses } from './styles.js';
 
 class PredefinedRanges extends Component {
-
   constructor(props, context) {
     super(props, context);
 
@@ -17,10 +16,13 @@ class PredefinedRanges extends Component {
 
     const range = this.props.ranges[name];
 
-    this.props.onSelect({
-      startDate : parseInput(range['startDate'], null, 'startOf'),
-      endDate   : parseInput(range['endDate'], null, 'endOf'),
-    }, PredefinedRanges);
+    this.props.onSelect(
+      {
+        startDate: parseInput(range.startDate, null, 'startOf'),
+        endDate: parseInput(range.endDate, null, 'endOf'),
+      },
+      PredefinedRanges
+    );
   }
 
   renderRangeList(classes) {
@@ -28,29 +30,27 @@ class PredefinedRanges extends Component {
     const { styles } = this;
 
     return Object.keys(ranges).map(name => {
-      const active = (
+      const active =
         parseInput(ranges[name].startDate, null, 'startOf').isSame(range.startDate) &&
-        parseInput(ranges[name].endDate, null, 'endOf').isSame(range.endDate)
-      );
+        parseInput(ranges[name].endDate, null, 'endOf').isSame(range.endDate);
 
       const style = {
-        ...styles['PredefinedRangesItem'],
-        ...(active ? styles['PredefinedRangesItemActive'] : {}),
+        ...styles.PredefinedRangesItem,
+        ...(active ? styles.PredefinedRangesItemActive : {}),
       };
 
       const predefinedRangeClass = classnames({
         [classes.predefinedRangesItem]: true,
-        [classes.predefinedRangesItemActive]: active
+        [classes.predefinedRangesItemActive]: active,
       });
 
       return (
         <a
-          href='#'
-          key={'range-' + name}
+          href="#"
+          key={`range-${name}`}
           className={predefinedRangeClass}
-          style={ onlyClasses ? undefined : style }
-          onClick={this.handleSelect.bind(this, name)}
-        >
+          style={onlyClasses ? undefined : style}
+          onClick={this.handleSelect.bind(this, name)}>
           {name}
         </a>
       );
@@ -65,24 +65,27 @@ class PredefinedRanges extends Component {
 
     return (
       <div
-        style={onlyClasses ? undefined : { ...styles['PredefinedRanges'], ...style }}
-        className={ classes.predefinedRanges }
-      >
-        { this.renderRangeList(classes) }
+        style={onlyClasses ? undefined : { ...styles.PredefinedRanges, ...style }}
+        className={classes.predefinedRanges}>
+        {this.renderRangeList(classes)}
       </div>
     );
   }
 }
 
 PredefinedRanges.defaultProps = {
-  onlyClasses : false,
-  classNames  : {}
+  onlyClasses: false,
+  classNames: {},
 };
 
 PredefinedRanges.propTypes = {
-  ranges      : PropTypes.object.isRequired,
-  onlyClasses : PropTypes.bool,
-  classNames  : PropTypes.object
-}
+  ranges: PropTypes.object.isRequired,
+  onlyClasses: PropTypes.bool,
+  classNames: PropTypes.object,
+  theme: PropTypes.object,
+  onSelect: PropTypes.func,
+  range: PropTypes.object,
+  style: PropTypes.object,
+};
 
 export default PredefinedRanges;

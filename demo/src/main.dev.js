@@ -6,17 +6,17 @@ import Main from './components/Main';
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-      <Main />
+      <Component />
     </AppContainer>,
-    document.getElementById('root'),
-  )
-}
+    document.getElementById('root')
+  );
+};
 
-render(Main)
+render(Main);
 
 // Webpack Hot Module Replacement API
 if (module.hot) {
   module.hot.accept('./components/Main', () => {
-    render(Main)
-  })
+    render(Main);
+  });
 }

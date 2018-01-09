@@ -4,7 +4,7 @@ import { defaultRanges, Calendar, DateRange } from '../../../src';
 import Section from './Section';
 
 import 'normalize.css';
-import '../styles/global.css'
+import '../styles/global.css';
 import styles from '../styles/main.css';
 
 export default class Main extends Component {
@@ -12,244 +12,270 @@ export default class Main extends Component {
     super(props, context);
 
     this.state = {
-      'rangePicker' : {},
-      'rangePickerMobile' : {},
-      'linked' : {},
-      'datePicker' : null,
-      'datePickerInternational': null,
-      'firstDayOfWeek' : null,
-      'predefined' : {},
-    }
+      rangePicker: {},
+      rangePickerMobile: {},
+      linked: {},
+      datePicker: null,
+      datePickerInternational: null,
+      firstDayOfWeek: null,
+      predefined: {},
+    };
   }
 
   handleChange(which, payload) {
     this.setState({
-      [which] : payload
+      [which]: payload,
     });
   }
 
   render() {
     const {
-        rangePicker,
-        rangePickerMobile,
-        linked,
-        datePicker,
-        firstDayOfWeek,
-        predefined,
-        datePickerInternational
+      rangePicker,
+      rangePickerMobile,
+      linked,
+      datePicker,
+      firstDayOfWeek,
+      predefined,
+      datePickerInternational,
     } = this.state;
 
     const format = 'dddd, D MMMM YYYY';
 
     return (
       <main className={styles['Main']}>
-
         <h1 className={styles['Title']}>React-date-range</h1>
 
-        <Section title='Range Picker'>
+        <Section title="Range Picker">
           <div>
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ rangePicker['startDate'] && rangePicker['startDate'].format(format).toString() || ''}
+              value={
+                (rangePicker['startDate'] && rangePicker['startDate'].format(format).toString()) ||
+                ''
+              }
             />
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ rangePicker['endDate'] && rangePicker['endDate'].format(format).toString() || ''}
+              value={
+                (rangePicker['endDate'] && rangePicker['endDate'].format(format).toString()) || ''
+              }
             />
           </div>
 
           <DateRange
-            startDate='10/11/2015'
-            endDate={ () => {
+            startDate="10/11/2015"
+            endDate={() => {
               return '11/12/2015';
             }}
-            onInit={ this.handleChange.bind(this, 'rangePicker') }
-            onChange={ this.handleChange.bind(this, 'rangePicker') }
+            onInit={this.handleChange.bind(this, 'rangePicker')}
+            onChange={this.handleChange.bind(this, 'rangePicker')}
           />
         </Section>
 
-        <Section title='Range Picker (Linked Calendars)'>
+        <Section title="Range Picker (Linked Calendars)">
           <div>
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ linked['startDate'] && linked['startDate'].format(format).toString() || ''}
+              value={(linked['startDate'] && linked['startDate'].format(format).toString()) || ''}
             />
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ linked['endDate'] && linked['endDate'].format(format).toString() || ''}
+              value={(linked['endDate'] && linked['endDate'].format(format).toString()) || ''}
             />
           </div>
           <DateRange
-            startDate={ () => {
+            startDate={() => {
               return '9/10/2015';
             }}
-            endDate={ () => {
+            endDate={() => {
               return '13/11/2015';
             }}
-            linkedCalendars={ true }
-            onInit={ this.handleChange.bind(this, 'linked') }
-            onChange={ this.handleChange.bind(this, 'linked') }
+            linkedCalendars={true}
+            onInit={this.handleChange.bind(this, 'linked')}
+            onChange={this.handleChange.bind(this, 'linked')}
           />
         </Section>
 
-        <Section title='Date Picker'>
+        <Section title="Date Picker">
           <div>
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ datePicker && datePicker.format(format).toString() || ''}
+              value={(datePicker && datePicker.format(format).toString()) || ''}
             />
           </div>
           <Calendar
-            date={ now => { return now.add(-4, 'days') } }
-            onInit={ this.handleChange.bind(this, 'datePicker') }
-            onChange={ this.handleChange.bind(this, 'datePicker') }
+            date={now => {
+              return now.add(-4, 'days');
+            }}
+            onInit={this.handleChange.bind(this, 'datePicker')}
+            onChange={this.handleChange.bind(this, 'datePicker')}
           />
         </Section>
 
-        <Section title='Date Picker, Internationalization - Chinese.'>
+        <Section title="Date Picker, Internationalization - Chinese.">
           <div>
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ datePickerInternational && datePickerInternational.format(format).toString() || '' }
+              value={
+                (datePickerInternational && datePickerInternational.format(format).toString()) || ''
+              }
             />
           </div>
           <Calendar
             disableDaysBeforeToday={true}
             lang={'cn'}
-            date={ now => now }
-            onInit={ this.handleChange.bind(this, 'datePickerInternational') }
-            onChange={ this.handleChange.bind(this, 'datePickerInternational') }
+            date={now => now}
+            onInit={this.handleChange.bind(this, 'datePickerInternational')}
+            onChange={this.handleChange.bind(this, 'datePickerInternational')}
           />
         </Section>
 
-        <Section title='Date Picker (Monday First)'>
+        <Section title="Date Picker (Monday First)">
           <div>
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ firstDayOfWeek && firstDayOfWeek.format(format).toString() || '' }
+              value={(firstDayOfWeek && firstDayOfWeek.format(format).toString()) || ''}
             />
           </div>
           <Calendar
-            firstDayOfWeek={ 1 }
-            date={ now => { return now.add(-4, 'days') } }
-            onInit={ this.handleChange.bind(this, 'firstDayOfWeek') }
-            onChange={ this.handleChange.bind(this, 'firstDayOfWeek') }
+            firstDayOfWeek={1}
+            date={now => {
+              return now.add(-4, 'days');
+            }}
+            onInit={this.handleChange.bind(this, 'firstDayOfWeek')}
+            onChange={this.handleChange.bind(this, 'firstDayOfWeek')}
           />
         </Section>
 
-        <Section title='Range Picker (Predefined Ranges)'>
+        <Section title="Range Picker (Predefined Ranges)">
           <div>
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ predefined['startDate'] && predefined['startDate'].format(format).toString() || '' }
+              value={
+                (predefined['startDate'] && predefined['startDate'].format(format).toString()) || ''
+              }
             />
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ predefined['endDate'] && predefined['endDate'].format(format).toString() || '' }
+              value={
+                (predefined['endDate'] && predefined['endDate'].format(format).toString()) || ''
+              }
             />
           </div>
           <DateRange
-            linkedCalendars={ true }
-            ranges={ defaultRanges }
-            onInit={ this.handleChange.bind(this, 'predefined') }
-            onChange={ this.handleChange.bind(this, 'predefined') }
+            linkedCalendars={true}
+            ranges={defaultRanges}
+            onInit={this.handleChange.bind(this, 'predefined')}
+            onChange={this.handleChange.bind(this, 'predefined')}
             theme={{
-              Calendar : { width: 200 },
-              PredefinedRanges : { marginLeft: 10, marginTop: 10 }
+              Calendar: { width: 200 },
+              PredefinedRanges: { marginLeft: 10, marginTop: 10 },
             }}
           />
         </Section>
 
-        <Section title='Theming'>
+        <Section title="Theming">
           <div />
           <DateRange
-            linkedCalendars={ true }
+            linkedCalendars={true}
             theme={{
-              DateRange      : {
-                background   : '#ffffff'
+              DateRange: {
+                background: '#ffffff',
               },
-              Calendar       : {
-                background   : 'transparent',
-                color        : '#95a5a6',
+              Calendar: {
+                background: 'transparent',
+                color: '#95a5a6',
               },
-              MonthAndYear   : {
-                background   : '#e74c3c',
-                color        : '#9e3024'
+              MonthAndYear: {
+                background: '#e74c3c',
+                color: '#9e3024',
               },
-              MonthButton    : {
-                background   : '#c0392b'
+              MonthButton: {
+                background: '#c0392b',
               },
-              MonthArrowPrev : {
-                borderRightColor : '#d96659',
+              MonthArrowPrev: {
+                borderRightColor: '#d96659',
               },
-              MonthArrowNext : {
-                borderLeftColor : '#d96659',
+              MonthArrowNext: {
+                borderLeftColor: '#d96659',
               },
-              Weekday        : {
-                background   : '#e74c3c',
-                color        : '#9e3024'
+              Weekday: {
+                background: '#e74c3c',
+                color: '#9e3024',
               },
-              Day            : {
-                transition   : 'transform .1s ease, box-shadow .1s ease, background .1s ease'
+              Day: {
+                transition: 'transform .1s ease, box-shadow .1s ease, background .1s ease',
               },
-              DaySelected    : {
-                background   : '#8e44ad'
+              DaySelected: {
+                background: '#8e44ad',
               },
-              DayActive    : {
-                background   : '#8e44ad',
-                boxShadow    : 'none'
+              DayActive: {
+                background: '#8e44ad',
+                boxShadow: 'none',
               },
-              DayInRange     : {
-                background   : '#9b59b6',
-                color        : '#fff'
+              DayInRange: {
+                background: '#9b59b6',
+                color: '#fff',
               },
-              DayHover       : {
-                background   : '#ffffff',
-                color        : '#7f8c8d',
-                transform    : 'scale(1.1) translateY(-10%)',
-                boxShadow    : '0 2px 4px rgba(0, 0, 0, 0.4)'
-              }
+              DayHover: {
+                background: '#ffffff',
+                color: '#7f8c8d',
+                transform: 'scale(1.1) translateY(-10%)',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.4)',
+              },
             }}
           />
         </Section>
 
-        <Section title='Mobile Datepicker'>
+        <Section title="Mobile Datepicker">
           <div>
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ rangePickerMobile['startDate'] && rangePickerMobile['startDate'].format(format).toString() || '' }
+              value={
+                (rangePickerMobile['startDate'] &&
+                  rangePickerMobile['startDate'].format(format).toString()) ||
+                ''
+              }
             />
             <input
-              type='text'
+              type="text"
               readOnly
-              value={ rangePickerMobile['endDate'] && rangePickerMobile['endDate'].format(format).toString() || '' }
+              value={
+                (rangePickerMobile['endDate'] &&
+                  rangePickerMobile['endDate'].format(format).toString()) ||
+                ''
+              }
             />
           </div>
           <div className={styles['Mobile-Container']}>
             <DateRange
-              startDate={ now => {return now.add(1,'month')}}
-              endDate={ now => {return now.add(1,'month').add(3,'days')}}
+              startDate={now => {
+                return now.add(1, 'month');
+              }}
+              endDate={now => {
+                return now.add(1, 'month').add(3, 'days');
+              }}
               shownDate={moment()}
               offsetPositive={true}
               disableDaysBeforeToday={true}
               showMonthArrow={false}
               calendars={4}
-              onInit={ this.handleChange.bind(this, 'rangePickerMobile') }
-              onChange={ this.handleChange.bind(this, 'rangePickerMobile') }
+              onInit={this.handleChange.bind(this, 'rangePickerMobile')}
+              onChange={this.handleChange.bind(this, 'rangePickerMobile')}
             />
           </div>
         </Section>
       </main>
-    )
+    );
   }
 }
