@@ -8,7 +8,7 @@
     "prebuild": "rm -rf lib/*",
     "build": "NODE_ENV=production & babel ./src --out-dir ./lib & webpack -p",
     "prepublish": "npm run build",
-    "lint": "eslint '**/*.js' --ignore-pattern 'lib/'"
+    "lint": "eslint '**/*.js'"
   },
   "keywords": [
     "react",
