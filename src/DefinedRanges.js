@@ -41,6 +41,7 @@ class DefinedRanges extends Component {
               <input
                 className={styles.inputRangeInput}
                 onFocus={() => this.setState({ focusedInput: i, rangeOffset: 0 })}
+                onBlur={() => this.setState({ rangeOffset: 0 })}
                 onChange={e => {
                   let value = parseInt(e.target.value, 10);
                   value = isNaN(value) ? 0 : Math.max(Math.min(99999, value), 0);
