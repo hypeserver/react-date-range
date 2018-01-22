@@ -136,10 +136,6 @@ export default class Main extends Component {
             months={2}
           />
         </Section>
-        <button
-          onClick={() => this.setState({ datePickerInternational: addDays(new Date(), 99999) })}>
-          onlcick
-        </button>
 
         <Section title="Range Picker">
           <div>
