@@ -1,234 +1,111 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import parseInput from './utils/parseInput.js';
 import Calendar from './Calendar.js';
-import PredefinedRanges from './PredefinedRanges.js';
-import getTheme, { defaultClasses } from './styles.js';
+import { findNextRangeIndex } from './utils.js';
+import styles from './styles';
+import { isBefore, differenceInCalendarDays, addDays, min } from 'date-fns';
+import classnames from 'classnames';
 
 class DateRange extends Component {
   constructor(props, context) {
     super(props, context);
-
-    const { format, linkedCalendars, theme } = props;
-
-    const startDate = parseInput(props.startDate, format, 'startOf');
-    const endDate = parseInput(props.endDate, format, 'endOf');
-
+    this.setSelection = this.setSelection.bind(this);
+    this.handleRangeFocusChange = this.handleRangeFocusChange.bind(this);
+    this.updatePreview = this.updatePreview.bind(this);
+    this.calcNewSelection = this.calcNewSelection.bind(this);
     this.state = {
-      range: { startDate, endDate },
-      link: linkedCalendars && endDate,
+      focusedRange: [findNextRangeIndex(props.ranges), 0],
+      preview: null,
     };
-
-    this.step = 0;
-    this.styles = getTheme(theme);
   }
+  calcNewSelection(value) {
+    const { focusedRange } = this.state;
+    const { ranges, onChange, maxDate, moveRangeOnFirstSelection } = this.props;
+    const selectedRangeIndex = focusedRange[0];
+    const selectedRange = ranges[selectedRangeIndex];
+    if (!selectedRange || !onChange) return;
 
-  componentDidMount() {
-    const { onInit } = this.props;
-    onInit && onInit(this.state.range);
-  }
-
-  orderRange(range) {
-    const { startDate, endDate } = range;
-    const swap = startDate.isAfter(endDate);
-
-    if (!swap) return range;
-
+    let { startDate, endDate } = selectedRange;
+    if (!endDate) endDate = new Date(startDate);
+    let nextFocusRange;
+    if (focusedRange[1] === 0) {
+      // startDate selection
+      const dayOffset = differenceInCalendarDays(endDate, startDate);
+      startDate = value;
+      endDate = moveRangeOnFirstSelection ? addDays(value, dayOffset) : value;
+      if (maxDate) endDate = min([endDate, maxDate]);
+      nextFocusRange = [focusedRange[0], 1];
+    } else {
+      endDate = value;
+      // reverse dates if startDate before endDate
+      if (isBefore(value, startDate)) {
+        [startDate, endDate] = [endDate, startDate];
+      }
+      const nextFocusRangeIndex = findNextRangeIndex(this.props.ranges, focusedRange[0]);
+      nextFocusRange = [nextFocusRangeIndex, 0];
+    }
     return {
-      startDate: endDate,
-      endDate: startDate,
+      range: { startDate, endDate },
+      nextFocusRange: nextFocusRange,
     };
   }
+  setSelection(value) {
+    const { onChange, ranges } = this.props;
+    const { focusedRange } = this.state;
+    const selectedRangeIndex = focusedRange[0];
+    const selectedRange = ranges[selectedRangeIndex];
 
-  setRange(range, source, triggerChange) {
-    const { onChange } = this.props;
-    range = this.orderRange(range);
-
-    this.setState({ range }, () => triggerChange && onChange && onChange(range, source));
-  }
-
-  handleSelect(date, source) {
-    if (date.startDate && date.endDate) {
-      this.step = 0;
-      return this.setRange(date, source, true);
-    }
-
-    const { startDate, endDate } = this.state.range;
-
-    const range = {
-      startDate,
-      endDate,
-    };
-
-    switch (this.step) {
-      case 0:
-        range.startDate = date;
-        range.endDate = date;
-        this.step = 1;
-        break;
-
-      case 1:
-        range.endDate = date;
-        this.step = 0;
-        break;
-    }
-
-    const triggerChange =
-      !this.props.twoStepChange || (this.step === 0 && this.props.twoStepChange);
-
-    this.setRange(range, source, triggerChange);
-  }
-
-  handleLinkChange(direction) {
-    const { link } = this.state;
-
+    const newSelection = this.calcNewSelection(value);
+    onChange({
+      [selectedRange.key || `range${selectedRangeIndex + 1}`]: newSelection.range,
+    });
     this.setState({
-      link: link.clone().add(direction, 'months'),
+      focusedRange: newSelection.nextFocusRange,
+      preview: newSelection.range,
     });
   }
-
-  componentWillReceiveProps(newProps) {
-    // Whenever date props changes, update state with parsed variant
-    if (newProps.startDate || newProps.endDate) {
-      const format = newProps.format || this.props.format;
-      const startDate = newProps.startDate && parseInput(newProps.startDate, format, 'startOf');
-      const endDate = newProps.endDate && parseInput(newProps.endDate, format, 'endOf');
-      const oldStartDate =
-        this.props.startDate && parseInput(this.props.startDate, format, 'startOf');
-      const oldEndDate = this.props.endDate && parseInput(this.props.endDate, format, 'endOf');
-
-      if (!startDate.isSame(oldStartDate) || !endDate.isSame(oldEndDate)) {
-        this.setRange({
-          startDate: startDate || oldStartDate,
-          endDate: endDate || oldEndDate,
-        });
-      }
-    }
+  handleRangeFocusChange(focusedRange) {
+    this.setState({ focusedRange });
+    this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
   }
-
+  updatePreview(val) {
+    this.setState({ preview: val });
+  }
   render() {
-    const {
-      ranges,
-      format,
-      linkedCalendars,
-      style,
-      calendars,
-      firstDayOfWeek,
-      minDate,
-      maxDate,
-      classNames,
-      onlyClasses,
-      specialDays,
-      lang,
-      disableDaysBeforeToday,
-      offsetPositive,
-      shownDate,
-      showMonthArrow,
-      rangedCalendars,
-    } = this.props;
-    const { range, link } = this.state;
-    const { styles } = this;
-
-    const classes = { ...defaultClasses, ...classNames };
-    const yearsDiff = range.endDate.year() - range.startDate.year();
-    const monthsDiff = range.endDate.month() - range.startDate.month();
-    const diff = yearsDiff * 12 + monthsDiff;
-    const calendarsCount = Number(calendars) - 1;
-
     return (
-      <div
-        style={onlyClasses ? undefined : { ...styles.DateRange, ...style }}
-        className={classes.dateRange}>
-        {ranges && (
-          <PredefinedRanges
-            format={format}
-            ranges={ranges}
-            range={range}
-            theme={styles}
-            onSelect={this.handleSelect.bind(this)}
-            onlyClasses={onlyClasses}
-            classNames={classes}
-          />
-        )}
-
-        {(() => {
-          const _calendars = [];
-          const _method = offsetPositive ? 'unshift' : 'push';
-          for (let i = calendarsCount; i >= 0; i--) {
-            const offset = offsetPositive ? i : -i;
-            const realDiff = offsetPositive ? diff : -diff;
-            const realOffset =
-              rangedCalendars && i == calendarsCount && diff != 0 ? realDiff : offset;
-
-            _calendars[_method](
-              <Calendar
-                showMonthArrow={showMonthArrow}
-                shownDate={shownDate}
-                disableDaysBeforeToday={disableDaysBeforeToday}
-                lang={lang}
-                key={i}
-                offset={realOffset}
-                link={linkedCalendars && link}
-                linkCB={this.handleLinkChange.bind(this)}
-                range={range}
-                format={format}
-                firstDayOfWeek={firstDayOfWeek}
-                theme={styles}
-                minDate={minDate}
-                maxDate={maxDate}
-                onlyClasses={onlyClasses}
-                specialDays={specialDays}
-                classNames={classes}
-                onChange={this.handleSelect.bind(this)}
-              />
-            );
-          }
-          return _calendars;
-        })()}
-      </div>
+      <Calendar
+        {...this.props}
+        displayMode="dateRange"
+        className={classnames(styles.dateRangeWrapper, this.props.className)}
+        onChange={this.setSelection}
+        focusedRange={this.state.focusedRange}
+        onRangeFocusChange={this.handleRangeFocusChange}
+        preview={this.state.preview}
+        previewColor={this.props.ranges[this.state.focusedRange[0]].color}
+        onPreviewChange={value => {
+          this.updatePreview(value ? this.calcNewSelection(value).range : null);
+        }}
+        ref={target => {
+          this.calendar = target;
+        }}
+      />
     );
   }
 }
 
 DateRange.defaultProps = {
-  linkedCalendars: true,
-  theme: {},
-  format: 'DD/MM/YYYY',
-  calendars: 2,
-  onlyClasses: false,
-  offsetPositive: false,
   classNames: {},
-  specialDays: [],
-  rangedCalendars: false,
-  twoStepChange: false,
+  ranges: [],
+  moveRangeOnFirstSelection: false,
 };
 
 DateRange.propTypes = {
-  format: PropTypes.string,
-  firstDayOfWeek: PropTypes.number,
-  calendars: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  startDate: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
-  endDate: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
-  minDate: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
-  maxDate: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
-  dateLimit: PropTypes.func,
-  ranges: PropTypes.object,
-  linkedCalendars: PropTypes.bool,
-  twoStepChange: PropTypes.bool,
-  theme: PropTypes.object,
-  onInit: PropTypes.func,
+  ...Calendar.propTypes,
   onChange: PropTypes.func,
-  onlyClasses: PropTypes.bool,
-  specialDays: PropTypes.array,
-  offsetPositive: PropTypes.bool,
-  classNames: PropTypes.object,
-  rangedCalendars: PropTypes.bool,
-  style: PropTypes.object,
-  offset: PropTypes.number,
-  disableDaysBeforeToday: PropTypes.bool,
-  shownDate: PropTypes.object,
-  showMonthArrow: PropTypes.bool,
-  lang: PropTypes.string,
+  onRangeFocusChange: PropTypes.func,
+  className: PropTypes.string,
+  ranges: Calendar.propTypes.ranges,
+  moveRangeOnFirstSelection: PropTypes.bool,
 };
 
 export default DateRange;

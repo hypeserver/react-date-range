@@ -1,7 +1,5 @@
-import DateRangeComp from './DateRange.js';
-import CalendarComp from './Calendar.js';
-import defaultRangesComp from './defaultRanges.js';
-
-export const DateRange = DateRangeComp;
-export const Calendar = CalendarComp;
-export const defaultRanges = defaultRangesComp;
+export { default as DateRange } from './DateRange';
+export { default as Calendar } from './Calendar';
+export { default as DateRangePicker } from './DateRangePicker';
+export { default as DefinedRanges } from './DefinedRanges';
+export { inputRanges, staticRanges } from './defaultRanges';

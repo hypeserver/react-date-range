@@ -4,9 +4,8 @@
     "react"
   ],
   "plugins": [
-    [
-      "transform-object-rest-spread",
-      "add-module-exports"
-    ]
+    "date-fns",
+    "transform-object-rest-spread",
+    "transform-export-extensions"
   ]
 }

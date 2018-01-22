@@ -1,0 +1,42 @@
+.rdrDay {
+  box-sizing: inherit;
+  width: calc(100% / 7);
+  position: relative;
+  font: inherit;
+}
+
+.rdrDayNumber {
+  display: block;
+  position: relative;
+  span{
+    color: #1d2429;
+  }
+}
+
+.rdrDayPassive {
+  cursor: default;
+  pointer-events: none;
+  .rdrInRange, .rdrStartEdge, .rdrEndEdge, .rdrSelected, .rdrDayStartPreview, .rdrDayInPreview, .rdrDayEndPreview{
+    display: none;
+  }
+}
+
+.rdrDayDisabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+
+.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge{
+  pointer-events: none;
+}
+
+.rdrInRange{}
+
+.rdrDayStartPreview, .rdrDayInPreview, .rdrDayEndPreview{
+  pointer-events: none;
+}
+
+.rdrDayHovered{}
+
+.rdrDayActive{}

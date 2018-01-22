@@ -1,37 +1,94 @@
-export default {
-  Today: {
-    startDate: now => {
-      return now;
+import {
+  addDays,
+  endOfDay,
+  startOfDay,
+  startOfMonth,
+  endOfMonth,
+  addMonths,
+  startOfWeek,
+  endOfWeek,
+} from 'date-fns';
+
+export const defaultStaticRanges = [
+  {
+    label: 'Today',
+    range() {
+      return {
+        startDate: startOfDay(new Date()),
+        endDate: endOfDay(new Date()),
+      };
     },
-    endDate: now => {
-      return now;
+  },
+  {
+    label: 'Yesterday',
+    range() {
+      const yesterday = addDays(new Date(), -1);
+      return {
+        startDate: startOfDay(yesterday),
+        endDate: endOfDay(yesterday),
+      };
     },
   },
 
-  Yesterday: {
-    startDate: now => {
-      return now.add(-1, 'days');
-    },
-    endDate: now => {
-      return now.add(-1, 'days');
+  {
+    label: 'This Week',
+    range() {
+      return {
+        startDate: startOfWeek(new Date()),
+        endDate: endOfWeek(new Date()),
+      };
     },
   },
+  {
+    label: 'Last Week',
+    range() {
+      const lastWeek = addDays(new Date(), -7);
+      return {
+        startDate: startOfWeek(lastWeek),
+        endDate: endOfWeek(lastWeek),
+      };
+    },
+  },
+  {
+    label: 'This Month',
+    range() {
+      return {
+        startDate: startOfMonth(new Date()),
+        endDate: endOfMonth(new Date()),
+      };
+    },
+  },
+  {
+    label: 'Last Month',
+    range() {
+      const lastMonth = addMonths(new Date(), -1);
+      return {
+        startDate: startOfMonth(lastMonth),
+        endDate: endOfMonth(lastMonth),
+      };
+    },
+  },
+];
 
-  'Last 7 Days': {
-    startDate: now => {
-      return now.add(-7, 'days');
-    },
-    endDate: now => {
-      return now;
-    },
-  },
-
-  'Last 30 Days': {
-    startDate: now => {
-      return now.add(-30, 'days');
-    },
-    endDate: now => {
-      return now;
+export const defaultInputRanges = [
+  {
+    label: 'days up today',
+    range(value) {
+      const today = new Date();
+      return {
+        startDate: addDays(today, Number(value) * -1),
+        endDate: today,
+      };
     },
   },
-};
+  {
+    label: 'days up yesterday',
+    range(value) {
+      const today = new Date();
+      return {
+        startDate: today,
+        endDate: addDays(today, Number(value)),
+      };
+    },
+  },
+];

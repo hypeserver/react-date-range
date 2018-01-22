@@ -1,54 +1,69 @@
-:local(.Main) {
+.Main {
   width: 800px;
   margin: 40px auto;
 }
 
-:local(.Title) {
+.Title {
   display: block;
-  font-size: 2.4rem;
   font-weight: 200;
   padding: 0;
   margin: 0 0 24px;
 }
 
-:local(.Section) {
+.Section {
   padding: 20px 0;
   border-top: 1px dashed rgba(0, 0, 0, 0.1);
   clear: both;
 }
 
-:local(.Section ~ .Section) {
+.Section ~ .Section {
   margin-top: 24px;
 }
 
-:local(.Demo-description) {
-  float : left;
-  width: 240px;
+.Demo-description {
 }
 
-:local(.Demo-description) h2 {
+.label{
+  padding-right: 30px;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.Demo-inputs > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.Demo-inputs > div > *{
+  margin: 0 10px 5px;
+}
+
+.newLine{
+  flex: 0 1 100%;
+}
+
+.Demo-description input, .Demo-description select {
+  padding: 10px;
+  outline: 0;
+  border: 1px solid #dadada;
+  border-radius: 2px;
+  min-width: 100px;
+  height: 35px;
+}
+
+.Demo-description h2 {
   font-weight: 400;
   font-size: 1.4rem;
 }
 
-:local(.Demo) {
-  width: 560px;
-  float: left;
+.Demo{
+  text-align: center;
+  padding-top: 30px;
 }
 
-:local(.Demo-inputs) input {
-  display: block;
-  width: 90%;
-  height: 44px;
-  padding: 0 10px;
-  margin: 0 0 6px;
-  outline: 0;
-  border: 1px solid #dadada;
-  border-radius: 2px;
-  font-size: 1.2rem;
-}
-
-:local(.Mobile-Container) {
+.Mobile-Container {
   height: 500px;
   overflow-y: scroll;
   width: 296px;

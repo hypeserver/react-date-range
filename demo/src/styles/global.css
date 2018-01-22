@@ -2,11 +2,11 @@ body,
 html {
   width: 100%;
   height: 100%;
-  background: #f0f0f0;
+  background-color: rgb(249, 250, 253);
   box-sizing: border-box;
-  font-family: Helvetica, Arial, 'sans-serif';
-  font-size: 62.5%;
-  font-weight: 400;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
 }
 body * {
   box-sizing: inherit;

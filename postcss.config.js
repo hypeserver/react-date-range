@@ -1,7 +1,7 @@
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
+const cssImport = require('postcss-import');
 
 module.exports = {
-  modules: true,
-  plugins: [precss, autoprefixer],
+  plugins: [cssImport(), precss(), autoprefixer()],
 };

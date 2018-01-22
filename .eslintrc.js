@@ -24,6 +24,5 @@ module.exports = {
         "node": true,
         "browser": true,
         "jest": true,
-
       },
 };
