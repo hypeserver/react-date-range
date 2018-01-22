@@ -19,7 +19,10 @@
     "datepicker",
     "rangepicker"
   ],
-  "author": "Burak Can <neoberg@gmail.com>",
+  "contributors": [
+    "Burak Can <neoberg@gmail.com> (https://github.com/burakcan)",
+    "Mehmet Kamil Morcay <mehmetmorcay@gmail.com> (https://github.com/mkg0)"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
