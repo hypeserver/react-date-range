@@ -37,10 +37,11 @@ class DateRangePicker extends Component {
           }}
         />
         <DateRange
+          {...this.props}
           ref={t => {
             this.dateRange = t;
           }}
-          {...this.props}
+          onRangeFocusChange={focusedRange => this.setState({ focusedRange })}
         />
       </div>
     );
