@@ -52,10 +52,11 @@ class DayCell extends Component {
         break;
       case 'mouseenter':
         this.props.onMouseEnter(day);
-      case 'focus':
-        stateChanges.hover = true;
         onPreviewChange && onPreviewChange(day);
-        this.props.onMouseEnter(day);
+        stateChanges.hover = true;
+        break;
+      case 'focus':
+        onPreviewChange && onPreviewChange(day);
         break;
     }
     if (Object.keys(stateChanges).length) {
