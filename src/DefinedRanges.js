@@ -20,7 +20,11 @@ class DefinedRanges extends Component {
   render() {
     const { onPreviewChange } = this.props;
     return (
-      <div className={styles.definedRangesWrapper}>
+      <div
+        className={styles.definedRangesWrapper}
+        onMouseLeave={() => {
+          this.props.onPreviewChange && this.props.onPreviewChange();
+        }}>
         <div className={styles.staticRanges}>
           {this.props.staticRanges.map((rangeOption, i) => (
             <button

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import styles from './styles';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 
 class DayCell extends Component {
@@ -64,6 +63,7 @@ class DayCell extends Component {
       isStartOfMonth,
       isEndOfMonth,
       disabled,
+      styles,
     } = this.props;
 
     return classnames(styles.day, {
@@ -81,7 +81,7 @@ class DayCell extends Component {
     });
   }
   renderPreviewPlaceholder() {
-    const { preview, day, previewColor, color } = this.props;
+    const { preview, day, previewColor, color, styles } = this.props;
     if (!preview) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
@@ -101,6 +101,7 @@ class DayCell extends Component {
     );
   }
   renderSelectionPlaceholders() {
+    const { styles } = this.props;
     if (this.props.displayMode === 'date') {
       let isSelected = isSameDay(this.props.day, this.props.date);
       return isSelected ? (
@@ -143,6 +144,7 @@ class DayCell extends Component {
     ));
   }
   render() {
+    const { styles } = this.props;
     return (
       <button
         onClick={this.handleMouseEvent}
@@ -179,6 +181,7 @@ export const rangeShape = PropTypes.shape({
   key: PropTypes.string,
   autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
+  showDateDisplay: PropTypes.bool,
 });
 
 DayCell.propTypes = {
@@ -204,6 +207,7 @@ DayCell.propTypes = {
   onMouseOver: PropTypes.func,
   color: PropTypes.string,
   displayMode: PropTypes.oneOf(['dateRange', 'date']),
+  styles: PropTypes.object,
 };
 
 export default DayCell;

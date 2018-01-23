@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DateRange from './DateRange';
 import DefinedRanges from './DefinedRanges';
-import { findNextRangeIndex } from './utils.js';
+import { findNextRangeIndex, generateStyles } from './utils.js';
 import classnames from 'classnames';
-import styles from './styles';
+import coreStyles from './styles';
 
 class DateRangePicker extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class DateRangePicker extends Component {
     this.state = {
       focusedRange: [findNextRangeIndex(props.ranges), 0],
     };
+    this.styles = generateStyles([coreStyles, props.classNames]);
   }
   handleChange(range) {
     const { focusedRange } = this.state;
@@ -27,7 +28,7 @@ class DateRangePicker extends Component {
   render() {
     const focusedRangeIndex = this.state.focusedRange[0];
     return (
-      <div className={classnames(styles.dateRangePickerWrapper, this.props.className)}>
+      <div className={classnames(this.styles.dateRangePickerWrapper, this.props.className)}>
         <DefinedRanges
           {...this.props}
           range={this.props.ranges[focusedRangeIndex] || {}}
@@ -35,6 +36,7 @@ class DateRangePicker extends Component {
           onPreviewChange={value => {
             this.dateRange.updatePreview(value);
           }}
+          className={undefined}
         />
         <DateRange
           {...this.props}
@@ -42,6 +44,7 @@ class DateRangePicker extends Component {
             this.dateRange = t;
           }}
           onRangeFocusChange={focusedRange => this.setState({ focusedRange })}
+          className={undefined}
         />
       </div>
     );
