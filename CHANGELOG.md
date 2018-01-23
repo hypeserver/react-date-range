@@ -109,9 +109,9 @@ Date-fns: `fns.parse(dateString)`
 Momentjs: `moment(dateString).toDate()`
 
 - `disableDaysBeforeToday` prop removed. use `minDate={new Date()}` instead.
-
 - `firstDayOfWeek` prop removed. It is auto detecting from locale prop.
-
 - `init` prop removed.
 
+### Added
 
+- Date range selection by drag n drop.

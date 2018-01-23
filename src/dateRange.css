@@ -1,1 +1,3 @@
-.rdrDateRangeWrapper{}
+.rdrDateRangeWrapper{
+  user-select: none;
+}

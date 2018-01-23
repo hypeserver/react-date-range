@@ -19,7 +19,7 @@ class DateRange extends Component {
     };
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
-  calcNewSelection(value) {
+  calcNewSelection(value, isSingleValue = true) {
     const { focusedRange } = this.state;
     const { ranges, onChange, maxDate, moveRangeOnFirstSelection } = this.props;
     const selectedRangeIndex = focusedRange[0];
@@ -29,7 +29,10 @@ class DateRange extends Component {
     let { startDate, endDate } = selectedRange;
     if (!endDate) endDate = new Date(startDate);
     let nextFocusRange;
-    if (focusedRange[1] === 0) {
+    if (!isSingleValue) {
+      startDate = value.startDate;
+      endDate = value.endDate;
+    } else if (focusedRange[1] === 0) {
       // startDate selection
       const dayOffset = differenceInCalendarDays(endDate, startDate);
       startDate = value;
@@ -38,10 +41,13 @@ class DateRange extends Component {
       nextFocusRange = [focusedRange[0], 1];
     } else {
       endDate = value;
-      // reverse dates if startDate before endDate
-      if (isBefore(value, startDate)) {
-        [startDate, endDate] = [endDate, startDate];
-      }
+    }
+    // reverse dates if startDate before endDate
+    if (isBefore(endDate, startDate)) {
+      [startDate, endDate] = [endDate, startDate];
+    }
+
+    if (!nextFocusRange) {
       const nextFocusRangeIndex = findNextRangeIndex(this.props.ranges, focusedRange[0]);
       nextFocusRange = [nextFocusRangeIndex, 0];
     }
@@ -50,13 +56,13 @@ class DateRange extends Component {
       nextFocusRange: nextFocusRange,
     };
   }
-  setSelection(value) {
+  setSelection(value, isSingleValue) {
     const { onChange, ranges } = this.props;
     const { focusedRange } = this.state;
     const selectedRangeIndex = focusedRange[0];
     const selectedRange = ranges[selectedRangeIndex];
-    const newSelection = this.calcNewSelection(value);
     if (!selectedRange) return;
+    const newSelection = this.calcNewSelection(value, isSingleValue);
     onChange({
       [selectedRange.key || `range${selectedRangeIndex + 1}`]: newSelection.range,
     });
@@ -84,6 +90,7 @@ class DateRange extends Component {
         onRangeFocusChange={this.handleRangeFocusChange}
         preview={this.state.preview}
         previewColor={selectedRange.color}
+        updateRange={val => this.setSelection(val, false)}
         onPreviewChange={value => {
           this.updatePreview(value ? this.calcNewSelection(value).range : null);
         }}

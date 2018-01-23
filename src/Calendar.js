@@ -28,8 +28,15 @@ class Calendar extends PureComponent {
     this.renderDays = this.renderDays.bind(this);
     this.handleRangeFocusChange = this.handleRangeFocusChange.bind(this);
     this.renderDateDisplay = this.renderDateDisplay.bind(this);
+    this.onSelectionStart = this.onSelectionStart.bind(this);
+    this.onSelectionEnd = this.onSelectionEnd.bind(this);
     this.state = {
       focusedDate: calcFocusDate(null, props),
+      drag: {
+        status: false,
+        range: { startDate: null, endDate: null },
+        disablePreview: false,
+      },
     };
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
@@ -166,16 +173,59 @@ class Calendar extends PureComponent {
       </div>
     );
   }
+  onSelectionStart(date) {
+    this.setState({
+      drag: {
+        status: true,
+        range: { startDate: date, endDate: date },
+        disablePreview: false,
+      },
+    });
+  }
+  onSelectionEnd(date) {
+    const { updateRange, displayMode, onChange } = this.props;
+    if (displayMode === 'date' || !this.state.drag.status) {
+      onChange && onChange(date);
+      return;
+    }
+    const newRange = {
+      startDate: this.state.drag.range.startDate,
+      endDate: date,
+    };
+    if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
+      this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
+    } else {
+      this.setState({ drag: { status: false, range: {} } }, () => {
+        updateRange && updateRange(newRange);
+      });
+    }
+  }
   renderDays(dateOptions, focusedDate) {
     const now = new Date();
-    const { specialDays } = this.props;
+    const { specialDays, displayMode, focusedRange } = this.props;
+    const { drag } = this.state;
     const minDate = this.props.minDate && startOfDay(this.props.minDate);
     const maxDate = this.props.maxDate && endOfDay(this.props.maxDate);
     const startDateOfMonth = startOfMonth(focusedDate, dateOptions);
     const endDateOfMonth = endOfMonth(focusedDate, dateOptions);
     const startDateOfCalendar = startOfWeek(startDateOfMonth, dateOptions);
     const endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
-
+    let ranges = this.props.ranges;
+    if (displayMode === 'dateRange' && drag.status) {
+      let { startDate, endDate } = drag.range;
+      if (isBefore(endDate, startDate)) {
+        [startDate, endDate] = [endDate, startDate];
+      }
+      ranges = ranges.map((range, i) => {
+        if (i !== focusedRange[0]) return range;
+        return {
+          ...range,
+          startDate,
+          endDate,
+        };
+      });
+    }
+    const showPreview = this.props.showSelectionPreview && !drag.disablePreview;
     return eachDayOfInterval({ start: startDateOfCalendar, end: endDateOfCalendar }).map(
       (day, index) => {
         const isStartOfMonth = isSameDay(day, startDateOfMonth);
@@ -187,9 +237,9 @@ class Calendar extends PureComponent {
         return (
           <DayCell
             {...this.props}
+            ranges={ranges}
             day={day}
-            preview={this.props.showSelectionPreview && this.props.preview}
-            onSelect={this.props.onChange}
+            preview={showPreview ? this.props.preview : null}
             isSunday={isSunday(day)}
             isSpecialDay={isSpecialDay}
             isToday={isSameDay(day, now)}
@@ -201,6 +251,20 @@ class Calendar extends PureComponent {
             disabled={isOutsideMinMax}
             isPassive={!isWithinInterval(day, { start: startDateOfMonth, end: endDateOfMonth })}
             styles={this.styles}
+            onMouseDown={this.onSelectionStart}
+            onMouseUp={this.onSelectionEnd}
+            onMouseEnter={date => {
+              if (!drag.status) return;
+              this.setState({
+                drag: {
+                  status: drag.status,
+                  range: { startDate: drag.range.startDate, endDate: date },
+                  disablePreview: true,
+                },
+              });
+            }}
+            dragRange={drag.range}
+            drag={drag.status}
           />
         );
       }
@@ -212,17 +276,20 @@ class Calendar extends PureComponent {
     return format(date, this.props.dateDisplayFormat, dateOptions);
   }
   render() {
-    const { showDateDisplay } = this.props;
+    const { showDateDisplay, onPreviewChange } = this.props;
     const dateOptions = { locale: this.props.locale };
     return (
-      <div className={classnames(this.styles.calendarWrapper, this.props.className)}>
+      <div
+        className={classnames(this.styles.calendarWrapper, this.props.className)}
+        onMouseUp={() => this.setState({ drag: { status: false, range: {} } })}
+        onMouseLeave={() => {
+          this.setState({ drag: { status: false, range: {} } });
+        }}>
         {showDateDisplay && this.renderDateDisplay(dateOptions)}
         {this.renderMonthAndYear(this.state.focusedDate)}
         <div
           className={this.styles.months}
-          onMouseLeave={() => {
-            this.props.onPreviewChange && this.props.onPreviewChange();
-          }}>
+          onMouseLeave={() => onPreviewChange && onPreviewChange()}>
           {new Array(this.props.months).fill(null).map((_, i) => (
             <div key={i} className={this.styles.month}>
               <div className={this.styles.weekDays}>{this.renderWeekdays(dateOptions)}</div>
@@ -278,6 +345,7 @@ Calendar.propTypes = {
   showSelectionPreview: PropTypes.bool,
   displayMode: PropTypes.oneOf(['dateRange', 'date']),
   color: PropTypes.string,
+  updateRange: PropTypes.func,
 };
 
 export default Calendar;

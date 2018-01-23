@@ -8,7 +8,15 @@
 ⚠️ Warning: the current branch represents v2 pre-release version. See [v1 branch](https://github.com/Adphorus/react-date-range/tree/v1).
 
 A library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
-Stateless date operations, highly configurable, multiple range selection support, based on js dates.
+
+### Why should you use `react-date-range`?
+
+- Stateless date operations
+- Highly configurable
+- Multiple range selection
+- Based on native js dates
+- Drag n Drop selection
+- Keyboard friendly
 
 **Live Demo :** [http://adphorus.github.io/react-date-range](http://adphorus.github.io/react-date-range)
 
@@ -85,7 +93,7 @@ class MyComponent extends Component {
 ### Options (DateRange, Calendar)
 Property                             | type      | Default Value    | Desctiption
 -------------------------------------|-----------|------------------|-----------------------------------------------------------------
-locale                               | object    | enUS from locale | you can view full list from [here](https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/v2.0.0-alpha.7/docs/I18n#supported-languages).
+locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/v2.0.0-alpha.7/docs/I18n#supported-languages).
 className                            | String    |                  | wrapper classname
 months                               | Number    | 1                | rendered month count
 showSelectionPreview                 | Boolean   | true             | show preview on focused/hovered dates
@@ -95,14 +103,15 @@ specialDays                          | Date[]    | []               | defines sp
 onPreviewChange                      | Func      |                  | callback for preview changes. fn()
 minDate                              | Date      |                  | defines minimum date. Disabled earlier dates
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
-showMonthArrow                       | Boolean   | true             |
-ranges(Calendar)                     | *Object[] | []               |
+showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 onChange(Calendar)                   | Func      |                  | callback function for date changes. fn(date: Date)
 color(Calendar)                      | String    | `#3d91ff`        | defines color for selected date in Calendar
 date(Calendar)                       | Date      |                  | date value for Calendar
 onChange(DateRange)                  | Func      |                  | callback function for range changes. fn(changes). changes contains `startDate` and `endDate` under an object key of changed range
 moveRangeOnFirstSelection(DateRange) | Boolean   | false            | move range on startDate selection. Otherwise endDate will replace with startDate.
-dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected range preview formatter. checkout [format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
+ranges(Calendar)                     | *Object[] | []               | Defines ranges. array of range object
+showDateDisplay(DateRange)      | Boolean   | true             | show/hide selection display row. Uses `dateDisplayFormat` for formatter
+dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected range preview formatter. checkout [date-fns's format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
 > *shape of range:
 > ```js
 >	{
@@ -112,6 +121,8 @@ dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected r
 >		key: PropTypes.string,
 >		autoFocus: PropTypes.bool,
 >		disabled: PropTypes.bool,
+>		show: PropTypes.bool,
+>		showDateDisplay: PropTypes.bool,
 >	}
 >```
 
@@ -119,5 +130,3 @@ TODOs
 
 - make mobile friendly (integrate tap and swipe actions)
 - add complex booking customization example with exposed renderer props
-- drag and drop date selection
-
