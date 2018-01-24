@@ -93,6 +93,7 @@ export default class Main extends Component {
   }
 
   handleChange(which, payload) {
+    console.log(which, payload);
     this.setState({
       [which]: payload,
     });
@@ -112,60 +113,38 @@ export default class Main extends Component {
       <main className={'Main'}>
         <h1 className={'Title'}>React-date-range</h1>
 
-        <Section title="Date Picker, Internationalization.">
-          <div>
-            <select
-              onChange={e => this.setState({ locale: e.target.value })}
-              value={this.state.locale}>
-              {localeOptions.map((option, i) => (
-                <option value={option.value} key={i}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <input
-              type="text"
-              readOnly
-              value={formatDateDisplay(this.state.datePickerInternational)}
-            />
-          </div>
-          <Calendar
-            locale={rdrLocales[this.state.locale]}
-            date={this.state.datePickerInternational}
-            onChange={this.handleChange.bind(this, 'datePickerInternational')}
-            months={2}
-          />
-        </Section>
-
-        <Section title="Range Picker">
+        <Section title="Date Range Picker">
           <div>
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(this.state.dateRange.selection.startDate)}
+              value={formatDateDisplay(this.state.dateRangePicker.selection.startDate)}
             />
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(this.state.dateRange.selection.endDate, 'Continuous')}
+              value={formatDateDisplay(this.state.dateRangePicker.selection.endDate)}
             />
           </div>
-
-          <DateRange
-            onChange={this.handleRangeChange.bind(this, 'dateRange')}
-            months={2}
-            moveRangeOnFirstSelection={false}
-            ranges={[
-              {
-                startDate: this.state.dateRange.selection.startDate,
-                endDate: this.state.dateRange.selection.endDate,
-                key: 'selection',
-              },
-            ]}
-          />
+          <div>
+            <DateRangePicker
+              onChange={this.handleRangeChange.bind(this, 'dateRangePicker')}
+              showMonthArrow={false}
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              className={'PreviewArea'}
+              ranges={[
+                {
+                  startDate: this.state.dateRangePicker.selection.startDate,
+                  endDate: this.state.dateRangePicker.selection.endDate,
+                  key: 'selection',
+                },
+              ]}
+            />
+          </div>
         </Section>
 
-        <Section title="Multi Range Picker - Compare">
+        <Section title="Date Range Picker - Multiple Range">
           <div>
             <label className={'label'}>Selection Start:</label>
             <input
@@ -193,7 +172,6 @@ export default class Main extends Component {
               value={formatDateDisplay(this.state.compareRanges.compare.endDate, 'Continuous')}
             />
           </div>
-
           <DateRangePicker
             onChange={this.handleRangeChange.bind(this, 'compareRanges')}
             ranges={[
@@ -201,7 +179,6 @@ export default class Main extends Component {
                 startDate: this.state.compareRanges.selection.startDate,
                 endDate: this.state.compareRanges.selection.endDate,
                 key: 'selection',
-                // autoFocus: false,
               },
               {
                 startDate: this.state.compareRanges.compare.startDate,
@@ -210,37 +187,61 @@ export default class Main extends Component {
                 color: '#3ecf8e',
               },
             ]}
+            className={'PreviewArea'}
           />
         </Section>
 
-        <Section title="Range Picker (Predefined Ranges)">
+        <Section title="Date Picker - Internationalization">
+          <div>
+            <select
+              onChange={e => this.setState({ locale: e.target.value })}
+              value={this.state.locale}>
+              {localeOptions.map((option, i) => (
+                <option value={option.value} key={i}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(this.state.datePickerInternational)}
+            />
+          </div>
+          <Calendar
+            locale={rdrLocales[this.state.locale]}
+            date={this.state.datePickerInternational}
+            onChange={this.handleChange.bind(this, 'datePickerInternational')}
+            className={'PreviewArea'}
+          />
+        </Section>
+
+        <Section title="Range Picker">
           <div>
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(this.state.dateRangePicker.selection.startDate)}
+              value={formatDateDisplay(this.state.dateRange.selection.startDate)}
             />
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(this.state.dateRangePicker.selection.endDate)}
+              value={formatDateDisplay(this.state.dateRange.selection.endDate, 'Continuous')}
             />
           </div>
-          <div>
-            <DateRangePicker
-              onChange={this.handleRangeChange.bind(this, 'dateRangePicker')}
-              showMonthArrow={false}
-              showSelectionPreview={true}
-              moveRangeOnFirstSelection={true}
-              ranges={[
-                {
-                  startDate: this.state.dateRangePicker.selection.startDate,
-                  endDate: this.state.dateRangePicker.selection.endDate,
-                  key: 'selection',
-                },
-              ]}
-            />
-          </div>
+
+          <DateRange
+            onChange={this.handleRangeChange.bind(this, 'dateRange')}
+            moveRangeOnFirstSelection={false}
+            ranges={[
+              {
+                startDate: this.state.dateRange.selection.startDate,
+                endDate: this.state.dateRange.selection.endDate,
+                key: 'selection',
+              },
+            ]}
+            className={'PreviewArea'}
+          />
         </Section>
       </main>
     );
