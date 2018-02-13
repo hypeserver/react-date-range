@@ -8,7 +8,7 @@
     "prebuild": "rm -rf dist/* & rm -rf demo/dist/*",
     "build": "NODE_ENV=production & yarn build-library & yarn build-demo",
     "build-demo": "webpack -p",
-    "build-library": "babel ./src --out-dir ./dist --ignore test.js & postcss 'src/styles.css' -d dist & postcss 'src/theme/*.css' -d 'dist/theme'",
+    "build-library": "babel ./src --out-dir ./dist --ignore test.js & postcss 'src/styles.scss' -d dist & postcss 'src/theme/*.scss' -d 'dist/theme'",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest"
   },

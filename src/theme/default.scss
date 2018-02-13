@@ -44,6 +44,7 @@
   font-weight: 600;
   select{
     appearance: none;
+    -webkit-appearance: none;
     border: 0;
     background: transparent;
     padding: 10px 30px 10px 10px;
@@ -325,9 +326,11 @@
   text-align: center;
   border: solid 1px rgb(222, 231, 235);
   margin-right: 10px;
+  color: rgb(108, 118, 122);
   &:focus, &:hover{
     border-color: rgb(180, 191, 196);
     outline: 0;
+    color: #333;
   }
 }
 
