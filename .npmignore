@@ -3,7 +3,6 @@ node_modules/
 *.log
 .gitignore
 .git/
-src/
 demo/
 webpack.config.js
 yarn.lock.js
