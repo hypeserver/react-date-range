@@ -113,7 +113,7 @@ export default class Main extends Component {
       <main className={'Main'}>
         <h1 className={'Title'}>React-date-range</h1>
 
-        <Section title="Date Range Picker">
+        <Section title="Date Range Picker - 2 month">
           <div>
             <input
               type="text"
@@ -133,6 +133,7 @@ export default class Main extends Component {
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               className={'PreviewArea'}
+              months={2}
               ranges={[
                 {
                   startDate: this.state.dateRangePicker.selection.startDate,
