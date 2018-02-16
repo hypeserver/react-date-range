@@ -1,2 +1,2 @@
-import locale from 'date-fns/esm/locale/es';
+import locale from 'date-fns/locale/es';
 export default locale;
