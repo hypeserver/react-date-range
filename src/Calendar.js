@@ -74,6 +74,7 @@ class Calendar extends PureComponent {
     const { showMonthArrow, locale, minDate, maxDate } = this.props;
     const upLimit = maxDate ? maxDate.getFullYear() : addYears(new Date(), 20).getFullYear();
     const downLimit = minDate ? minDate.getFullYear() : addYears(new Date(), -100).getFullYear();
+    console.log(downLimit, upLimit);
     const styles = this.styles;
     return (
       <div className={styles.monthAndYearWrapper}>
@@ -102,7 +103,7 @@ class Calendar extends PureComponent {
             <select
               value={focusedDate.getFullYear()}
               onChange={e => this.changeShownDate('setYear', e.target.value)}>
-              {new Array(upLimit - downLimit).fill(upLimit).map((val, i) => {
+              {new Array(upLimit - downLimit + 1).fill(upLimit).map((val, i) => {
                 const year = val - i;
                 return (
                   <option key={year} value={year}>
