@@ -52,8 +52,8 @@ import 'normalize.css';
 import '../styles/global.css';
 import '../styles/main.css';
 
-import '../../../src/styles.css';
-import '../../../src/theme/default.css';
+import '../../../src/styles.scss';
+import '../../../src/theme/default.scss';
 
 function formatDateDisplay(date, defaultText) {
   if (!date) return defaultText;
