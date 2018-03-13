@@ -54,13 +54,13 @@ export default {
     'october':'octobre',
     'november':'novembre',
     'december':'décembre',
-    'su':'Dimanche',
-    'mo':'Lundi',
-    'tu':'Mardi',
-    'we':'Mercredi',
-    'th':'Jeudi',
-    'fr':'Vendredi',
-    'sa':'Samedi'
+    'su':'Dim.',
+    'mo':'Lun.',
+    'tu':'Mar.',
+    'we':'Mer.',
+    'th':'Jeu.',
+    'fr':'Ven.',
+    'sa':'Sam.'
   },
   'it' : { // Italian
     'january':'gennaio',
