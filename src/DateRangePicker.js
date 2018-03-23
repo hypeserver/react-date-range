@@ -36,6 +36,7 @@ class DateRangePicker extends Component {
           onPreviewChange={value => {
             this.dateRange.updatePreview(value);
           }}
+          focusedRangeIndex={focusedRangeIndex}
           className={undefined}
         />
         <DateRange

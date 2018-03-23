@@ -7,88 +7,115 @@ import {
   addMonths,
   startOfWeek,
   endOfWeek,
+  isSameDay,
+  differenceInCalendarDays,
 } from 'date-fns';
+
+const defineds = {
+  startOfWeek: startOfWeek(new Date()),
+  endOfWeek: endOfWeek(new Date()),
+  startOfLastWeek: startOfWeek(addDays(new Date(), -7)),
+  endOfLastWeek: endOfWeek(addDays(new Date(), -7)),
+  startOfToday: startOfDay(new Date()),
+  endOfToday: endOfDay(new Date()),
+  startOfYesterday: startOfDay(addDays(new Date(), -1)),
+  endOfYesterday: endOfDay(addDays(new Date(), -1)),
+  startOfMonth: startOfMonth(new Date()),
+  endOfMonth: endOfMonth(new Date()),
+  startOfLastMonth: startOfMonth(addMonths(new Date(), -1)),
+  endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
+};
 
 export const defaultStaticRanges = [
   {
     label: 'Today',
-    range() {
-      return {
-        startDate: startOfDay(new Date()),
-        endDate: endOfDay(new Date()),
-      };
-    },
+    range: () => ({
+      startDate: defineds.startOfToday,
+      endDate: defineds.endOfToday,
+    }),
+    isSelected: range =>
+      isSameDay(range.startDate, defineds.startOfToday) &&
+      isSameDay(range.endDate, defineds.endOfToday),
   },
   {
     label: 'Yesterday',
-    range() {
-      const yesterday = addDays(new Date(), -1);
-      return {
-        startDate: startOfDay(yesterday),
-        endDate: endOfDay(yesterday),
-      };
-    },
+    range: () => ({
+      startDate: defineds.startOfYesterday,
+      endDate: defineds.endOfYesterday,
+    }),
+    isSelected: range =>
+      isSameDay(range.startDate, defineds.startOfYesterday) &&
+      isSameDay(range.endDate, defineds.endOfYesterday),
   },
 
   {
     label: 'This Week',
-    range() {
-      return {
-        startDate: startOfWeek(new Date()),
-        endDate: endOfWeek(new Date()),
-      };
-    },
+    range: () => ({
+      startDate: defineds.startOfWeek,
+      endDate: defineds.endOfWeek,
+    }),
+    isSelected: range =>
+      isSameDay(range.startDate, defineds.startOfWeek) &&
+      isSameDay(range.endDate, defineds.endOfWeek),
   },
   {
     label: 'Last Week',
-    range() {
-      const lastWeek = addDays(new Date(), -7);
-      return {
-        startDate: startOfWeek(lastWeek),
-        endDate: endOfWeek(lastWeek),
-      };
-    },
+    range: () => ({
+      startDate: defineds.startOfLastWeek,
+      endDate: defineds.endOfLastWeek,
+    }),
+    isSelected: range =>
+      isSameDay(range.startDate, defineds.startOfLastWeek) &&
+      isSameDay(range.endDate, defineds.endOfLastWeek),
   },
   {
     label: 'This Month',
-    range() {
-      return {
-        startDate: startOfMonth(new Date()),
-        endDate: endOfMonth(new Date()),
-      };
-    },
+    range: () => ({
+      startDate: defineds.startOfMonth,
+      endDate: defineds.endOfMonth,
+    }),
+    isSelected: range =>
+      isSameDay(range.startDate, defineds.startOfMonth) &&
+      isSameDay(range.endDate, defineds.endOfMonth),
   },
   {
     label: 'Last Month',
-    range() {
-      const lastMonth = addMonths(new Date(), -1);
-      return {
-        startDate: startOfMonth(lastMonth),
-        endDate: endOfMonth(lastMonth),
-      };
-    },
+    range: () => ({
+      startDate: defineds.startOfLastMonth,
+      endDate: defineds.endOfLastMonth,
+    }),
+    isSelected: range =>
+      isSameDay(range.startDate, defineds.startOfLastMonth) &&
+      isSameDay(range.endDate, defineds.endOfLastMonth),
   },
 ];
 
 export const defaultInputRanges = [
   {
-    label: 'days up today',
+    label: 'days up to today',
     range(value) {
-      const today = new Date();
       return {
-        startDate: addDays(today, Number(value) * -1),
-        endDate: today,
+        startDate: addDays(defineds.startOfToday, Number(value) * -1),
+        endDate: defineds.endOfToday,
       };
+    },
+    getCurrentValue(range) {
+      if (!isSameDay(range.endDate, defineds.endOfToday)) return '-';
+      return differenceInCalendarDays(defineds.endOfToday, range.startDate);
     },
   },
   {
-    label: 'days up yesterday',
+    label: 'days up to yesterday',
     range(value) {
       const today = new Date();
       return {
         startDate: today,
         endDate: addDays(today, Number(value)),
       };
+    },
+    getCurrentValue(range) {
+      if (!isSameDay(range.startDate, defineds.startOfToday)) return '-';
+      return differenceInCalendarDays(range.endDate, defineds.startOfToday);
     },
   },
 ];
