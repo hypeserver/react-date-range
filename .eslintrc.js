@@ -16,7 +16,9 @@ module.exports = {
             "jsxBracketSameLine": true,
             "printWidth": 100,
             "parser": "babylon",
-        }]
+        }],
+        "no-debugger": 0,
+        "no-console": 0,
     },
     parser: "babel-eslint",
     env: {
