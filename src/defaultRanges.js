@@ -105,7 +105,7 @@ export const defaultInputRanges = [
     },
   },
   {
-    label: 'days up to yesterday',
+    label: 'days starting today',
     range(value) {
       const today = new Date();
       return {
