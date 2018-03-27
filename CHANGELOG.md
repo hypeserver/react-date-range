@@ -113,5 +113,14 @@ Momentjs: `moment(dateString).toDate()`
 - `init` prop removed.
 
 ### Added
+- `DefinedRanges` component: It's a set of date presets. Receives `inputRanges`, `staticRanges` for setting date ranges.
+- `DateRangePicker` component. It's combined version of `DateRange` with `DefinedRanges` component.
+- Date range selection by drag.
+- Infinite scroll feature. Sample usage:
+```js
+  const horizontalScroll={enabled: true, monthHeight: 300, monthWidth: 300 };
+  const verticalScroll={enabled: true, monthHeight: 220, longMonthHeight: 240 };
+  <DateRangePicker scroll={horizontalScroll} />
+  <DateRangePicker scroll={verticalScroll} months={2} />
+```
 
-- Date range selection by drag n drop.

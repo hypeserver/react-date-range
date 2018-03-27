@@ -3,6 +3,7 @@
   width: calc(100% / 7);
   position: relative;
   font: inherit;
+  cursor: pointer;
 }
 
 .rdrDayNumber {
@@ -13,17 +14,8 @@
   }
 }
 
-.rdrDayPassive {
-  cursor: default;
-  pointer-events: none;
-  .rdrInRange, .rdrStartEdge, .rdrEndEdge, .rdrSelected, .rdrDayStartPreview, .rdrDayInPreview, .rdrDayEndPreview{
-    display: none;
-  }
-}
-
 .rdrDayDisabled {
-  cursor: default;
-  pointer-events: none;
+  cursor: not-allowed;
 }
 
 

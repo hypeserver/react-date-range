@@ -67,7 +67,13 @@ export default class Main extends Component {
     this.state = {
       dateRange: {
         selection: {
-          startDate: addDays(new Date(), 1115),
+          startDate: new Date(),
+          endDate: null,
+        },
+      },
+      dateRangePickerI: {
+        selection: {
+          startDate: new Date(),
           endDate: null,
         },
       },
@@ -81,7 +87,7 @@ export default class Main extends Component {
           endDate: addDays(new Date(), 8),
         },
       },
-      datePickerInternational: addDays(new Date(), 1167),
+      datePickerInternational: new Date(),
       locale: 'ja',
       dateRangePicker: {
         selection: {
@@ -129,7 +135,6 @@ export default class Main extends Component {
           <div>
             <DateRangePicker
               onChange={this.handleRangeChange.bind(this, 'dateRangePicker')}
-              showMonthArrow={false}
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               className={'PreviewArea'}
@@ -138,6 +143,40 @@ export default class Main extends Component {
                 {
                   startDate: this.state.dateRangePicker.selection.startDate,
                   endDate: this.state.dateRangePicker.selection.endDate,
+                  key: 'selection',
+                },
+              ]}
+              direction="horizontal"
+            />
+          </div>
+        </Section>
+
+        <Section title="Date Range Picker - Vertical Infinite">
+          <div>
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(this.state.dateRangePickerI.selection.startDate)}
+            />
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(this.state.dateRangePickerI.selection.endDate)}
+            />
+          </div>
+          <div>
+            <DateRangePicker
+              onChange={this.handleRangeChange.bind(this, 'dateRangePickerI')}
+              className={'PreviewArea'}
+              months={1}
+              minDate={addDays(new Date(), -300)}
+              maxDate={addDays(new Date(), 900)}
+              direction="vertical"
+              scroll={{ enabled: true }}
+              ranges={[
+                {
+                  startDate: this.state.dateRangePickerI.selection.startDate,
+                  endDate: this.state.dateRangePickerI.selection.endDate,
                   key: 'selection',
                 },
               ]}

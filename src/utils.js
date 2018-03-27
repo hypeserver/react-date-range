@@ -1,5 +1,12 @@
 import classnames from 'classnames';
-import { addMonths, areIntervalsOverlapping, startOfMonth, endOfMonth } from 'date-fns';
+import {
+  addMonths,
+  areIntervalsOverlapping,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+} from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
@@ -19,17 +26,19 @@ export function calcFocusDate(currentFocusedDate, props) {
   }
   targetInterval.start = startOfMonth(targetInterval.start || new Date());
   targetInterval.end = endOfMonth(targetInterval.end || targetInterval.start);
-
   const targetDate = targetInterval.start || targetInterval.end || shownDate || new Date();
+
   // initial focus
-  if (!currentFocusedDate)
-    return shownDate || targetInterval.start || targetInterval.end || new Date();
+  if (!currentFocusedDate) return shownDate || targetDate;
+
+  // // just return targetDate for native scrolled calendars
+  // if (props.scroll.enabled) return targetDate;
   const currentFocusInterval = {
     start: startOfMonth(currentFocusedDate),
     end: endOfMonth(addMonths(currentFocusedDate, months - 1)),
   };
-  // don't change focused if new selection in view area
   if (areIntervalsOverlapping(targetInterval, currentFocusInterval)) {
+    // don't change focused if new selection in view area
     return currentFocusedDate;
   }
   return targetDate;
@@ -41,6 +50,19 @@ export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
   );
   if (nextIndex !== -1) return nextIndex;
   return ranges.findIndex(range => range.autoFocus !== false && !range.disabled);
+}
+
+export function getMonthDisplayRange(date, dateOptions) {
+  const startDateOfMonth = startOfMonth(date, dateOptions);
+  const endDateOfMonth = endOfMonth(date, dateOptions);
+  const startDateOfCalendar = startOfWeek(startDateOfMonth, dateOptions);
+  const endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
+  return {
+    start: startDateOfCalendar,
+    end: endDateOfCalendar,
+    startDateOfMonth,
+    endDateOfMonth,
+  };
 }
 
 export function generateStyles(sources) {

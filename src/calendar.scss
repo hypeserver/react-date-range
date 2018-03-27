@@ -60,6 +60,15 @@
   display: flex;
 }
 
+.rdrMonthsVertical{
+  flex-direction: column;
+}
+
+.rdrMonthsHorizontal > div > div > div{
+  display: flex;
+  flex-direction: row;
+}
+
 .rdrMonth{
   width: 27.667em;
 }
@@ -80,3 +89,9 @@
 }
 
 .rdrDateDisplayWrapper{}
+
+.rdrMonthName{}
+
+.rdrInfiniteMonths{
+  overflow: auto;
+}

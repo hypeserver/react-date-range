@@ -44,4 +44,9 @@ export default {
   staticRangeLabel: 'rdrStaticRangeLabel',
   dayHovered: 'rdrDayHovered',
   dayActive: 'rdrDayActive',
+  staticRangeSelected: 'rdrStaticRangeSelected',
+  monthName: 'rdrMonthName',
+  infiniteMonths: 'rdrInfiniteMonths',
+  monthsVertical: 'rdrMonthsVertical',
+  monthsHorizontal: 'rdrMonthsHorizontal',
 };

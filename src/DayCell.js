@@ -34,9 +34,18 @@ class DayCell extends Component {
   }
   handleMouseEvent(event) {
     const { day, disabled, onPreviewChange } = this.props;
-    if (disabled) return null;
     const stateChanges = {};
+    if (disabled) {
+      onPreviewChange();
+      return;
+    }
+
     switch (event.type) {
+      case 'mouseenter':
+        this.props.onMouseEnter(day);
+        onPreviewChange(day);
+        stateChanges.hover = true;
+        break;
       case 'blur':
       case 'mouseleave':
         stateChanges.hover = false;
@@ -50,13 +59,8 @@ class DayCell extends Component {
         stateChanges.active = false;
         this.props.onMouseUp(day);
         break;
-      case 'mouseenter':
-        this.props.onMouseEnter(day);
-        onPreviewChange && onPreviewChange(day);
-        stateChanges.hover = true;
-        break;
       case 'focus':
-        onPreviewChange && onPreviewChange(day);
+        onPreviewChange(day);
         break;
     }
     if (Object.keys(stateChanges).length) {
@@ -163,7 +167,6 @@ class DayCell extends Component {
         onMouseDown={this.handleMouseEvent}
         onMouseUp={this.handleMouseEvent}
         onBlur={this.handleMouseEvent}
-        onCompositionStart={this.handleMouseEvent}
         onPauseCapture={this.handleMouseEvent}
         onKeyDown={this.handleKeyEvent}
         onKeyUp={this.handleKeyEvent}

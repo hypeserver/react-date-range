@@ -103,6 +103,8 @@ specialDays                          | Date[]    | []               | defines sp
 onPreviewChange                      | Func      |                  | callback for preview changes. fn()
 minDate                              | Date      |                  | defines minimum date. Disabled earlier dates
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
+direction                            | String    | 'vertical'                 | defines maximum date. Disabled later dates
+scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Checkout [Infinite Scroll](#infinite-scrolled-mode) section 
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 onChange(Calendar)                   | Func      |                  | callback function for date changes. fn(date: Date)
 color(Calendar)                      | String    | `#3d91ff`        | defines color for selected date in Calendar
@@ -112,6 +114,8 @@ moveRangeOnFirstSelection(DateRange) | Boolean   | false            | move range
 ranges(Calendar)                     | *Object[] | []               | Defines ranges. array of range object
 showDateDisplay(DateRange)      | Boolean   | true             | show/hide selection display row. Uses `dateDisplayFormat` for formatter
 dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected range preview formatter. checkout [date-fns's format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
+
+
 > *shape of range:
 > ```js
 >	{
@@ -125,6 +129,24 @@ dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected r
 >		showDateDisplay: PropTypes.bool,
 >	}
 >```
+
+#### Infinite Scrolled Mode
+
+	To enable infinite scroll set `scroll={{enabled: true}}` basically. Infinite scroll feature is affected by `direction`(rendering direction for months) and `months`(for rendered months count) props directly.
+	If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHeight` or each month's height/withs with `monthWidth`/`monthHeight`/`longMonthHeight` at `scroll` prop.
+
+```js
+	// shape of scroll prop
+  scroll: {
+    enabled: PropTypes.bool, 
+    monthHeight: PropTypes.number,
+    longMonthHeight: PropTypes.number, // some months has 1 more row than others
+    monthWidth: PropTypes.number, // just used when direction="horizontal"
+    calendarWidth: PropTypes.number, // defaults monthWidth * months
+    calendarHeight: PropTypes.number, // defaults monthHeight * months
+  }),
+```
+
 
 TODOs
 

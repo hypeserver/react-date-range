@@ -5,12 +5,13 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "NODE_ENV=development & webpack-dev-server --hot --inline",
-    "prebuild": "rm -rf dist/* & rm -rf demo/dist/*",
+    "clear": "rm -rf dist/* & rm -rf demo/dist/*",
     "build": "NODE_ENV=production & yarn build-library & yarn build-demo",
     "build-demo": "webpack -p",
     "build-library": "babel ./src --out-dir ./dist --ignore test.js & postcss 'src/styles.scss' -d dist --ext css & postcss 'src/theme/*.scss' -d 'dist/theme' --ext css",
     "lint": "eslint 'src/**/*.js'",
-    "test": "jest"
+    "test": "jest",
+    "preversion": "yarn clear & yarn build"
   },
   "keywords": [
     "react",
@@ -33,7 +34,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.1",
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.5.10",
+    "react-list": "^0.8.8"
   },
   "peerDependencies": {
     "react": "^0.14 || ^15.0.0-rc || >=15.0"
