@@ -26,16 +26,35 @@ const defineds = {
   endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
 };
 
-export const defaultStaticRanges = [
+const staticRangeHandler = {
+  get: (obj, prop) => {
+    const checkIsSelected = range => {
+      const definedRange = obj.range();
+      return (
+        isSameDay(range.startDate, definedRange.startDate) &&
+        isSameDay(range.endDate, definedRange.endDate)
+      );
+    };
+    switch (prop) {
+      case 'isSelected':
+        return obj[prop] || checkIsSelected;
+      default:
+        return obj[prop];
+    }
+  },
+};
+
+export function createStaticRanges(ranges) {
+  return ranges.map(range => new Proxy(range, staticRangeHandler));
+}
+
+export const defaultStaticRanges = createStaticRanges([
   {
     label: 'Today',
     range: () => ({
       startDate: defineds.startOfToday,
       endDate: defineds.endOfToday,
     }),
-    isSelected: range =>
-      isSameDay(range.startDate, defineds.startOfToday) &&
-      isSameDay(range.endDate, defineds.endOfToday),
   },
   {
     label: 'Yesterday',
@@ -43,9 +62,6 @@ export const defaultStaticRanges = [
       startDate: defineds.startOfYesterday,
       endDate: defineds.endOfYesterday,
     }),
-    isSelected: range =>
-      isSameDay(range.startDate, defineds.startOfYesterday) &&
-      isSameDay(range.endDate, defineds.endOfYesterday),
   },
 
   {
@@ -54,9 +70,6 @@ export const defaultStaticRanges = [
       startDate: defineds.startOfWeek,
       endDate: defineds.endOfWeek,
     }),
-    isSelected: range =>
-      isSameDay(range.startDate, defineds.startOfWeek) &&
-      isSameDay(range.endDate, defineds.endOfWeek),
   },
   {
     label: 'Last Week',
@@ -64,9 +77,6 @@ export const defaultStaticRanges = [
       startDate: defineds.startOfLastWeek,
       endDate: defineds.endOfLastWeek,
     }),
-    isSelected: range =>
-      isSameDay(range.startDate, defineds.startOfLastWeek) &&
-      isSameDay(range.endDate, defineds.endOfLastWeek),
   },
   {
     label: 'This Month',
@@ -74,9 +84,6 @@ export const defaultStaticRanges = [
       startDate: defineds.startOfMonth,
       endDate: defineds.endOfMonth,
     }),
-    isSelected: range =>
-      isSameDay(range.startDate, defineds.startOfMonth) &&
-      isSameDay(range.endDate, defineds.endOfMonth),
   },
   {
     label: 'Last Month',
@@ -84,11 +91,8 @@ export const defaultStaticRanges = [
       startDate: defineds.startOfLastMonth,
       endDate: defineds.endOfLastMonth,
     }),
-    isSelected: range =>
-      isSameDay(range.startDate, defineds.startOfLastMonth) &&
-      isSameDay(range.endDate, defineds.endOfLastMonth),
   },
-];
+]);
 
 export const defaultInputRanges = [
   {

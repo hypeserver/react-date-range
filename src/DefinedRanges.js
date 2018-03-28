@@ -13,15 +13,13 @@ class DefinedRanges extends Component {
       focusedInput: -1,
     };
     this.handleRangeChange = this.handleRangeChange.bind(this);
-    this.checkIsSelected = this.checkIsSelected.bind(this);
   }
   handleRangeChange(range) {
     const { onChange } = this.props;
     onChange && onChange(range);
   }
   checkIsSelected(definedRange, ranges) {
-    if (!definedRange.isSelected) return false;
-    return ranges.some(range => definedRange.isSelected(range));
+    return ranges.some(range => definedRange.isSelected && definedRange.isSelected(range));
   }
   render() {
     const { onPreviewChange } = this.props;
