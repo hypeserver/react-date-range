@@ -106,6 +106,7 @@ maxDate                              | Date      |                  | defines ma
 direction                            | String    | 'vertical'                 | defines maximum date. Disabled later dates
 scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Checkout [Infinite Scroll](#infinite-scrolled-mode) section 
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
+navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
 onChange(Calendar)                   | Func      |                  | callback function for date changes. fn(date: Date)
 color(Calendar)                      | String    | `#3d91ff`        | defines color for selected date in Calendar
 date(Calendar)                       | Date      |                  | date value for Calendar

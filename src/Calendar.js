@@ -38,6 +38,7 @@ class Calendar extends PureComponent {
     this.onDragSelectionStart = this.onDragSelectionStart.bind(this);
     this.onDragSelectionEnd = this.onDragSelectionEnd.bind(this);
     this.onDragSelectionMove = this.onDragSelectionMove.bind(this);
+    this.renderMonthAndYear = this.renderMonthAndYear.bind(this);
     this.dateOptions = { locale: props.locale };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
@@ -116,21 +117,21 @@ class Calendar extends PureComponent {
       this.updateShownDate(nextProps);
     }
   }
-  changeShownDate(mode, value) {
+  changeShownDate(value, mode = 'set') {
     const focusedDate = this.state.focusedDate;
     const modeMapper = {
       monthOffset: () => addMonths(focusedDate, value),
       setMonth: () => setMonth(focusedDate, value),
       setYear: () => setYear(focusedDate, value),
+      set: () => value,
     };
     const newDate = min([max([modeMapper[mode](), this.props.minDate]), this.props.maxDate]);
-    console.log(focusedDate, newDate);
     this.focusToDate(newDate, this.props, false);
   }
   handleRangeFocusChange(rangesIndex, rangeItemIndex) {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange([rangesIndex, rangeItemIndex]);
   }
-  renderMonthAndYear(focusedDate, props, changeShownDate) {
+  renderMonthAndYear(focusedDate, changeShownDate, props) {
     const { showMonthArrow, locale, minDate, maxDate } = props;
     const upperYearLimit = maxDate.getFullYear();
     const lowerYearLimit = minDate.getFullYear();
@@ -141,7 +142,7 @@ class Calendar extends PureComponent {
           <button
             type="button"
             className={classnames(styles.nextPrevButton, styles.prevButton)}
-            onClick={() => changeShownDate('monthOffset', -1)}>
+            onClick={() => changeShownDate(-1, 'monthOffset')}>
             <i />
           </button>
         ) : null}
@@ -149,7 +150,7 @@ class Calendar extends PureComponent {
           <span className={styles.monthPicker}>
             <select
               value={focusedDate.getMonth()}
-              onChange={e => changeShownDate('setMonth', e.target.value)}>
+              onChange={e => changeShownDate(e.target.value, 'setMonth')}>
               {locale.localize.months().map((month, i) => (
                 <option key={i} value={i}>
                   {month}
@@ -161,7 +162,7 @@ class Calendar extends PureComponent {
           <span className={styles.yearPicker}>
             <select
               value={focusedDate.getFullYear()}
-              onChange={e => changeShownDate('setYear', e.target.value)}>
+              onChange={e => changeShownDate(e.target.value, 'setYear')}>
               {new Array(upperYearLimit - lowerYearLimit + 1).fill(upperYearLimit).map((val, i) => {
                 const year = val - i;
                 return (
@@ -177,7 +178,7 @@ class Calendar extends PureComponent {
           <button
             type="button"
             className={classnames(styles.nextPrevButton, styles.nextButton)}
-            onClick={() => changeShownDate('monthOffset', +1)}>
+            onClick={() => changeShownDate(+1, 'monthOffset')}>
             <i />
           </button>
         ) : null}
@@ -284,6 +285,7 @@ class Calendar extends PureComponent {
     const { showDateDisplay, onPreviewChange, scroll, direction, maxDate, minDate } = this.props;
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
+    const navigatorRenderer = this.props.navigatorRenderer || this.renderMonthAndYear;
     return (
       <div
         className={classnames(this.styles.calendarWrapper, this.props.className)}
@@ -292,7 +294,7 @@ class Calendar extends PureComponent {
           this.setState({ drag: { status: false, range: {} } });
         }}>
         {showDateDisplay && this.renderDateDisplay()}
-        {this.renderMonthAndYear(focusedDate, this.props, this.changeShownDate)}
+        {navigatorRenderer(focusedDate, this.changeShownDate, this.props)}
         {scroll.enabled ? (
           <div>
             {isVertical && this.renderWeekdays(this.dateOptions)}
@@ -451,6 +453,7 @@ Calendar.propTypes = {
     calendarHeight: PropTypes.number,
   }),
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
+  navigatorRenderer: PropTypes.func,
 };
 
 export default Calendar;
