@@ -107,13 +107,20 @@
 }
 
 
+.rdrWeekDays {
+  padding: 0 0.833em;
+}
+
 .rdrMonth{
   padding: 0 0.833em 1.666em 0.833em;
-}
+  .rdrWeekDays {
+    padding: 0;
+  }
+}  
 
 .rdrMonths.rdrMonthsVertical .rdrMonth:first-child .rdrMonthName{
   display: none;
-}
+}  
 
 .rdrWeekDay {
   font-weight: 400;
