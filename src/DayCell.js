@@ -96,7 +96,7 @@ class DayCell extends Component {
     });
   }
   renderPreviewPlaceholder() {
-    const { preview, day, previewColor, color, styles } = this.props;
+    const { preview, day, styles } = this.props;
     if (!preview) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
@@ -111,7 +111,7 @@ class DayCell extends Component {
           [styles.dayInPreview]: isInRange,
           [styles.dayEndPreview]: isEndEdge,
         })}
-        style={{ color: previewColor || color }}
+        style={{ color: preview.color }}
       />
     );
   }

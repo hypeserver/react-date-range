@@ -77,10 +77,16 @@ class DateRange extends Component {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
   }
   updatePreview(val) {
-    this.setState({ preview: val });
+    if (!val) {
+      this.setState({ preview: null });
+      return;
+    }
+    const { rangeColors, ranges } = this.props;
+    const { focusedRange } = this.state;
+    const color = ranges[focusedRange[0]].color || rangeColors[focusedRange[0]] || color;
+    this.setState({ preview: { ...val, color } });
   }
   render() {
-    const selectedRange = this.props.ranges[this.state.focusedRange[0]] || {};
     return (
       <Calendar
         {...this.props}
@@ -90,7 +96,6 @@ class DateRange extends Component {
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
         preview={this.state.preview}
-        previewColor={selectedRange.color}
         updateRange={val => this.setSelection(val, false)}
         onPreviewChange={value => {
           this.updatePreview(value ? this.calcNewSelection(value).range : null);
@@ -107,6 +112,7 @@ DateRange.defaultProps = {
   classNames: {},
   ranges: [],
   moveRangeOnFirstSelection: false,
+  rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
 };
 
 DateRange.propTypes = {

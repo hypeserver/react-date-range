@@ -39,6 +39,7 @@ class Calendar extends PureComponent {
     this.onDragSelectionEnd = this.onDragSelectionEnd.bind(this);
     this.onDragSelectionMove = this.onDragSelectionMove.bind(this);
     this.renderMonthAndYear = this.renderMonthAndYear.bind(this);
+    this.updatePreview = this.updatePreview.bind(this);
     this.dateOptions = { locale: props.locale };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
@@ -94,6 +95,18 @@ class Calendar extends PureComponent {
       : props;
     const newFocus = calcFocusDate(this.state.focusedDate, newProps);
     this.focusToDate(newFocus, newProps);
+  }
+  updatePreview(val) {
+    if (!val) {
+      this.setState({ preview: null });
+      return;
+    }
+    const preview = {
+      startDate: val,
+      endDate: val,
+      color: this.props.color,
+    };
+    this.setState({ preview });
   }
   componentDidMount() {
     if (this.props.scroll.enabled) {
@@ -201,7 +214,8 @@ class Calendar extends PureComponent {
     );
   }
   renderDateDisplay() {
-    const { focusedRange, color, ranges } = this.props;
+    const { focusedRange, color, ranges, rangeColors } = this.props;
+    const defaultColor = rangeColors[focusedRange[0]] || color;
     const styles = this.styles;
     return (
       <div className={styles.dateDisplayWrapper}>
@@ -209,7 +223,10 @@ class Calendar extends PureComponent {
           if (range.showDateDisplay === false || (range.disabled && !range.showDateDisplay))
             return null;
           return (
-            <div className={styles.dateDisplay} key={i} style={{ color: range.color || color }}>
+            <div
+              className={styles.dateDisplay}
+              key={i}
+              style={{ color: range.color || defaultColor }}>
               <span
                 className={classnames(styles.dateDisplayItem, {
                   [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 0,
@@ -282,10 +299,24 @@ class Calendar extends PureComponent {
     return format(date, this.props.dateDisplayFormat, this.dateOptions);
   }
   render() {
-    const { showDateDisplay, onPreviewChange, scroll, direction, maxDate, minDate } = this.props;
+    const {
+      showDateDisplay,
+      onPreviewChange,
+      scroll,
+      direction,
+      maxDate,
+      minDate,
+      rangeColors,
+      color,
+    } = this.props;
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
     const navigatorRenderer = this.props.navigatorRenderer || this.renderMonthAndYear;
+
+    const ranges = this.props.ranges.map((range, i) => ({
+      ...range,
+      color: range.color || rangeColors[i] || color,
+    }));
     return (
       <div
         className={classnames(this.styles.calendarWrapper, this.props.className)}
@@ -340,6 +371,9 @@ class Calendar extends PureComponent {
                   return (
                     <Month
                       {...this.props}
+                      onPreviewChange={this.props.onPreviewChange || this.updatePreview}
+                      preview={this.props.preview || this.state.preview}
+                      ranges={ranges}
                       key={key}
                       drag={this.state.drag}
                       dateOptions={this.dateOptions}
@@ -373,6 +407,9 @@ class Calendar extends PureComponent {
               return (
                 <Month
                   {...this.props}
+                  onPreviewChange={this.props.onPreviewChange || this.updatePreview}
+                  preview={this.props.preview || this.state.preview}
+                  ranges={ranges}
                   key={i}
                   drag={this.state.drag}
                   dateOptions={this.dateOptions}
@@ -414,6 +451,7 @@ Calendar.defaultProps = {
   direction: 'vertical',
   maxDate: addYears(new Date(), 20),
   minDate: addYears(new Date(), -100),
+  rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
 };
 
 Calendar.propTypes = {
@@ -454,6 +492,7 @@ Calendar.propTypes = {
   }),
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
   navigatorRenderer: PropTypes.func,
+  rangeColors: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Calendar;

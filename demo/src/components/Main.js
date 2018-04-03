@@ -77,14 +77,18 @@ export default class Main extends Component {
           endDate: null,
         },
       },
-      compareRanges: {
-        selection: {
+      multipleRanges: {
+        selection1: {
           startDate: addDays(new Date(), 1),
           endDate: null,
         },
-        compare: {
+        selection2: {
           startDate: addDays(new Date(), 4),
           endDate: addDays(new Date(), 8),
+        },
+        selection3: {
+          startDate: addDays(new Date(), 8),
+          endDate: addDays(new Date(), 10),
         },
       },
       datePickerInternational: new Date(),
@@ -186,45 +190,69 @@ export default class Main extends Component {
 
         <Section title="Date Range Picker - Multiple Range">
           <div>
-            <label className={'label'}>Selection Start:</label>
+            <label className={'label'}>Selection1 Start:</label>
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(this.state.compareRanges.selection.startDate, '-')}
+              value={formatDateDisplay(this.state.multipleRanges.selection1.startDate, '-')}
             />
-            <label className={'label'}>Selection End:</label>
+            <label className={'label'}>Selection1 End:</label>
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(this.state.compareRanges.selection.endDate, 'Continuous')}
+              value={formatDateDisplay(this.state.multipleRanges.selection1.endDate, 'Continuous')}
             />
             <div className={'newLine'} />
-            <label className={'label'}>Compare Start:</label>
+
+            <label className={'label'}>Selection2 Start:</label>
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(this.state.compareRanges.compare.startDate, '-')}
+              value={formatDateDisplay(this.state.multipleRanges.selection2.startDate, '-')}
             />
-            <label className={'label'}>Compare End:</label>
+            <label className={'label'}>Selection2 End:</label>
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(this.state.compareRanges.compare.endDate, 'Continuous')}
+              value={formatDateDisplay(this.state.multipleRanges.selection2.endDate, 'Continuous')}
+            />
+            <div className={'newLine'} />
+
+            <label className={'label'}>Selection3 Start:</label>
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(this.state.multipleRanges.selection3.startDate, '-')}
+            />
+            <label className={'label'}>Selection3 End:</label>
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(this.state.multipleRanges.selection3.endDate, 'Continuous')}
             />
           </div>
           <DateRangePicker
-            onChange={this.handleRangeChange.bind(this, 'compareRanges')}
+            onChange={this.handleRangeChange.bind(this, 'multipleRanges')}
             ranges={[
               {
-                startDate: this.state.compareRanges.selection.startDate,
-                endDate: this.state.compareRanges.selection.endDate,
-                key: 'selection',
+                startDate: this.state.multipleRanges.selection1.startDate,
+                endDate: this.state.multipleRanges.selection1.endDate,
+                key: 'selection1',
+                // color: '#3d91ff',
               },
               {
-                startDate: this.state.compareRanges.compare.startDate,
-                endDate: this.state.compareRanges.compare.endDate,
-                key: 'compare',
-                color: '#3ecf8e',
+                startDate: this.state.multipleRanges.selection2.startDate,
+                endDate: this.state.multipleRanges.selection2.endDate,
+                key: 'selection2',
+                // color: '#3ecf8e',
+              },
+              {
+                startDate: this.state.multipleRanges.selection3.startDate,
+                endDate: this.state.multipleRanges.selection3.endDate,
+                key: 'selection3',
+                showDateDisplay: false,
+                autoFocus: false,
+                // color: '#fed14c',
               },
             ]}
             className={'PreviewArea'}
