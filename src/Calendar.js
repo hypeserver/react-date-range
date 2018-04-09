@@ -40,6 +40,7 @@ class Calendar extends PureComponent {
     this.onDragSelectionMove = this.onDragSelectionMove.bind(this);
     this.renderMonthAndYear = this.renderMonthAndYear.bind(this);
     this.updatePreview = this.updatePreview.bind(this);
+    this.estimateMonthSize = this.estimateMonthSize.bind(this);
     this.dateOptions = { locale: props.locale };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
@@ -62,7 +63,7 @@ class Calendar extends PureComponent {
       return {
         enabled: true,
         monthHeight: scroll.monthHeight || 220,
-        longMonthHeight: longMonthHeight || 240,
+        longMonthHeight: longMonthHeight || 260,
         calendarWidth: 'auto',
         calendarHeight: (scroll.calendarHeight || longMonthHeight || 240) * months,
       };
@@ -294,6 +295,19 @@ class Calendar extends PureComponent {
     });
   }
 
+  estimateMonthSize(index, cache) {
+    const { direction, minDate } = this.props;
+    const { scrollArea } = this.state;
+    if (cache) {
+      this.listSizeCache = cache;
+      if (cache[index]) return cache[index];
+    }
+    if (direction === 'horizontal') return scrollArea.monthWidth;
+    const monthStep = addMonths(minDate, index);
+    const { start, end } = getMonthDisplayRange(monthStep, this.dateOptions);
+    const isLongMonth = differenceInDays(end, start, this.dateOptions) + 1 > 7 * 5;
+    return isLongMonth ? scrollArea.longMonthHeight : scrollArea.monthHeight;
+  }
   formatDateDisplay(date, defaultText) {
     if (!date) return defaultText;
     return format(date, this.props.dateDisplayFormat, this.dateOptions);
@@ -356,15 +370,7 @@ class Calendar extends PureComponent {
                 treshold={500}
                 type="variable"
                 ref={target => (this.list = target)}
-                itemSizeEstimator={(index, cache) => {
-                  this.listSizeCache = cache;
-                  if (cache[index]) return cache[index];
-                  if (!isVertical) return scrollArea.monthWidth;
-                  const monthStep = addMonths(minDate, index);
-                  const { start, end } = getMonthDisplayRange(monthStep, this.dateOptions);
-                  const isLongMonth = differenceInDays(end, start, this.dateOptions) + 1 > 7 * 5;
-                  return isLongMonth ? scrollArea.longMonthHeight : scrollArea.monthHeight;
-                }}
+                itemSizeEstimator={this.estimateMonthSize}
                 axis={isVertical ? 'y' : 'x'}
                 itemRenderer={(index, key) => {
                   const monthStep = addMonths(minDate, index);
@@ -385,8 +391,8 @@ class Calendar extends PureComponent {
                       styles={this.styles}
                       style={
                         isVertical
-                          ? {}
-                          : { height: scrollArea.monthHeight, width: scrollArea.monthWidth }
+                          ? { height: this.estimateMonthSize(index) }
+                          : { height: scrollArea.monthHeight, width: this.estimateMonthSize(index) }
                       }
                       showMonthName
                       showWeekDays={!isVertical}
