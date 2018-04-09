@@ -444,7 +444,7 @@ Calendar.defaultProps = {
   locale: defaultLocale,
   ranges: [],
   focusedRange: [0, 0],
-  dateDisplayFormat: 'MMM D,YYYY',
+  dateDisplayFormat: 'MMM D, YYYY',
   monthDisplayFormat: 'MMM YYYY',
   showDateDisplay: true,
   showSelectionPreview: true,
