@@ -95,12 +95,18 @@ class DateRange extends Component {
       const endDate      = newProps.endDate     && parseInput(newProps.endDate, format, 'endOf');
       const oldStartDate = this.props.startDate && parseInput(this.props.startDate, format, 'startOf');
       const oldEndDate   = this.props.endDate   && parseInput(this.props.endDate, format, 'endOf');
+      const linkedCalendars = this.props.linkedCalendars;
 
       if (!startDate.isSame(oldStartDate) || !endDate.isSame(oldEndDate)) {
         this.setRange({
           startDate: startDate || oldStartDate,
           endDate: endDate || oldEndDate
         });
+
+          this.state = {
+            range     : { startDate, endDate },
+            link      : linkedCalendars && endDate,
+          }
       }
     }
   }
