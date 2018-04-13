@@ -164,7 +164,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
+    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays, disablePassive } = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -185,7 +185,7 @@ class Calendar extends Component {
     const diff = (Math.abs(firstDayOfWeek - (startOfMonth + 7)) % 7);
     for (let i = diff-1; i >= 0; i--) {
       const dayMoment  = lastMonth.clone().date(lastMonthDayCount - i);
-      days.push({ dayMoment, isPassive : true });
+      days.push({ dayMoment, isPassive : !disablePassive });
     }
 
     // Current month's days
@@ -194,7 +194,7 @@ class Calendar extends Component {
       // set days before today to isPassive
       const _today = moment();
       if (disableDaysBeforeToday && Number(dayMoment.diff(_today,"days")) <= -1) {
-        days.push({ dayMoment ,isPassive:true});
+        days.push({ dayMoment , isPassive: true});
       } else {
         days.push({ dayMoment });
       }
@@ -204,7 +204,7 @@ class Calendar extends Component {
     const remainingCells = 42 - days.length; // 42cells = 7days * 6rows
     for (let i = 1; i <= remainingCells; i++ ) {
       const dayMoment  = nextMonth.clone().date(i);
-      days.push({ dayMoment, isPassive : true });
+      days.push({ dayMoment, isPassive : !disablePassive });
     }
 
     const today = moment().startOf('day');
@@ -267,6 +267,7 @@ Calendar.defaultProps = {
   onlyClasses : false,
   classNames  : {},
   specialDays : [],
+  disablePassive : false,
 }
 
 Calendar.propTypes = {
@@ -294,7 +295,8 @@ Calendar.propTypes = {
   onlyClasses    : PropTypes.bool,
   specialDays    : PropTypes.array,
   classNames     : PropTypes.object,
-  locale         : PropTypes.string
+  locale         : PropTypes.string,
+  disablePassive : PropTypes.bool,
 }
 
 export default Calendar;

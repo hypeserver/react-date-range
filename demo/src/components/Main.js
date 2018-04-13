@@ -112,6 +112,22 @@ export default class Main extends Component {
           />
         </Section>
 
+        <Section title='Date Picker (make days selectable outside current month)'>
+          <div>
+            <input
+              type='text'
+              readOnly
+              value={ datePicker && datePicker.format(format).toString() }
+            />
+          </div>
+          <Calendar
+            date={ now => { return now.add(-4, 'days') } }
+            onInit={ this.handleChange.bind(this, 'datePicker') }
+            onChange={ this.handleChange.bind(this, 'datePicker') }
+            disablePassive
+          />
+        </Section>
+
         <Section title='Date Picker, Internationalization - Chinese.'>
           <div>
             <input
