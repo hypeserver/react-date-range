@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { rangeShape } from './DayCell.js';
 import Month from './Month.js';
-import { calcFocusDate, generateStyles, getMonthDisplayRange } from './utils';
+import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../utils';
 import classnames from 'classnames';
 import ReactList from 'react-list';
 import {
@@ -25,7 +25,7 @@ import {
   max,
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
-import coreStyles from './styles';
+import coreStyles from '../styles';
 
 class Calendar extends PureComponent {
   constructor(props, context) {

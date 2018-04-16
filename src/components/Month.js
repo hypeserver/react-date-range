@@ -15,7 +15,7 @@ import {
   isWithinInterval,
   eachDayOfInterval,
 } from 'date-fns';
-import { getMonthDisplayRange } from './utils';
+import { getMonthDisplayRange } from '../utils';
 
 function renderWeekdays(styles, dateOptions) {
   const now = new Date();

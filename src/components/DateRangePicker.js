@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DateRange from './DateRange';
 import DefinedRanges from './DefinedRanges';
-import { findNextRangeIndex, generateStyles } from './utils.js';
+import { findNextRangeIndex, generateStyles } from '../utils.js';
 import classnames from 'classnames';
-import coreStyles from './styles';
+import coreStyles from '../styles';
 
 class DateRangePicker extends Component {
   constructor(props) {

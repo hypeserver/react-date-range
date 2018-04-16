@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from './Calendar.js';
 import { rangeShape } from './DayCell';
-import { findNextRangeIndex, generateStyles } from './utils.js';
+import { findNextRangeIndex, generateStyles } from '../utils.js';
 import { isBefore, differenceInCalendarDays, addDays, min } from 'date-fns';
 import classnames from 'classnames';
-import coreStyles from './styles';
+import coreStyles from '../styles';
 
 class DateRange extends Component {
   constructor(props, context) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles';
-import { defaultInputRanges, defaultStaticRanges } from './defaultRanges';
+import styles from '../styles';
+import { defaultInputRanges, defaultStaticRanges } from '../defaultRanges';
 import { rangeShape } from './DayCell';
 import cx from 'classnames';
 
