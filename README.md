@@ -12,16 +12,13 @@ A React component for choosing dates and date ranges. Uses [Moment.js](http://mo
 
 ![](https://cdn.pbrd.co/images/1fjQlZzy.png)
 
-## React Range Picker v2 is coming!💥
-
-** Want to help us testing the next version? Let's go
-[next branch](https://github.com/adphorus/react-date-range/tree/next)!**
+## ⚠️️ This branch represents deprecated version. See the new version at [master](https://github.com/Adphorus/react-date-range) branch.
 
 ## Getting Started
 ### Installation
 
 ```
-$ npm install --save react-date-range
+$ npm install --save react-date-range@0.9.4
 ```
 
 ## Usage
