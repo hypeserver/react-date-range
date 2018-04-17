@@ -23,8 +23,8 @@ class DateRange extends Component {
   calcNewSelection(value, isSingleValue = true) {
     const { focusedRange } = this.state;
     const { ranges, onChange, maxDate, moveRangeOnFirstSelection } = this.props;
-    const selectedRangeIndex = focusedRange[0];
-    const selectedRange = ranges[selectedRangeIndex];
+    const focusedRangeIndex = focusedRange[0];
+    const selectedRange = ranges[focusedRangeIndex];
     if (!selectedRange || !onChange) return {};
 
     let { startDate, endDate } = selectedRange;
@@ -60,12 +60,15 @@ class DateRange extends Component {
   setSelection(value, isSingleValue) {
     const { onChange, ranges } = this.props;
     const { focusedRange } = this.state;
-    const selectedRangeIndex = focusedRange[0];
-    const selectedRange = ranges[selectedRangeIndex];
+    const focusedRangeIndex = focusedRange[0];
+    const selectedRange = ranges[focusedRangeIndex];
     if (!selectedRange) return;
     const newSelection = this.calcNewSelection(value, isSingleValue);
     onChange({
-      [selectedRange.key || `range${selectedRangeIndex + 1}`]: newSelection.range,
+      [selectedRange.key || `range${focusedRangeIndex + 1}`]: {
+        ...selectedRange,
+        ...newSelection.range,
+      },
     });
     this.setState({
       focusedRange: newSelection.nextFocusRange,
