@@ -20,7 +20,7 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 
 **Live Demo :** [http://adphorus.github.io/react-date-range](http://adphorus.github.io/react-date-range)
 
-![](https://raw.githubusercontent.com/Adphorus/react-date-range/next/demo/assets/ss.png)
+![](https://raw.githubusercontent.com/Adphorus/react-date-range/master/demo/assets/ss.png)
 
 
 ## Getting Started
@@ -123,18 +123,18 @@ staticRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default preDefined 
 inputRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default input ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
 
 
-> *shape of range:
-> ```js
->	{
->		startDate: PropTypes.object,
->		endDate: PropTypes.object,
->		color: PropTypes.string,
->		key: PropTypes.string,
->		autoFocus: PropTypes.bool,
->		disabled: PropTypes.bool,
->		showDateDisplay: PropTypes.bool,
->	}
->```
+ *shape of range:
+ ```js
+	{
+		startDate: PropTypes.object,
+		endDate: PropTypes.object,
+		color: PropTypes.string,
+		key: PropTypes.string,
+		autoFocus: PropTypes.bool,
+		disabled: PropTypes.bool,
+		showDateDisplay: PropTypes.bool,
+	}
+```
 
 #### Infinite Scrolled Mode
 
