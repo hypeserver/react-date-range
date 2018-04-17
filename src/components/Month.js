@@ -36,7 +36,7 @@ function renderWeekdays(styles, dateOptions) {
 class Month extends PureComponent {
   render() {
     const now = new Date();
-    const { specialDays, displayMode, focusedRange, drag, styles } = this.props;
+    const { displayMode, focusedRange, drag, styles } = this.props;
     const minDate = this.props.minDate && startOfDay(this.props.minDate);
     const maxDate = this.props.maxDate && endOfDay(this.props.maxDate);
     const monthDisplay = getMonthDisplayRange(this.props.month, this.props.dateOptions);
@@ -69,7 +69,6 @@ class Month extends PureComponent {
             (day, index) => {
               const isStartOfMonth = isSameDay(day, monthDisplay.startDateOfMonth);
               const isEndOfMonth = isSameDay(day, monthDisplay.endDateOfMonth);
-              const isSpecialDay = specialDays.some(specialDay => isSameDay(day, specialDay));
               const isOutsideMinMax =
                 (minDate && isBefore(day, minDate)) || (maxDate && isAfter(day, maxDate));
               return (
@@ -79,7 +78,6 @@ class Month extends PureComponent {
                   day={day}
                   preview={showPreview ? this.props.preview : null}
                   isSunday={isSunday(day)}
-                  isSpecialDay={isSpecialDay}
                   isToday={isSameDay(day, now)}
                   isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
                   isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
@@ -122,7 +120,6 @@ Month.propTypes = {
     endDate: PropTypes.object,
   }),
   showSelectionPreview: PropTypes.bool,
-  specialDays: PropTypes.array,
   displayMode: PropTypes.oneOf(['dateRange', 'date']),
   minDate: PropTypes.object,
   maxDate: PropTypes.object,

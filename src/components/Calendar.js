@@ -440,7 +440,6 @@ class Calendar extends PureComponent {
 Calendar.defaultProps = {
   showMonthArrow: true,
   classNames: {},
-  specialDays: [],
   locale: defaultLocale,
   ranges: [],
   focusedRange: [0, 0],
@@ -468,7 +467,6 @@ Calendar.propTypes = {
   onChange: PropTypes.func,
   onPreviewChange: PropTypes.func,
   onRangeFocusChange: PropTypes.func,
-  specialDays: PropTypes.array,
   classNames: PropTypes.object,
   locale: PropTypes.object,
   shownDate: PropTypes.object,
