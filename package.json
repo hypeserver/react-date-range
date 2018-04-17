@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.1",
+    "date-fns": "2.0.0-alpha.7",
     "prop-types": "^15.5.10",
     "react-list": "^0.8.8"
   },
@@ -52,7 +53,6 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.8",
-    "date-fns": "2.0.0-alpha.7",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.15.0",
