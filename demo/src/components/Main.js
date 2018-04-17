@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Calendar, DateRange, DateRangePicker } from '../../../src';
+import { Calendar, DateRange, DateRangePicker, DefinedRange } from '../../../src';
 import * as rdrLocales from '../../../src/locale';
 import { format, addDays } from 'date-fns';
 import Section from './Section';
@@ -69,34 +69,54 @@ export default class Main extends Component {
         selection: {
           startDate: new Date(),
           endDate: null,
+          key: 'selection',
+        },
+      },
+      definedRange: {
+        selection: {
+          startDate: new Date(),
+          endDate: new Date(),
+          key: 'selection',
         },
       },
       dateRangePickerI: {
         selection: {
           startDate: new Date(),
           endDate: null,
+          key: 'selection',
+        },
+        compare: {
+          startDate: new Date(),
+          endDate: addDays(new Date(), 3),
+          key: 'compare',
         },
       },
       multipleRanges: {
         selection1: {
           startDate: addDays(new Date(), 1),
           endDate: null,
+          key: 'selection1',
         },
         selection2: {
           startDate: addDays(new Date(), 4),
           endDate: addDays(new Date(), 8),
+          key: 'selection2',
         },
         selection3: {
           startDate: addDays(new Date(), 8),
           endDate: addDays(new Date(), 10),
+          key: 'selection3',
+          showDateDisplay: false,
+          autoFocus: false,
         },
       },
-      datePickerInternational: new Date(),
+      datePickerInternational: null,
       locale: 'ja',
       dateRangePicker: {
         selection: {
           startDate: new Date(),
           endDate: addDays(new Date(), 7),
+          key: 'selection',
         },
       },
     };
@@ -123,7 +143,7 @@ export default class Main extends Component {
       <main className={'Main'}>
         <h1 className={'Title'}>React-date-range</h1>
 
-        <Section title="Date Range Picker - 2 month">
+        <Section title="DateRangePicker - 2 month">
           <div>
             <input
               type="text"
@@ -143,19 +163,13 @@ export default class Main extends Component {
               moveRangeOnFirstSelection={false}
               className={'PreviewArea'}
               months={2}
-              ranges={[
-                {
-                  startDate: this.state.dateRangePicker.selection.startDate,
-                  endDate: this.state.dateRangePicker.selection.endDate,
-                  key: 'selection',
-                },
-              ]}
+              ranges={[this.state.dateRangePicker.selection]}
               direction="horizontal"
             />
           </div>
         </Section>
 
-        <Section title="Date Range Picker - Vertical Infinite">
+        <Section title="DateRangePicker - Vertical Infinite">
           <div>
             <input
               type="text"
@@ -177,18 +191,12 @@ export default class Main extends Component {
               maxDate={addDays(new Date(), 900)}
               direction="vertical"
               scroll={{ enabled: true }}
-              ranges={[
-                {
-                  startDate: this.state.dateRangePickerI.selection.startDate,
-                  endDate: this.state.dateRangePickerI.selection.endDate,
-                  key: 'selection',
-                },
-              ]}
+              ranges={[this.state.dateRangePickerI.selection, this.state.dateRangePickerI.compare]}
             />
           </div>
         </Section>
 
-        <Section title="Date Range Picker - Multiple Range">
+        <Section title="DateRangePicker - Multiple Range">
           <div>
             <label className={'label'}>Selection1 Start:</label>
             <input
@@ -234,32 +242,15 @@ export default class Main extends Component {
           <DateRangePicker
             onChange={this.handleRangeChange.bind(this, 'multipleRanges')}
             ranges={[
-              {
-                startDate: this.state.multipleRanges.selection1.startDate,
-                endDate: this.state.multipleRanges.selection1.endDate,
-                key: 'selection1',
-                // color: '#3d91ff',
-              },
-              {
-                startDate: this.state.multipleRanges.selection2.startDate,
-                endDate: this.state.multipleRanges.selection2.endDate,
-                key: 'selection2',
-                // color: '#3ecf8e',
-              },
-              {
-                startDate: this.state.multipleRanges.selection3.startDate,
-                endDate: this.state.multipleRanges.selection3.endDate,
-                key: 'selection3',
-                showDateDisplay: false,
-                autoFocus: false,
-                // color: '#fed14c',
-              },
+              this.state.multipleRanges.selection1,
+              this.state.multipleRanges.selection2,
+              this.state.multipleRanges.selection3,
             ]}
             className={'PreviewArea'}
           />
         </Section>
 
-        <Section title="Date Picker - Internationalization">
+        <Section title="DatePicker - Internationalization">
           <div>
             <select
               onChange={e => this.setState({ locale: e.target.value })}
@@ -284,7 +275,7 @@ export default class Main extends Component {
           />
         </Section>
 
-        <Section title="Range Picker">
+        <Section title="RangePicker">
           <div>
             <input
               type="text"
@@ -301,14 +292,28 @@ export default class Main extends Component {
           <DateRange
             onChange={this.handleRangeChange.bind(this, 'dateRange')}
             moveRangeOnFirstSelection={false}
-            ranges={[
-              {
-                startDate: this.state.dateRange.selection.startDate,
-                endDate: this.state.dateRange.selection.endDate,
-                key: 'selection',
-              },
-            ]}
+            ranges={[this.state.dateRange.selection]}
             className={'PreviewArea'}
+          />
+        </Section>
+        <Section title="DefinedRange">
+          <div>
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(this.state.definedRange.selection.startDate)}
+            />
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(this.state.definedRange.selection.endDate, 'Continuous')}
+            />
+          </div>
+
+          <DefinedRange
+            ranges={[this.state.definedRange.selection]}
+            onChange={this.handleRangeChange.bind(this, 'definedRange')}
+            className={'centered'}
           />
         </Section>
       </main>
