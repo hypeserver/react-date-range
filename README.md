@@ -5,9 +5,9 @@
 [![npm](https://img.shields.io/npm/l/react-date-range.svg?style=flat-square)]()
 [![npm](https://img.shields.io/npm/dm/localeval.svg?style=flat-square)](https://www.npmjs.com/package/react-date-range)
 
-⚠️ Warning: the current branch represents v2 pre-release version. See [v1 branch](https://github.com/Adphorus/react-date-range/tree/v1).
+> ⚠️ Warning: the current branch represents the new pre-release version. [Legacy version](https://github.com/Adphorus/react-date-range/tree/v1) deprecated.
 
-A library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
+A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
 
 ### Why should you use `react-date-range`?
 
@@ -20,7 +20,7 @@ A library agnostic React component for choosing dates and date ranges. Uses [dat
 
 **Live Demo :** [http://adphorus.github.io/react-date-range](http://adphorus.github.io/react-date-range)
 
-![](https://raw.githubusercontent.com/Adphorus/react-date-range/next/demo/assets/src/ss.png)
+![](https://raw.githubusercontent.com/Adphorus/react-date-range/next/demo/assets/ss.png)
 
 
 ## Getting Started
@@ -36,85 +36,91 @@ $ npm install --save react-date-range@next
 ```
 
 ## Usage
-### Date Picker
-```javascript
-import React, { Component } from 'react';
-import { Calendar } from 'react-date-range';
-// main style file
-import 'react-date-range/dist/styles.css';
-// theme css file
-import 'react-date-range/dist/theme/default.css';
 
+You need to import skeleton and theme styles first.
+
+```javascript
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+```
+
+### `DatePicker`
+```javascript
+import { Calendar } from 'react-date-range';
 
 class MyComponent extends Component {
 	handleSelect(date){
 		console.log(date); // native Date object
 	}
-
 	render(){
 		return (
-			<div>
-				<Calendar
-					date={new Date()}
-					onChange={this.handleSelect}
-				/>
-			</div>
+			<Calendar
+				date={new Date()}
+				onChange={this.handleSelect}
+			/>
 		)
 	}
 }
 
 ```
 
-### Range Picker
+### `DateRangePicker / DateRange`
 ```javascript
-import React, { Component } from 'react';
-import { DateRange } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
 
 class MyComponent extends Component {
-	handleSelect(range){
-		console.log(range);
-		// An object with two keys,
-		// 'startDate' and 'endDate' which are Momentjs objects.
+	handleSelect(ranges){
+		console.log(ranges);
+		// {
+		// 	selection: {
+		// 		startDate: [native Date Object],
+		// 		endDate: [native Date Object],
+		// 	}
+		// }
 	}
-
 	render(){
+		const selectionRange = {
+			startDate: new Date(),
+			endDate: new Date(),
+			key: 'selection',
+		}
 		return (
-			<div>
-				<DateRange
-					onInit={this.handleSelect}
-					onChange={this.handleSelect}
-				/>
-			</div>
+			<DateRangePicker
+				ranges={[selectionRange]}
+				onChange={this.handleSelect}
+			/>
 		)
 	}
 }
 
 ```
-### Options (DateRange, Calendar)
+
+### Options
+
 Property                             | type      | Default Value    | Desctiption
 -------------------------------------|-----------|------------------|-----------------------------------------------------------------
 locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/v2.0.0-alpha.7/docs/I18n#supported-languages).
 className                            | String    |                  | wrapper classname
 months                               | Number    | 1                | rendered month count
 showSelectionPreview                 | Boolean   | true             | show preview on focused/hovered dates
-previewColor                         | String    |                  | defines color for selection preview
+rangeColors                          | String[]  |                  | defines color for selection preview.
 shownDate                            | Date      |                  | initial focus date
-specialDays                          | Date[]    | []               | defines special days
-onPreviewChange                      | Func      |                  | callback for preview changes. fn()
 minDate                              | Date      |                  | defines minimum date. Disabled earlier dates
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
-direction                            | String    | 'vertical'                 | defines maximum date. Disabled later dates
+direction                            | String    | 'vertical'       | direction of calendar months. can be `vertical` or `horizontal`
 scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Checkout [Infinite Scroll](#infinite-scrolled-mode) section 
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
+ranges                               | *Object[] | []               | Defines ranges. array of range object
+moveRangeOnFirstSelection(DateRange) | Boolean   | false            | move range on startDate selection. Otherwise endDate will replace with startDate.
 onChange(Calendar)                   | Func      |                  | callback function for date changes. fn(date: Date)
+onChange(DateRange)                  | Func      |                  | callback function for range changes. fn(changes). changes contains changed ranges with new `startDate`/`endDate` properties.
 color(Calendar)                      | String    | `#3d91ff`        | defines color for selected date in Calendar
 date(Calendar)                       | Date      |                  | date value for Calendar
-onChange(DateRange)                  | Func      |                  | callback function for range changes. fn(changes). changes contains `startDate` and `endDate` under an object key of changed range
-moveRangeOnFirstSelection(DateRange) | Boolean   | false            | move range on startDate selection. Otherwise endDate will replace with startDate.
-ranges(Calendar)                     | *Object[] | []               | Defines ranges. array of range object
-showDateDisplay(DateRange)      | Boolean   | true             | show/hide selection display row. Uses `dateDisplayFormat` for formatter
+showDateDisplay(DateRange)           | Boolean   | true             | show/hide selection display row. Uses `dateDisplayFormat` for formatter
 dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected range preview formatter. checkout [date-fns's format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
+staticRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default preDefined ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
+inputRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default input ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
 
 
 > *shape of range:
@@ -126,7 +132,6 @@ dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected r
 >		key: PropTypes.string,
 >		autoFocus: PropTypes.bool,
 >		disabled: PropTypes.bool,
->		show: PropTypes.bool,
 >		showDateDisplay: PropTypes.bool,
 >	}
 >```
@@ -151,5 +156,7 @@ dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected r
 
 TODOs
 
-- make mobile friendly (integrate tap and swipe actions)
-- add complex booking customization example with exposed renderer props
+- Make mobile friendly (integrate tap and swipe actions)
+- Add complex booking customization example with exposed dayRenderer prop
+- Add tests
+- Improve documentation
