@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/l/react-date-range.svg?style=flat-square)]()
 [![npm](https://img.shields.io/npm/dm/localeval.svg?style=flat-square)](https://www.npmjs.com/package/react-date-range)
 
-> ⚠️ Warning: the current branch represents the new pre-release version. [Legacy version](https://github.com/Adphorus/react-date-range/tree/v1) deprecated.
+> ⚠️ Warning: the current branch represents the new pre-release version. [Legacy version](https://github.com/Adphorus/react-date-range/tree/v0) deprecated.
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
 
