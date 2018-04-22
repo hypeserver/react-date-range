@@ -11,7 +11,7 @@ import {
   isBefore,
   isSameDay,
   isAfter,
-  isSunday,
+  isWeekend,
   isWithinInterval,
   eachDayOfInterval,
 } from 'date-fns';
@@ -43,9 +43,6 @@ class Month extends PureComponent {
     let ranges = this.props.ranges;
     if (displayMode === 'dateRange' && drag.status) {
       let { startDate, endDate } = drag.range;
-      if (isBefore(endDate, startDate)) {
-        [startDate, endDate] = [endDate, startDate];
-      }
       ranges = ranges.map((range, i) => {
         if (i !== focusedRange[0]) return range;
         return {
@@ -77,7 +74,7 @@ class Month extends PureComponent {
                   ranges={ranges}
                   day={day}
                   preview={showPreview ? this.props.preview : null}
-                  isSunday={isSunday(day)}
+                  isWeekend={isWeekend(day, this.props.dateOptions)}
                   isToday={isSameDay(day, now)}
                   isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
                   isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
