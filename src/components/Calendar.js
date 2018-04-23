@@ -41,6 +41,7 @@ class Calendar extends PureComponent {
     this.renderMonthAndYear = this.renderMonthAndYear.bind(this);
     this.updatePreview = this.updatePreview.bind(this);
     this.estimateMonthSize = this.estimateMonthSize.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
     this.dateOptions = { locale: props.locale };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
@@ -132,8 +133,8 @@ class Calendar extends PureComponent {
     }
   }
   changeShownDate(value, mode = 'set') {
-    const {focusedDate} = this.state;
-    const {onShownDateChange, minDate, maxDate} = this.props;
+    const { focusedDate } = this.state;
+    const { onShownDateChange, minDate, maxDate } = this.props;
     const modeMapper = {
       monthOffset: () => addMonths(focusedDate, value),
       setMonth: () => setMonth(focusedDate, value),
@@ -142,10 +143,22 @@ class Calendar extends PureComponent {
     };
     const newDate = min([max([modeMapper[mode](), minDate]), maxDate]);
     this.focusToDate(newDate, this.props, false);
-    onShownDateChange && onShownDateChange(newDate)
+    onShownDateChange && onShownDateChange(newDate);
   }
   handleRangeFocusChange(rangesIndex, rangeItemIndex) {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange([rangesIndex, rangeItemIndex]);
+  }
+  handleScroll() {
+    const { onShownDateChange, minDate } = this.props;
+    const visibleMonths = this.list.getVisibleRange();
+    // prevent scroll jump with wrong visible value
+    if (visibleMonths[0] === undefined) return;
+    const visibleMonth = addMonths(minDate, visibleMonths[0] || 0);
+    const isFocusedToDifferent = !isSameMonth(visibleMonth, this.state.focusedDate);
+    if (isFocusedToDifferent) {
+      this.setState({ focusedDate: visibleMonth });
+      onShownDateChange && onShownDateChange(visibleMonth);
+    }
   }
   renderMonthAndYear(focusedDate, changeShownDate, props) {
     const { showMonthArrow, locale, minDate, maxDate } = props;
@@ -355,14 +368,7 @@ class Calendar extends PureComponent {
                 width: scrollArea.calendarWidth + 11,
                 height: scrollArea.calendarHeight + 11,
               }}
-              onScroll={() => {
-                const visibleMonths = this.list.getVisibleRange();
-                // prevent scroll jump with wrong visible value
-                if (visibleMonths[0] === undefined) return;
-                const visibleMonth = addMonths(minDate, visibleMonths[0] || 0);
-                const isFocusedToDifferent = !isSameMonth(visibleMonth, focusedDate);
-                if (isFocusedToDifferent) this.setState({ focusedDate: visibleMonth });
-              }}>
+              onScroll={this.handleScroll}>
               <ReactList
                 length={differenceInCalendarMonths(
                   endOfMonth(maxDate),
