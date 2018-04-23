@@ -132,15 +132,17 @@ class Calendar extends PureComponent {
     }
   }
   changeShownDate(value, mode = 'set') {
-    const focusedDate = this.state.focusedDate;
+    const {focusedDate} = this.state;
+    const {onShownDateChange, minDate, maxDate} = this.props;
     const modeMapper = {
       monthOffset: () => addMonths(focusedDate, value),
       setMonth: () => setMonth(focusedDate, value),
       setYear: () => setYear(focusedDate, value),
       set: () => value,
     };
-    const newDate = min([max([modeMapper[mode](), this.props.minDate]), this.props.maxDate]);
+    const newDate = min([max([modeMapper[mode](), minDate]), maxDate]);
     this.focusToDate(newDate, this.props, false);
+    onShownDateChange && onShownDateChange(newDate)
   }
   handleRangeFocusChange(rangesIndex, rangeItemIndex) {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange([rangesIndex, rangeItemIndex]);
@@ -470,6 +472,7 @@ Calendar.propTypes = {
   classNames: PropTypes.object,
   locale: PropTypes.object,
   shownDate: PropTypes.object,
+  onShownDateChange: PropTypes.func,
   ranges: PropTypes.arrayOf(rangeShape),
   preview: PropTypes.shape({
     startDate: PropTypes.object,
