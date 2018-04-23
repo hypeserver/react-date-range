@@ -118,6 +118,7 @@ onChange(DateRange)                  | Func      |                  | callback f
 color(Calendar)                      | String    | `#3d91ff`        | defines color for selected date in Calendar
 date(Calendar)                       | Date      |                  | date value for Calendar
 showDateDisplay(DateRange)           | Boolean   | true             | show/hide selection display row. Uses `dateDisplayFormat` for formatter
+onShownDateChange(DateRange,Calendar)| Function  |                  | Callback function that is called when the shown date changes
 initialFocusedRange(DateRange)       | Object    |                  | Initial value for focused range. See `focusedRange` for usage.
 focusedRange(DateRange)              | Object    |                  | It defines which range and step are focused. Common initial value is `[0, 0]`; first value is index of ranges, second one is which step on date range(startDate or endDate).
 onRangeFocusChange(DateRange)        | Object    |                  | Callback function for focus changes by user
