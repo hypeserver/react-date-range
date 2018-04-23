@@ -15,24 +15,21 @@ class DateRangePicker extends Component {
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
   render() {
-    const focusedRangeIndex = this.state.focusedRange[0];
+    const { focusedRange } = this.state;
     return (
       <div className={classnames(this.styles.dateRangePickerWrapper, this.props.className)}>
         <DefinedRange
+          focusedRange={focusedRange}
+          onPreviewChange={value => this.dateRange.updatePreview(value)}
           {...this.props}
-          range={this.props.ranges[focusedRangeIndex] || {}}
-          onPreviewChange={value => {
-            this.dateRange.updatePreview(value);
-          }}
-          focusedRangeIndex={focusedRangeIndex}
+          range={this.props.ranges[focusedRange[0]]}
           className={undefined}
         />
         <DateRange
-          {...this.props}
-          ref={t => {
-            this.dateRange = t;
-          }}
           onRangeFocusChange={focusedRange => this.setState({ focusedRange })}
+          focusedRange={focusedRange}
+          {...this.props}
+          ref={t => (this.dateRange = t)}
           className={undefined}
         />
       </div>

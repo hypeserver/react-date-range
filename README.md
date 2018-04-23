@@ -108,7 +108,7 @@ shownDate                            | Date      |                  | initial fo
 minDate                              | Date      |                  | defines minimum date. Disabled earlier dates
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
 direction                            | String    | 'vertical'       | direction of calendar months. can be `vertical` or `horizontal`
-scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Checkout [Infinite Scroll](#infinite-scrolled-mode) section 
+scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section 
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
 ranges                               | *Object[] | []               | Defines ranges. array of range object
@@ -118,7 +118,13 @@ onChange(DateRange)                  | Func      |                  | callback f
 color(Calendar)                      | String    | `#3d91ff`        | defines color for selected date in Calendar
 date(Calendar)                       | Date      |                  | date value for Calendar
 showDateDisplay(DateRange)           | Boolean   | true             | show/hide selection display row. Uses `dateDisplayFormat` for formatter
-dateDisplayFormat(DateRange)         | String    | `MMM D,YYYY`     | selected range preview formatter. checkout [date-fns's format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
+initialFocusedRange(DateRange)       | Object    |                  | Initial value for focused range. See `focusedRange` for usage.
+focusedRange(DateRange)              | Object    |                  | It defines which range and step are focused. Common initial value is `[0, 0]`; first value is index of ranges, second one is which step on date range(startDate or endDate).
+onRangeFocusChange(DateRange)        | Object    |                  | Callback function for focus changes by user
+preview(DateRange)                   | Object    |              | displays a preview range and overwrite DateRange's default preview. Expected shape: `{ startDate: Date, endDate: Date, color: String }`
+showPreview(DateRange)               | bool      | true             | visibility of preview
+onPreviewChange(DateRange)           | Object    |                  | Callback function for preview changes
+dateDisplayFormat(DateRange)         | String    | `MMM D, YYYY`    | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
 staticRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default preDefined ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
 inputRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default input ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
 
@@ -138,8 +144,8 @@ inputRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default input ranges
 
 #### Infinite Scrolled Mode
 
-	To enable infinite scroll set `scroll={{enabled: true}}` basically. Infinite scroll feature is affected by `direction`(rendering direction for months) and `months`(for rendered months count) props directly.
-	If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHeight` or each month's height/withs with `monthWidth`/`monthHeight`/`longMonthHeight` at `scroll` prop.
+To enable infinite scroll set `scroll={{enabled: true}}` basically. Infinite scroll feature is affected by `direction`(rendering direction for months) and `months`(for rendered months count) props directly.
+If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHeight` or each month's height/withs with `monthWidth`/`monthHeight`/`longMonthHeight` at `scroll` prop.
 
 ```js
 	// shape of scroll prop

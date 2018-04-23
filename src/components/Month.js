@@ -52,7 +52,7 @@ class Month extends PureComponent {
         };
       });
     }
-    const showPreview = this.props.showSelectionPreview && !drag.disablePreview;
+    const showPreview = this.props.showPreview && !drag.disablePreview;
     return (
       <div className={styles.month} style={this.props.style}>
         {this.props.showMonthName ? (
@@ -116,7 +116,7 @@ Month.propTypes = {
     startDate: PropTypes.object,
     endDate: PropTypes.object,
   }),
-  showSelectionPreview: PropTypes.bool,
+  showPreview: PropTypes.bool,
   displayMode: PropTypes.oneOf(['dateRange', 'date']),
   minDate: PropTypes.object,
   maxDate: PropTypes.object,

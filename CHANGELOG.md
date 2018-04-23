@@ -111,6 +111,7 @@ Momentjs: `moment(dateString).toDate()`
 - `disableDaysBeforeToday` prop removed. use `minDate={new Date()}` instead.
 - `firstDayOfWeek` prop removed. It is auto detecting from locale prop.
 - `init` prop removed.
+- `specialDays` prop removed.
 
 ### Added
 - `DefinedRanges` component: It's a set of date presets. Receives `inputRanges`, `staticRanges` for setting date ranges.
@@ -123,4 +124,16 @@ Momentjs: `moment(dateString).toDate()`
   <DateRangePicker scroll={horizontalScroll} />
   <DateRangePicker scroll={verticalScroll} months={2} />
 ```
-
+- `showPreview` prop added to control visibility of preview. Default value is `true`.
+- `preview` prop added: It displays a preview range and overwrite DateRange's default preview. You can set a controlled preview with below shape of object.
+```js
+{
+  startDate: [Date Object] || null,
+  endDate: [Date Object] || null,
+  color: '#fed14c',
+}
+```
+- `onPreviewChange(date)` prop added: Callback function for preview changes. You can set controlled custom previews with `preview` prop.
+- `focusedRange` prop added: It defines which range and step are focused. Common initial value is `[0, 0]`; first value is index of ranges, second value is which step on date range(startDate or endDate).
+- `initialFocusedRange` prop added: Initial value for focused range. See `focusedRange` for usage.
+- `onRangeFocusChange` prop added: Callback function for focus changes by user.
