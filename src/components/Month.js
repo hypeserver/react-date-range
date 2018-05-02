@@ -57,7 +57,7 @@ class Month extends PureComponent {
       <div className={styles.month} style={this.props.style}>
         {this.props.showMonthName ? (
           <div className={styles.monthName}>
-            {format(this.props.month, this.props.monthDisplayFormat)}
+            {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
           </div>
         ) : null}
         {this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions)}
