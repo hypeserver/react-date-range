@@ -164,6 +164,7 @@ class DayCell extends Component {
     const { styles } = this.props;
     return (
       <button
+        type="button"
         onMouseEnter={this.handleMouseEvent}
         onMouseLeave={this.handleMouseEvent}
         onFocus={this.handleMouseEvent}
