@@ -121,7 +121,7 @@ showDateDisplay(DateRange)           | Boolean   | true             | show/hide 
 onShownDateChange(DateRange,Calendar)| Function  |                  | Callback function that is called when the shown date changes
 initialFocusedRange(DateRange)       | Object    |                  | Initial value for focused range. See `focusedRange` for usage.
 focusedRange(DateRange)              | Object    |                  | It defines which range and step are focused. Common initial value is `[0, 0]`; first value is index of ranges, second one is which step on date range(startDate or endDate).
-onRangeFocusChange(DateRange)        | Object    |                  | Callback function for focus changes by user
+onRangeFocusChange(DateRange)        | Object    |                  | Callback function for focus changes
 preview(DateRange)                   | Object    |              | displays a preview range and overwrite DateRange's default preview. Expected shape: `{ startDate: Date, endDate: Date, color: String }`
 showPreview(DateRange)               | bool      | true             | visibility of preview
 onPreviewChange(DateRange)           | Object    |                  | Callback function for preview changes
