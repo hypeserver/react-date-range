@@ -272,7 +272,9 @@ class Calendar extends PureComponent {
     );
   }
   onDragSelectionStart(date) {
-    if (this.props.dragSelectionEnabled) {
+    const { onChange, dragSelectionEnabled } = this.props;
+
+    if (dragSelectionEnabled) {
       this.setState({
         drag: {
           status: true,
@@ -280,25 +282,30 @@ class Calendar extends PureComponent {
           disablePreview: true,
         },
       });
+    } else {
+      onChange && onChange(date);
     }
   }
+
   onDragSelectionEnd(date) {
     const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
 
-    if (!dragSelectionEnabled || displayMode === 'date' || !this.state.drag.status) {
-      onChange && onChange(date);
-      return;
-    }
-    const newRange = {
-      startDate: this.state.drag.range.startDate,
-      endDate: date,
-    };
-    if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
-      this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
-    } else {
-      this.setState({ drag: { status: false, range: {} } }, () => {
-        updateRange && updateRange(newRange);
-      });
+    if (dragSelectionEnabled) {
+      if (displayMode === 'date' || !this.state.drag.status) {
+        onChange && onChange(date);
+        return;
+      }
+      const newRange = {
+        startDate: this.state.drag.range.startDate,
+        endDate: date,
+      };
+      if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
+        this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
+      } else {
+        this.setState({ drag: { status: false, range: {} } }, () => {
+          updateRange && updateRange(newRange);
+        });
+      }
     }
   }
   onDragSelectionMove(date) {
