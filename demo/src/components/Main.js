@@ -165,7 +165,6 @@ export default class Main extends Component {
               months={2}
               ranges={[this.state.dateRangePicker.selection]}
               direction="horizontal"
-              dragSelectionEnabled={false}
             />
           </div>
         </Section>
