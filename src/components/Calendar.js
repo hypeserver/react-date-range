@@ -161,7 +161,7 @@ class Calendar extends PureComponent {
     }
   }
   renderMonthAndYear(focusedDate, changeShownDate, props) {
-    const { showMonthArrow, locale, minDate, maxDate } = props;
+    const { showMonthArrow, locale, minDate, maxDate, showMonthAndYearPickers } = props;
     const upperYearLimit = maxDate.getFullYear();
     const lowerYearLimit = minDate.getFullYear();
     const styles = this.styles;
@@ -175,34 +175,42 @@ class Calendar extends PureComponent {
             <i />
           </button>
         ) : null}
-        <span className={styles.monthAndYearPickers}>
-          <span className={styles.monthPicker}>
-            <select
-              value={focusedDate.getMonth()}
-              onChange={e => changeShownDate(e.target.value, 'setMonth')}>
-              {locale.localize.months().map((month, i) => (
-                <option key={i} value={i}>
-                  {month}
-                </option>
-              ))}
-            </select>
-          </span>
-          <span className={styles.monthAndYearDivider} />
-          <span className={styles.yearPicker}>
-            <select
-              value={focusedDate.getFullYear()}
-              onChange={e => changeShownDate(e.target.value, 'setYear')}>
-              {new Array(upperYearLimit - lowerYearLimit + 1).fill(upperYearLimit).map((val, i) => {
-                const year = val - i;
-                return (
-                  <option key={year} value={year}>
-                    {year}
+        {showMonthAndYearPickers ? (
+          <span className={styles.monthAndYearPickers}>
+            <span className={styles.monthPicker}>
+              <select
+                value={focusedDate.getMonth()}
+                onChange={e => changeShownDate(e.target.value, 'setMonth')}>
+                {locale.localize.months().map((month, i) => (
+                  <option key={i} value={i}>
+                    {month}
                   </option>
-                );
-              })}
-            </select>
+                ))}
+              </select>
+            </span>
+            <span className={styles.monthAndYearDivider} />
+            <span className={styles.yearPicker}>
+              <select
+                value={focusedDate.getFullYear()}
+                onChange={e => changeShownDate(e.target.value, 'setYear')}>
+                {new Array(upperYearLimit - lowerYearLimit + 1)
+                  .fill(upperYearLimit)
+                  .map((val, i) => {
+                    const year = val - i;
+                    return (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    );
+                  })}
+              </select>
+            </span>
           </span>
-        </span>
+        ) : (
+          <span className={styles.monthAndYearPickers}>
+            {locale.localize.months()[focusedDate.getMonth()]} {focusedDate.getFullYear()}
+          </span>
+        )}
         {showMonthArrow ? (
           <button
             type="button"
@@ -447,6 +455,7 @@ class Calendar extends PureComponent {
 
 Calendar.defaultProps = {
   showMonthArrow: true,
+  showMonthAndYearPickers: true,
   classNames: {},
   locale: defaultLocale,
   ranges: [],
@@ -469,6 +478,7 @@ Calendar.defaultProps = {
 
 Calendar.propTypes = {
   showMonthArrow: PropTypes.bool,
+  showMonthAndYearPickers: PropTypes.bool,
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
   date: PropTypes.object,

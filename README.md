@@ -103,12 +103,13 @@ locale                               | Object    | enUS from locale | you can vi
 className                            | String    |                  | wrapper classname
 months                               | Number    | 1                | rendered month count
 showSelectionPreview                 | Boolean   | true             | show preview on focused/hovered dates
+showMonthAndYearPickers              | Boolean   | true             | show select tags for month and year on calendar top, if false it will just display the month and year
 rangeColors                          | String[]  |                  | defines color for selection preview.
 shownDate                            | Date      |                  | initial focus date
 minDate                              | Date      |                  | defines minimum date. Disabled earlier dates
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
 direction                            | String    | 'vertical'       | direction of calendar months. can be `vertical` or `horizontal`
-scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section 
+scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
 ranges                               | *Object[] | []               | Defines ranges. array of range object
@@ -151,7 +152,7 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
 ```js
 	// shape of scroll prop
   scroll: {
-    enabled: PropTypes.bool, 
+    enabled: PropTypes.bool,
     monthHeight: PropTypes.number,
     longMonthHeight: PropTypes.number, // some months has 1 more row than others
     monthWidth: PropTypes.number, // just used when direction="horizontal"
