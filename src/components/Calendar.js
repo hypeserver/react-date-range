@@ -290,36 +290,34 @@ class Calendar extends PureComponent {
   onDragSelectionEnd(date) {
     const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
 
-    if (dragSelectionEnabled) {
-      if (displayMode === 'date' || !this.state.drag.status) {
-        onChange && onChange(date);
-        return;
-      }
-      const newRange = {
-        startDate: this.state.drag.range.startDate,
-        endDate: date,
-      };
-      if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
-        this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
-      } else {
-        this.setState({ drag: { status: false, range: {} } }, () => {
-          updateRange && updateRange(newRange);
-        });
-      }
+    if (!dragSelectionEnabled) return;
+
+    if (displayMode === 'date' || !this.state.drag.status) {
+      onChange && onChange(date);
+      return;
+    }
+    const newRange = {
+      startDate: this.state.drag.range.startDate,
+      endDate: date,
+    };
+    if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
+      this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
+    } else {
+      this.setState({ drag: { status: false, range: {} } }, () => {
+        updateRange && updateRange(newRange);
+      });
     }
   }
   onDragSelectionMove(date) {
-    if (this.props.dragSelectionEnabled) {
-      const { drag } = this.state;
-      if (!drag.status) return;
-      this.setState({
-        drag: {
-          status: drag.status,
-          range: { startDate: drag.range.startDate, endDate: date },
-          disablePreview: true,
-        },
-      });
-    }
+    const { drag } = this.state;
+    if (!drag.status || !this.props.dragSelectionEnabled) return;
+    this.setState({
+      drag: {
+        status: drag.status,
+        range: { startDate: drag.range.startDate, endDate: date },
+        disablePreview: true,
+      },
+    });
   }
 
   estimateMonthSize(index, cache) {
