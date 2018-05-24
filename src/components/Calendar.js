@@ -272,17 +272,20 @@ class Calendar extends PureComponent {
     );
   }
   onDragSelectionStart(date) {
-    this.setState({
-      drag: {
-        status: true,
-        range: { startDate: date, endDate: date },
-        disablePreview: true,
-      },
-    });
+    if (this.props.dragSelectionEnabled) {
+      this.setState({
+        drag: {
+          status: true,
+          range: { startDate: date, endDate: date },
+          disablePreview: true,
+        },
+      });
+    }
   }
   onDragSelectionEnd(date) {
-    const { updateRange, displayMode, onChange } = this.props;
-    if (displayMode === 'date' || !this.state.drag.status) {
+    const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
+
+    if (!dragSelectionEnabled || displayMode === 'date' || !this.state.drag.status) {
       onChange && onChange(date);
       return;
     }
@@ -299,15 +302,17 @@ class Calendar extends PureComponent {
     }
   }
   onDragSelectionMove(date) {
-    const { drag } = this.state;
-    if (!drag.status) return;
-    this.setState({
-      drag: {
-        status: drag.status,
-        range: { startDate: drag.range.startDate, endDate: date },
-        disablePreview: true,
-      },
-    });
+    if (this.props.dragSelectionEnabled) {
+      const { drag } = this.state;
+      if (!drag.status) return;
+      this.setState({
+        drag: {
+          status: drag.status,
+          range: { startDate: drag.range.startDate, endDate: date },
+          disablePreview: true,
+        },
+      });
+    }
   }
 
   estimateMonthSize(index, cache) {
@@ -465,6 +470,7 @@ Calendar.defaultProps = {
   maxDate: addYears(new Date(), 20),
   minDate: addYears(new Date(), -100),
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+  dragSelectionEnabled: true,
 };
 
 Calendar.propTypes = {
@@ -507,6 +513,7 @@ Calendar.propTypes = {
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
   navigatorRenderer: PropTypes.func,
   rangeColors: PropTypes.arrayOf(PropTypes.string),
+  dragSelectionEnabled: PropTypes.bool,
 };
 
 export default Calendar;
