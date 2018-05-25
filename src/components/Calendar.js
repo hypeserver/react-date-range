@@ -166,7 +166,7 @@ class Calendar extends PureComponent {
     const lowerYearLimit = minDate.getFullYear();
     const styles = this.styles;
     return (
-      <div className={styles.monthAndYearWrapper}>
+      <div onMouseUp={e => e.stopPropagation()} className={styles.monthAndYearWrapper}>
         {showMonthArrow ? (
           <button
             type="button"
