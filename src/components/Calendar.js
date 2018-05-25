@@ -280,16 +280,26 @@ class Calendar extends PureComponent {
     );
   }
   onDragSelectionStart(date) {
-    this.setState({
-      drag: {
-        status: true,
-        range: { startDate: date, endDate: date },
-        disablePreview: true,
-      },
-    });
+    const { onChange, dragSelectionEnabled } = this.props;
+
+    if (dragSelectionEnabled) {
+      this.setState({
+        drag: {
+          status: true,
+          range: { startDate: date, endDate: date },
+          disablePreview: true,
+        },
+      });
+    } else {
+      onChange && onChange(date);
+    }
   }
+
   onDragSelectionEnd(date) {
-    const { updateRange, displayMode, onChange } = this.props;
+    const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
+
+    if (!dragSelectionEnabled) return;
+
     if (displayMode === 'date' || !this.state.drag.status) {
       onChange && onChange(date);
       return;
@@ -308,7 +318,7 @@ class Calendar extends PureComponent {
   }
   onDragSelectionMove(date) {
     const { drag } = this.state;
-    if (!drag.status) return;
+    if (!drag.status || !this.props.dragSelectionEnabled) return;
     this.setState({
       drag: {
         status: drag.status,
@@ -474,6 +484,7 @@ Calendar.defaultProps = {
   maxDate: addYears(new Date(), 20),
   minDate: addYears(new Date(), -100),
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+  dragSelectionEnabled: true,
 };
 
 Calendar.propTypes = {
@@ -517,6 +528,7 @@ Calendar.propTypes = {
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
   navigatorRenderer: PropTypes.func,
   rangeColors: PropTypes.arrayOf(PropTypes.string),
+  dragSelectionEnabled: PropTypes.bool,
 };
 
 export default Calendar;
