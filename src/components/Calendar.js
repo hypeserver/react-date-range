@@ -166,7 +166,7 @@ class Calendar extends PureComponent {
     const lowerYearLimit = minDate.getFullYear();
     const styles = this.styles;
     return (
-      <div className={styles.monthAndYearWrapper}>
+      <div onMouseUp={e => e.stopPropagation()} className={styles.monthAndYearWrapper}>
         {showMonthArrow ? (
           <button
             type="button"
@@ -367,7 +367,9 @@ class Calendar extends PureComponent {
     return (
       <div
         className={classnames(this.styles.calendarWrapper, this.props.className)}
-        onMouseUp={() => this.setState({ drag: { status: false, range: {} } })}
+        onMouseUp={e => {
+          this.setState({ drag: { status: false, range: {} } });
+        }}
         onMouseLeave={() => {
           this.setState({ drag: { status: false, range: {} } });
         }}>
@@ -418,7 +420,10 @@ class Calendar extends PureComponent {
                       style={
                         isVertical
                           ? { height: this.estimateMonthSize(index) }
-                          : { height: scrollArea.monthHeight, width: this.estimateMonthSize(index) }
+                          : {
+                              height: scrollArea.monthHeight,
+                              width: this.estimateMonthSize(index),
+                            }
                       }
                       showMonthName
                       showWeekDays={!isVertical}
