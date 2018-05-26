@@ -137,3 +137,5 @@ Momentjs: `moment(dateString).toDate()`
 - `focusedRange` prop added: It defines which range and step are focused. Common initial value is `[0, 0]`; first value is index of ranges, second value is which step on date range(startDate or endDate).
 - `initialFocusedRange` prop added: Initial value for focused range. See `focusedRange` for usage.
 - `onRangeFocusChange` prop added: Callback function for focus changes by user.
+- `dragSelectionEnabled` prop added
+- `showMonthAndYearPickers` prop added
