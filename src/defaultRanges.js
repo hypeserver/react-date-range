@@ -27,25 +27,18 @@ const defineds = {
 };
 
 const staticRangeHandler = {
-  get: (obj, prop) => {
-    const checkIsSelected = range => {
-      const definedRange = obj.range();
-      return (
-        isSameDay(range.startDate, definedRange.startDate) &&
-        isSameDay(range.endDate, definedRange.endDate)
-      );
-    };
-    switch (prop) {
-      case 'isSelected':
-        return obj[prop] || checkIsSelected;
-      default:
-        return obj[prop];
-    }
+  range: {},
+  isSelected(range) {
+    const definedRange = this.range();
+    return (
+      isSameDay(range.startDate, definedRange.startDate) &&
+      isSameDay(range.endDate, definedRange.endDate)
+    );
   },
 };
 
 export function createStaticRanges(ranges) {
-  return ranges.map(range => new Proxy(range, staticRangeHandler));
+  return ranges.map(range => ({ ...staticRangeHandler, ...range }));
 }
 
 export const defaultStaticRanges = createStaticRanges([
