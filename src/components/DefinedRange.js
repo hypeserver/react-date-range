@@ -33,11 +33,7 @@ class DefinedRanges extends Component {
   render() {
     const { onPreviewChange, ranges, rangeColors, className } = this.props;
     return (
-      <div
-        className={cx(styles.definedRangesWrapper, className)}
-        onMouseLeave={() => {
-          this.props.onPreviewChange && this.props.onPreviewChange();
-        }}>
+      <div className={cx(styles.definedRangesWrapper, className)}>
         {this.props.headerContent}
         <div className={styles.staticRanges}>
           {this.props.staticRanges.map((staticRange, i) => {
@@ -57,7 +53,10 @@ class DefinedRanges extends Component {
                 onFocus={() => onPreviewChange && onPreviewChange(staticRange.range(this.props))}
                 onMouseOver={() =>
                   onPreviewChange && onPreviewChange(staticRange.range(this.props))
-                }>
+                }
+                onMouseLeave={() => {
+                  this.props.onPreviewChange && this.props.onPreviewChange();
+                }}>
                 <span tabIndex={-1} className={styles.staticRangeLabel}>
                   {staticRange.label}
                 </span>
