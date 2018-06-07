@@ -55,6 +55,7 @@ class DayCell extends Component {
         this.props.onMouseDown(day);
         break;
       case 'mouseup':
+      case 'touchstart':
         event.stopPropagation();
         stateChanges.active = false;
         this.props.onMouseUp(day);
@@ -174,6 +175,7 @@ class DayCell extends Component {
         onPauseCapture={this.handleMouseEvent}
         onKeyDown={this.handleKeyEvent}
         onKeyUp={this.handleKeyEvent}
+        onTouchStart={this.handleMouseEvent}
         className={this.getClassNames(styles)}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
         style={{ color: this.props.color }}>
