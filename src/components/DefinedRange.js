@@ -40,6 +40,7 @@ class DefinedRanges extends Component {
             const { selectedRange, focusedRangeIndex } = this.getSelectedRange(ranges, staticRange);
             return (
               <button
+                type="button"
                 className={cx(styles.staticRange, {
                   [styles.staticRangeSelected]: Boolean(selectedRange),
                 })}
