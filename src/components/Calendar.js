@@ -401,8 +401,6 @@ class Calendar extends PureComponent {
                 axis={isVertical ? 'y' : 'x'}
                 itemRenderer={(index, key) => {
                   const monthStep = addMonths(minDate, index);
-                  let tomorrow = new Date();
-                  tomorrow.setDate(tomorrow.getDate + 1);
                   return (
                     <Month
                       {...this.props}
@@ -440,8 +438,6 @@ class Calendar extends PureComponent {
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
               const monthStep = addMonths(this.state.focusedDate, i);
-              let tomorrow = new Date();
-              tomorrow.setDate(tomorrow.getDate + 1);
               return (
                 <Month
                   {...this.props}
