@@ -346,6 +346,7 @@ export default class Main extends Component {
             ranges={[this.state.dateRangeWithDisabled.selection]}
             className={'PreviewArea'}
             disabledDates={[Date()]}
+            minDate={new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000)}
           />
         </Section>
       </main>
