@@ -116,7 +116,7 @@ class Calendar extends PureComponent {
       setTimeout(() => this.focusToDate(this.state.focusedDate), 1);
     }
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const propMapper = {
       dateRange: 'ranges',
       date: 'date',
@@ -351,6 +351,7 @@ class Calendar extends PureComponent {
       onPreviewChange,
       scroll,
       direction,
+      disabledDates,
       maxDate,
       minDate,
       rangeColors,
@@ -400,6 +401,8 @@ class Calendar extends PureComponent {
                 axis={isVertical ? 'y' : 'x'}
                 itemRenderer={(index, key) => {
                   const monthStep = addMonths(minDate, index);
+                  let tomorrow = new Date();
+                  tomorrow.setDate(tomorrow.getDate + 1);
                   return (
                     <Month
                       {...this.props}
@@ -409,6 +412,7 @@ class Calendar extends PureComponent {
                       key={key}
                       drag={this.state.drag}
                       dateOptions={this.dateOptions}
+                      disabledDates={disabledDates}
                       month={monthStep}
                       onDragSelectionStart={this.onDragSelectionStart}
                       onDragSelectionEnd={this.onDragSelectionEnd}
@@ -436,6 +440,8 @@ class Calendar extends PureComponent {
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
               const monthStep = addMonths(this.state.focusedDate, i);
+              let tomorrow = new Date();
+              tomorrow.setDate(tomorrow.getDate + 1);
               return (
                 <Month
                   {...this.props}
@@ -445,6 +451,7 @@ class Calendar extends PureComponent {
                   key={i}
                   drag={this.state.drag}
                   dateOptions={this.dateOptions}
+                  disabledDates={disabledDates}
                   month={monthStep}
                   onDragSelectionStart={this.onDragSelectionStart}
                   onDragSelectionEnd={this.onDragSelectionEnd}
@@ -466,6 +473,7 @@ class Calendar extends PureComponent {
 Calendar.defaultProps = {
   showMonthArrow: true,
   showMonthAndYearPickers: true,
+  disabledDates: [],
   classNames: {},
   locale: defaultLocale,
   ranges: [],
@@ -490,6 +498,7 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   showMonthArrow: PropTypes.bool,
   showMonthAndYearPickers: PropTypes.bool,
+  disabledDates: PropTypes.array,
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
   date: PropTypes.object,

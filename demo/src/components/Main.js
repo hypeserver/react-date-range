@@ -72,6 +72,13 @@ export default class Main extends Component {
           key: 'selection',
         },
       },
+      dateRangeWithDisabled: {
+        selection: {
+          startDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+          endDate: null,
+          key: 'selection',
+        },
+      },
       definedRange: {
         selection: {
           startDate: new Date(),
@@ -314,6 +321,31 @@ export default class Main extends Component {
             ranges={[this.state.definedRange.selection]}
             onChange={this.handleRangeChange.bind(this, 'definedRange')}
             className={'centered'}
+          />
+        </Section>
+        <Section title="RangePicker with disabled dates">
+          <div>
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(this.state.dateRangeWithDisabled.selection.startDate)}
+            />
+            <input
+              type="text"
+              readOnly
+              value={formatDateDisplay(
+                this.state.dateRangeWithDisabled.selection.endDate,
+                'Continuous'
+              )}
+            />
+          </div>
+
+          <DateRange
+            onChange={this.handleRangeChange.bind(this, 'dateRangeWithDisabled')}
+            moveRangeOnFirstSelection={false}
+            ranges={[this.state.dateRangeWithDisabled.selection]}
+            className={'PreviewArea'}
+            disabledDates={[Date()]}
           />
         </Section>
       </main>
