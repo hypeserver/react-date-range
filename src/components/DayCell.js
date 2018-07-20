@@ -1,10 +1,10 @@
 /* eslint-disable no-fallthrough */
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 
-class DayCell extends Component {
+class DayCell extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
@@ -121,6 +121,12 @@ class DayCell extends Component {
         <span className={styles.selected} style={{ color: this.props.color }} />
       ) : null;
     }
+    if (this.props.displayMode === 'multiDate') {
+      let isSelected = this.props.dates.some(date => isSameDay(this.props.day, date));
+      return isSelected ? (
+        <span className={styles.selected} style={{ color: this.props.color }} />
+      ) : null;
+    }
 
     const inRanges = ranges.reduce((result, range) => {
       let startDate = range.startDate;
@@ -202,6 +208,7 @@ export const rangeShape = PropTypes.shape({
 DayCell.propTypes = {
   day: PropTypes.object.isRequired,
   date: PropTypes.object,
+  dates: PropTypes.array,
   ranges: PropTypes.arrayOf(rangeShape),
   preview: PropTypes.shape({
     startDate: PropTypes.object,
@@ -218,7 +225,7 @@ DayCell.propTypes = {
   isStartOfMonth: PropTypes.bool,
   isEndOfMonth: PropTypes.bool,
   color: PropTypes.string,
-  displayMode: PropTypes.oneOf(['dateRange', 'date']),
+  displayMode: PropTypes.oneOf(['dateRange', 'date', 'multiDate']),
   styles: PropTypes.object,
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,

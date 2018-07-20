@@ -134,6 +134,7 @@ class DateRange extends Component {
 DateRange.defaultProps = {
   classNames: {},
   ranges: [],
+  dates: [],
   moveRangeOnFirstSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: [],
