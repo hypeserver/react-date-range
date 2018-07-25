@@ -110,7 +110,7 @@ export default class Main extends Component {
           autoFocus: false,
         },
       },
-      datePickerInternational: null,
+      datePickerInternational: new Date(),
       locale: 'ja',
       dateRangePicker: {
         selection: {

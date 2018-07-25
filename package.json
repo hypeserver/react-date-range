@@ -39,7 +39,7 @@
     "react-list": "^0.8.8"
   },
   "peerDependencies": {
-    "react": "^0.14 || ^15.0.0-rc || >=15.0"
+    "react": "^0.14 || ^15.0.0-rc || >=15.0 || ^16.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.4",
