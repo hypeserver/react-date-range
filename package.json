@@ -65,6 +65,7 @@
     "jest": "^22.1.4",
     "normalize.css": "^7.0.0",
     "postcss": "^7.0.1",
+    "postcss-cli": "^6.0.0",
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.10",
     "precss": "^2.0.0",
