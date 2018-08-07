@@ -109,6 +109,7 @@ shownDate                            | Date      |                  | initial fo
 minDate                              | Date      |                  | defines minimum date. Disabled earlier dates
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
 direction                            | String    | 'vertical'       | direction of calendar months. can be `vertical` or `horizontal`
+disabledDates                        | Date[]    | []               | dates that are disabled
 scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
