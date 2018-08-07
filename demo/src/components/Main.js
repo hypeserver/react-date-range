@@ -74,7 +74,7 @@ export default class Main extends Component {
       },
       dateRangeWithDisabled: {
         selection: {
-          startDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+          startDate: addDays(new Date(), 4),
           endDate: null,
           key: 'selection',
         },
@@ -345,8 +345,8 @@ export default class Main extends Component {
             moveRangeOnFirstSelection={false}
             ranges={[this.state.dateRangeWithDisabled.selection]}
             className={'PreviewArea'}
-            disabledDates={[new Date()]}
-            minDate={new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000)}
+            disabledDates={[new Date(), addDays(new Date(), 3)]}
+            minDate={addDays(new Date(), -3)}
           />
         </Section>
       </main>

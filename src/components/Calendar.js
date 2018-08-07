@@ -116,7 +116,7 @@ class Calendar extends PureComponent {
       setTimeout(() => this.focusToDate(this.state.focusedDate), 1);
     }
   }
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     const propMapper = {
       dateRange: 'ranges',
       date: 'date',
