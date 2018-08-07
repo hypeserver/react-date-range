@@ -114,6 +114,7 @@ Momentjs: `moment(dateString).toDate()`
 - `specialDays` prop removed.
 
 ### Added
+- `disabledDates` prop: It's a set of disabled dates.
 - `DefinedRanges` component: It's a set of date presets. Receives `inputRanges`, `staticRanges` for setting date ranges.
 - `DateRangePicker` component. It's combined version of `DateRange` with `DefinedRanges` component.
 - Date range selection by drag.
