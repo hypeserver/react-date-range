@@ -172,7 +172,7 @@
   }
 }
 
-.rdrDayToday {
+.rdrDayToday:not(.rdrDayPassive) {
   .rdrInRange, .rdrStartEdge, .rdrEndEdge, .rdrSelected{
     & ~ .rdrDayNumber span:after{
       background: #fff;
