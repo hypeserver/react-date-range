@@ -131,7 +131,8 @@ onPreviewChange(DateRange)           | Object    |                  | Callback f
 dateDisplayFormat(DateRange)         | String    | `MMM D, YYYY`    | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
 staticRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default preDefined ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
 inputRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default input ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
-
+cellInfo														 | array     |                  | 
+cellInfoClassName										 | String    |                  |
 
  *shape of range:
  ```js
