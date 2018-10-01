@@ -146,6 +146,10 @@ export default class Main extends Component {
   }
 
   render() {
+    const cellInfo = [
+      { date: addDays(new Date(), 1), value: '$ 20' },
+      { date: addDays(new Date(), 2), value: '$ 120' },
+    ];
     return (
       <main className={'Main'}>
         <h1 className={'Title'}>React-date-range</h1>
@@ -347,6 +351,8 @@ export default class Main extends Component {
             className={'PreviewArea'}
             disabledDates={[new Date(), addDays(new Date(), 3)]}
             minDate={addDays(new Date(), -3)}
+            cellInfo={cellInfo}
+            cellInfoClassName="abc"
           />
         </Section>
       </main>

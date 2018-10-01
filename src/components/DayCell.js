@@ -161,7 +161,13 @@ class DayCell extends Component {
     ));
   }
   render() {
-    const { styles } = this.props;
+    const { styles, cellInfoClassName, cellInfo } = this.props;
+    let dayInfo = [];
+    if (this.props && this.props !== 'undefined' && cellInfo) {
+      dayInfo = this.props.cellInfo.filter(data => {
+        return isSameDay(new Date(data.date), new Date(this.props.day));
+      });
+    }
     return (
       <button
         type="button"
@@ -182,6 +188,13 @@ class DayCell extends Component {
         <span className={styles.dayNumber}>
           <span>{format(this.props.day, 'D')}</span>
         </span>
+        {dayInfo.length > 0 && (
+          <span
+            className={cellInfoClassName}
+            style={{ display: 'inline-block', marginTop: '15px' }}>
+            {dayInfo[0].value}
+          </span>
+        )}
       </button>
     );
   }
@@ -223,6 +236,8 @@ DayCell.propTypes = {
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
   onMouseEnter: PropTypes.func,
+  cellInfo: PropTypes.array,
+  cellInfoClassName: PropTypes.string,
 };
 
 export default DayCell;
