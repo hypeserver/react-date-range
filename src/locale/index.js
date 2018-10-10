@@ -14,6 +14,7 @@ export { default as fil } from './fil.js';
 export { default as fr } from './fr.js';
 export { default as frCH } from './fr-CH.js';
 export { default as hr } from './hr.js';
+export { default as hu } from './hu.js';
 export { default as id } from './id.js';
 export { default as is } from './is.js';
 export { default as it } from './it.js';
