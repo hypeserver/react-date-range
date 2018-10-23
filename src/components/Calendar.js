@@ -42,16 +42,17 @@ class Calendar extends PureComponent {
     this.updatePreview = this.updatePreview.bind(this);
     this.estimateMonthSize = this.estimateMonthSize.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    this.dateOptions = { locale: props.locale };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
     this.state = {
+      dateOptions: { locale: props.locale },
       focusedDate: calcFocusDate(null, props),
       drag: {
         status: false,
         range: { startDate: null, endDate: null },
         disablePreview: false,
       },
+      scroll: 0,
       scrollArea: this.calcScrollArea(props),
     };
   }
@@ -114,22 +115,6 @@ class Calendar extends PureComponent {
     if (this.props.scroll.enabled) {
       // prevent react-list's initial render focus problem
       setTimeout(() => this.focusToDate(this.state.focusedDate), 1);
-    }
-  }
-  componentWillReceiveProps(nextProps) {
-    const propMapper = {
-      dateRange: 'ranges',
-      date: 'date',
-    };
-    const targetProp = propMapper[nextProps.displayMode];
-    if (this.props.locale !== nextProps.locale) {
-      this.dateOptions = { locale: nextProps.locale };
-    }
-    if (JSON.stringify(this.props.scroll) !== JSON.stringify(nextProps.scroll)) {
-      this.setState({ scrollArea: this.calcScrollArea(nextProps) });
-    }
-    if (nextProps[targetProp] !== this.props[targetProp]) {
-      this.updateShownDate(nextProps);
     }
   }
   changeShownDate(value, mode = 'set') {
@@ -490,6 +475,30 @@ Calendar.defaultProps = {
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   dragSelectionEnabled: true,
 };
+
+const propMapper = {
+  dateRange: 'ranges',
+  date: 'date',
+};
+
+Calendar.getDerivedStateFromProps(props, state) {
+  let nextState = {};
+  const targetProp = propMapper[nextProps.displayMode];
+  if (props.locale !== state.locale) {
+    nextState.locale = nextProps.locale;
+  }
+  if (JSON.stringify(state.scroll) !== JSON.stringify(props.scroll)) {
+    nextState.scroll = props.scroll;
+    nextState.shouldCalcScrollArea = true;
+  }
+  if (nextProps[targetProp] !== props[targetProp]) {
+    nextState.shouldUpdateShownDate = true;
+    nextState[targetProp] = props[targetProp]
+  }
+  if (Object.keys(state).length) {
+    return nextState
+  }
+}
 
 Calendar.propTypes = {
   showMonthArrow: PropTypes.bool,
