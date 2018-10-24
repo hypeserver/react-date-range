@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.1",
-    "date-fns": "2.0.0-alpha.7",
+    "date-fns": "^2.0.0-alpha.24",
     "prop-types": "^15.5.10",
     "react-list": "^0.8.8"
   },
