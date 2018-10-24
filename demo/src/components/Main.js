@@ -21,6 +21,7 @@ const nameMapper = {
   frCH: 'French',
   fr: 'French',
   hr: 'Croatian',
+  hu: 'Hungarian',
   id: 'Indonesian',
   is: 'Icelandic',
   it: 'Italian',
