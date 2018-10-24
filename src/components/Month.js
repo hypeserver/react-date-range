@@ -26,7 +26,7 @@ function renderWeekdays(styles, dateOptions) {
         end: endOfWeek(now, dateOptions),
       }).map((day, i) => (
         <span className={styles.weekDay} key={i}>
-          {format(day, 'ddd', dateOptions)}
+          {format(day, 'eee', { ...dateOptions, awareOfUnicodeTokens: true })}
         </span>
       ))}
     </div>
@@ -57,7 +57,10 @@ class Month extends PureComponent {
       <div className={styles.month} style={this.props.style}>
         {this.props.showMonthName ? (
           <div className={styles.monthName}>
-            {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
+            {format(this.props.month, this.props.monthDisplayFormat, {
+              ...this.props.dateOptions,
+              awareOfUnicodeTokens: true,
+            })}
           </div>
         ) : null}
         {this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions)}

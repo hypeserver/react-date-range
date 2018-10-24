@@ -58,7 +58,7 @@ import '../../../src/theme/default.scss';
 
 function formatDateDisplay(date, defaultText) {
   if (!date) return defaultText;
-  return format(date, 'MM/DD/YYYY');
+  return format(date, 'MM/dd/YYYY', { awareOfUnicodeTokens: true });
 }
 
 export default class Main extends Component {

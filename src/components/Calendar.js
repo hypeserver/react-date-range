@@ -181,11 +181,14 @@ class Calendar extends PureComponent {
               <select
                 value={focusedDate.getMonth()}
                 onChange={e => changeShownDate(e.target.value, 'setMonth')}>
-                {locale.localize.months().map((month, i) => (
-                  <option key={i} value={i}>
-                    {month}
-                  </option>
-                ))}
+                {/* REVIEW: Probably a bit hacky solution*/}
+                {Array(12)
+                  .fill(null)
+                  .map((_e, i) => (
+                    <option key={i} value={i}>
+                      {locale.localize.month(i)}
+                    </option>
+                  ))}
               </select>
             </span>
             <span className={styles.monthAndYearDivider} />
@@ -208,7 +211,7 @@ class Calendar extends PureComponent {
           </span>
         ) : (
           <span className={styles.monthAndYearPickers}>
-            {locale.localize.months()[focusedDate.getMonth()]} {focusedDate.getFullYear()}
+            {locale.localize.month(focusedDate.getMonth())} {focusedDate.getFullYear()}
           </span>
         )}
         {showMonthArrow ? (
@@ -231,7 +234,7 @@ class Calendar extends PureComponent {
           end: endOfWeek(now, this.dateOptions),
         }).map((day, i) => (
           <span className={this.styles.weekDay} key={i}>
-            {format(day, 'ddd', this.dateOptions)}
+            {format(day, 'eee', { ...this.dateOptions, awareOfUnicodeTokens: true })}
           </span>
         ))}
       </div>
@@ -343,7 +346,10 @@ class Calendar extends PureComponent {
   }
   formatDateDisplay(date, defaultText) {
     if (!date) return defaultText;
-    return format(date, this.props.dateDisplayFormat, this.dateOptions);
+    return format(date, this.props.dateDisplayFormat, {
+      ...this.dateOptions,
+      awareOfUnicodeTokens: true,
+    });
   }
   render() {
     const {
@@ -474,7 +480,7 @@ Calendar.defaultProps = {
   locale: defaultLocale,
   ranges: [],
   focusedRange: [0, 0],
-  dateDisplayFormat: 'MMM D, YYYY',
+  dateDisplayFormat: 'MMM dd, YYYY',
   monthDisplayFormat: 'MMM YYYY',
   showDateDisplay: true,
   showPreview: true,
