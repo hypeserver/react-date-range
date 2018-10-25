@@ -238,7 +238,7 @@ class Calendar extends PureComponent {
     );
   }
   renderDateDisplay() {
-    const { focusedRange, color, ranges, rangeColors } = this.props;
+    const { focusedRange, color, ranges, rangeColors, startPlaceholder, endPlaceholder } = this.props;
     const defaultColor = rangeColors[focusedRange[0]] || color;
     const styles = this.styles;
     return (
@@ -259,7 +259,7 @@ class Calendar extends PureComponent {
                 <input
                   disabled={range.disabled}
                   readOnly
-                  value={this.formatDateDisplay(range.startDate, 'Early')}
+                  value={this.formatDateDisplay(range.startDate, startPlaceholder)}
                 />
               </span>
               <span
@@ -270,7 +270,7 @@ class Calendar extends PureComponent {
                 <input
                   disabled={range.disabled}
                   readOnly
-                  value={this.formatDateDisplay(range.endDate, 'Continuous')}
+                  value={this.formatDateDisplay(range.endDate, endPlaceholder)}
                 />
               </span>
             </div>
@@ -489,6 +489,8 @@ Calendar.defaultProps = {
   minDate: addYears(new Date(), -100),
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   dragSelectionEnabled: true,
+  startPlaceholder: 'Early',
+  endPlaceholder: 'Continuous',
 };
 
 Calendar.propTypes = {
@@ -534,6 +536,8 @@ Calendar.propTypes = {
   navigatorRenderer: PropTypes.func,
   rangeColors: PropTypes.arrayOf(PropTypes.string),
   dragSelectionEnabled: PropTypes.bool,
+  startPlaceholder: PropTypes.string,
+  endPlaceholder: PropTypes.string,
 };
 
 export default Calendar;
