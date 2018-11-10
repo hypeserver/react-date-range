@@ -231,7 +231,7 @@ class Calendar extends PureComponent {
           end: endOfWeek(now, this.dateOptions),
         }).map((day, i) => (
           <span className={this.styles.weekDay} key={i}>
-            {format(day, 'ddd', this.dateOptions)}
+            {format(day, this.props.weekdaysDisplayFormat, this.dateOptions)}
           </span>
         ))}
       </div>
@@ -476,6 +476,7 @@ Calendar.defaultProps = {
   focusedRange: [0, 0],
   dateDisplayFormat: 'MMM D, YYYY',
   monthDisplayFormat: 'MMM YYYY',
+  weekdaysDisplayFormat: 'ddd',
   showDateDisplay: true,
   showPreview: true,
   displayMode: 'date',
@@ -513,6 +514,7 @@ Calendar.propTypes = {
   }),
   dateDisplayFormat: PropTypes.string,
   monthDisplayFormat: PropTypes.string,
+  weekdaysDisplayFormat: PropTypes.string,
   focusedRange: PropTypes.arrayOf(PropTypes.number),
   initialFocusedRange: PropTypes.arrayOf(PropTypes.number),
   months: PropTypes.number,
