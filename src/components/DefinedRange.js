@@ -14,6 +14,7 @@ class DefinedRanges extends Component {
     };
     this.handleRangeChange = this.handleRangeChange.bind(this);
   }
+
   handleRangeChange(range) {
     const { onChange, ranges, focusedRange } = this.props;
     const selectedRange = ranges[focusedRange[0]];
@@ -22,6 +23,7 @@ class DefinedRanges extends Component {
       [selectedRange.key || `range${focusedRange[0] + 1}`]: { ...selectedRange, ...range },
     });
   }
+
   getSelectedRange(ranges, staticRange) {
     const focusedRangeIndex = ranges.findIndex(range => {
       if (!range.startDate || !range.endDate || range.disabled) return false;
@@ -30,14 +32,24 @@ class DefinedRanges extends Component {
     const selectedRange = ranges[focusedRangeIndex];
     return { selectedRange, focusedRangeIndex };
   }
+
   render() {
-    const { onPreviewChange, ranges, rangeColors, className } = this.props;
+    const { onPreviewChange, ranges, renderStaticRangeLabel, rangeColors, className } = this.props;
+
     return (
       <div className={cx(styles.definedRangesWrapper, className)}>
         {this.props.headerContent}
         <div className={styles.staticRanges}>
           {this.props.staticRanges.map((staticRange, i) => {
             const { selectedRange, focusedRangeIndex } = this.getSelectedRange(ranges, staticRange);
+            let labelContent;
+
+            if (staticRange.hasCustomRendering) {
+              labelContent = renderStaticRangeLabel(staticRange);
+            } else {
+              labelContent = staticRange.label;
+            }
+
             return (
               <button
                 type="button"
@@ -59,7 +71,7 @@ class DefinedRanges extends Component {
                   this.props.onPreviewChange && this.props.onPreviewChange();
                 }}>
                 <span tabIndex={-1} className={styles.staticRangeLabel}>
-                  {staticRange.label}
+                  {labelContent}
                 </span>
               </button>
             );
@@ -106,6 +118,7 @@ DefinedRanges.propTypes = {
   headerContent: PropTypes.any,
   rangeColors: PropTypes.arrayOf(PropTypes.string),
   className: PropTypes.string,
+  renderStaticRangeLabel: PropTypes.func,
 };
 
 DefinedRanges.defaultProps = {

@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DefinedRange tests Should render dynamic static label contents correctly 1`] = `
+<div
+  className="rdrDefinedRangesWrapper"
+>
+  <div
+    className="rdrStaticRanges"
+  >
+    <button
+      className="rdrStaticRange"
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        Object {
+          "color": null,
+        }
+      }
+      type="button"
+    >
+      <span
+        className="rdrStaticRangeLabel"
+        tabIndex={-1}
+      >
+        <i
+          className="italic-label-content"
+        >
+          Italic Content
+        </i>
+      </span>
+    </button>
+    <button
+      className="rdrStaticRange"
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        Object {
+          "color": null,
+        }
+      }
+      type="button"
+    >
+      <span
+        className="rdrStaticRangeLabel"
+        tabIndex={-1}
+      >
+        Static Label
+      </span>
+    </button>
+    <button
+      className="rdrStaticRange"
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        Object {
+          "color": null,
+        }
+      }
+      type="button"
+    >
+      <span
+        className="rdrStaticRangeLabel"
+        tabIndex={-1}
+      >
+        <img
+          className="random-image"
+        />
+      </span>
+    </button>
+    <button
+      className="rdrStaticRange"
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        Object {
+          "color": null,
+        }
+      }
+      type="button"
+    >
+      <span
+        className="rdrStaticRangeLabel"
+        tabIndex={-1}
+      >
+        <b
+          className="bold-label-content"
+        >
+          Bold Content
+        </b>
+      </span>
+    </button>
+  </div>
+  <div
+    className="rdrInputRanges"
+  >
+    <div
+      className="rdrInputRange"
+    >
+      <input
+        className="rdrInputRangeInput"
+        max={99999}
+        min={0}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        value="-"
+      />
+      <span
+        className={undefined}
+      >
+        days up to today
+      </span>
+    </div>
+    <div
+      className="rdrInputRange"
+    >
+      <input
+        className="rdrInputRangeInput"
+        max={99999}
+        min={0}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        value="-"
+      />
+      <span
+        className={undefined}
+      >
+        days starting today
+      </span>
+    </div>
+  </div>
+</div>
+`;
