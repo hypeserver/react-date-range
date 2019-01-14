@@ -14,6 +14,7 @@ class DayCell extends Component {
     };
     this.getClassNames = this.getClassNames.bind(this);
     this.handleMouseEvent = this.handleMouseEvent.bind(this);
+    this.handleTouchEvent = this.handleTouchEvent.bind(this);
     this.handleKeyEvent = this.handleKeyEvent.bind(this);
     this.renderSelectionPlaceholders = this.renderSelectionPlaceholders.bind(this);
     this.renderPreviewPlaceholder = this.renderPreviewPlaceholder.bind(this);
@@ -33,8 +34,12 @@ class DayCell extends Component {
     }
   }
   handleMouseEvent(event) {
+    if (this.state.useTouch && event.type !== 'mouseleave') return;
     const { day, disabled, onPreviewChange } = this.props;
     const stateChanges = {};
+    if (this.state.useTouch) {
+      stateChanges.useTouch = false;
+    }
     if (disabled) {
       onPreviewChange();
       return;
@@ -63,6 +68,35 @@ class DayCell extends Component {
         onPreviewChange(day);
         break;
     }
+    if (Object.keys(stateChanges).length) {
+      this.setState(stateChanges);
+    }
+  }
+  handleTouchEvent(event) {
+    const { day, disabled, onPreviewChange } = this.props;
+    const stateChanges = {};
+    if (!this.state.useTouch) {
+      stateChanges.useTouch = true;
+    }
+    if (disabled) {
+      onPreviewChange();
+      return;
+    }
+
+    switch (event.type) {
+      case 'touchstart':
+        stateChanges.active = true;
+        break;
+      case 'touchmove':
+        stateChanges.active = false;
+        break;
+      case 'touchend':
+        if (this.state.active) {
+          this.props.onMouseUp(day);
+        }
+        break;
+    }
+
     if (Object.keys(stateChanges).length) {
       this.setState(stateChanges);
     }
@@ -174,6 +208,9 @@ class DayCell extends Component {
         onPauseCapture={this.handleMouseEvent}
         onKeyDown={this.handleKeyEvent}
         onKeyUp={this.handleKeyEvent}
+        onTouchEnd={this.handleTouchEvent}
+        onTouchStart={this.handleTouchEvent}
+        onTouchMove={this.handleTouchEvent}
         className={this.getClassNames(styles)}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
         style={{ color: this.props.color }}>
