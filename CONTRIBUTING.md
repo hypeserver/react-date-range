@@ -14,7 +14,7 @@ Make sure your issue or feature doesn't have any related issue at [react-date-ra
 
 ## Building
 
-. Run `yarn test` and `yarn run lint` for make sure tests passes and linter doesn't throw any error.
+. Run `yarn run test` and `yarn run lint` for make sure tests passes and linter doesn't throw any error.
 
 . Run `yarn run build` compile the library and demo source.
 
