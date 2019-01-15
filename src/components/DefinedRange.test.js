@@ -1,9 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import DefinedRange from './DefinedRange';
 import { isSameDay } from 'date-fns';
-import testRenderer from 'react-test-renderer';
 
 describe('DefinedRange tests', () => {
   test('Should call "renderStaticRangeLabel" callback correct amount of times according to the "hasCustomRendering" option', () => {
@@ -76,8 +75,7 @@ describe('DefinedRange tests', () => {
       return result;
     };
 
-    const tree = testRenderer
-      .create(
+    const wrapper = shallow(
         <DefinedRange
           staticRanges={[
             {
@@ -130,9 +128,8 @@ describe('DefinedRange tests', () => {
           ]}
           renderStaticRangeLabel={renderStaticRangeLabel}
         />
-      )
-      .toJSON();
+      );
 
-    expect(tree).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 });
