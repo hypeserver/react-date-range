@@ -148,17 +148,21 @@ class DayCell extends Component {
       return result;
     }, []);
 
-    return inRanges.map((range, i) => (
-      <span
-        key={i}
-        className={classnames({
-          [styles.startEdge]: range.isStartEdge,
-          [styles.endEdge]: range.isEndEdge,
-          [styles.inRange]: range.isInRange,
-        })}
-        style={{ color: range.color || this.props.color }}
-      />
-    ));
+    return inRanges.map((range, i) => {
+      return (
+        <span
+          key={i}
+          className={classnames({
+            [styles.startEdge]: range.isStartEdge,
+            [styles.endEdge]: range.isEndEdge,
+            [styles.inRange]: range.isInRange,
+          })}
+          style={{ color: range.color || this.props.color }}
+        >
+        {range.isEndEdge && range.hint && range.hint()}
+        </span>
+      )
+    });
   }
   render() {
     const { styles } = this.props;
@@ -197,6 +201,7 @@ export const rangeShape = PropTypes.shape({
   autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
   showDateDisplay: PropTypes.bool,
+  hint: PropTypes.func,
 });
 
 DayCell.propTypes = {
