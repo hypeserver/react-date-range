@@ -6,6 +6,12 @@
   cursor: pointer;
 }
 
+@supports (-ms-ime-align: auto) {
+  .rdrDay {
+    flex-basis: 14.285% !important;
+  }
+}
+
 .rdrDayNumber {
   display: block;
   position: relative;
