@@ -180,7 +180,7 @@ class DayCell extends Component {
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={styles.dayNumber}>
-          <span>{format(this.props.day, 'D')}</span>
+          <span>{format(this.props.day, 'd')}</span>
         </span>
       </button>
     );
@@ -202,7 +202,7 @@ export const rangeShape = PropTypes.shape({
 DayCell.propTypes = {
   day: PropTypes.object.isRequired,
   date: PropTypes.object,
-  ranges: PropTypes.arrayOf(rangeShape),
+  ranges: PropTypes.arrayOf(rangeShape).isRequired,
   preview: PropTypes.shape({
     startDate: PropTypes.object,
     endDate: PropTypes.object,
@@ -219,7 +219,7 @@ DayCell.propTypes = {
   isEndOfMonth: PropTypes.bool,
   color: PropTypes.string,
   displayMode: PropTypes.oneOf(['dateRange', 'date']),
-  styles: PropTypes.object,
+  styles: PropTypes.object.isRequired,
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
   onMouseEnter: PropTypes.func,

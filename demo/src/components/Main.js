@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Calendar, DateRange, DateRangePicker, DefinedRange } from '../../../src';
-import * as rdrLocales from '../../../src/locale';
+import * as rdrLocales from 'date-fns/locale';
 import { format, addDays } from 'date-fns';
 import Section from './Section';
 
@@ -50,13 +50,18 @@ class CustomStaticRangeLabelContent extends React.Component {
 }
 
 const nameMapper = {
+  af: 'Afrikaans',
+  arDZ: 'Arabic (Modern Standard Arabic)',
+  arSA: 'Arabic (Sauid Arabic)',
   ar: 'Arabic (Modern Standard Arabic - Al-fussha)',
   bg: 'Bulgarian',
+  bn: 'Bengali',
   ca: 'Catalan',
   cs: 'Czech',
   da: 'Danish',
   de: 'German',
   el: 'Greek',
+  enCA: 'English (Canada)',
   enGB: 'English (United Kingdom)',
   enUS: 'English (United States)',
   eo: 'Esperanto',
@@ -65,24 +70,32 @@ const nameMapper = {
   fil: 'Filipino',
   frCH: 'French',
   fr: 'French',
+  he: 'Hebrew',
   hr: 'Croatian',
+  hu: 'Hungarian',
   id: 'Indonesian',
   is: 'Icelandic',
   it: 'Italian',
   ja: 'Japanese',
+  ka: 'Georgian',
   ko: 'Korean',
+  lt: 'Lithuanian',
   mk: 'Macedonian',
+  ms: 'Malay',
   nb: 'Norwegian Bokmål',
+  nlBE: 'Dutch (same as nl)',
   nl: 'Dutch',
   pl: 'Polish',
+  ptBR: 'Portuguese (Brazil)',
   pt: 'Portuguese',
   ro: 'Romanian',
   ru: 'Russian',
   sk: 'Slovak',
+  sr: 'Serbian Latn',
   sv: 'Swedish',
   th: 'Thai',
   tr: 'Turkish',
-  ua: 'Ukrainian',
+  uk: 'Ukrainian',
   vi: 'Vietnamese',
   zhCN: 'Chinese Simplified',
   zhTW: 'Chinese Traditional',
@@ -102,7 +115,7 @@ import '../../../src/theme/default.scss';
 
 function formatDateDisplay(date, defaultText) {
   if (!date) return defaultText;
-  return format(date, 'MM/DD/YYYY');
+  return format(date, 'MM/dd/y');
 }
 
 export default class Main extends Component {

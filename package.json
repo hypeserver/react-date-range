@@ -1,6 +1,6 @@
 {
   "name": "react-date-range",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta3",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.1",
-    "date-fns": "2.0.0-alpha.7",
+    "date-fns": "2.0.0-alpha.25",
     "prop-types": "^15.5.10",
     "react-list": "^0.8.8"
   },

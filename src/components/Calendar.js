@@ -181,9 +181,9 @@ class Calendar extends PureComponent {
               <select
                 value={focusedDate.getMonth()}
                 onChange={e => changeShownDate(e.target.value, 'setMonth')}>
-                {locale.localize.months().map((month, i) => (
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => (
                   <option key={i} value={i}>
-                    {month}
+                    {locale.localize.month(i)}
                   </option>
                 ))}
               </select>
@@ -208,7 +208,7 @@ class Calendar extends PureComponent {
           </span>
         ) : (
           <span className={styles.monthAndYearPickers}>
-            {locale.localize.months()[focusedDate.getMonth()]} {focusedDate.getFullYear()}
+            {locale.localize.month(focusedDate.getMonth())} {focusedDate.getFullYear()}
           </span>
         )}
         {showMonthArrow ? (
@@ -231,7 +231,7 @@ class Calendar extends PureComponent {
           end: endOfWeek(now, this.dateOptions),
         }).map((day, i) => (
           <span className={this.styles.weekDay} key={i}>
-            {format(day, 'ddd', this.dateOptions)}
+            {format(day, 'E', this.dateOptions)}
           </span>
         ))}
       </div>
@@ -474,8 +474,8 @@ Calendar.defaultProps = {
   locale: defaultLocale,
   ranges: [],
   focusedRange: [0, 0],
-  dateDisplayFormat: 'MMM D, YYYY',
-  monthDisplayFormat: 'MMM YYYY',
+  dateDisplayFormat: 'MMM d, y',
+  monthDisplayFormat: 'MMM y',
   showDateDisplay: true,
   showPreview: true,
   displayMode: 'date',

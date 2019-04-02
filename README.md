@@ -128,7 +128,7 @@ preview(DateRange)                   | Object    |              | displays a pre
 showPreview(DateRange)               | bool      | true             | visibility of preview
 dragSelectionEnabled(Calendar)       | bool      | true             | whether dates can be selected via drag n drop
 onPreviewChange(DateRange)           | Object    |                  | Callback function for preview changes
-dateDisplayFormat(DateRange)         | String    | `MMM D, YYYY`    | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
+dateDisplayFormat(DateRange)         | String    | `MMM d, y`       | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/v2.0.0-alpha.25/docs/format)
 renderStaticRangeLabel(`DefinedRange`)| Function  |                  | Callback function to be triggered for the static range configurations that have `hasCustomRendering: true` on them. Instead of rendering `staticRange.label`, return value of this callback will be rendered.
 staticRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default preDefined ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
 inputRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default input ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
