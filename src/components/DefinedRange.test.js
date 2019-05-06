@@ -76,59 +76,59 @@ describe('DefinedRange tests', () => {
     };
 
     const wrapper = shallow(
-        <DefinedRange
-          staticRanges={[
-            {
-              id: 'italic',
-              range: {},
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) &&
-                  isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-              hasCustomRendering: true,
+      <DefinedRange
+        staticRanges={[
+          {
+            id: 'italic',
+            range: {},
+            isSelected(range) {
+              const definedRange = this.range();
+              return (
+                isSameDay(range.startDate, definedRange.startDate) &&
+                isSameDay(range.endDate, definedRange.endDate)
+              );
             },
-            {
-              label: 'Static Label',
-              range: {},
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) &&
-                  isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
+            hasCustomRendering: true,
+          },
+          {
+            label: 'Static Label',
+            range: {},
+            isSelected(range) {
+              const definedRange = this.range();
+              return (
+                isSameDay(range.startDate, definedRange.startDate) &&
+                isSameDay(range.endDate, definedRange.endDate)
+              );
             },
-            {
-              id: 'whatever',
-              range: {},
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) &&
-                  isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-              hasCustomRendering: true,
+          },
+          {
+            id: 'whatever',
+            range: {},
+            isSelected(range) {
+              const definedRange = this.range();
+              return (
+                isSameDay(range.startDate, definedRange.startDate) &&
+                isSameDay(range.endDate, definedRange.endDate)
+              );
             },
-            {
-              id: 'bold',
-              range: {},
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) &&
-                  isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-              hasCustomRendering: true,
+            hasCustomRendering: true,
+          },
+          {
+            id: 'bold',
+            range: {},
+            isSelected(range) {
+              const definedRange = this.range();
+              return (
+                isSameDay(range.startDate, definedRange.startDate) &&
+                isSameDay(range.endDate, definedRange.endDate)
+              );
             },
-          ]}
-          renderStaticRangeLabel={renderStaticRangeLabel}
-        />
-      );
+            hasCustomRendering: true,
+          },
+        ]}
+        renderStaticRangeLabel={renderStaticRangeLabel}
+      />
+    );
 
     expect(wrapper).toMatchSnapshot();
   });

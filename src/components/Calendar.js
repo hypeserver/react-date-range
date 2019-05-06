@@ -244,22 +244,29 @@ class Calendar extends PureComponent {
     return (
       <div className={styles.dateDisplayWrapper}>
         {ranges.map((range, i) => {
-          if (range.showDateDisplay === false || (range.disabled && !range.showDateDisplay))
-            return null;
+          const {
+            color = defaultColor,
+            disabled,
+            endDate,
+            endDatePlaceholder = 'Continuous',
+            showDateDisplay,
+            startDate,
+            startDatePlaceholder = 'Early',
+          } = range;
+
+          if (showDateDisplay === false || (disabled && !showDateDisplay)) return null;
+
           return (
-            <div
-              className={styles.dateDisplay}
-              key={i}
-              style={{ color: range.color || defaultColor }}>
+            <div className={styles.dateDisplay} key={i} style={{ color }}>
               <span
                 className={classnames(styles.dateDisplayItem, {
                   [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 0,
                 })}
                 onFocus={() => this.handleRangeFocusChange(i, 0)}>
                 <input
-                  disabled={range.disabled}
+                  disabled={disabled}
                   readOnly
-                  value={this.formatDateDisplay(range.startDate, 'Early')}
+                  value={this.formatDateDisplay(startDate, startDatePlaceholder)}
                 />
               </span>
               <span
@@ -268,9 +275,9 @@ class Calendar extends PureComponent {
                 })}
                 onFocus={() => this.handleRangeFocusChange(i, 1)}>
                 <input
-                  disabled={range.disabled}
+                  disabled={disabled}
                   readOnly
-                  value={this.formatDateDisplay(range.endDate, 'Continuous')}
+                  value={this.formatDateDisplay(endDate, endDatePlaceholder)}
                 />
               </span>
             </div>
