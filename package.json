@@ -4,7 +4,7 @@
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=production webpack-dev-server --hot --inline",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline",
     "clear": "rm -rf dist/* & rm -rf demo/dist/*",
     "build": "yarn build-library & yarn build-demo",
     "build-demo": "cross-env NODE_ENV=production webpack -p",

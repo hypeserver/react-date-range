@@ -87,6 +87,8 @@ class DateRange extends Component {
       [selectedRange.key || `range${focusedRangeIndex + 1}`]: {
         ...selectedRange,
         ...newSelection.range,
+        changeReason: newSelection.nextFocusRange[1] === 0 ? 'setRangeEnd' : 'setRangeStart',
+        changeFinished: newSelection.nextFocusRange[1] === 0 ? true : false
       },
     });
     this.setState({
@@ -104,10 +106,13 @@ class DateRange extends Component {
       this.setState({ preview: null });
       return;
     }
+    if (val.range) {
+      val = {...val, ...val.range};
+    }
     const { rangeColors, ranges } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const color = ranges[focusedRange[0]].color || rangeColors[focusedRange[0]] || color;
-    this.setState({ preview: { ...val.range, color } });
+    this.setState({ preview: { ...val, color } });
   }
   render() {
     return (
