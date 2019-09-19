@@ -45,44 +45,56 @@ export const defaultStaticRanges = createStaticRanges([
   {
     label: 'Today',
     range: () => ({
-      startDate: defineds.startOfToday,
-      endDate: defineds.endOfToday,
+      range: {
+        startDate: defineds.startOfToday,
+        endDate: defineds.endOfToday,
+      },
     }),
   },
   {
     label: 'Yesterday',
     range: () => ({
-      startDate: defineds.startOfYesterday,
-      endDate: defineds.endOfYesterday,
+      range: {
+        startDate: defineds.startOfYesterday,
+        endDate: defineds.endOfYesterday,
+      },
     }),
   },
 
   {
     label: 'This Week',
     range: () => ({
-      startDate: defineds.startOfWeek,
-      endDate: defineds.endOfWeek,
+      range: {
+        startDate: defineds.startOfWeek,
+        endDate: defineds.endOfWeek,
+      },
     }),
   },
   {
     label: 'Last Week',
     range: () => ({
-      startDate: defineds.startOfLastWeek,
-      endDate: defineds.endOfLastWeek,
+      range: {
+        startDate: defineds.startOfLastWeek,
+        endDate: defineds.endOfLastWeek,
+      },
     }),
   },
   {
     label: 'This Month',
     range: () => ({
-      startDate: defineds.startOfMonth,
-      endDate: defineds.endOfMonth,
+      range: {
+        startDate: defineds.startOfMonth,
+        endDate: defineds.endOfMonth,
+      },
     }),
   },
   {
     label: 'Last Month',
     range: () => ({
-      startDate: defineds.startOfLastMonth,
-      endDate: defineds.endOfLastMonth,
+      range: {
+        startDate: defineds.startOfLastMonth,
+        endDate: defineds.endOfLastMonth,
+      },
     }),
   },
 ]);
