@@ -114,6 +114,7 @@ Month.propTypes = {
   styles: PropTypes.object,
   month: PropTypes.object,
   drag: PropTypes.object,
+  dates: PropTypes.array,
   dateOptions: PropTypes.object,
   disabledDates: PropTypes.array,
   preview: PropTypes.shape({
@@ -121,7 +122,7 @@ Month.propTypes = {
     endDate: PropTypes.object,
   }),
   showPreview: PropTypes.bool,
-  displayMode: PropTypes.oneOf(['dateRange', 'date']),
+  displayMode: PropTypes.oneOf(['dateRange', 'date', 'multiDate']),
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
   ranges: PropTypes.arrayOf(rangeShape),

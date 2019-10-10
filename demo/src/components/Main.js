@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Calendar, DateRange, DateRangePicker, DefinedRange } from '../../../src';
 import * as rdrLocales from '../../../src/locale';
-import { format, addDays } from 'date-fns';
+import { format, addDays, isSameDay } from 'date-fns';
 import Section from './Section';
 
 function renderStaticRangeLabel(staticRange) {
@@ -163,6 +163,7 @@ export default class Main extends Component {
         },
       },
       datePickerInternational: null,
+      multiDatePicker: [],
       locale: 'ja',
       dateRangePicker: {
         selection: {
@@ -188,6 +189,20 @@ export default class Main extends Component {
         ...this.state[which],
         ...payload,
       },
+    });
+  }
+  handleMultiDateChange(which, payload) {
+    console.log(which, payload);
+    this.setState(prevState => {
+      if (prevState[which].some(date => isSameDay(date, payload))) {
+        return {
+          [which]: prevState[which].filter(date => !isSameDay(date, payload)),
+        };
+      } else {
+        return {
+          [which]: [...prevState[which], payload],
+        };
+      }
     });
   }
 
@@ -427,6 +442,19 @@ export default class Main extends Component {
             }]}
             onChange={this.handleRangeChange.bind(this, 'definedRange')}
             className={'centered'}
+          />
+        </Section>
+        <Section title="Multi date picker">
+          <ul>
+            {this.state.multiDatePicker.map((date, i) => {
+              return <li key={i.toString()}>{formatDateDisplay(date)}</li>;
+            })}
+          </ul>
+          <Calendar
+            dates={this.state.multiDatePicker}
+            onChange={this.handleMultiDateChange.bind(this, 'multiDatePicker')}
+            className={'PreviewArea'}
+            displayMode="multiDate"
           />
         </Section>
       </main>

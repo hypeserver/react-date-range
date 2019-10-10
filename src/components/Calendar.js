@@ -120,6 +120,7 @@ class Calendar extends PureComponent {
     const propMapper = {
       dateRange: 'ranges',
       date: 'date',
+      multiDate: 'dates',
     };
     const targetProp = propMapper[nextProps.displayMode];
     if (this.props.locale !== nextProps.locale) {
@@ -473,6 +474,7 @@ Calendar.defaultProps = {
   classNames: {},
   locale: defaultLocale,
   ranges: [],
+  dates: [],
   focusedRange: [0, 0],
   dateDisplayFormat: 'MMM D, YYYY',
   monthDisplayFormat: 'MMM YYYY',
@@ -498,6 +500,7 @@ Calendar.propTypes = {
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
   date: PropTypes.object,
+  dates: PropTypes.array,
   onChange: PropTypes.func,
   onPreviewChange: PropTypes.func,
   onRangeFocusChange: PropTypes.func,
@@ -519,7 +522,7 @@ Calendar.propTypes = {
   className: PropTypes.string,
   showDateDisplay: PropTypes.bool,
   showPreview: PropTypes.bool,
-  displayMode: PropTypes.oneOf(['dateRange', 'date']),
+  displayMode: PropTypes.oneOf(['dateRange', 'date', 'multiDate']),
   color: PropTypes.string,
   updateRange: PropTypes.func,
   scroll: PropTypes.shape({
