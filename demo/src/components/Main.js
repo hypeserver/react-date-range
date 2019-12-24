@@ -50,10 +50,12 @@ class CustomStaticRangeLabelContent extends React.Component {
 }
 
 const nameMapper = {
-  ar: 'Arabic (Modern Standard Arabic - Al-fussha)',
+  ar: 'Arabic',
+
   bg: 'Bulgarian',
   ca: 'Catalan',
   cs: 'Czech',
+  cy: 'Welsh',
   da: 'Danish',
   de: 'German',
   el: 'Greek',
@@ -61,16 +63,23 @@ const nameMapper = {
   enUS: 'English (United States)',
   eo: 'Esperanto',
   es: 'Spanish',
+  et: 'Estonian',
+  faIR: 'Persian',
   fi: 'Finnish',
   fil: 'Filipino',
-  frCH: 'French',
   fr: 'French',
+  hi: 'Hindi',
   hr: 'Croatian',
+  hu: 'Hungarian',
+  hy: 'Armenian',
   id: 'Indonesian',
   is: 'Icelandic',
   it: 'Italian',
   ja: 'Japanese',
+  ka: 'Georgian',
   ko: 'Korean',
+  lt: 'Lithuanian',
+  lv: 'Latvian',
   mk: 'Macedonian',
   nb: 'Norwegian Bokmål',
   nl: 'Dutch',
@@ -79,19 +88,21 @@ const nameMapper = {
   ro: 'Romanian',
   ru: 'Russian',
   sk: 'Slovak',
+  sl: 'Slovenian',
+  sr: 'Serbian',
   sv: 'Swedish',
   th: 'Thai',
   tr: 'Turkish',
-  ua: 'Ukrainian',
+  uk: 'Ukrainian',
   vi: 'Vietnamese',
   zhCN: 'Chinese Simplified',
-  zhTW: 'Chinese Traditional',
+  zhTW: 'Chinese Traditional'
 };
 
 const localeOptions = Object.keys(rdrLocales).map(key => ({
   value: key,
   label: `${key} - ${nameMapper[key] || ''}`,
-}));
+})).filter(item => nameMapper[item.value]);
 
 import 'normalize.css';
 import '../styles/global.css';
