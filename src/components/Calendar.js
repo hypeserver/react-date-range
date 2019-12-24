@@ -45,6 +45,7 @@ class Calendar extends PureComponent {
     this.dateOptions = { locale: props.locale };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
+    this.monthNames = [...Array(12).keys()].map(i => props.locale.localize.month(i))
     this.state = {
       focusedDate: calcFocusDate(null, props),
       drag: {
@@ -161,7 +162,7 @@ class Calendar extends PureComponent {
     }
   }
   renderMonthAndYear(focusedDate, changeShownDate, props) {
-    const { showMonthArrow, locale, minDate, maxDate, showMonthAndYearPickers } = props;
+    const { showMonthArrow, minDate, maxDate, showMonthAndYearPickers } = props;
     const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
     const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
     const styles = this.styles;
@@ -181,9 +182,9 @@ class Calendar extends PureComponent {
               <select
                 value={focusedDate.getMonth()}
                 onChange={e => changeShownDate(e.target.value, 'setMonth')}>
-                {locale.localize.months().map((month, i) => (
+                {this.monthNames.map((monthName, i) => (
                   <option key={i} value={i}>
-                    {month}
+                    {monthName}
                   </option>
                 ))}
               </select>
@@ -208,7 +209,7 @@ class Calendar extends PureComponent {
           </span>
         ) : (
           <span className={styles.monthAndYearPickers}>
-            {locale.localize.months()[focusedDate.getMonth()]} {focusedDate.getFullYear()}
+            {props.monthNames[focusedDate.getMonth()]} {focusedDate.getFullYear()}
           </span>
         )}
         {showMonthArrow ? (
@@ -474,8 +475,8 @@ Calendar.defaultProps = {
   locale: defaultLocale,
   ranges: [],
   focusedRange: [0, 0],
-  dateDisplayFormat: 'MMM D, YYYY',
-  monthDisplayFormat: 'MMM YYYY',
+  dateDisplayFormat: 'mmm d, yyyy',
+  monthDisplayFormat: 'mmm yyyy',
   showDateDisplay: true,
   showPreview: true,
   displayMode: 'date',

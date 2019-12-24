@@ -102,7 +102,7 @@ import '../../../src/theme/default.scss';
 
 function formatDateDisplay(date, defaultText) {
   if (!date) return defaultText;
-  return format(date, 'MM/DD/YYYY');
+  return format(date, 'mm/dd/yyyy');
 }
 
 export default class Main extends Component {
