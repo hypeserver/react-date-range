@@ -45,7 +45,7 @@ class Calendar extends PureComponent {
     this.dateOptions = { locale: props.locale };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
-    this.monthNames = [...Array(12).keys()].map(i => props.locale.localize.month(i))
+    this.monthNames = [...Array(12).keys()].map(i => props.locale.localize.month(i));
     this.state = {
       focusedDate: calcFocusDate(null, props),
       drag: {

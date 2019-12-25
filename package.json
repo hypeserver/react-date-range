@@ -34,6 +34,7 @@
     "defaults"
   ],
   "dependencies": {
+    "babel-eslint": "^10.0.3",
     "classnames": "^2.2.6",
     "date-fns": "^2.8.1",
     "normalize.css": "^8.0.1",
