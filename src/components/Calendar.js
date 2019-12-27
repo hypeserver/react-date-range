@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { rangeShape } from './DayCell.js';
 import Month from './Month.js';
+import DateInput from './DateInput';
 import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../utils';
 import classnames from 'classnames';
 import ReactList from 'react-list';
@@ -239,9 +240,18 @@ class Calendar extends PureComponent {
     );
   }
   renderDateDisplay() {
-    const { focusedRange, color, ranges, rangeColors } = this.props;
+    const {
+      focusedRange,
+      color,
+      ranges,
+      rangeColors,
+      dateDisplayFormat,
+      editableDateInputs,
+    } = this.props;
+
     const defaultColor = rangeColors[focusedRange[0]] || color;
     const styles = this.styles;
+
     return (
       <div className={styles.dateDisplayWrapper}>
         {ranges.map((range, i) => {
@@ -252,28 +262,32 @@ class Calendar extends PureComponent {
               className={styles.dateDisplay}
               key={i}
               style={{ color: range.color || defaultColor }}>
-              <span
+              <DateInput
                 className={classnames(styles.dateDisplayItem, {
                   [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 0,
                 })}
-                onFocus={() => this.handleRangeFocusChange(i, 0)}>
-                <input
-                  disabled={range.disabled}
-                  readOnly
-                  value={this.formatDateDisplay(range.startDate, 'Early')}
-                />
-              </span>
-              <span
+                readOnly={!editableDateInputs}
+                disabled={range.disabled}
+                value={range.startDate}
+                placeholder="Early"
+                dateOptions={this.dateOptions}
+                dateDisplayFormat={dateDisplayFormat}
+                onChange={this.onDragSelectionEnd}
+                onFocus={() => this.handleRangeFocusChange(i, 0)}
+              />
+              <DateInput
                 className={classnames(styles.dateDisplayItem, {
                   [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 1,
                 })}
-                onFocus={() => this.handleRangeFocusChange(i, 1)}>
-                <input
-                  disabled={range.disabled}
-                  readOnly
-                  value={this.formatDateDisplay(range.endDate, 'Continuous')}
-                />
-              </span>
+                readOnly={!editableDateInputs}
+                disabled={range.disabled}
+                value={range.endDate}
+                placeholder="Continuous"
+                dateOptions={this.dateOptions}
+                dateDisplayFormat={dateDisplayFormat}
+                onChange={this.onDragSelectionEnd}
+                onFocus={() => this.handleRangeFocusChange(i, 1)}
+              />
             </div>
           );
         })}
@@ -341,10 +355,6 @@ class Calendar extends PureComponent {
     const { start, end } = getMonthDisplayRange(monthStep, this.dateOptions);
     const isLongMonth = differenceInDays(end, start, this.dateOptions) + 1 > 7 * 5;
     return isLongMonth ? scrollArea.longMonthHeight : scrollArea.monthHeight;
-  }
-  formatDateDisplay(date, defaultText) {
-    if (!date) return defaultText;
-    return format(date, this.props.dateDisplayFormat, this.dateOptions);
   }
   render() {
     const {
@@ -489,6 +499,7 @@ Calendar.defaultProps = {
   maxDate: addYears(new Date(), 20),
   minDate: addYears(new Date(), -100),
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+  editableDateInputs: false,
   dragSelectionEnabled: true,
 };
 
@@ -534,6 +545,7 @@ Calendar.propTypes = {
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
   navigatorRenderer: PropTypes.func,
   rangeColors: PropTypes.arrayOf(PropTypes.string),
+  editableDateInputs: PropTypes.bool,
   dragSelectionEnabled: PropTypes.bool,
 };
 
