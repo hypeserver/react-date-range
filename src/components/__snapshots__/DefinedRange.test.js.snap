@@ -2,7 +2,6 @@
 
 exports[`DefinedRange tests Should render dynamic static label contents correctly 1`] = `
 ShallowWrapper {
-  "length": 1,
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <DefinedRanges
     focusedRange={
@@ -64,8 +63,10 @@ ShallowWrapper {
   />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
     "getNode": [Function],
     "render": [Function],
+    "simulateError": [Function],
     "simulateEvent": [Function],
     "unmount": [Function],
   },
@@ -173,42 +174,132 @@ ShallowWrapper {
         <div
           className="rdrInputRanges"
         >
-          <div
-            className="rdrInputRange"
-          >
-            <input
-              className="rdrInputRangeInput"
-              max={99999}
-              min={0}
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              value="-"
-            />
-            <span
-              className={undefined}
-            >
-              days up to today
-            </span>
-          </div>
-          <div
-            className="rdrInputRange"
-          >
-            <input
-              className="rdrInputRangeInput"
-              max={99999}
-              min={0}
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              value="-"
-            />
-            <span
-              className={undefined}
-            >
-              days starting today
-            </span>
-          </div>
+          <InputRangeField
+            label="days up to today"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            placeholder="-"
+            styles={
+              Object {
+                "calendarWrapper": "rdrCalendarWrapper",
+                "dateDisplay": "rdrDateDisplay",
+                "dateDisplayItem": "rdrDateDisplayItem",
+                "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                "dateRangeWrapper": "rdrDateRangeWrapper",
+                "day": "rdrDay",
+                "dayActive": "rdrDayActive",
+                "dayDisabled": "rdrDayDisabled",
+                "dayEndOfMonth": "rdrDayEndOfMonth",
+                "dayEndOfWeek": "rdrDayEndOfWeek",
+                "dayEndPreview": "rdrDayEndPreview",
+                "dayHovered": "rdrDayHovered",
+                "dayInPreview": "rdrDayInPreview",
+                "dayNumber": "rdrDayNumber",
+                "dayPassive": "rdrDayPassive",
+                "daySelected": "rdrDaySelected",
+                "dayStartOfMonth": "rdrDayStartOfMonth",
+                "dayStartOfWeek": "rdrDayStartOfWeek",
+                "dayStartPreview": "rdrDayStartPreview",
+                "dayToday": "rdrDayToday",
+                "dayWeekend": "rdrDayWeekend",
+                "days": "rdrDays",
+                "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                "endEdge": "rdrEndEdge",
+                "inRange": "rdrInRange",
+                "infiniteMonths": "rdrInfiniteMonths",
+                "inputRange": "rdrInputRange",
+                "inputRangeInput": "rdrInputRangeInput",
+                "inputRanges": "rdrInputRanges",
+                "month": "rdrMonth",
+                "monthAndYearPickers": "rdrMonthAndYearPickers",
+                "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                "monthName": "rdrMonthName",
+                "monthPicker": "rdrMonthPicker",
+                "months": "rdrMonths",
+                "monthsHorizontal": "rdrMonthsHorizontal",
+                "monthsVertical": "rdrMonthsVertical",
+                "nextButton": "rdrNextButton",
+                "nextPrevButton": "rdrNextPrevButton",
+                "prevButton": "rdrPprevButton",
+                "selected": "rdrSelected",
+                "startEdge": "rdrStartEdge",
+                "staticRange": "rdrStaticRange",
+                "staticRangeLabel": "rdrStaticRangeLabel",
+                "staticRangeSelected": "rdrStaticRangeSelected",
+                "staticRanges": "rdrStaticRanges",
+                "weekDay": "rdrWeekDay",
+                "weekDays": "rdrWeekDays",
+                "yearPicker": "rdrYearPicker",
+              }
+            }
+            value="-"
+          />
+          <InputRangeField
+            label="days starting today"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            placeholder="-"
+            styles={
+              Object {
+                "calendarWrapper": "rdrCalendarWrapper",
+                "dateDisplay": "rdrDateDisplay",
+                "dateDisplayItem": "rdrDateDisplayItem",
+                "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                "dateRangeWrapper": "rdrDateRangeWrapper",
+                "day": "rdrDay",
+                "dayActive": "rdrDayActive",
+                "dayDisabled": "rdrDayDisabled",
+                "dayEndOfMonth": "rdrDayEndOfMonth",
+                "dayEndOfWeek": "rdrDayEndOfWeek",
+                "dayEndPreview": "rdrDayEndPreview",
+                "dayHovered": "rdrDayHovered",
+                "dayInPreview": "rdrDayInPreview",
+                "dayNumber": "rdrDayNumber",
+                "dayPassive": "rdrDayPassive",
+                "daySelected": "rdrDaySelected",
+                "dayStartOfMonth": "rdrDayStartOfMonth",
+                "dayStartOfWeek": "rdrDayStartOfWeek",
+                "dayStartPreview": "rdrDayStartPreview",
+                "dayToday": "rdrDayToday",
+                "dayWeekend": "rdrDayWeekend",
+                "days": "rdrDays",
+                "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                "endEdge": "rdrEndEdge",
+                "inRange": "rdrInRange",
+                "infiniteMonths": "rdrInfiniteMonths",
+                "inputRange": "rdrInputRange",
+                "inputRangeInput": "rdrInputRangeInput",
+                "inputRanges": "rdrInputRanges",
+                "month": "rdrMonth",
+                "monthAndYearPickers": "rdrMonthAndYearPickers",
+                "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                "monthName": "rdrMonthName",
+                "monthPicker": "rdrMonthPicker",
+                "months": "rdrMonths",
+                "monthsHorizontal": "rdrMonthsHorizontal",
+                "monthsVertical": "rdrMonthsVertical",
+                "nextButton": "rdrNextButton",
+                "nextPrevButton": "rdrNextPrevButton",
+                "prevButton": "rdrPprevButton",
+                "selected": "rdrSelected",
+                "startEdge": "rdrStartEdge",
+                "staticRange": "rdrStaticRange",
+                "staticRangeLabel": "rdrStaticRangeLabel",
+                "staticRangeSelected": "rdrStaticRangeSelected",
+                "staticRanges": "rdrStaticRanges",
+                "weekDay": "rdrWeekDay",
+                "weekDays": "rdrWeekDays",
+                "yearPicker": "rdrYearPicker",
+              }
+            }
+            value="-"
+          />
         </div>,
         undefined,
       ],
@@ -527,42 +618,132 @@ ShallowWrapper {
         "nodeType": "host",
         "props": Object {
           "children": Array [
-            <div
-              className="rdrInputRange"
-            >
-              <input
-                className="rdrInputRangeInput"
-                max={99999}
-                min={0}
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                value="-"
-              />
-              <span
-                className={undefined}
-              >
-                days up to today
-              </span>
-            </div>,
-            <div
-              className="rdrInputRange"
-            >
-              <input
-                className="rdrInputRangeInput"
-                max={99999}
-                min={0}
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                value="-"
-              />
-              <span
-                className={undefined}
-              >
-                days starting today
-              </span>
-            </div>,
+            <InputRangeField
+              label="days up to today"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="-"
+              styles={
+                Object {
+                  "calendarWrapper": "rdrCalendarWrapper",
+                  "dateDisplay": "rdrDateDisplay",
+                  "dateDisplayItem": "rdrDateDisplayItem",
+                  "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                  "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                  "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                  "dateRangeWrapper": "rdrDateRangeWrapper",
+                  "day": "rdrDay",
+                  "dayActive": "rdrDayActive",
+                  "dayDisabled": "rdrDayDisabled",
+                  "dayEndOfMonth": "rdrDayEndOfMonth",
+                  "dayEndOfWeek": "rdrDayEndOfWeek",
+                  "dayEndPreview": "rdrDayEndPreview",
+                  "dayHovered": "rdrDayHovered",
+                  "dayInPreview": "rdrDayInPreview",
+                  "dayNumber": "rdrDayNumber",
+                  "dayPassive": "rdrDayPassive",
+                  "daySelected": "rdrDaySelected",
+                  "dayStartOfMonth": "rdrDayStartOfMonth",
+                  "dayStartOfWeek": "rdrDayStartOfWeek",
+                  "dayStartPreview": "rdrDayStartPreview",
+                  "dayToday": "rdrDayToday",
+                  "dayWeekend": "rdrDayWeekend",
+                  "days": "rdrDays",
+                  "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                  "endEdge": "rdrEndEdge",
+                  "inRange": "rdrInRange",
+                  "infiniteMonths": "rdrInfiniteMonths",
+                  "inputRange": "rdrInputRange",
+                  "inputRangeInput": "rdrInputRangeInput",
+                  "inputRanges": "rdrInputRanges",
+                  "month": "rdrMonth",
+                  "monthAndYearPickers": "rdrMonthAndYearPickers",
+                  "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                  "monthName": "rdrMonthName",
+                  "monthPicker": "rdrMonthPicker",
+                  "months": "rdrMonths",
+                  "monthsHorizontal": "rdrMonthsHorizontal",
+                  "monthsVertical": "rdrMonthsVertical",
+                  "nextButton": "rdrNextButton",
+                  "nextPrevButton": "rdrNextPrevButton",
+                  "prevButton": "rdrPprevButton",
+                  "selected": "rdrSelected",
+                  "startEdge": "rdrStartEdge",
+                  "staticRange": "rdrStaticRange",
+                  "staticRangeLabel": "rdrStaticRangeLabel",
+                  "staticRangeSelected": "rdrStaticRangeSelected",
+                  "staticRanges": "rdrStaticRanges",
+                  "weekDay": "rdrWeekDay",
+                  "weekDays": "rdrWeekDays",
+                  "yearPicker": "rdrYearPicker",
+                }
+              }
+              value="-"
+            />,
+            <InputRangeField
+              label="days starting today"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="-"
+              styles={
+                Object {
+                  "calendarWrapper": "rdrCalendarWrapper",
+                  "dateDisplay": "rdrDateDisplay",
+                  "dateDisplayItem": "rdrDateDisplayItem",
+                  "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                  "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                  "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                  "dateRangeWrapper": "rdrDateRangeWrapper",
+                  "day": "rdrDay",
+                  "dayActive": "rdrDayActive",
+                  "dayDisabled": "rdrDayDisabled",
+                  "dayEndOfMonth": "rdrDayEndOfMonth",
+                  "dayEndOfWeek": "rdrDayEndOfWeek",
+                  "dayEndPreview": "rdrDayEndPreview",
+                  "dayHovered": "rdrDayHovered",
+                  "dayInPreview": "rdrDayInPreview",
+                  "dayNumber": "rdrDayNumber",
+                  "dayPassive": "rdrDayPassive",
+                  "daySelected": "rdrDaySelected",
+                  "dayStartOfMonth": "rdrDayStartOfMonth",
+                  "dayStartOfWeek": "rdrDayStartOfWeek",
+                  "dayStartPreview": "rdrDayStartPreview",
+                  "dayToday": "rdrDayToday",
+                  "dayWeekend": "rdrDayWeekend",
+                  "days": "rdrDays",
+                  "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                  "endEdge": "rdrEndEdge",
+                  "inRange": "rdrInRange",
+                  "infiniteMonths": "rdrInfiniteMonths",
+                  "inputRange": "rdrInputRange",
+                  "inputRangeInput": "rdrInputRangeInput",
+                  "inputRanges": "rdrInputRanges",
+                  "month": "rdrMonth",
+                  "monthAndYearPickers": "rdrMonthAndYearPickers",
+                  "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                  "monthName": "rdrMonthName",
+                  "monthPicker": "rdrMonthPicker",
+                  "months": "rdrMonths",
+                  "monthsHorizontal": "rdrMonthsHorizontal",
+                  "monthsVertical": "rdrMonthsVertical",
+                  "nextButton": "rdrNextButton",
+                  "nextPrevButton": "rdrNextPrevButton",
+                  "prevButton": "rdrPprevButton",
+                  "selected": "rdrSelected",
+                  "startEdge": "rdrStartEdge",
+                  "staticRange": "rdrStaticRange",
+                  "staticRangeLabel": "rdrStaticRangeLabel",
+                  "staticRangeSelected": "rdrStaticRangeSelected",
+                  "staticRanges": "rdrStaticRanges",
+                  "weekDay": "rdrWeekDay",
+                  "weekDays": "rdrWeekDays",
+                  "yearPicker": "rdrYearPicker",
+                }
+              }
+              value="-"
+            />,
           ],
           "className": "rdrInputRanges",
         },
@@ -571,116 +752,140 @@ ShallowWrapper {
           Object {
             "instance": null,
             "key": "0",
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
-              "children": Array [
-                <input
-                  className="rdrInputRangeInput"
-                  max={99999}
-                  min={0}
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  value="-"
-                />,
-                <span
-                  className={undefined}
-                >
-                  days up to today
-                </span>,
-              ],
-              "className": "rdrInputRange",
+              "label": "days up to today",
+              "onBlur": [Function],
+              "onChange": [Function],
+              "onFocus": [Function],
+              "placeholder": "-",
+              "styles": Object {
+                "calendarWrapper": "rdrCalendarWrapper",
+                "dateDisplay": "rdrDateDisplay",
+                "dateDisplayItem": "rdrDateDisplayItem",
+                "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                "dateRangeWrapper": "rdrDateRangeWrapper",
+                "day": "rdrDay",
+                "dayActive": "rdrDayActive",
+                "dayDisabled": "rdrDayDisabled",
+                "dayEndOfMonth": "rdrDayEndOfMonth",
+                "dayEndOfWeek": "rdrDayEndOfWeek",
+                "dayEndPreview": "rdrDayEndPreview",
+                "dayHovered": "rdrDayHovered",
+                "dayInPreview": "rdrDayInPreview",
+                "dayNumber": "rdrDayNumber",
+                "dayPassive": "rdrDayPassive",
+                "daySelected": "rdrDaySelected",
+                "dayStartOfMonth": "rdrDayStartOfMonth",
+                "dayStartOfWeek": "rdrDayStartOfWeek",
+                "dayStartPreview": "rdrDayStartPreview",
+                "dayToday": "rdrDayToday",
+                "dayWeekend": "rdrDayWeekend",
+                "days": "rdrDays",
+                "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                "endEdge": "rdrEndEdge",
+                "inRange": "rdrInRange",
+                "infiniteMonths": "rdrInfiniteMonths",
+                "inputRange": "rdrInputRange",
+                "inputRangeInput": "rdrInputRangeInput",
+                "inputRanges": "rdrInputRanges",
+                "month": "rdrMonth",
+                "monthAndYearPickers": "rdrMonthAndYearPickers",
+                "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                "monthName": "rdrMonthName",
+                "monthPicker": "rdrMonthPicker",
+                "months": "rdrMonths",
+                "monthsHorizontal": "rdrMonthsHorizontal",
+                "monthsVertical": "rdrMonthsVertical",
+                "nextButton": "rdrNextButton",
+                "nextPrevButton": "rdrNextPrevButton",
+                "prevButton": "rdrPprevButton",
+                "selected": "rdrSelected",
+                "startEdge": "rdrStartEdge",
+                "staticRange": "rdrStaticRange",
+                "staticRangeLabel": "rdrStaticRangeLabel",
+                "staticRangeSelected": "rdrStaticRangeSelected",
+                "staticRanges": "rdrStaticRanges",
+                "weekDay": "rdrWeekDay",
+                "weekDays": "rdrWeekDays",
+                "yearPicker": "rdrYearPicker",
+              },
+              "value": "-",
             },
             "ref": null,
-            "rendered": Array [
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "className": "rdrInputRangeInput",
-                  "max": 99999,
-                  "min": 0,
-                  "onBlur": [Function],
-                  "onChange": [Function],
-                  "onFocus": [Function],
-                  "value": "-",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "input",
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "children": "days up to today",
-                  "className": undefined,
-                },
-                "ref": null,
-                "rendered": "days up to today",
-                "type": "span",
-              },
-            ],
-            "type": "div",
+            "rendered": null,
+            "type": [Function],
           },
           Object {
             "instance": null,
             "key": "1",
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
-              "children": Array [
-                <input
-                  className="rdrInputRangeInput"
-                  max={99999}
-                  min={0}
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  value="-"
-                />,
-                <span
-                  className={undefined}
-                >
-                  days starting today
-                </span>,
-              ],
-              "className": "rdrInputRange",
+              "label": "days starting today",
+              "onBlur": [Function],
+              "onChange": [Function],
+              "onFocus": [Function],
+              "placeholder": "-",
+              "styles": Object {
+                "calendarWrapper": "rdrCalendarWrapper",
+                "dateDisplay": "rdrDateDisplay",
+                "dateDisplayItem": "rdrDateDisplayItem",
+                "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                "dateRangeWrapper": "rdrDateRangeWrapper",
+                "day": "rdrDay",
+                "dayActive": "rdrDayActive",
+                "dayDisabled": "rdrDayDisabled",
+                "dayEndOfMonth": "rdrDayEndOfMonth",
+                "dayEndOfWeek": "rdrDayEndOfWeek",
+                "dayEndPreview": "rdrDayEndPreview",
+                "dayHovered": "rdrDayHovered",
+                "dayInPreview": "rdrDayInPreview",
+                "dayNumber": "rdrDayNumber",
+                "dayPassive": "rdrDayPassive",
+                "daySelected": "rdrDaySelected",
+                "dayStartOfMonth": "rdrDayStartOfMonth",
+                "dayStartOfWeek": "rdrDayStartOfWeek",
+                "dayStartPreview": "rdrDayStartPreview",
+                "dayToday": "rdrDayToday",
+                "dayWeekend": "rdrDayWeekend",
+                "days": "rdrDays",
+                "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                "endEdge": "rdrEndEdge",
+                "inRange": "rdrInRange",
+                "infiniteMonths": "rdrInfiniteMonths",
+                "inputRange": "rdrInputRange",
+                "inputRangeInput": "rdrInputRangeInput",
+                "inputRanges": "rdrInputRanges",
+                "month": "rdrMonth",
+                "monthAndYearPickers": "rdrMonthAndYearPickers",
+                "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                "monthName": "rdrMonthName",
+                "monthPicker": "rdrMonthPicker",
+                "months": "rdrMonths",
+                "monthsHorizontal": "rdrMonthsHorizontal",
+                "monthsVertical": "rdrMonthsVertical",
+                "nextButton": "rdrNextButton",
+                "nextPrevButton": "rdrNextPrevButton",
+                "prevButton": "rdrPprevButton",
+                "selected": "rdrSelected",
+                "startEdge": "rdrStartEdge",
+                "staticRange": "rdrStaticRange",
+                "staticRangeLabel": "rdrStaticRangeLabel",
+                "staticRangeSelected": "rdrStaticRangeSelected",
+                "staticRanges": "rdrStaticRanges",
+                "weekDay": "rdrWeekDay",
+                "weekDays": "rdrWeekDays",
+                "yearPicker": "rdrYearPicker",
+              },
+              "value": "-",
             },
             "ref": null,
-            "rendered": Array [
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "className": "rdrInputRangeInput",
-                  "max": 99999,
-                  "min": 0,
-                  "onBlur": [Function],
-                  "onChange": [Function],
-                  "onFocus": [Function],
-                  "value": "-",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "input",
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "children": "days starting today",
-                  "className": undefined,
-                },
-                "ref": null,
-                "rendered": "days starting today",
-                "type": "span",
-              },
-            ],
-            "type": "div",
+            "rendered": null,
+            "type": [Function],
           },
         ],
         "type": "div",
@@ -794,42 +999,132 @@ ShallowWrapper {
           <div
             className="rdrInputRanges"
           >
-            <div
-              className="rdrInputRange"
-            >
-              <input
-                className="rdrInputRangeInput"
-                max={99999}
-                min={0}
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                value="-"
-              />
-              <span
-                className={undefined}
-              >
-                days up to today
-              </span>
-            </div>
-            <div
-              className="rdrInputRange"
-            >
-              <input
-                className="rdrInputRangeInput"
-                max={99999}
-                min={0}
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                value="-"
-              />
-              <span
-                className={undefined}
-              >
-                days starting today
-              </span>
-            </div>
+            <InputRangeField
+              label="days up to today"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="-"
+              styles={
+                Object {
+                  "calendarWrapper": "rdrCalendarWrapper",
+                  "dateDisplay": "rdrDateDisplay",
+                  "dateDisplayItem": "rdrDateDisplayItem",
+                  "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                  "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                  "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                  "dateRangeWrapper": "rdrDateRangeWrapper",
+                  "day": "rdrDay",
+                  "dayActive": "rdrDayActive",
+                  "dayDisabled": "rdrDayDisabled",
+                  "dayEndOfMonth": "rdrDayEndOfMonth",
+                  "dayEndOfWeek": "rdrDayEndOfWeek",
+                  "dayEndPreview": "rdrDayEndPreview",
+                  "dayHovered": "rdrDayHovered",
+                  "dayInPreview": "rdrDayInPreview",
+                  "dayNumber": "rdrDayNumber",
+                  "dayPassive": "rdrDayPassive",
+                  "daySelected": "rdrDaySelected",
+                  "dayStartOfMonth": "rdrDayStartOfMonth",
+                  "dayStartOfWeek": "rdrDayStartOfWeek",
+                  "dayStartPreview": "rdrDayStartPreview",
+                  "dayToday": "rdrDayToday",
+                  "dayWeekend": "rdrDayWeekend",
+                  "days": "rdrDays",
+                  "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                  "endEdge": "rdrEndEdge",
+                  "inRange": "rdrInRange",
+                  "infiniteMonths": "rdrInfiniteMonths",
+                  "inputRange": "rdrInputRange",
+                  "inputRangeInput": "rdrInputRangeInput",
+                  "inputRanges": "rdrInputRanges",
+                  "month": "rdrMonth",
+                  "monthAndYearPickers": "rdrMonthAndYearPickers",
+                  "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                  "monthName": "rdrMonthName",
+                  "monthPicker": "rdrMonthPicker",
+                  "months": "rdrMonths",
+                  "monthsHorizontal": "rdrMonthsHorizontal",
+                  "monthsVertical": "rdrMonthsVertical",
+                  "nextButton": "rdrNextButton",
+                  "nextPrevButton": "rdrNextPrevButton",
+                  "prevButton": "rdrPprevButton",
+                  "selected": "rdrSelected",
+                  "startEdge": "rdrStartEdge",
+                  "staticRange": "rdrStaticRange",
+                  "staticRangeLabel": "rdrStaticRangeLabel",
+                  "staticRangeSelected": "rdrStaticRangeSelected",
+                  "staticRanges": "rdrStaticRanges",
+                  "weekDay": "rdrWeekDay",
+                  "weekDays": "rdrWeekDays",
+                  "yearPicker": "rdrYearPicker",
+                }
+              }
+              value="-"
+            />
+            <InputRangeField
+              label="days starting today"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="-"
+              styles={
+                Object {
+                  "calendarWrapper": "rdrCalendarWrapper",
+                  "dateDisplay": "rdrDateDisplay",
+                  "dateDisplayItem": "rdrDateDisplayItem",
+                  "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                  "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                  "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                  "dateRangeWrapper": "rdrDateRangeWrapper",
+                  "day": "rdrDay",
+                  "dayActive": "rdrDayActive",
+                  "dayDisabled": "rdrDayDisabled",
+                  "dayEndOfMonth": "rdrDayEndOfMonth",
+                  "dayEndOfWeek": "rdrDayEndOfWeek",
+                  "dayEndPreview": "rdrDayEndPreview",
+                  "dayHovered": "rdrDayHovered",
+                  "dayInPreview": "rdrDayInPreview",
+                  "dayNumber": "rdrDayNumber",
+                  "dayPassive": "rdrDayPassive",
+                  "daySelected": "rdrDaySelected",
+                  "dayStartOfMonth": "rdrDayStartOfMonth",
+                  "dayStartOfWeek": "rdrDayStartOfWeek",
+                  "dayStartPreview": "rdrDayStartPreview",
+                  "dayToday": "rdrDayToday",
+                  "dayWeekend": "rdrDayWeekend",
+                  "days": "rdrDays",
+                  "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                  "endEdge": "rdrEndEdge",
+                  "inRange": "rdrInRange",
+                  "infiniteMonths": "rdrInfiniteMonths",
+                  "inputRange": "rdrInputRange",
+                  "inputRangeInput": "rdrInputRangeInput",
+                  "inputRanges": "rdrInputRanges",
+                  "month": "rdrMonth",
+                  "monthAndYearPickers": "rdrMonthAndYearPickers",
+                  "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                  "monthName": "rdrMonthName",
+                  "monthPicker": "rdrMonthPicker",
+                  "months": "rdrMonths",
+                  "monthsHorizontal": "rdrMonthsHorizontal",
+                  "monthsVertical": "rdrMonthsVertical",
+                  "nextButton": "rdrNextButton",
+                  "nextPrevButton": "rdrNextPrevButton",
+                  "prevButton": "rdrPprevButton",
+                  "selected": "rdrSelected",
+                  "startEdge": "rdrStartEdge",
+                  "staticRange": "rdrStaticRange",
+                  "staticRangeLabel": "rdrStaticRangeLabel",
+                  "staticRangeSelected": "rdrStaticRangeSelected",
+                  "staticRanges": "rdrStaticRanges",
+                  "weekDay": "rdrWeekDay",
+                  "weekDays": "rdrWeekDays",
+                  "yearPicker": "rdrYearPicker",
+                }
+              }
+              value="-"
+            />
           </div>,
           undefined,
         ],
@@ -1148,42 +1443,132 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": Array [
-              <div
-                className="rdrInputRange"
-              >
-                <input
-                  className="rdrInputRangeInput"
-                  max={99999}
-                  min={0}
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  value="-"
-                />
-                <span
-                  className={undefined}
-                >
-                  days up to today
-                </span>
-              </div>,
-              <div
-                className="rdrInputRange"
-              >
-                <input
-                  className="rdrInputRangeInput"
-                  max={99999}
-                  min={0}
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  value="-"
-                />
-                <span
-                  className={undefined}
-                >
-                  days starting today
-                </span>
-              </div>,
+              <InputRangeField
+                label="days up to today"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                placeholder="-"
+                styles={
+                  Object {
+                    "calendarWrapper": "rdrCalendarWrapper",
+                    "dateDisplay": "rdrDateDisplay",
+                    "dateDisplayItem": "rdrDateDisplayItem",
+                    "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                    "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                    "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                    "dateRangeWrapper": "rdrDateRangeWrapper",
+                    "day": "rdrDay",
+                    "dayActive": "rdrDayActive",
+                    "dayDisabled": "rdrDayDisabled",
+                    "dayEndOfMonth": "rdrDayEndOfMonth",
+                    "dayEndOfWeek": "rdrDayEndOfWeek",
+                    "dayEndPreview": "rdrDayEndPreview",
+                    "dayHovered": "rdrDayHovered",
+                    "dayInPreview": "rdrDayInPreview",
+                    "dayNumber": "rdrDayNumber",
+                    "dayPassive": "rdrDayPassive",
+                    "daySelected": "rdrDaySelected",
+                    "dayStartOfMonth": "rdrDayStartOfMonth",
+                    "dayStartOfWeek": "rdrDayStartOfWeek",
+                    "dayStartPreview": "rdrDayStartPreview",
+                    "dayToday": "rdrDayToday",
+                    "dayWeekend": "rdrDayWeekend",
+                    "days": "rdrDays",
+                    "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                    "endEdge": "rdrEndEdge",
+                    "inRange": "rdrInRange",
+                    "infiniteMonths": "rdrInfiniteMonths",
+                    "inputRange": "rdrInputRange",
+                    "inputRangeInput": "rdrInputRangeInput",
+                    "inputRanges": "rdrInputRanges",
+                    "month": "rdrMonth",
+                    "monthAndYearPickers": "rdrMonthAndYearPickers",
+                    "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                    "monthName": "rdrMonthName",
+                    "monthPicker": "rdrMonthPicker",
+                    "months": "rdrMonths",
+                    "monthsHorizontal": "rdrMonthsHorizontal",
+                    "monthsVertical": "rdrMonthsVertical",
+                    "nextButton": "rdrNextButton",
+                    "nextPrevButton": "rdrNextPrevButton",
+                    "prevButton": "rdrPprevButton",
+                    "selected": "rdrSelected",
+                    "startEdge": "rdrStartEdge",
+                    "staticRange": "rdrStaticRange",
+                    "staticRangeLabel": "rdrStaticRangeLabel",
+                    "staticRangeSelected": "rdrStaticRangeSelected",
+                    "staticRanges": "rdrStaticRanges",
+                    "weekDay": "rdrWeekDay",
+                    "weekDays": "rdrWeekDays",
+                    "yearPicker": "rdrYearPicker",
+                  }
+                }
+                value="-"
+              />,
+              <InputRangeField
+                label="days starting today"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                placeholder="-"
+                styles={
+                  Object {
+                    "calendarWrapper": "rdrCalendarWrapper",
+                    "dateDisplay": "rdrDateDisplay",
+                    "dateDisplayItem": "rdrDateDisplayItem",
+                    "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                    "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                    "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                    "dateRangeWrapper": "rdrDateRangeWrapper",
+                    "day": "rdrDay",
+                    "dayActive": "rdrDayActive",
+                    "dayDisabled": "rdrDayDisabled",
+                    "dayEndOfMonth": "rdrDayEndOfMonth",
+                    "dayEndOfWeek": "rdrDayEndOfWeek",
+                    "dayEndPreview": "rdrDayEndPreview",
+                    "dayHovered": "rdrDayHovered",
+                    "dayInPreview": "rdrDayInPreview",
+                    "dayNumber": "rdrDayNumber",
+                    "dayPassive": "rdrDayPassive",
+                    "daySelected": "rdrDaySelected",
+                    "dayStartOfMonth": "rdrDayStartOfMonth",
+                    "dayStartOfWeek": "rdrDayStartOfWeek",
+                    "dayStartPreview": "rdrDayStartPreview",
+                    "dayToday": "rdrDayToday",
+                    "dayWeekend": "rdrDayWeekend",
+                    "days": "rdrDays",
+                    "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                    "endEdge": "rdrEndEdge",
+                    "inRange": "rdrInRange",
+                    "infiniteMonths": "rdrInfiniteMonths",
+                    "inputRange": "rdrInputRange",
+                    "inputRangeInput": "rdrInputRangeInput",
+                    "inputRanges": "rdrInputRanges",
+                    "month": "rdrMonth",
+                    "monthAndYearPickers": "rdrMonthAndYearPickers",
+                    "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                    "monthName": "rdrMonthName",
+                    "monthPicker": "rdrMonthPicker",
+                    "months": "rdrMonths",
+                    "monthsHorizontal": "rdrMonthsHorizontal",
+                    "monthsVertical": "rdrMonthsVertical",
+                    "nextButton": "rdrNextButton",
+                    "nextPrevButton": "rdrNextPrevButton",
+                    "prevButton": "rdrPprevButton",
+                    "selected": "rdrSelected",
+                    "startEdge": "rdrStartEdge",
+                    "staticRange": "rdrStaticRange",
+                    "staticRangeLabel": "rdrStaticRangeLabel",
+                    "staticRangeSelected": "rdrStaticRangeSelected",
+                    "staticRanges": "rdrStaticRanges",
+                    "weekDay": "rdrWeekDay",
+                    "weekDays": "rdrWeekDays",
+                    "yearPicker": "rdrYearPicker",
+                  }
+                }
+                value="-"
+              />,
             ],
             "className": "rdrInputRanges",
           },
@@ -1192,116 +1577,140 @@ ShallowWrapper {
             Object {
               "instance": null,
               "key": "0",
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
-                "children": Array [
-                  <input
-                    className="rdrInputRangeInput"
-                    max={99999}
-                    min={0}
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onFocus={[Function]}
-                    value="-"
-                  />,
-                  <span
-                    className={undefined}
-                  >
-                    days up to today
-                  </span>,
-                ],
-                "className": "rdrInputRange",
+                "label": "days up to today",
+                "onBlur": [Function],
+                "onChange": [Function],
+                "onFocus": [Function],
+                "placeholder": "-",
+                "styles": Object {
+                  "calendarWrapper": "rdrCalendarWrapper",
+                  "dateDisplay": "rdrDateDisplay",
+                  "dateDisplayItem": "rdrDateDisplayItem",
+                  "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                  "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                  "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                  "dateRangeWrapper": "rdrDateRangeWrapper",
+                  "day": "rdrDay",
+                  "dayActive": "rdrDayActive",
+                  "dayDisabled": "rdrDayDisabled",
+                  "dayEndOfMonth": "rdrDayEndOfMonth",
+                  "dayEndOfWeek": "rdrDayEndOfWeek",
+                  "dayEndPreview": "rdrDayEndPreview",
+                  "dayHovered": "rdrDayHovered",
+                  "dayInPreview": "rdrDayInPreview",
+                  "dayNumber": "rdrDayNumber",
+                  "dayPassive": "rdrDayPassive",
+                  "daySelected": "rdrDaySelected",
+                  "dayStartOfMonth": "rdrDayStartOfMonth",
+                  "dayStartOfWeek": "rdrDayStartOfWeek",
+                  "dayStartPreview": "rdrDayStartPreview",
+                  "dayToday": "rdrDayToday",
+                  "dayWeekend": "rdrDayWeekend",
+                  "days": "rdrDays",
+                  "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                  "endEdge": "rdrEndEdge",
+                  "inRange": "rdrInRange",
+                  "infiniteMonths": "rdrInfiniteMonths",
+                  "inputRange": "rdrInputRange",
+                  "inputRangeInput": "rdrInputRangeInput",
+                  "inputRanges": "rdrInputRanges",
+                  "month": "rdrMonth",
+                  "monthAndYearPickers": "rdrMonthAndYearPickers",
+                  "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                  "monthName": "rdrMonthName",
+                  "monthPicker": "rdrMonthPicker",
+                  "months": "rdrMonths",
+                  "monthsHorizontal": "rdrMonthsHorizontal",
+                  "monthsVertical": "rdrMonthsVertical",
+                  "nextButton": "rdrNextButton",
+                  "nextPrevButton": "rdrNextPrevButton",
+                  "prevButton": "rdrPprevButton",
+                  "selected": "rdrSelected",
+                  "startEdge": "rdrStartEdge",
+                  "staticRange": "rdrStaticRange",
+                  "staticRangeLabel": "rdrStaticRangeLabel",
+                  "staticRangeSelected": "rdrStaticRangeSelected",
+                  "staticRanges": "rdrStaticRanges",
+                  "weekDay": "rdrWeekDay",
+                  "weekDays": "rdrWeekDays",
+                  "yearPicker": "rdrYearPicker",
+                },
+                "value": "-",
               },
               "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "className": "rdrInputRangeInput",
-                    "max": 99999,
-                    "min": 0,
-                    "onBlur": [Function],
-                    "onChange": [Function],
-                    "onFocus": [Function],
-                    "value": "-",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "input",
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "days up to today",
-                    "className": undefined,
-                  },
-                  "ref": null,
-                  "rendered": "days up to today",
-                  "type": "span",
-                },
-              ],
-              "type": "div",
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
               "key": "1",
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
-                "children": Array [
-                  <input
-                    className="rdrInputRangeInput"
-                    max={99999}
-                    min={0}
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onFocus={[Function]}
-                    value="-"
-                  />,
-                  <span
-                    className={undefined}
-                  >
-                    days starting today
-                  </span>,
-                ],
-                "className": "rdrInputRange",
+                "label": "days starting today",
+                "onBlur": [Function],
+                "onChange": [Function],
+                "onFocus": [Function],
+                "placeholder": "-",
+                "styles": Object {
+                  "calendarWrapper": "rdrCalendarWrapper",
+                  "dateDisplay": "rdrDateDisplay",
+                  "dateDisplayItem": "rdrDateDisplayItem",
+                  "dateDisplayItemActive": "rdrDateDisplayItemActive",
+                  "dateDisplayWrapper": "rdrDateDisplayWrapper",
+                  "dateRangePickerWrapper": "rdrDateRangePickerWrapper",
+                  "dateRangeWrapper": "rdrDateRangeWrapper",
+                  "day": "rdrDay",
+                  "dayActive": "rdrDayActive",
+                  "dayDisabled": "rdrDayDisabled",
+                  "dayEndOfMonth": "rdrDayEndOfMonth",
+                  "dayEndOfWeek": "rdrDayEndOfWeek",
+                  "dayEndPreview": "rdrDayEndPreview",
+                  "dayHovered": "rdrDayHovered",
+                  "dayInPreview": "rdrDayInPreview",
+                  "dayNumber": "rdrDayNumber",
+                  "dayPassive": "rdrDayPassive",
+                  "daySelected": "rdrDaySelected",
+                  "dayStartOfMonth": "rdrDayStartOfMonth",
+                  "dayStartOfWeek": "rdrDayStartOfWeek",
+                  "dayStartPreview": "rdrDayStartPreview",
+                  "dayToday": "rdrDayToday",
+                  "dayWeekend": "rdrDayWeekend",
+                  "days": "rdrDays",
+                  "definedRangesWrapper": "rdrDefinedRangesWrapper",
+                  "endEdge": "rdrEndEdge",
+                  "inRange": "rdrInRange",
+                  "infiniteMonths": "rdrInfiniteMonths",
+                  "inputRange": "rdrInputRange",
+                  "inputRangeInput": "rdrInputRangeInput",
+                  "inputRanges": "rdrInputRanges",
+                  "month": "rdrMonth",
+                  "monthAndYearPickers": "rdrMonthAndYearPickers",
+                  "monthAndYearWrapper": "rdrMonthAndYearWrapper",
+                  "monthName": "rdrMonthName",
+                  "monthPicker": "rdrMonthPicker",
+                  "months": "rdrMonths",
+                  "monthsHorizontal": "rdrMonthsHorizontal",
+                  "monthsVertical": "rdrMonthsVertical",
+                  "nextButton": "rdrNextButton",
+                  "nextPrevButton": "rdrNextPrevButton",
+                  "prevButton": "rdrPprevButton",
+                  "selected": "rdrSelected",
+                  "startEdge": "rdrStartEdge",
+                  "staticRange": "rdrStaticRange",
+                  "staticRangeLabel": "rdrStaticRangeLabel",
+                  "staticRangeSelected": "rdrStaticRangeSelected",
+                  "staticRanges": "rdrStaticRanges",
+                  "weekDay": "rdrWeekDay",
+                  "weekDays": "rdrWeekDays",
+                  "yearPicker": "rdrYearPicker",
+                },
+                "value": "-",
               },
               "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "className": "rdrInputRangeInput",
-                    "max": 99999,
-                    "min": 0,
-                    "onBlur": [Function],
-                    "onChange": [Function],
-                    "onFocus": [Function],
-                    "value": "-",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "input",
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "days starting today",
-                    "className": undefined,
-                  },
-                  "ref": null,
-                  "rendered": "days starting today",
-                  "type": "span",
-                },
-              ],
-              "type": "div",
+              "rendered": null,
+              "type": [Function],
             },
           ],
           "type": "div",
@@ -1315,8 +1724,23 @@ ShallowWrapper {
     "adapter": ReactSixteenAdapter {
       "options": Object {
         "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
       },
     },
   },
+  Symbol(enzyme.__childContext__): null,
 }
 `;
