@@ -24,8 +24,6 @@ module.exports = {
 
     entry: {
       'js/main.js': path.resolve('./demo/src/index.js'),
-      // 'js/main.js': path.resolve('./src/index.js'),
-      //'css/main.css': path.resolve('./src/styles/index.scss')
     },
 
     output: {

@@ -6,9 +6,7 @@ console.log('[Webpack] Use prod configuration\n')
 
 module.exports = Object.assign(
   {
-    //mode: 'production',
-    mode: 'development',
-    devtool: '#source-map',
+    mode: 'production'
   },
   common.main
 )
