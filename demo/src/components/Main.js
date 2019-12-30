@@ -91,13 +91,15 @@ const nameMapper = {
   uk: 'Ukrainian',
   vi: 'Vietnamese',
   zhCN: 'Chinese Simplified',
-  zhTW: 'Chinese Traditional'
+  zhTW: 'Chinese Traditional',
 };
 
-const localeOptions = Object.keys(rdrLocales).map(key => ({
-  value: key,
-  label: `${key} - ${nameMapper[key] || ''}`,
-})).filter(item => nameMapper[item.value]);
+const localeOptions = Object.keys(rdrLocales)
+  .map(key => ({
+    value: key,
+    label: `${key} - ${nameMapper[key] || ''}`,
+  }))
+  .filter(item => nameMapper[item.value]);
 
 import 'normalize.css';
 import '../styles/global.css';

@@ -18,11 +18,11 @@ class DateInput extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { value } = this.props;
+  componentDidUpdate(prevProps) {
+    const { value } = prevProps;
 
-    if (!isEqual(value, nextProps.value)) {
-      this.setState({ value: this.formatDate(nextProps) });
+    if (!isEqual(value, this.props.value)) {
+      this.setState({ value: this.formatDate(this.props) });
     }
   }
 
