@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from '../styles';
 import { defaultInputRanges, defaultStaticRanges } from '../defaultRanges';
 import { rangeShape } from './DayCell';
+import InputRangeField from './InputRangeField';
 import cx from 'classnames';
 
 class DefinedRanges extends Component {
@@ -22,6 +23,17 @@ class DefinedRanges extends Component {
     onChange({
       [selectedRange.key || `range${focusedRange[0] + 1}`]: { ...selectedRange, ...range },
     });
+  }
+
+  getRangeOptionValue(option) {
+    const { ranges = [], focusedRange = [] } = this.props;
+
+    if (typeof option.getCurrentValue !== 'function') {
+      return '';
+    }
+
+    const selectedRange = ranges[focusedRange[0]] || {};
+    return option.getCurrentValue(selectedRange) || '';
   }
 
   getSelectedRange(ranges, staticRange) {
@@ -79,26 +91,15 @@ class DefinedRanges extends Component {
         </div>
         <div className={styles.inputRanges}>
           {this.props.inputRanges.map((rangeOption, i) => (
-            <div className={styles.inputRange} key={i}>
-              <input
-                className={styles.inputRangeInput}
-                onFocus={() => this.setState({ focusedInput: i, rangeOffset: 0 })}
-                onBlur={() => this.setState({ rangeOffset: 0 })}
-                onChange={e => {
-                  let value = parseInt(e.target.value, 10);
-                  value = isNaN(value) ? 0 : Math.max(Math.min(99999, value), 0);
-                  this.handleRangeChange(rangeOption.range(value, this.props));
-                }}
-                min={0}
-                max={99999}
-                value={
-                  rangeOption.getCurrentValue
-                    ? rangeOption.getCurrentValue(ranges[this.props.focusedRange[0]] || {})
-                    : '-'
-                }
-              />
-              <span className={styles.inputRangeLabel}>{rangeOption.label}</span>
-            </div>
+            <InputRangeField
+              key={i}
+              styles={styles}
+              label={rangeOption.label}
+              onFocus={() => this.setState({ focusedInput: i, rangeOffset: 0 })}
+              onBlur={() => this.setState({ rangeOffset: 0 })}
+              onChange={value => this.handleRangeChange(rangeOption.range(value, this.props))}
+              value={this.getRangeOptionValue(rangeOption)}
+            />
           ))}
         </div>
         {this.props.footerContent}

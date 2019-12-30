@@ -20,20 +20,14 @@ class DayCell extends Component {
   }
 
   handleKeyEvent(event) {
-    const { day } = this.props;
-    switch (event.keyCode) {
-      case 13: //space
-      case 32: //enter
-        if (event.type === 'keydown') {
-          this.props.onMouseDown(day);
-        } else {
-          this.props.onMouseUp(day);
-        }
-        break;
+    const { day, onMouseDown, onMouseUp } = this.props;
+    if ([13 /* space */, 32 /* enter */].includes(event.keyCode)) {
+      if (event.type === 'keydown') onMouseDown(day);
+      else onMouseUp(day);
     }
   }
   handleMouseEvent(event) {
-    const { day, disabled, onPreviewChange } = this.props;
+    const { day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp } = this.props;
     const stateChanges = {};
     if (disabled) {
       onPreviewChange();
@@ -42,7 +36,7 @@ class DayCell extends Component {
 
     switch (event.type) {
       case 'mouseenter':
-        this.props.onMouseEnter(day);
+        onMouseEnter(day);
         onPreviewChange(day);
         stateChanges.hover = true;
         break;
@@ -52,12 +46,12 @@ class DayCell extends Component {
         break;
       case 'mousedown':
         stateChanges.active = true;
-        this.props.onMouseDown(day);
+        onMouseDown(day);
         break;
       case 'mouseup':
         event.stopPropagation();
         stateChanges.active = false;
-        this.props.onMouseUp(day);
+        onMouseUp(day);
         break;
       case 'focus':
         onPreviewChange(day);
@@ -180,7 +174,7 @@ class DayCell extends Component {
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={styles.dayNumber}>
-          <span>{format(this.props.day, 'D')}</span>
+          <span>{format(this.props.day, 'd')}</span>
         </span>
       </button>
     );

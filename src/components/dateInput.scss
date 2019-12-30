@@ -1,0 +1,16 @@
+.rdrDateInput {
+  position: relative;
+
+  input {
+    outline: none;
+  }
+
+  .rdrWarning {
+    position: absolute;
+    font-size: 1.6em;
+    line-height: 1.6em;
+    top: 0;
+    right: .25em;
+    color: #FF0000;
+  }
+}
