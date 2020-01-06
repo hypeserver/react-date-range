@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { rangeShape } from './DayCell.js';
-import Month from './Month.js';
-import DateInput from './DateInput';
-import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../utils';
+import { rangeShape } from '../DayCell';
+import Month from '../Month';
+import DateInput from '../DateInput';
+import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../../utils';
 import classnames from 'classnames';
 import ReactList from 'react-list';
 import {
@@ -26,7 +26,7 @@ import {
   max,
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
-import coreStyles from '../styles';
+import coreStyles from '../../styles';
 
 class Calendar extends PureComponent {
   constructor(props, context) {
@@ -47,6 +47,7 @@ class Calendar extends PureComponent {
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
     this.monthNames = [...Array(12).keys()].map(i => props.locale.localize.month(i));
+    this.isFirstRender = true;
     this.state = {
       focusedDate: calcFocusDate(null, props),
       drag: {
@@ -55,7 +56,6 @@ class Calendar extends PureComponent {
         disablePreview: false,
       },
       scrollArea: this.calcScrollArea(props),
-      isFirstRender: true,
     };
   }
   calcScrollArea(props) {
@@ -88,6 +88,7 @@ class Calendar extends PureComponent {
     const targetMonthIndex = differenceInCalendarMonths(date, props.minDate, this.dateOptions);
     const visibleMonths = this.list.getVisibleRange();
     if (preventUnnecessary && visibleMonths.includes(targetMonthIndex)) return;
+    this.isFirstRender = true;
     this.list.scrollTo(targetMonthIndex);
     this.setState({ focusedDate: date });
   }
@@ -155,7 +156,8 @@ class Calendar extends PureComponent {
   }
   handleScroll() {
     const { onShownDateChange, minDate } = this.props;
-    const { focusedDate, isFirstRender } = this.state;
+    const { focusedDate } = this.state;
+    const { isFirstRender } = this;
 
     const visibleMonths = this.list.getVisibleRange();
     // prevent scroll jump with wrong visible value
@@ -166,7 +168,7 @@ class Calendar extends PureComponent {
       this.setState({ focusedDate: visibleMonth });
       onShownDateChange && onShownDateChange(visibleMonth);
     }
-    this.setState({ isFirstRender: false });
+    this.isFirstRender = false;
   }
   renderMonthAndYear(focusedDate, changeShownDate, props) {
     const { showMonthArrow, minDate, maxDate, showMonthAndYearPickers } = props;

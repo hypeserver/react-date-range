@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Calendar from './Calendar.js';
-import { rangeShape } from './DayCell';
-import { findNextRangeIndex, generateStyles } from '../utils.js';
+import Calendar from '../Calendar';
+import { rangeShape } from '../DayCell';
+import { findNextRangeIndex, generateStyles } from '../../utils';
 import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
 import classnames from 'classnames';
-import coreStyles from '../styles';
+import coreStyles from '../../styles';
 
 class DateRange extends Component {
   constructor(props, context) {

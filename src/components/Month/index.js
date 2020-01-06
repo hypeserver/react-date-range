@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import DayCell, { rangeShape } from './DayCell.js';
+import DayCell, { rangeShape } from '../DayCell';
 import {
   format,
   startOfDay,
@@ -15,7 +15,7 @@ import {
   isWithinInterval,
   eachDayOfInterval,
 } from 'date-fns';
-import { getMonthDisplayRange } from '../utils';
+import { getMonthDisplayRange } from '../../utils';
 
 function renderWeekdays(styles, dateOptions) {
   const now = new Date();
