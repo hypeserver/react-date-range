@@ -6,7 +6,7 @@ body {
   display: flex;
 }
 
-.PreviewArea {
+[data-testid=mountNode] > * {
   margin: auto;
   box-shadow: 1px 1px 81px rgba(41,60,74,.18);
 }
