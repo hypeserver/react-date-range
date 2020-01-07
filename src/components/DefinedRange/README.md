@@ -1,4 +1,4 @@
-### DateRange
+#### Example: Defined Date Ranges
 
 ```jsx inside Markdown
 import { useState } from 'react';
@@ -51,7 +51,7 @@ const [state, setState] = useState([
   }
 ]);
 
-<DefinedRanges
+<DefinedRange
   onChange={item => setState([item.selection])}
   ranges={state}
   renderStaticRangeLabel={renderStaticRangeLabel}

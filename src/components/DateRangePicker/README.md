@@ -1,4 +1,4 @@
-### 2 Month View
+#### Example: 2 Month View
 
 ```jsx inside Markdown
 import { addDays } from 'date-fns';
@@ -22,7 +22,7 @@ const [state, setState] = useState([
 />;
 ```
 
-### Vertical Infinite
+#### Example: Vertical Infinite
 
 ```jsx inside Markdown
 import { addDays } from 'date-fns';
@@ -52,7 +52,7 @@ const [state, setState] = useState({
 />;
 ```
 
-### Multiple Range
+#### Example: Multiple Range
 
 ```jsx inside Markdown
 import { addDays } from 'date-fns';

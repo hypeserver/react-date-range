@@ -6,7 +6,7 @@ import { rangeShape } from '../DayCell';
 import InputRangeField from '../InputRangeField';
 import cx from 'classnames';
 
-class DefinedRanges extends Component {
+class DefinedRange extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -108,7 +108,7 @@ class DefinedRanges extends Component {
   }
 }
 
-DefinedRanges.propTypes = {
+DefinedRange.propTypes = {
   inputRanges: PropTypes.array,
   staticRanges: PropTypes.array,
   ranges: PropTypes.arrayOf(rangeShape),
@@ -122,7 +122,7 @@ DefinedRanges.propTypes = {
   renderStaticRangeLabel: PropTypes.func,
 };
 
-DefinedRanges.defaultProps = {
+DefinedRange.defaultProps = {
   inputRanges: defaultInputRanges,
   staticRanges: defaultStaticRanges,
   ranges: [],
@@ -130,4 +130,4 @@ DefinedRanges.defaultProps = {
   focusedRange: [0, 0],
 };
 
-export default DefinedRanges;
+export default DefinedRange;

@@ -1,7 +1,9 @@
 const path = require('path');
+const isDEV = process.env.NODE_ENV === 'development';
+const moduleSource = isDEV ? 'src' : 'dist';
 
 module.exports = {
-  ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
+  //ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
   title: 'react-date-range',
   showSidebar: false,
   template: {
@@ -21,7 +23,7 @@ module.exports = {
         },
         {
           rel: 'stylesheet',
-          href: './styleguide/styles.css',
+          href: './demo/styles.css',
         },
       ],
     },
@@ -64,13 +66,13 @@ module.exports = {
   },
   // Override Styleguidist components
   styleguideComponents: {
-    LogoRenderer: path.join(__dirname, 'styleguide/components/Logo'),
-    StyleGuideRenderer: path.join(__dirname, 'styleguide/components/StyleGuide'),
-    SectionsRenderer: path.join(__dirname, 'styleguide/components/SectionsRenderer'),
+    LogoRenderer: path.join(__dirname, 'demo/components/Logo'),
+    StyleGuideRenderer: path.join(__dirname, 'demo/components/StyleGuide'),
+    SectionsRenderer: path.join(__dirname, 'demo/components/SectionsRenderer'),
   },
   moduleAliases: {
-    'react-date-range/dist': path.resolve(__dirname, 'dist'),
-    'react-date-range': path.resolve(__dirname, 'dist'),
+    'react-date-range/dist': path.resolve(__dirname, moduleSource),
+    'react-date-range': path.resolve(__dirname, moduleSource),
   },
   webpackConfig: {
     module: {
@@ -91,4 +93,23 @@ module.exports = {
       ],
     },
   },
+
+  sections: [
+    {
+      name: 'Introduction',
+      content: 'demo/README.md',
+      sections: [
+        {
+          components: () => ['src/components/DateRangePicker/index.js'],
+        },
+        {
+          components: () => ['src/components/DateRange/index.js'],
+        },
+        {
+          components: () => ['src/components/Calendar/index.js'],
+        },
+      ],
+      sectionDepth: 1,
+    },
+  ],
 };

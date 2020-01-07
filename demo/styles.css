@@ -10,3 +10,7 @@ body {
   margin: auto;
   box-shadow: 1px 1px 81px rgba(41,60,74,.18);
 }
+
+.rsg--toolbar-17 {
+  display: none;
+}

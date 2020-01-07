@@ -1,4 +1,4 @@
-### Internationalization
+#### Example: Internationalization
 
 ```jsx inside Markdown
 import * as locales from 'react-date-range/dist/locale';
