@@ -1,29 +1,40 @@
+### DateRange
+
 ```jsx inside Markdown
-<DateRange
-  onChange={()=> {}}
-  moveRangeOnFirstSelection={false}
-  ranges={[
+import {useState} from 'react'
+const [state, setState] = useState([
     {
       startDate: new Date(),
       endDate: null,
       key: 'selection'
     }
-  ]}
-  className={'PreviewArea'}
+  ]);
+  
+
+<DateRange
+  onChange={item => setState([item.selection])}
+  moveRangeOnFirstSelection={false}
+  ranges={state}
 />
 ```
 
+### Editable Date Inputs
+
 ```jsx inside Markdown
-<DateRange
-  editableDateInputs={true}
-  moveRangeOnFirstSelection={false}
-  ranges={[
+import {useState} from 'react'
+const [state, setState] = useState([
     {
       startDate: new Date(),
       endDate: null,
       key: 'selection'
     }
-  ]}
-  className={'PreviewArea'}
+  ]);
+  
+<DateRange
+  editableDateInputs={true}
+  onChange={item => setState([item.selection])}
+  moveRangeOnFirstSelection={false}
+  ranges={state}
+
 />
 ```
