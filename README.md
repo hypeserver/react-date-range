@@ -49,17 +49,17 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { Calendar } from 'react-date-range';
 
 class MyComponent extends Component {
-	handleSelect(date){
-		console.log(date); // native Date object
-	}
-	render(){
-		return (
-			<Calendar
-				date={new Date()}
-				onChange={this.handleSelect}
-			/>
-		)
-	}
+  handleSelect(date){
+    console.log(date); // native Date object
+  }
+  render(){
+    return (
+      <Calendar
+        date={new Date()}
+        onChange={this.handleSelect}
+      />
+    )
+  }
 }
 
 ```
@@ -69,28 +69,28 @@ class MyComponent extends Component {
 import { DateRangePicker } from 'react-date-range';
 
 class MyComponent extends Component {
-	handleSelect(ranges){
-		console.log(ranges);
-		// {
-		// 	selection: {
-		// 		startDate: [native Date Object],
-		// 		endDate: [native Date Object],
-		// 	}
-		// }
-	}
-	render(){
-		const selectionRange = {
-			startDate: new Date(),
-			endDate: new Date(),
-			key: 'selection',
-		}
-		return (
-			<DateRangePicker
-				ranges={[selectionRange]}
-				onChange={this.handleSelect}
-			/>
-		)
-	}
+  handleSelect(ranges){
+    console.log(ranges);
+    // {
+    //   selection: {
+    //     startDate: [native Date Object],
+    //     endDate: [native Date Object],
+    //   }
+    // }
+  }
+  render(){
+    const selectionRange = {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    }
+    return (
+      <DateRangePicker
+        ranges={[selectionRange]}
+        onChange={this.handleSelect}
+      />
+    )
+  }
 }
 
 ```
@@ -110,7 +110,7 @@ minDate                              | Date      |                  | defines mi
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
 direction                            | String    | 'vertical'       | direction of calendar months. can be `vertical` or `horizontal`
 disabledDates                        | Date[]    | []               | dates that are disabled
-scroll                       				 | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section
+scroll                                | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
 ranges                               | *Object[] | []               | Defines ranges. array of range object
@@ -137,15 +137,15 @@ inputRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default input ranges
 
  *shape of range:
  ```js
-	{
-		startDate: PropTypes.object,
-		endDate: PropTypes.object,
-		color: PropTypes.string,
-		key: PropTypes.string,
-		autoFocus: PropTypes.bool,
-		disabled: PropTypes.bool,
-		showDateDisplay: PropTypes.bool,
-	}
+  {
+    startDate: PropTypes.object,
+    endDate: PropTypes.object,
+    color: PropTypes.string,
+    key: PropTypes.string,
+    autoFocus: PropTypes.bool,
+    disabled: PropTypes.bool,
+    showDateDisplay: PropTypes.bool,
+  }
 ```
 
 #### Infinite Scrolled Mode
@@ -154,7 +154,7 @@ To enable infinite scroll set `scroll={{enabled: true}}` basically. Infinite scr
 If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHeight` or each month's height/withs with `monthWidth`/`monthHeight`/`longMonthHeight` at `scroll` prop.
 
 ```js
-	// shape of scroll prop
+  // shape of scroll prop
   scroll: {
     enabled: PropTypes.bool,
     monthHeight: PropTypes.number,
