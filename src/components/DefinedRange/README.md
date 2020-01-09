@@ -1,4 +1,22 @@
-#### Example: Defined Date Ranges
+#### Example: Default Labels
+
+```jsx inside Markdown
+import { useState } from 'react';
+
+const [state, setState] = useState([
+  {
+    startDate: new Date(),
+    endDate: null,
+    key: 'selection'
+  }
+]);
+
+<DefinedRange
+  onChange={item => setState([item.selection])}
+  ranges={state}
+/>;
+```
+#### Example: Custom range labels
 
 ```jsx inside Markdown
 import { useState } from 'react';
