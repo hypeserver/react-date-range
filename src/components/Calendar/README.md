@@ -2,6 +2,7 @@
 
 ```jsx inside Markdown
 import * as locales from 'react-date-range/dist/locale';
+import {useState} from 'react'
 
 const nameMapper = {
   ar: 'Arabic',
@@ -60,6 +61,9 @@ const localeOptions = Object.keys(locales)
   .filter(item => nameMapper[item.value]);
 
 const [locale, setLocale] = React.useState('ja');
+const [date, setDate] = useState(null);
+
+
 <div style={{ display: 'flex', flexFlow: 'column nowrap' }}>
   <select
     style={{ margin: '20px auto' }}
@@ -72,6 +76,7 @@ const [locale, setLocale] = React.useState('ja');
       </option>
     ))}
   </select>
-  <Calendar locale={locales[locale]} date={null} />
+  <Calendar onChange={item => setDate(item)}
+ locale={locales[locale]} date={date} />
 </div>;
 ```

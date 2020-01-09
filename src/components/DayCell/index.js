@@ -174,7 +174,7 @@ class DayCell extends Component {
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={styles.dayNumber}>
-          <span>{format(this.props.day, 'd')}</span>
+          <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
         </span>
       </button>
     );
@@ -195,6 +195,7 @@ export const rangeShape = PropTypes.shape({
 
 DayCell.propTypes = {
   day: PropTypes.object.isRequired,
+  dayDisplayFormat: PropTypes.string,
   date: PropTypes.object,
   ranges: PropTypes.arrayOf(rangeShape),
   preview: PropTypes.shape({
