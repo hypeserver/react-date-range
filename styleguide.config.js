@@ -1,6 +1,6 @@
 const path = require('path');
 const isDEV = process.env.NODE_ENV === 'development';
-const moduleSource = isDEV ? 'src' : 'dist';
+const moduleSource = isDEV ? 'src' : 'src';
 
 module.exports = {
   //ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
@@ -93,14 +93,19 @@ module.exports = {
       ],
     },
   },
-
+  pagePerSection: false,
   sections: [
     {
-      name: 'Introduction',
+      name: 'Getting Started',
       content: 'demo/README.md',
+      sectionDepth: 0,
+    },
+    {
+      name: 'Components',
       sections: [
         {
           components: () => ['src/components/DateRangePicker/index.js'],
+          usageMode: 'hide',
         },
         {
           components: () => ['src/components/DateRange/index.js'],
@@ -108,8 +113,11 @@ module.exports = {
         {
           components: () => ['src/components/Calendar/index.js'],
         },
+        {
+          components: () => ['src/components/DefinedRange/index.js'],
+        },
       ],
-      sectionDepth: 1,
+      sectionDepth: 0,
     },
   ],
 };
