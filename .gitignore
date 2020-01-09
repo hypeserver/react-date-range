@@ -6,3 +6,4 @@ dist/
 *.orig
 lib/
 NOTES.txt
+styleguide/
