@@ -46,9 +46,9 @@ class Calendar extends PureComponent {
     this.dateOptions = { locale: props.locale };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
-    this.monthNames = [...Array(12).keys()].map(i => props.locale.localize.month(i));
     this.isFirstRender = true;
     this.state = {
+      monthNames: [...Array(12).keys()].map(i => props.locale.localize.month(i)),
       focusedDate: calcFocusDate(null, props),
       drag: {
         status: false,
@@ -129,6 +129,9 @@ class Calendar extends PureComponent {
     const targetProp = propMapper[this.props.displayMode];
     if (prevProps.locale !== this.props.locale) {
       this.dateOptions = { locale: this.props.locale };
+      this.setState({
+        monthNames: [...Array(12).keys()].map(i => this.props.locale.localize.month(i)),
+      });
     }
     if (JSON.stringify(prevProps.scroll) !== JSON.stringify(this.props.scroll)) {
       this.setState({ scrollArea: this.calcScrollArea(this.props) });
@@ -137,6 +140,7 @@ class Calendar extends PureComponent {
       this.updateShownDate(this.props);
     }
   }
+
   changeShownDate(value, mode = 'set') {
     const { focusedDate } = this.state;
     const { onShownDateChange, minDate, maxDate } = this.props;
@@ -191,7 +195,7 @@ class Calendar extends PureComponent {
               <select
                 value={focusedDate.getMonth()}
                 onChange={e => changeShownDate(e.target.value, 'setMonth')}>
-                {this.monthNames.map((monthName, i) => (
+                {this.state.monthNames.map((monthName, i) => (
                   <option key={i} value={i}>
                     {monthName}
                   </option>
@@ -218,7 +222,7 @@ class Calendar extends PureComponent {
           </span>
         ) : (
           <span className={styles.monthAndYearPickers}>
-            {props.monthNames[focusedDate.getMonth()]} {focusedDate.getFullYear()}
+            {this.state.monthNames[focusedDate.getMonth()]} {focusedDate.getFullYear()}
           </span>
         )}
         {showMonthArrow ? (
