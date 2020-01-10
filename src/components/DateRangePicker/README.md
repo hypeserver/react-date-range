@@ -1,3 +1,5 @@
+This component wraps **[DefinedRange](#definedrange)** and **[Calendar](#calendar)** components together, and extends all the props of them.
+
 #### Example: 2 Month View
 
 ```jsx inside Markdown

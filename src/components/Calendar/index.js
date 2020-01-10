@@ -44,6 +44,8 @@ class Calendar extends PureComponent {
     this.estimateMonthSize = this.estimateMonthSize.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.dateOptions = { locale: props.locale };
+    if (this.props.weekStartsOn !== undefined)
+      this.dateOptions.weekStartsOn = this.props.weekStartsOn;
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
     this.isFirstRender = true;
@@ -127,17 +129,24 @@ class Calendar extends PureComponent {
       date: 'date',
     };
     const targetProp = propMapper[this.props.displayMode];
-    if (prevProps.locale !== this.props.locale) {
+    if (this.props[targetProp] !== prevProps[targetProp]) {
+      this.updateShownDate(this.props);
+    }
+
+    if (
+      prevProps.locale !== this.props.locale ||
+      prevProps.weekStartsOn !== this.props.weekStartsOn
+    ) {
       this.dateOptions = { locale: this.props.locale };
+      if (this.props.weekStartsOn !== undefined)
+        this.dateOptions.weekStartsOn = this.props.weekStartsOn;
       this.setState({
         monthNames: [...Array(12).keys()].map(i => this.props.locale.localize.month(i)),
       });
     }
+
     if (JSON.stringify(prevProps.scroll) !== JSON.stringify(this.props.scroll)) {
       this.setState({ scrollArea: this.calcScrollArea(this.props) });
-    }
-    if (this.props[targetProp] !== prevProps[targetProp]) {
-      this.updateShownDate(this.props);
     }
   }
 
@@ -544,6 +553,7 @@ Calendar.propTypes = {
   dateDisplayFormat: PropTypes.string,
   monthDisplayFormat: PropTypes.string,
   weekdayDisplayFormat: PropTypes.string,
+  weekStartsOn: PropTypes.number,
   dayDisplayFormat: PropTypes.string,
   focusedRange: PropTypes.arrayOf(PropTypes.number),
   initialFocusedRange: PropTypes.arrayOf(PropTypes.number),

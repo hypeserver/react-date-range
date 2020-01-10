@@ -109,6 +109,7 @@ module.exports = {
         },
         {
           components: () => ['src/components/DateRange/index.js'],
+          usageMode: 'hide',
         },
         {
           components: () => ['src/components/Calendar/index.js'],
