@@ -74,18 +74,8 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children }) {
               </a>
             </Logo>
             <nav className={classes.nav}>
-              <a
-                className={classes.headerLink}
-                href="https://github.com/styleguidist/react-styleguidist/tree/master/docs">
-                Docs
-              </a>
-              <a
-                className={classes.headerLink}
-                href="https://github.com/styleguidist/react-styleguidist">
+              <a className={classes.headerLink} href="https://github.com/Adphorus/react-date-range">
                 GitHub
-              </a>
-              <a className={classes.headerLink} href="https://gitter.im/styleguidist/styleguidist">
-                Gitter
               </a>
             </nav>
           </div>
