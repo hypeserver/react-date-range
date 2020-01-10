@@ -259,6 +259,8 @@ class Calendar extends PureComponent {
       rangeColors,
       dateDisplayFormat,
       editableDateInputs,
+      startDatePlaceholder,
+      endDatePlaceholder,
     } = this.props;
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
@@ -281,7 +283,7 @@ class Calendar extends PureComponent {
                 readOnly={!editableDateInputs}
                 disabled={range.disabled}
                 value={range.startDate}
-                placeholder="Early"
+                placeholder={startDatePlaceholder}
                 dateOptions={this.dateOptions}
                 dateDisplayFormat={dateDisplayFormat}
                 onChange={this.onDragSelectionEnd}
@@ -294,7 +296,7 @@ class Calendar extends PureComponent {
                 readOnly={!editableDateInputs}
                 disabled={range.disabled}
                 value={range.endDate}
-                placeholder="Continuous"
+                placeholder={endDatePlaceholder}
                 dateOptions={this.dateOptions}
                 dateDisplayFormat={dateDisplayFormat}
                 onChange={this.onDragSelectionEnd}
@@ -513,6 +515,8 @@ Calendar.defaultProps = {
   maxDate: addYears(new Date(), 20),
   minDate: addYears(new Date(), -100),
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+  startDatePlaceholder: 'Early',
+  endDatePlaceholder: 'Continuous',
   editableDateInputs: false,
   dragSelectionEnabled: true,
 };
@@ -559,6 +563,8 @@ Calendar.propTypes = {
     calendarHeight: PropTypes.number,
   }),
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
+  startDatePlaceholder: PropTypes.string,
+  endDatePlaceholder: PropTypes.string,
   navigatorRenderer: PropTypes.func,
   rangeColors: PropTypes.arrayOf(PropTypes.string),
   editableDateInputs: PropTypes.bool,
