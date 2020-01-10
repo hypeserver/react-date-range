@@ -68,7 +68,11 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children }) {
       <header className={classes.header}>
         <div className={classes.content}>
           <div className={classes.bar}>
-            <Logo>{title}</Logo>
+            <Logo>
+              <a className={classes.headerLink} href="#">
+                {title}
+              </a>
+            </Logo>
             <nav className={classes.nav}>
               <a
                 className={classes.headerLink}
