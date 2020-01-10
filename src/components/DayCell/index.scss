@@ -18,6 +18,11 @@
   cursor: not-allowed;
 }
 
+@supports (-ms-ime-align: auto) {
+  .rdrDay {
+    flex-basis: 14.285% !important;
+  }
+}
 
 .rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge{
   pointer-events: none;
