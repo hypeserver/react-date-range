@@ -254,7 +254,7 @@ class Calendar extends PureComponent {
           end: endOfWeek(now, this.dateOptions),
         }).map((day, i) => (
           <span className={this.styles.weekDay} key={i}>
-            {format(day, 'E', this.dateOptions)}
+            {format(day, this.props.weekdayDisplayFormat, this.dateOptions)}
           </span>
         ))}
       </div>
