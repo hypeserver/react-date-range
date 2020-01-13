@@ -39,7 +39,11 @@ class Month extends PureComponent {
     const { displayMode, focusedRange, drag, styles, disabledDates } = this.props;
     const minDate = this.props.minDate && startOfDay(this.props.minDate);
     const maxDate = this.props.maxDate && endOfDay(this.props.maxDate);
-    const monthDisplay = getMonthDisplayRange(this.props.month, this.props.dateOptions);
+    const monthDisplay = getMonthDisplayRange(
+      this.props.month,
+      this.props.dateOptions,
+      this.props.fixedHeight
+    );
     let ranges = this.props.ranges;
     if (displayMode === 'dateRange' && drag.status) {
       let { startDate, endDate } = drag.range;
@@ -136,6 +140,7 @@ Month.propTypes = {
   dayDisplayFormat: PropTypes.string,
   showWeekDays: PropTypes.bool,
   showMonthName: PropTypes.bool,
+  fixedHeight: PropTypes.bool,
 };
 
 export default Month;

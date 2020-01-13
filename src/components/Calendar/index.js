@@ -528,6 +528,7 @@ Calendar.defaultProps = {
   endDatePlaceholder: 'Continuous',
   editableDateInputs: false,
   dragSelectionEnabled: true,
+  fixedHeight: false,
 };
 
 Calendar.propTypes = {
@@ -579,6 +580,7 @@ Calendar.propTypes = {
   rangeColors: PropTypes.arrayOf(PropTypes.string),
   editableDateInputs: PropTypes.bool,
   dragSelectionEnabled: PropTypes.bool,
+  fixedHeight: PropTypes.bool,
 };
 
 export default Calendar;
