@@ -7,8 +7,6 @@ const MAX = 99999;
 class InputRangeField extends Component {
   constructor(props, context) {
     super(props, context);
-
-    this.onChange = this.onChange.bind(this);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -21,14 +19,14 @@ class InputRangeField extends Component {
     );
   }
 
-  onChange(e) {
+  onChange = e => {
     const { onChange } = this.props;
 
     let value = parseInt(e.target.value, 10);
     value = isNaN(value) ? 0 : Math.max(Math.min(MAX, value), MIN);
 
     onChange(value);
-  }
+  };
 
   render() {
     const { label, placeholder, value, styles, onBlur, onFocus } = this.props;

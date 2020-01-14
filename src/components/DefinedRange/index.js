@@ -13,17 +13,16 @@ class DefinedRange extends Component {
       rangeOffset: 0,
       focusedInput: -1,
     };
-    this.handleRangeChange = this.handleRangeChange.bind(this);
   }
 
-  handleRangeChange(range) {
+  handleRangeChange = range => {
     const { onChange, ranges, focusedRange } = this.props;
     const selectedRange = ranges[focusedRange[0]];
     if (!onChange || !selectedRange) return;
     onChange({
       [selectedRange.key || `range${focusedRange[0] + 1}`]: { ...selectedRange, ...range },
     });
-  }
+  };
 
   getRangeOptionValue(option) {
     const { ranges = [], focusedRange = [] } = this.props;

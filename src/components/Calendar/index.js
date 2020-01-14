@@ -31,18 +31,6 @@ import coreStyles from '../../styles';
 class Calendar extends PureComponent {
   constructor(props, context) {
     super(props, context);
-    this.changeShownDate = this.changeShownDate.bind(this);
-    this.focusToDate = this.focusToDate.bind(this);
-    this.updateShownDate = this.updateShownDate.bind(this);
-    this.handleRangeFocusChange = this.handleRangeFocusChange.bind(this);
-    this.renderDateDisplay = this.renderDateDisplay.bind(this);
-    this.onDragSelectionStart = this.onDragSelectionStart.bind(this);
-    this.onDragSelectionEnd = this.onDragSelectionEnd.bind(this);
-    this.onDragSelectionMove = this.onDragSelectionMove.bind(this);
-    this.renderMonthAndYear = this.renderMonthAndYear.bind(this);
-    this.updatePreview = this.updatePreview.bind(this);
-    this.estimateMonthSize = this.estimateMonthSize.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
     this.dateOptions = { locale: props.locale };
     if (this.props.weekStartsOn !== undefined)
       this.dateOptions.weekStartsOn = this.props.weekStartsOn;
@@ -82,7 +70,7 @@ class Calendar extends PureComponent {
       calendarHeight: longMonthHeight || 300,
     };
   }
-  focusToDate(date, props = this.props, preventUnnecessary = true) {
+  focusToDate = (date, props = this.props, preventUnnecessary = true) => {
     if (!props.scroll.enabled) {
       this.setState({ focusedDate: date });
       return;
@@ -93,8 +81,8 @@ class Calendar extends PureComponent {
     this.isFirstRender = true;
     this.list.scrollTo(targetMonthIndex);
     this.setState({ focusedDate: date });
-  }
-  updateShownDate(props = this.props) {
+  };
+  updateShownDate = (props = this.props) => {
     const newProps = props.scroll.enabled
       ? {
           ...props,
@@ -103,8 +91,8 @@ class Calendar extends PureComponent {
       : props;
     const newFocus = calcFocusDate(this.state.focusedDate, newProps);
     this.focusToDate(newFocus, newProps);
-  }
-  updatePreview(val) {
+  };
+  updatePreview = val => {
     if (!val) {
       this.setState({ preview: null });
       return;
@@ -115,7 +103,7 @@ class Calendar extends PureComponent {
       color: this.props.color,
     };
     this.setState({ preview });
-  }
+  };
   componentDidMount() {
     if (this.props.scroll.enabled) {
       // prevent react-list's initial render focus problem
@@ -150,7 +138,7 @@ class Calendar extends PureComponent {
     }
   }
 
-  changeShownDate(value, mode = 'set') {
+  changeShownDate = (value, mode = 'set') => {
     const { focusedDate } = this.state;
     const { onShownDateChange, minDate, maxDate } = this.props;
     const modeMapper = {
@@ -163,11 +151,11 @@ class Calendar extends PureComponent {
     const newDate = min([max([modeMapper[mode](), minDate]), maxDate]);
     this.focusToDate(newDate, this.props, false);
     onShownDateChange && onShownDateChange(newDate);
-  }
-  handleRangeFocusChange(rangesIndex, rangeItemIndex) {
+  };
+  handleRangeFocusChange = (rangesIndex, rangeItemIndex) => {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange([rangesIndex, rangeItemIndex]);
-  }
-  handleScroll() {
+  };
+  handleScroll = () => {
     const { onShownDateChange, minDate } = this.props;
     const { focusedDate } = this.state;
     const { isFirstRender } = this;
@@ -182,8 +170,8 @@ class Calendar extends PureComponent {
       onShownDateChange && onShownDateChange(visibleMonth);
     }
     this.isFirstRender = false;
-  }
-  renderMonthAndYear(focusedDate, changeShownDate, props) {
+  };
+  renderMonthAndYear = (focusedDate, changeShownDate, props) => {
     const { showMonthArrow, minDate, maxDate, showMonthAndYearPickers } = props;
     const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
     const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
@@ -244,7 +232,7 @@ class Calendar extends PureComponent {
         ) : null}
       </div>
     );
-  }
+  };
   renderWeekdays() {
     const now = new Date();
     return (
@@ -260,7 +248,7 @@ class Calendar extends PureComponent {
       </div>
     );
   }
-  renderDateDisplay() {
+  renderDateDisplay = () => {
     const {
       focusedRange,
       color,
@@ -316,8 +304,8 @@ class Calendar extends PureComponent {
         })}
       </div>
     );
-  }
-  onDragSelectionStart(date) {
+  };
+  onDragSelectionStart = date => {
     const { onChange, dragSelectionEnabled } = this.props;
 
     if (dragSelectionEnabled) {
@@ -331,9 +319,9 @@ class Calendar extends PureComponent {
     } else {
       onChange && onChange(date);
     }
-  }
+  };
 
-  onDragSelectionEnd(date) {
+  onDragSelectionEnd = date => {
     const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
 
     if (!dragSelectionEnabled) return;
@@ -353,8 +341,8 @@ class Calendar extends PureComponent {
         updateRange && updateRange(newRange);
       });
     }
-  }
-  onDragSelectionMove(date) {
+  };
+  onDragSelectionMove = date => {
     const { drag } = this.state;
     if (!drag.status || !this.props.dragSelectionEnabled) return;
     this.setState({
@@ -364,9 +352,9 @@ class Calendar extends PureComponent {
         disablePreview: true,
       },
     });
-  }
+  };
 
-  estimateMonthSize(index, cache) {
+  estimateMonthSize = (index, cache) => {
     const { direction, minDate } = this.props;
     const { scrollArea } = this.state;
     if (cache) {
@@ -378,7 +366,7 @@ class Calendar extends PureComponent {
     const { start, end } = getMonthDisplayRange(monthStep, this.dateOptions);
     const isLongMonth = differenceInDays(end, start, this.dateOptions) + 1 > 7 * 5;
     return isLongMonth ? scrollArea.longMonthHeight : scrollArea.monthHeight;
-  }
+  };
   render() {
     const {
       showDateDisplay,

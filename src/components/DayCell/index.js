@@ -12,21 +12,16 @@ class DayCell extends Component {
       hover: false,
       active: false,
     };
-    this.getClassNames = this.getClassNames.bind(this);
-    this.handleMouseEvent = this.handleMouseEvent.bind(this);
-    this.handleKeyEvent = this.handleKeyEvent.bind(this);
-    this.renderSelectionPlaceholders = this.renderSelectionPlaceholders.bind(this);
-    this.renderPreviewPlaceholder = this.renderPreviewPlaceholder.bind(this);
   }
 
-  handleKeyEvent(event) {
+  handleKeyEvent = event => {
     const { day, onMouseDown, onMouseUp } = this.props;
     if ([13 /* space */, 32 /* enter */].includes(event.keyCode)) {
       if (event.type === 'keydown') onMouseDown(day);
       else onMouseUp(day);
     }
-  }
-  handleMouseEvent(event) {
+  };
+  handleMouseEvent = event => {
     const { day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp } = this.props;
     const stateChanges = {};
     if (disabled) {
@@ -60,8 +55,8 @@ class DayCell extends Component {
     if (Object.keys(stateChanges).length) {
       this.setState(stateChanges);
     }
-  }
-  getClassNames() {
+  };
+  getClassNames = () => {
     const {
       isPassive,
       isToday,
@@ -86,8 +81,8 @@ class DayCell extends Component {
       [styles.dayHovered]: this.state.hover,
       [styles.dayActive]: this.state.active,
     });
-  }
-  renderPreviewPlaceholder() {
+  };
+  renderPreviewPlaceholder = () => {
     const { preview, day, styles } = this.props;
     if (!preview) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
@@ -106,8 +101,8 @@ class DayCell extends Component {
         style={{ color: preview.color }}
       />
     );
-  }
-  renderSelectionPlaceholders() {
+  };
+  renderSelectionPlaceholders = () => {
     const { styles, ranges, day } = this.props;
     if (this.props.displayMode === 'date') {
       let isSelected = isSameDay(this.props.day, this.props.date);
@@ -153,7 +148,7 @@ class DayCell extends Component {
         style={{ color: range.color || this.props.color }}
       />
     ));
-  }
+  };
   render() {
     const { styles } = this.props;
     return (
@@ -201,6 +196,7 @@ DayCell.propTypes = {
   preview: PropTypes.shape({
     startDate: PropTypes.object,
     endDate: PropTypes.object,
+    color: PropTypes.string,
   }),
   onPreviewChange: PropTypes.func,
   previewColor: PropTypes.string,

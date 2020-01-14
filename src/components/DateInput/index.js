@@ -7,10 +7,6 @@ class DateInput extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-
     this.state = {
       invalid: false,
       changed: false,
@@ -50,22 +46,22 @@ class DateInput extends PureComponent {
     }
   }
 
-  onKeyDown(e) {
+  onKeyDown = e => {
     const { value } = this.state;
 
     if (e.key === 'Enter') {
       this.update(value);
     }
-  }
+  };
 
-  onChange(e) {
+  onChange = e => {
     this.setState({ value: e.target.value, changed: true, invalid: false });
-  }
+  };
 
-  onBlur() {
+  onBlur = () => {
     const { value } = this.state;
     this.update(value);
-  }
+  };
 
   render() {
     const { className, readOnly, placeholder, disabled, onFocus } = this.props;

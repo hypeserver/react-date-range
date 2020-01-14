@@ -10,17 +10,13 @@ import coreStyles from '../../styles';
 class DateRange extends Component {
   constructor(props, context) {
     super(props, context);
-    this.setSelection = this.setSelection.bind(this);
-    this.handleRangeFocusChange = this.handleRangeFocusChange.bind(this);
-    this.updatePreview = this.updatePreview.bind(this);
-    this.calcNewSelection = this.calcNewSelection.bind(this);
     this.state = {
       focusedRange: props.initialFocusedRange || [findNextRangeIndex(props.ranges), 0],
       preview: null,
     };
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
-  calcNewSelection(value, isSingleValue = true) {
+  calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates } = this.props;
     const focusedRangeIndex = focusedRange[0];
@@ -75,8 +71,8 @@ class DateRange extends Component {
       range: { startDate, endDate },
       nextFocusRange: nextFocusRange,
     };
-  }
-  setSelection(value, isSingleValue) {
+  };
+  setSelection = (value, isSingleValue) => {
     const { onChange, ranges, onRangeFocusChange } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const focusedRangeIndex = focusedRange[0];
@@ -94,12 +90,12 @@ class DateRange extends Component {
       preview: null,
     });
     onRangeFocusChange && onRangeFocusChange(newSelection.nextFocusRange);
-  }
-  handleRangeFocusChange(focusedRange) {
+  };
+  handleRangeFocusChange = focusedRange => {
     this.setState({ focusedRange });
     this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
-  }
-  updatePreview(val) {
+  };
+  updatePreview = val => {
     if (!val) {
       this.setState({ preview: null });
       return;
@@ -108,7 +104,7 @@ class DateRange extends Component {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const color = ranges[focusedRange[0]].color || rangeColors[focusedRange[0]] || color;
     this.setState({ preview: { ...val.range, color } });
-  }
+  };
   render() {
     return (
       <Calendar
