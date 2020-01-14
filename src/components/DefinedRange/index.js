@@ -45,13 +45,23 @@ class DefinedRange extends Component {
   }
 
   render() {
-    const { onPreviewChange, ranges, renderStaticRangeLabel, rangeColors, className } = this.props;
+    const {
+      headerContent,
+      footerContent,
+      onPreviewChange,
+      inputRanges,
+      staticRanges,
+      ranges,
+      renderStaticRangeLabel,
+      rangeColors,
+      className,
+    } = this.props;
 
     return (
       <div className={cx(styles.definedRangesWrapper, className)}>
-        {this.props.headerContent}
+        {headerContent}
         <div className={styles.staticRanges}>
-          {this.props.staticRanges.map((staticRange, i) => {
+          {staticRanges.map((staticRange, i) => {
             const { selectedRange, focusedRangeIndex } = this.getSelectedRange(ranges, staticRange);
             let labelContent;
 
@@ -79,7 +89,7 @@ class DefinedRange extends Component {
                   onPreviewChange && onPreviewChange(staticRange.range(this.props))
                 }
                 onMouseLeave={() => {
-                  this.props.onPreviewChange && this.props.onPreviewChange();
+                  onPreviewChange && onPreviewChange();
                 }}>
                 <span tabIndex={-1} className={styles.staticRangeLabel}>
                   {labelContent}
@@ -89,7 +99,7 @@ class DefinedRange extends Component {
           })}
         </div>
         <div className={styles.inputRanges}>
-          {this.props.inputRanges.map((rangeOption, i) => (
+          {inputRanges.map((rangeOption, i) => (
             <InputRangeField
               key={i}
               styles={styles}
@@ -101,7 +111,7 @@ class DefinedRange extends Component {
             />
           ))}
         </div>
-        {this.props.footerContent}
+        {footerContent}
       </div>
     );
   }

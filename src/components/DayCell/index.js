@@ -150,7 +150,6 @@ class DayCell extends Component {
     ));
   };
   render() {
-    const { styles } = this.props;
     return (
       <button
         type="button"
@@ -163,12 +162,12 @@ class DayCell extends Component {
         onPauseCapture={this.handleMouseEvent}
         onKeyDown={this.handleKeyEvent}
         onKeyUp={this.handleKeyEvent}
-        className={this.getClassNames(styles)}
+        className={this.getClassNames(this.props.styles)}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
         style={{ color: this.props.color }}>
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
-        <span className={styles.dayNumber}>
+        <span className={this.props.styles.dayNumber}>
           <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
         </span>
       </button>
