@@ -6,6 +6,7 @@ import DateInput from '../DateInput';
 import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../../utils';
 import classnames from 'classnames';
 import ReactList from 'react-list';
+import { shallowEqualObjects } from 'shallow-equal';
 import {
   addMonths,
   format,
@@ -32,8 +33,7 @@ class Calendar extends PureComponent {
   constructor(props, context) {
     super(props, context);
     this.dateOptions = { locale: props.locale };
-    if (this.props.weekStartsOn !== undefined)
-      this.dateOptions.weekStartsOn = this.props.weekStartsOn;
+    if (props.weekStartsOn !== undefined) this.dateOptions.weekStartsOn = props.weekStartsOn;
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
     this.isFirstRender = true;
@@ -133,7 +133,7 @@ class Calendar extends PureComponent {
       });
     }
 
-    if (JSON.stringify(prevProps.scroll) !== JSON.stringify(this.props.scroll)) {
+    if (!shallowEqualObjects(prevProps.scroll, this.props.scroll)) {
       this.setState({ scrollArea: this.calcScrollArea(this.props) });
     }
   }
@@ -378,10 +378,13 @@ class Calendar extends PureComponent {
       minDate,
       rangeColors,
       color,
+      navigatorRenderer,
+      className,
+      preview,
     } = this.props;
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
-    const navigatorRenderer = this.props.navigatorRenderer || this.renderMonthAndYear;
+    const monthAndYearRenderer = navigatorRenderer || this.renderMonthAndYear;
 
     const ranges = this.props.ranges.map((range, i) => ({
       ...range,
@@ -389,13 +392,13 @@ class Calendar extends PureComponent {
     }));
     return (
       <div
-        className={classnames(this.styles.calendarWrapper, this.props.className)}
+        className={classnames(this.styles.calendarWrapper, className)}
         onMouseUp={() => this.setState({ drag: { status: false, range: {} } })}
         onMouseLeave={() => {
           this.setState({ drag: { status: false, range: {} } });
         }}>
         {showDateDisplay && this.renderDateDisplay()}
-        {navigatorRenderer(focusedDate, this.changeShownDate, this.props)}
+        {monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)}
         {scroll.enabled ? (
           <div>
             {isVertical && this.renderWeekdays(this.dateOptions)}
@@ -426,8 +429,8 @@ class Calendar extends PureComponent {
                   return (
                     <Month
                       {...this.props}
-                      onPreviewChange={this.props.onPreviewChange || this.updatePreview}
-                      preview={this.props.preview || this.state.preview}
+                      onPreviewChange={onPreviewChange || this.updatePreview}
+                      preview={preview || this.state.preview}
                       ranges={ranges}
                       key={key}
                       drag={this.state.drag}
@@ -463,8 +466,8 @@ class Calendar extends PureComponent {
               return (
                 <Month
                   {...this.props}
-                  onPreviewChange={this.props.onPreviewChange || this.updatePreview}
-                  preview={this.props.preview || this.state.preview}
+                  onPreviewChange={onPreviewChange || this.updatePreview}
+                  preview={preview || this.state.preview}
                   ranges={ranges}
                   key={i}
                   drag={this.state.drag}
