@@ -38,7 +38,7 @@ class Calendar extends PureComponent {
     this.listSizeCache = {};
     this.isFirstRender = true;
     this.state = {
-      monthNames: [...Array(12).keys()].map(i => props.locale.localize.month(i)),
+      monthNames: this.getMonthNames(),
       focusedDate: calcFocusDate(null, props),
       drag: {
         status: false,
@@ -48,6 +48,10 @@ class Calendar extends PureComponent {
       scrollArea: this.calcScrollArea(props),
     };
   }
+  getMonthNames() {
+    return [...Array(12).keys()].map(i => this.props.locale.localize.month(i));
+  }
+
   calcScrollArea(props) {
     const { direction, months, scroll } = props;
     if (!scroll.enabled) return { enabled: false };
@@ -129,7 +133,7 @@ class Calendar extends PureComponent {
       if (this.props.weekStartsOn !== undefined)
         this.dateOptions.weekStartsOn = this.props.weekStartsOn;
       this.setState({
-        monthNames: [...Array(12).keys()].map(i => this.props.locale.localize.month(i)),
+        monthNames: this.getMonthNames(),
       });
     }
 
