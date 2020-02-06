@@ -1,7 +1,10 @@
 /* eslint-disable no-fallthrough */
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DayCell, { rangeShape } from './DayCell.js';
+import { FaClock } from 'react-icons/fa';
+import TimePicker from 'rc-time-picker';
+
 import {
   format,
   startOfDay,
@@ -33,7 +36,7 @@ function renderWeekdays(styles, dateOptions) {
   );
 }
 
-class Month extends PureComponent {
+class Month extends Component {
   render() {
     const now = new Date();
     const { displayMode, focusedRange, drag, styles, disabledDates } = this.props;
@@ -52,12 +55,27 @@ class Month extends PureComponent {
         };
       });
     }
+
     const showPreview = this.props.showPreview && !drag.disablePreview;
     return (
       <div className={styles.month} style={this.props.style}>
         {this.props.showMonthName ? (
           <div className={styles.monthName}>
-            {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
+            <span className={styles.monthSpanName}>
+              {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
+            </span>
+            <span>
+              <TimePicker
+                allowEmpty={false}
+                showSecond={false}
+                clearIcon={() => {
+                  return <React.Fragment />;
+                }}
+              />
+              <span className={styles.timePickerIcon}>
+                <FaClock />
+              </span>
+            </span>
           </div>
         ) : null}
         {this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions)}
