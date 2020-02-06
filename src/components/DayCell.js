@@ -105,6 +105,8 @@ class DayCell extends Component {
       (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
     const isStartEdge = !isInRange && isSameDay(day, startDate);
     const isEndEdge = !isInRange && isSameDay(day, endDate);
+    /* eslint-disable-next-line react/prop-types */
+    const previewColor = preview.color;
     return (
       <span
         className={classnames({
@@ -112,7 +114,7 @@ class DayCell extends Component {
           [styles.dayInPreview]: isInRange,
           [styles.dayEndPreview]: isEndEdge,
         })}
-        style={{ color: preview.color }}
+        style={{ color: previewColor }}
       />
     );
   }
