@@ -13,6 +13,7 @@
   background-color: rgb(255, 255, 255);
   box-shadow: 0 1px 2px 0 rgba(35, 57, 66, 0.21);
   border: 1px solid transparent;
+  display: flex;
 
   input {
     cursor: pointer;
@@ -422,18 +423,23 @@
 
 .rdrTimePickerIcon {
   cursor: pointer;
-  margin-left: 5px;
-  vertical-align: middle;
+  flex: 1;
   font-size: 13.5px;
+  margin-right: 0.5em;
+  color: black;
 }
 
 .rdrTimePickerContainer {
-  position: absolute;
-  z-index: 2;
-  right: 3.5em;
-  top: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid;
+  border-color: lightgray;
 }
 
+.rdrTimePickerContainerActive {
+  border-color: initial;
+}
 
 .rc-time-picker {
   display: inline-block;
@@ -476,7 +482,7 @@
 }
 
 .rc-time-picker-input {
-  width: 7em;
+  width: 5em;
   position: relative;
   display: inline-block;
   padding: 4px 7px;

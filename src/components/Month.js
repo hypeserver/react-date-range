@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DayCell, { rangeShape } from './DayCell.js';
-import { FaClock } from 'react-icons/fa';
-import TimePicker from 'rc-time-picker';
 
 import {
   format,
@@ -63,18 +61,6 @@ class Month extends Component {
           <div className={styles.monthName}>
             <span className={styles.monthSpanName}>
               {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
-            </span>
-            <span>
-              <TimePicker
-                allowEmpty={false}
-                showSecond={false}
-                clearIcon={() => {
-                  return <React.Fragment />;
-                }}
-              />
-              <span className={styles.timePickerIcon}>
-                <FaClock />
-              </span>
             </span>
           </div>
         ) : null}

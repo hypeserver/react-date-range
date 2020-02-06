@@ -36,6 +36,7 @@
   "dependencies": {
     "classnames": "^2.2.1",
     "date-fns": "2.0.0-alpha.7",
+    "moment": "^2.24.0",
     "prop-types": "^15.5.10",
     "rc-time-picker": "^3.7.3",
     "react-icons": "^3.9.0",

@@ -51,6 +51,7 @@ export default {
   timePicker: 'rdrTimePicker',
   timePickerIcon: 'rdrTimePickerIcon',
   timePickerContainer: 'rdrTimePickerContainer',
+  timePickerContainerActive: 'rdrTimePickerContainerActive',
   infiniteMonths: 'rdrInfiniteMonths',
   monthsVertical: 'rdrMonthsVertical',
   monthsHorizontal: 'rdrMonthsHorizontal',
