@@ -438,7 +438,7 @@ class Calendar extends PureComponent {
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
               const monthStep = addMonths(this.state.focusedDate, i);
-              console.log(this.state.focusedDate)
+              console.log(this.state.focusedDate);
               return (
                 <Month
                   {...this.props}
