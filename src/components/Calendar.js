@@ -255,7 +255,7 @@ class Calendar extends PureComponent {
   }
 
   renderDateDisplay() {
-    const { focusedRange, color, ranges, rangeColors, updateRange } = this.props;
+    const { focusedRange, color, ranges, rangeColors, updateRange, showTime } = this.props;
     const defaultColor = rangeColors[focusedRange[0]] || color;
     const styles = this.styles;
     return (
@@ -278,26 +278,30 @@ class Calendar extends PureComponent {
                   readOnly
                   value={this.formatDateDisplay(range.startDate, 'Early')}
                 />
-                <span
-                  className={classnames(styles.timePickerContainer, {
-                    [styles.timePickerContainerActive]:
-                      focusedRange[0] === i && focusedRange[1] === 0,
-                  })}>
-                  <TimePicker
-                    allowEmpty={false}
-                    showSecond={false}
-                    onChange={value => {
-                      updateRange && updateRange({ ...range, startDate: value.toDate() });
-                    }}
-                    clearIcon={() => {
-                      return <React.Fragment />;
-                    }}
-                    value={moment(range.startDate)}
-                  />
-                  <span className={styles.timePickerIcon}>
-                    <FaClock />
+                {showTime ? (
+                  <span
+                    className={classnames(styles.timePickerContainer, {
+                      [styles.timePickerContainerActive]:
+                        focusedRange[0] === i && focusedRange[1] === 0,
+                    })}>
+                    <TimePicker
+                      allowEmpty={false}
+                      showSecond={false}
+                      onChange={value => {
+                        updateRange && updateRange({ ...range, startDate: value.toDate() });
+                      }}
+                      clearIcon={() => {
+                        return <React.Fragment />;
+                      }}
+                      value={moment(range.startDate)}
+                    />
+                    <span className={styles.timePickerIcon}>
+                      <FaClock />
+                    </span>
                   </span>
-                </span>
+                ) : (
+                  <React.Fragment />
+                )}
               </span>
               <span
                 className={classnames(styles.dateDisplayItem, {
@@ -309,22 +313,26 @@ class Calendar extends PureComponent {
                   readOnly
                   value={this.formatDateDisplay(range.endDate, 'Continuous')}
                 />
-                <span className={styles.timePickerContainer}>
-                  <TimePicker
-                    allowEmpty={false}
-                    showSecond={false}
-                    clearIcon={() => {
-                      return <React.Fragment />;
-                    }}
-                    onChange={value => {
-                      updateRange && updateRange({ ...range, endDate: value.toDate() });
-                    }}
-                    value={moment(range.endDate)}
-                  />
-                  <span className={styles.timePickerIcon}>
-                    <FaClock />
+                {showTime ? (
+                  <span className={styles.timePickerContainer}>
+                    <TimePicker
+                      allowEmpty={false}
+                      showSecond={false}
+                      clearIcon={() => {
+                        return <React.Fragment />;
+                      }}
+                      onChange={value => {
+                        updateRange && updateRange({ ...range, endDate: value.toDate() });
+                      }}
+                      value={moment(range.endDate)}
+                    />
+                    <span className={styles.timePickerIcon}>
+                      <FaClock />
+                    </span>
                   </span>
-                </span>
+                ) : (
+                  <React.Fragment />
+                )}
               </span>
             </div>
           );
