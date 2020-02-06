@@ -5,3 +5,5 @@ dist/
 .idea
 *.orig
 lib/
+.vscode/
+.github/
