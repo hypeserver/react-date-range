@@ -97,7 +97,7 @@ class MyComponent extends Component {
 
 ### Options
 
-Property                             | type      | Default Value    | Desctiption
+Property                             | type      | Default Value    | Description
 -------------------------------------|-----------|------------------|-----------------------------------------------------------------
 locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/v2.0.0-alpha.7/docs/I18n#supported-languages).
 className                            | String    |                  | wrapper classname
