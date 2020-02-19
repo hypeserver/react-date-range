@@ -1,0 +1,16 @@
+body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+[data-testid=mountNode] {
+  display: flex;
+}
+
+[data-testid=mountNode] > * {
+  margin: auto;
+  box-shadow: 1px 1px 81px rgba(41,60,74,.18);
+}
+
+.rsg--toolbar-17, .rsg--wrapper-16 {
+  display: none;
+}
