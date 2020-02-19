@@ -3,9 +3,12 @@
   font-size: 12px;
 }
 
-.rdrDateDisplay{
+.rdrDateDisplayWrapper{
   background-color: rgb(239, 242, 247);
-  padding: 0.833em;
+}
+
+.rdrDateDisplay{
+  margin: 0.833em;
 }
 
 .rdrDateDisplayItem{

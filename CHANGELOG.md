@@ -4,9 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.1.0
+### Changed
+- BREAKING: `date-fns` is now loaded as a peerDependency. You can use this plugin with your own project's `date-fns` version. However if you want to keep using date-fns versions older than 2.0.0, you need to pass the following props to your component. ([See the reason here](https://blog.date-fns.org/post/unicode-tokens-in-date-fns-v2-sreatyki91jg/))
 
+```jsx
+<Calendar
+  dateDisplayFormat='MMM D, YYYY'
+  monthDisplayFormat='MMM YYYY'
+  weekdayDisplayFormat='E'
+  dayDisplayFormat='D'
+/>
+```
 
-## [Unreleased]
+### Added
+- `weekStartsOn` prop: You can set the week start day. (Number, 0 - Sunday, 1 - Monday etc.) If not specified, gets the week start day from your locale.
+
+- `weekdayDisplayFormat` and `dayDisplayFormat` props: For being able to use different versions of date-fns
+
+- `startDatePlaceholder` and `endDatePlaceholder` props: You can set different placeholders for Date inputs. If not set, falls back to 'Early' and 'Continuous'.
+
+- `fixedHeight` prop: Set this to `true` to prevent height change while selecting different months. Since some months require less than 6 lines to show, by setting this prop, you can force 6 lines for all months.
+
+## 1.0.0 beta
 
 ### Changed
 - BREAKING: `Calendar` and `DateRange` are now totally controlled components with stateless date management.

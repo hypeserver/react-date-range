@@ -1,7 +1,8 @@
 node_modules/
 .DS_Store
 *.log
-dist/
 .idea
 *.orig
 lib/
+NOTES.txt
+styleguide/

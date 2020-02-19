@@ -1,11 +1,11 @@
 {
   "presets": [
-    "env",
-    "react"
+    ["@babel/preset-env", { "targets": { "node": "current" } }],
+    ["@babel/preset-react"]
   ],
   "plugins": [
-    "date-fns",
-    "transform-object-rest-spread",
-    "transform-export-extensions"
+    ["@babel/plugin-proposal-class-properties"],
+    ["@babel/plugin-proposal-export-default-from"]
   ]
 }
+ 
