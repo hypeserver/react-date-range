@@ -96,7 +96,7 @@ class MyComponent extends Component {
 
 Property                             | type      | Default Value    | Description
 -------------------------------------|-----------|------------------|-----------------------------------------------------------------
-locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/v2.0.0-alpha.7/docs/I18n#supported-languages).
+locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/docs/I18n#supported-languages).
 className                            | String    |                  | wrapper classname
 months                               | Number    | 1                | rendered month count
 showSelectionPreview                 | Boolean   | true             | show preview on focused/hovered dates
@@ -107,7 +107,7 @@ minDate                              | Date      |                  | defines mi
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
 direction                            | String    | 'vertical'       | direction of calendar months. can be `vertical` or `horizontal`
 disabledDates                        | Date[]    | []               | dates that are disabled
-scroll                                | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section
+scroll                               | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
 ranges                               | *Object[] | []               | Defines ranges. array of range object
@@ -121,16 +121,22 @@ onShownDateChange(DateRange,Calendar)| Function  |                  | Callback f
 initialFocusedRange(DateRange)       | Object    |                  | Initial value for focused range. See `focusedRange` for usage.
 focusedRange(DateRange)              | Object    |                  | It defines which range and step are focused. Common initial value is `[0, 0]`; first value is index of ranges, second one is which step on date range(startDate or endDate).
 onRangeFocusChange(DateRange)        | Object    |                  | Callback function for focus changes
-preview(DateRange)                   | Object    |              | displays a preview range and overwrite DateRange's default preview. Expected shape: `{ startDate: Date, endDate: Date, color: String }`
+preview(DateRange)                   | Object    |                  | displays a preview range and overwrite DateRange's default preview. Expected shape: `{ startDate: Date, endDate: Date, color: String }`
 showPreview(DateRange)               | bool      | true             | visibility of preview
 editableDateInputs(Calendar)         | bool      | false            | whether dates can be edited in the Calendar's input fields
 dragSelectionEnabled(Calendar)       | bool      | true             | whether dates can be selected via drag n drop
 onPreviewChange(DateRange)           | Object    |                  | Callback function for preview changes
-dateDisplayFormat(DateRange)         | String    | `MMM D, YYYY`    | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/v2.0.0-alpha.7/docs/format)
-renderStaticRangeLabel(`DefinedRange`)| Function  |                  | Callback function to be triggered for the static range configurations that have `hasCustomRendering: true` on them. Instead of rendering `staticRange.label`, return value of this callback will be rendered.
-staticRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default preDefined ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
-inputRanges(`DefinedRange`, `DateRangePicker`) | Array   | [default input ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
-
+dateDisplayFormat                    | String    | `MMM d, yyyy`    | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
+dayDisplayFormat                     | String    | `d`              | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
+weekdayDisplayFormat                 | String    | `E`              | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
+monthDisplayFormat                   | String    | `MMM yyyy`       | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
+weekStartsOn                         | Number    |                  | Whether the week start day that comes from the locale will be overriden. Default value comes from your locale, if no local is specified, note that default locale is enUS
+startDatePlaceholder                 | String    | `Early`          | Start Date Placeholder
+endDatePlaceholder                   | String    | `Continuous`     | End Date Placeholder
+fixedHeight                          | Boolean   | false            | Since some months require less than 6 lines to show, by setting this prop, you can force 6 lines for all months.
+renderStaticRangeLabel(`DefinedRange`)| Function |                  | Callback function to be triggered for the static range configurations that have `hasCustomRendering: true` on them. Instead of rendering `staticRange.label`, return value of this callback will be rendered.
+staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
+inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
 
  *shape of range:
  ```js
