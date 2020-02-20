@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 1.1.0
+## 2.0.0
 ### Changed
 - BREAKING: `date-fns` is now loaded as a peerDependency. You can use this plugin with your own project's `date-fns` version. However if you want to keep using date-fns versions older than 2.0.0, you need to pass the following props to your component. ([See the reason here](https://blog.date-fns.org/post/unicode-tokens-in-date-fns-v2-sreatyki91jg/))
 
