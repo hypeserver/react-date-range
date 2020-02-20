@@ -26,9 +26,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - `fixedHeight` prop: Set this to `true` to prevent height change while selecting different months. Since some months require less than 6 lines to show, by setting this prop, you can force 6 lines for all months.
 
+- `editableDateInputs` prop: Set this to `true` to make the inputs editable. Falls back to false.
+
+- `DateInput` and `InputRangeField` are exported as dedicated components.
+
 
 ### Fixed
-- 
+- Works with React 16, without warnings (Deprecated methods are removed: componentWillReceiveProps )
+- IE11 Bug where the last day of each week is not shown.
+- Now infinite scroll mode works as expected.
 
 ## 1.0.0 beta
 
