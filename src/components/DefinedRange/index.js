@@ -4,7 +4,7 @@ import styles from '../../styles';
 import { defaultInputRanges, defaultStaticRanges } from '../../defaultRanges';
 import { rangeShape } from '../DayCell';
 import InputRangeField from '../InputRangeField';
-import cx from 'classnames';
+import { cnb } from 'cnbuilder';
 
 class DefinedRange extends Component {
   constructor(props) {
@@ -58,7 +58,7 @@ class DefinedRange extends Component {
     } = this.props;
 
     return (
-      <div className={cx(styles.definedRangesWrapper, className)}>
+      <div className={cnb(styles.definedRangesWrapper, className)}>
         {headerContent}
         <div className={styles.staticRanges}>
           {staticRanges.map((staticRange, i) => {
@@ -74,7 +74,7 @@ class DefinedRange extends Component {
             return (
               <button
                 type="button"
-                className={cx(styles.staticRange, {
+                className={cnb(styles.staticRange, {
                   [styles.staticRangeSelected]: Boolean(selectedRange),
                 })}
                 style={{

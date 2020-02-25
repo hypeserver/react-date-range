@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import { cnb } from 'cnbuilder';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 
 class DayCell extends Component {
@@ -69,7 +69,7 @@ class DayCell extends Component {
       styles,
     } = this.props;
 
-    return classnames(styles.day, {
+    return cnb(styles.day, {
       [styles.dayPassive]: isPassive,
       [styles.dayDisabled]: disabled,
       [styles.dayToday]: isToday,
@@ -93,7 +93,7 @@ class DayCell extends Component {
     const isEndEdge = !isInRange && isSameDay(day, endDate);
     return (
       <span
-        className={classnames({
+        className={cnb({
           [styles.dayStartPreview]: isStartEdge,
           [styles.dayInPreview]: isInRange,
           [styles.dayEndPreview]: isEndEdge,
@@ -140,7 +140,7 @@ class DayCell extends Component {
     return inRanges.map((range, i) => (
       <span
         key={i}
-        className={classnames({
+        className={cnb({
           [styles.startEdge]: range.isStartEdge,
           [styles.endEdge]: range.isEndEdge,
           [styles.inRange]: range.isInRange,

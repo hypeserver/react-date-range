@@ -4,7 +4,7 @@ import Calendar from '../Calendar';
 import { rangeShape } from '../DayCell';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
-import classnames from 'classnames';
+import { cnb } from 'cnbuilder';
 import coreStyles from '../../styles';
 
 class DateRange extends Component {
@@ -116,7 +116,7 @@ class DateRange extends Component {
         }}
         {...this.props}
         displayMode="dateRange"
-        className={classnames(this.styles.dateRangeWrapper, this.props.className)}
+        className={cnb(this.styles.dateRangeWrapper, this.props.className)}
         onChange={this.setSelection}
         updateRange={val => this.setSelection(val, false)}
         ref={target => {

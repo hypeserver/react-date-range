@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { cnb } from 'cnbuilder';
 import {
   addMonths,
   areIntervalsOverlapping,
@@ -76,7 +76,7 @@ export function generateStyles(sources) {
     .filter(source => Boolean(source))
     .reduce((styles, styleSource) => {
       Object.keys(styleSource).forEach(key => {
-        styles[key] = classnames(styles[key], styleSource[key]);
+        styles[key] = cnb(styles[key], styleSource[key]);
       });
       return styles;
     }, {});

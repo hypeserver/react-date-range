@@ -37,7 +37,7 @@
     "defaults"
   ],
   "dependencies": {
-    "classnames": "^2.2.6",
+    "cnbuilder": "^2.3.0",
     "prop-types": "^15.7.2",
     "react-list": "^0.8.13",
     "shallow-equal": "^1.2.1"

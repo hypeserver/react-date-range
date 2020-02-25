@@ -2241,11 +2241,6 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.6:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
-  integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
-
 clean-stack@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
@@ -2324,6 +2319,11 @@ clsx@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
   integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
+
+cnbuilder@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/cnbuilder/-/cnbuilder-2.3.0.tgz#1f19b0da35dfc83cd4f34caa29ce06f29feac295"
+  integrity sha512-c15eLhxGuBMKkrAAYFJtbwLzwWOhs+pGyOvT9hW5aLMHDOpvtpZnTR3NjwD9WLB1iI1AykRKdojxSQPEgcGxJg==
 
 co@^4.6.0:
   version "4.6.0"

@@ -4,7 +4,7 @@ import { rangeShape } from '../DayCell';
 import Month from '../Month';
 import DateInput from '../DateInput';
 import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../../utils';
-import classnames from 'classnames';
+import { cnb } from 'cnbuilder';
 import ReactList from 'react-list';
 import { shallowEqualObjects } from 'shallow-equal';
 import {
@@ -185,7 +185,7 @@ class Calendar extends PureComponent {
         {showMonthArrow ? (
           <button
             type="button"
-            className={classnames(styles.nextPrevButton, styles.prevButton)}
+            className={cnb(styles.nextPrevButton, styles.prevButton)}
             onClick={() => changeShownDate(-1, 'monthOffset')}>
             <i />
           </button>
@@ -229,7 +229,7 @@ class Calendar extends PureComponent {
         {showMonthArrow ? (
           <button
             type="button"
-            className={classnames(styles.nextPrevButton, styles.nextButton)}
+            className={cnb(styles.nextPrevButton, styles.nextButton)}
             onClick={() => changeShownDate(+1, 'monthOffset')}>
             <i />
           </button>
@@ -278,7 +278,7 @@ class Calendar extends PureComponent {
               key={i}
               style={{ color: range.color || defaultColor }}>
               <DateInput
-                className={classnames(styles.dateDisplayItem, {
+                className={cnb(styles.dateDisplayItem, {
                   [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 0,
                 })}
                 readOnly={!editableDateInputs}
@@ -291,7 +291,7 @@ class Calendar extends PureComponent {
                 onFocus={() => this.handleRangeFocusChange(i, 0)}
               />
               <DateInput
-                className={classnames(styles.dateDisplayItem, {
+                className={cnb(styles.dateDisplayItem, {
                   [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 1,
                 })}
                 readOnly={!editableDateInputs}
@@ -396,7 +396,7 @@ class Calendar extends PureComponent {
     }));
     return (
       <div
-        className={classnames(this.styles.calendarWrapper, className)}
+        className={cnb(this.styles.calendarWrapper, className)}
         onMouseUp={() => this.setState({ drag: { status: false, range: {} } })}
         onMouseLeave={() => {
           this.setState({ drag: { status: false, range: {} } });
@@ -407,7 +407,7 @@ class Calendar extends PureComponent {
           <div>
             {isVertical && this.renderWeekdays(this.dateOptions)}
             <div
-              className={classnames(
+              className={cnb(
                 this.styles.infiniteMonths,
                 isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
               )}
@@ -461,7 +461,7 @@ class Calendar extends PureComponent {
           </div>
         ) : (
           <div
-            className={classnames(
+            className={cnb(
               this.styles.months,
               isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
             )}>

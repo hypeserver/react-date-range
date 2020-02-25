@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import { cnb } from 'cnbuilder';
 import { format, parse, isValid, isEqual } from 'date-fns';
 
 class DateInput extends PureComponent {
@@ -68,7 +68,7 @@ class DateInput extends PureComponent {
     const { value, invalid } = this.state;
 
     return (
-      <span className={classnames('rdrDateInput', className)}>
+      <span className={cnb('rdrDateInput', className)}>
         <input
           readOnly={readOnly}
           disabled={disabled}
