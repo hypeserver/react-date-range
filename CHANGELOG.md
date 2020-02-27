@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <Calendar
   dateDisplayFormat='MMM D, YYYY'
   monthDisplayFormat='MMM YYYY'
-  weekdayDisplayFormat='E'
+  weekdayDisplayFormat='ddd'
   dayDisplayFormat='D'
 />
 ```
