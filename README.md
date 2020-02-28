@@ -24,12 +24,12 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 ### Installation
 
 ```
-yarn add react-date-range
-```
-
-If you don't use yarn
-```
 npm install --save react-date-range
+```
+This plugin expects `react` and `date-fns` as peerDependencies, It means that you need to install them in your project folder.
+
+```
+npm install --save react date-fns
 ```
 
 ## Usage
