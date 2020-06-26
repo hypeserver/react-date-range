@@ -74,6 +74,7 @@ const [state, setState] = useState({
   selection3: {
     startDate: addDays(new Date(), 8),
     endDate: addDays(new Date(), 10),
+    dayNumberColor: '#000000',
     key: 'selection3',
     autoFocus: false
   }

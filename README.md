@@ -144,6 +144,7 @@ inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default i
     startDate: PropTypes.object,
     endDate: PropTypes.object,
     color: PropTypes.string,
+    dayNumberColor: PropTypes.string,
     key: PropTypes.string,
     autoFocus: PropTypes.bool,
     disabled: PropTypes.bool,

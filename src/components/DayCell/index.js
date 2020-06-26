@@ -102,16 +102,13 @@ class DayCell extends Component {
       />
     );
   };
-  renderSelectionPlaceholders = () => {
-    const { styles, ranges, day } = this.props;
-    if (this.props.displayMode === 'date') {
-      let isSelected = isSameDay(this.props.day, this.props.date);
-      return isSelected ? (
-        <span className={styles.selected} style={{ color: this.props.color }} />
-      ) : null;
+  getInRanges = () => {
+    const { ranges, day } = this.props;
+    if (this.props.displayMode !== 'dateRange') {
+      return null;
     }
 
-    const inRanges = ranges.reduce((result, range) => {
+    return ranges.reduce((result, range) => {
       let startDate = range.startDate;
       let endDate = range.endDate;
       if (startDate && endDate && isBefore(endDate, startDate)) {
@@ -136,6 +133,16 @@ class DayCell extends Component {
       }
       return result;
     }, []);
+  };
+  renderSelectionPlaceholders = inRanges => {
+    const { styles } = this.props;
+    if (this.props.displayMode === 'date') {
+      let isSelected = isSameDay(this.props.day, this.props.date);
+      return isSelected ? (
+        <span className={styles.selected} style={{ color: this.props.color }} />
+      ) : null;
+    }
+    inRanges = inRanges === undefined ? this.getInRanges() : inRanges;
 
     return inRanges.map((range, i) => (
       <span
@@ -149,7 +156,18 @@ class DayCell extends Component {
       />
     ));
   };
+  getDayNumberColor = inRanges => {
+    if (inRanges === null) {
+      return;
+    }
+    inRanges = inRanges === undefined ? this.getInRanges() : inRanges;
+    if (inRanges.length === 0) {
+      return;
+    }
+    return inRanges[inRanges.length - 1].dayNumberColor;
+  };
   render() {
+    const ranges = this.getInRanges();
     return (
       <button
         type="button"
@@ -165,10 +183,12 @@ class DayCell extends Component {
         className={this.getClassNames(this.props.styles)}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
         style={{ color: this.props.color }}>
-        {this.renderSelectionPlaceholders()}
+        {this.renderSelectionPlaceholders(ranges)}
         {this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
-          <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
+          <span style={{ color: this.getDayNumberColor(ranges) }}>
+            {format(this.props.day, this.props.dayDisplayFormat)}
+          </span>
         </span>
       </button>
     );
@@ -181,6 +201,7 @@ export const rangeShape = PropTypes.shape({
   startDate: PropTypes.object,
   endDate: PropTypes.object,
   color: PropTypes.string,
+  dayNumberColor: PropTypes.string,
   key: PropTypes.string,
   autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
