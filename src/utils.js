@@ -7,6 +7,7 @@ import {
   startOfWeek,
   endOfWeek,
   differenceInCalendarDays,
+  differenceInCalendarMonths,
   addDays,
 } from 'date-fns';
 
@@ -35,11 +36,7 @@ export function calcFocusDate(currentFocusedDate, props) {
 
   // // just return targetDate for native scrolled calendars
   // if (props.scroll.enabled) return targetDate;
-  const currentFocusInterval = {
-    start: startOfMonth(currentFocusedDate),
-    end: endOfMonth(addMonths(currentFocusedDate, months - 1)),
-  };
-  if (areIntervalsOverlapping(targetInterval, currentFocusInterval)) {
+  if (differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
     // don't change focused if new selection in view area
     return currentFocusedDate;
   }
