@@ -10,7 +10,7 @@ class DateInput extends PureComponent {
     this.state = {
       invalid: false,
       changed: false,
-      value: this.formatDate(props),
+      value: this.formatDate(props)
     };
   }
 
@@ -64,11 +64,12 @@ class DateInput extends PureComponent {
   };
 
   render() {
-    const { className, readOnly, placeholder, disabled, onFocus } = this.props;
+    const { className, readOnly, placeholder, disabled, onFocus, label } = this.props;
     const { value, invalid } = this.state;
 
     return (
       <span className={classnames('rdrDateInput', className)}>
+        {label}
         <input
           readOnly={readOnly}
           disabled={disabled}
@@ -94,13 +95,13 @@ DateInput.propTypes = {
   dateDisplayFormat: PropTypes.string,
   className: PropTypes.string,
   onFocus: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 DateInput.defaultProps = {
   readOnly: true,
   disabled: false,
-  dateDisplayFormat: 'MMM D, YYYY',
+  dateDisplayFormat: 'MMM D, YYYY'
 };
 
 export default DateInput;

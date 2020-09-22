@@ -6,6 +6,46 @@ This component wraps **[DefinedRange](#definedrange)** and **[Calendar](#calenda
 import { addDays } from 'date-fns';
 import { useState } from 'react';
 
+const renderStaticRangeLabel = () => (
+  <CustomStaticRangeLabelContent text={'This is a custom label content: '} />
+);
+
+class CustomStaticRangeLabelContent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentDateString: Date()
+    };
+
+    this.intervalId = setInterval(() => {
+      this.setState({
+        currentDateString: Date()
+      });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  render() {
+    const { currentDateString } = this.state;
+    const { text } = this.props;
+
+    return (
+      <span>
+        <i>{text}</i>
+        <span className={'random-date-string'}>
+          <b>{currentDateString}</b>
+        </span>
+      </span>
+    );
+  }
+}
+
 const [state, setState] = useState([
   {
     startDate: new Date(),
@@ -19,8 +59,30 @@ const [state, setState] = useState([
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
+  editableDateInputs={true}
   ranges={state}
   direction="horizontal"
+  showDefinedRange={false}
+  // weekStartsOn={3}
+  maxDate={new Date()}
+  rangeColors={['#ffcb00']}
+  showMonthName={false}
+  // locale="es"
+  inputRanges={[]}
+  renderStaticRangeLabel={renderStaticRangeLabel}
+  staticRanges={[
+    {
+      label: 'Hoy',
+      hasCustomRendering: true,
+      range: () => ({
+        startDate: new Date(),
+        endDate: new Date()
+      }),
+      isSelected() {
+        return true;
+      }
+    }
+  ]}
 />;
 ```
 

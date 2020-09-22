@@ -11,7 +11,7 @@ class DefinedRange extends Component {
     super(props);
     this.state = {
       rangeOffset: 0,
-      focusedInput: -1,
+      focusedInput: -1
     };
   }
 
@@ -20,7 +20,7 @@ class DefinedRange extends Component {
     const selectedRange = ranges[focusedRange[0]];
     if (!onChange || !selectedRange) return;
     onChange({
-      [selectedRange.key || `range${focusedRange[0] + 1}`]: { ...selectedRange, ...range },
+      [selectedRange.key || `range${focusedRange[0] + 1}`]: { ...selectedRange, ...range }
     });
   };
 
@@ -54,7 +54,7 @@ class DefinedRange extends Component {
       ranges,
       renderStaticRangeLabel,
       rangeColors,
-      className,
+      className
     } = this.props;
 
     return (
@@ -75,22 +75,19 @@ class DefinedRange extends Component {
               <button
                 type="button"
                 className={cx(styles.staticRange, {
-                  [styles.staticRangeSelected]: Boolean(selectedRange),
+                  [styles.staticRangeSelected]: Boolean(selectedRange)
                 })}
                 style={{
-                  color: selectedRange
-                    ? selectedRange.color || rangeColors[focusedRangeIndex]
-                    : null,
+                  color: selectedRange ? selectedRange.color || rangeColors[focusedRangeIndex] : null
                 }}
                 key={i}
                 onClick={() => this.handleRangeChange(staticRange.range(this.props))}
                 onFocus={() => onPreviewChange && onPreviewChange(staticRange.range(this.props))}
-                onMouseOver={() =>
-                  onPreviewChange && onPreviewChange(staticRange.range(this.props))
-                }
+                onMouseOver={() => onPreviewChange && onPreviewChange(staticRange.range(this.props))}
                 onMouseLeave={() => {
                   onPreviewChange && onPreviewChange();
-                }}>
+                }}
+              >
                 <span tabIndex={-1} className={styles.staticRangeLabel}>
                   {labelContent}
                 </span>
@@ -128,7 +125,7 @@ DefinedRange.propTypes = {
   headerContent: PropTypes.any,
   rangeColors: PropTypes.arrayOf(PropTypes.string),
   className: PropTypes.string,
-  renderStaticRangeLabel: PropTypes.func,
+  renderStaticRangeLabel: PropTypes.func
 };
 
 DefinedRange.defaultProps = {
@@ -136,7 +133,7 @@ DefinedRange.defaultProps = {
   staticRanges: defaultStaticRanges,
   ranges: [],
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
-  focusedRange: [0, 0],
+  focusedRange: [0, 0]
 };
 
 export default DefinedRange;
