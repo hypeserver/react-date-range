@@ -29,6 +29,10 @@ var _enUS = _interopRequireDefault(require("date-fns/locale/en-US"));
 
 var _styles = _interopRequireDefault(require("../../styles"));
 
+var _leftArrow = _interopRequireDefault(require("../../Icons/left-arrow"));
+
+var _rightArrow = _interopRequireDefault(require("../../Icons/right-arrow"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -219,7 +223,7 @@ function (_PureComponent) {
         onClick: function onClick() {
           return changeShownDate(-1, 'monthOffset');
         }
-      }, _react["default"].createElement("i", null)) : null, _react["default"].createElement("span", {
+      }, _react["default"].createElement(_leftArrow["default"], null)) : null, _react["default"].createElement("span", {
         className: styles.monthPicker
       }, _react["default"].createElement("select", {
         value: focusedDate.getMonth(),
@@ -248,7 +252,7 @@ function (_PureComponent) {
         onClick: function onClick() {
           return changeShownDate(+1, 'monthOffset');
         }
-      }, _react["default"].createElement("i", null)) : null), _react["default"].createElement("span", {
+      }, _react["default"].createElement(_rightArrow["default"], null)) : null), _react["default"].createElement("span", {
         className: styles.monthAndYearDivider
       }), _react["default"].createElement("div", {
         className: styles.monthAndYearPickers
@@ -258,7 +262,7 @@ function (_PureComponent) {
         onClick: function onClick() {
           return changeShownDate(-1, 'monthOffset');
         }
-      }, _react["default"].createElement("i", null)) : null, _react["default"].createElement("span", {
+      }, _react["default"].createElement(_leftArrow["default"], null)) : null, _react["default"].createElement("span", {
         className: styles.yearPicker
       }, _react["default"].createElement("select", {
         value: (0, _dateFns.addMonths)(focusedDate, 1).getFullYear(),
@@ -287,7 +291,7 @@ function (_PureComponent) {
         onClick: function onClick() {
           return changeShownDate(+1, 'monthOffset');
         }
-      }, _react["default"].createElement("i", null)) : null)) : _react["default"].createElement("span", {
+      }, _react["default"].createElement(_rightArrow["default"], null)) : null)) : _react["default"].createElement("span", {
         className: styles.monthAndYearPickers
       }, _this.state.monthNames[focusedDate.getMonth()], " ", focusedDate.getFullYear()));
     });

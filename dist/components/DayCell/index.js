@@ -162,21 +162,7 @@ function (_Component) {
           ranges = _this$props4.ranges;
 
       var _ranges = _slicedToArray(ranges, 1),
-          range = _ranges[0]; // return (
-      //   <span
-      //     className={classnames({
-      //       [styles.dayStartPreview]: true,
-      //       [styles.dayInPreview]: false,
-      //       [styles.dayEndPreview]: false
-      //     })}
-      //     // opacity: isStartEdge || isEndEdge ? 1 : 0.2
-      //     style={{
-      //       backgroundColor: range.color || this.props.color,
-      //       opacity: 1
-      //     }}
-      //   />
-      // );
-
+          range = _ranges[0];
 
       if (!preview) return null; // const [range] = ranges;
 
@@ -207,7 +193,8 @@ function (_Component) {
           backgroundColor: isEndEdgerange || isStartEdgerange ? '' : range.color || _this.props.color,
           opacity: isStartEdge || isEndEdge ? 1 : 0.2,
           zIndex: 0,
-          border: 'none'
+          border: 'none',
+          borderRadius: isEndEdgerange || isEndEdge || isStartEdgerange || isStartEdge ? '100px' : ''
         }
       });
     });
@@ -254,7 +241,8 @@ function (_Component) {
         }
 
         return result;
-      }, []);
+      }, []); // hello
+
       return inRanges.map(function (range, i) {
         var _classnames3;
 
