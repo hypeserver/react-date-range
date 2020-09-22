@@ -28,6 +28,8 @@ import {
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles from '../../styles';
+import LeftArrow from '../../Icons/left-arrow';
+import RightArrow from '../../Icons/right-arrow';
 
 class Calendar extends PureComponent {
   constructor(props, context) {
@@ -187,7 +189,7 @@ class Calendar extends PureComponent {
                   className={classnames(styles.nextPrevButton, styles.prevButton)}
                   onClick={() => changeShownDate(-1, 'monthOffset')}
                 >
-                  <i />
+                  <LeftArrow />
                 </button>
               ) : null}
 
@@ -223,7 +225,7 @@ class Calendar extends PureComponent {
                   className={classnames(styles.nextPrevButton, styles.nextButton)}
                   onClick={() => changeShownDate(+1, 'monthOffset')}
                 >
-                  <i />
+                  <RightArrow />
                 </button>
               ) : null}
             </div>
@@ -235,7 +237,7 @@ class Calendar extends PureComponent {
                   className={classnames(styles.nextPrevButton, styles.prevButton)}
                   onClick={() => changeShownDate(-1, 'monthOffset')}
                 >
-                  <i />
+                  <LeftArrow />
                 </button>
               ) : null}
               <span className={styles.yearPicker}>
@@ -273,7 +275,7 @@ class Calendar extends PureComponent {
                   className={classnames(styles.nextPrevButton, styles.nextButton)}
                   onClick={() => changeShownDate(+1, 'monthOffset')}
                 >
-                  <i />
+                  <RightArrow />
                 </button>
               ) : null}
             </div>
