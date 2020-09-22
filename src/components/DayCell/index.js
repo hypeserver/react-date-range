@@ -86,20 +86,6 @@ class DayCell extends Component {
     const { preview, day, styles, ranges } = this.props;
     const [range] = ranges;
 
-    // return (
-    //   <span
-    //     className={classnames({
-    //       [styles.dayStartPreview]: true,
-    //       [styles.dayInPreview]: false,
-    //       [styles.dayEndPreview]: false
-    //     })}
-    //     // opacity: isStartEdge || isEndEdge ? 1 : 0.2
-    //     style={{
-    //       backgroundColor: range.color || this.props.color,
-    //       opacity: 1
-    //     }}
-    //   />
-    // );
     if (!preview) return null;
     // const [range] = ranges;
 
@@ -135,7 +121,8 @@ class DayCell extends Component {
           backgroundColor: isEndEdgerange || isStartEdgerange ? '' : range.color || this.props.color,
           opacity: isStartEdge || isEndEdge ? 1 : 0.2,
           zIndex: 0,
-          border: 'none'
+          border: 'none',
+          borderRadius: isEndEdgerange || isEndEdge || isStartEdgerange || isStartEdge ? '100px' : ''
         }}
       />
     );
