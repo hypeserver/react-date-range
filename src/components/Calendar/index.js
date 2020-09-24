@@ -30,6 +30,23 @@ import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles from '../../styles';
 import LeftArrow from '../../Icons/left-arrow';
 import RightArrow from '../../Icons/right-arrow';
+import LeftDoubleArrow from '../../Icons/left_double_arrow';
+import RightDoubleArrow from '../../Icons/right_double_arrow';
+
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
 
 class Calendar extends PureComponent {
   constructor(props, context) {
@@ -175,14 +192,25 @@ class Calendar extends PureComponent {
   };
   renderMonthAndYear = (focusedDate, changeShownDate, props) => {
     const { showMonthArrow, minDate, maxDate, showMonthAndYearPickers } = props;
-    const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
-    const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
+    // const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
+    // const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
+    const CurrYear = focusedDate.getFullYear();
     const styles = this.styles;
+    const { monthNames } = this.state;
     return (
       <div onMouseUp={e => e.stopPropagation()} className={styles.monthAndYearWrapper}>
         {showMonthAndYearPickers ? (
           <span className={styles.monthAndYearPickers}>
             <div className={styles.monthAndYearPickers}>
+              {showMonthArrow ? (
+                <button
+                  type="button"
+                  className={classnames(styles.nextPrevButton, styles.prevButton)}
+                  onClick={() => changeShownDate(focusedDate.getFullYear() - 1, 'setYear')}
+                >
+                  <LeftDoubleArrow />
+                </button>
+              ) : null}
               {showMonthArrow ? (
                 <button
                   type="button"
@@ -194,7 +222,7 @@ class Calendar extends PureComponent {
               ) : null}
 
               <span className={styles.monthPicker}>
-                <select
+                {/* <select
                   value={focusedDate.getMonth()}
                   onChange={e => changeShownDate(e.target.value, 'setMonth')}
                 >
@@ -203,62 +231,14 @@ class Calendar extends PureComponent {
                       {monthName}
                     </option>
                   ))}
-                </select>
-
-                <select
-                  value={focusedDate.getFullYear()}
-                  onChange={e => changeShownDate(e.target.value, 'setYear')}
-                >
-                  {new Array(upperYearLimit - lowerYearLimit + 1).fill(upperYearLimit).map((val, i) => {
-                    const year = val - i;
-                    return (
-                      <option key={year} value={year}>
-                        {year}
-                      </option>
-                    );
-                  })}
-                </select>
+                </select> */}
+                {monthNames[focusedDate.getMonth()]} {focusedDate.getFullYear()}
               </span>
-              {showMonthArrow ? (
-                <button
-                  type="button"
-                  className={classnames(styles.nextPrevButton, styles.nextButton)}
-                  onClick={() => changeShownDate(+1, 'monthOffset')}
-                >
-                  <RightArrow />
-                </button>
-              ) : null}
             </div>
             <span className={styles.monthAndYearDivider} />
             <div className={styles.monthAndYearPickers}>
-              {showMonthArrow ? (
-                <button
-                  type="button"
-                  className={classnames(styles.nextPrevButton, styles.prevButton)}
-                  onClick={() => changeShownDate(-1, 'monthOffset')}
-                >
-                  <LeftArrow />
-                </button>
-              ) : null}
               <span className={styles.yearPicker}>
-                <select
-                  value={addMonths(focusedDate, 1).getFullYear()}
-                  onChange={e => changeShownDate(e.target.value, 'setYear')}
-                >
-                  {new Array(upperYearLimit - lowerYearLimit + 1)
-                    .fill(upperYearLimit)
-                    .reverse()
-                    .map((val, i) => {
-                      const year = val - i;
-                      return (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      );
-                    })}
-                </select>
-
-                <select
+                {/* <select
                   value={focusedDate.getMonth() + 1}
                   onChange={e => changeShownDate(e.target.value - 1, 'setMonth')}
                 >
@@ -267,7 +247,8 @@ class Calendar extends PureComponent {
                       {monthName}
                     </option>
                   ))}
-                </select>
+                </select> */}
+                {monthNames[focusedDate.getMonth() + 1] || monthNames[0]} {focusedDate.getFullYear()}
               </span>
               {showMonthArrow ? (
                 <button
@@ -276,6 +257,15 @@ class Calendar extends PureComponent {
                   onClick={() => changeShownDate(+1, 'monthOffset')}
                 >
                   <RightArrow />
+                </button>
+              ) : null}
+              {showMonthArrow ? (
+                <button
+                  type="button"
+                  className={classnames(styles.nextPrevButton, styles.nextButton)}
+                  onClick={() => changeShownDate(focusedDate.getFullYear() + 1, 'setYear')}
+                >
+                  <RightDoubleArrow />
                 </button>
               ) : null}
             </div>

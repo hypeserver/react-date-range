@@ -1,6 +1,6 @@
 .rdrCalendarWrapper {
   color: #000000;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .rdrDateDisplayWrapper {
@@ -17,13 +17,12 @@
   box-shadow: 0 1px 2px 0 rgba(35, 57, 66, 0.21);
   border: 1px solid transparent;
   input {
-    margin-left: 10px;
     cursor: pointer;
     height: 2.5em;
     line-height: 2.5em;
     border: 0px;
     background: transparent;
-    width: 50%;
+    width: 100%;
     color: #849095;
   }
 }
@@ -195,14 +194,13 @@
   .rdrSelected {
     & ~ .rdrDayNumber {
       span {
-        color: #18181a;
+        color: rgba(7, 6, 6, 0.85);
       }
     }
   }
 }
 
 .rdrSelected,
-.rdrInRange,
 .rdrStartEdge,
 .rdrEndEdge {
   background: currentColor;
@@ -211,7 +209,16 @@
   left: 0;
   right: 0;
   bottom: 5px;
-  opacity: 0.6;
+}
+
+.rdrInRange {
+  background: currentColor;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  opacity: 0.5;
 }
 
 .rdrSelected {
@@ -225,20 +232,13 @@
 .rdrStartEdge {
   border-top-left-radius: 1.042em;
   border-bottom-left-radius: 1.042em;
-
-  left: 5px;
-  width: 39px;
-  opacity: 1;
-  transform: scale(1.135);
+  left: 2px;
 }
 
 .rdrEndEdge {
-  right: 9px;
-  width: 39px;
   border-top-right-radius: 1.042em;
   border-bottom-right-radius: 1.042em;
-  transform: scale(1.135);
-  opacity: 1;
+  right: 2px;
 }
 
 .rdrSelected {
@@ -288,14 +288,27 @@
 }
 
 .rdrDayStartPreview,
-.rdrDayInPreview,
 .rdrDayEndPreview {
-  background: rgba(255, 255, 255, 0.09);
+  background: currentColor;
+  position: absolute;
+  box-sizing: content-box;
+  top: 3px;
+  left: 0px;
+  right: 0px;
+  bottom: 3px;
+  pointer-events: none;
+  border: 0px solid #849095;
+  z-index: 0;
+}
+
+.rdrDayInPreview {
+  background: currentColor;
   position: absolute;
   top: 3px;
   left: 0px;
   right: 0px;
   bottom: 3px;
+  opacity: 0.5;
   pointer-events: none;
   border: 0px solid currentColor;
   z-index: 1;
@@ -388,6 +401,7 @@
 
 .rdrCalendarWrapper:not(.rdrDateRangeWrapper) .rdrDayHovered .rdrDayNumber:after {
   content: '';
+  border: 1px solid currentColor;
   border-radius: 1.333em;
   position: absolute;
   top: -2px;

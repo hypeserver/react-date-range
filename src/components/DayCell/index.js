@@ -118,11 +118,11 @@ class DayCell extends Component {
           [styles.dayEndPreview]: isEndEdge
         })}
         style={{
-          backgroundColor: isEndEdgerange || isStartEdgerange ? '' : range.color || this.props.color,
-          opacity: isStartEdge || isEndEdge ? 1 : 0.2,
-          zIndex: 0,
-          border: 'none',
-          borderRadius: isEndEdgerange || isEndEdge || isStartEdgerange || isStartEdge ? '100px' : ''
+          backgroundColor: range.color || this.props.color
+          // opacity: isStartEdge || isEndEdge ? 1 : 0.2,
+          // zIndex: 0,
+          // border: isEndEdgerange || isStartEdgerange ? 'none' : ''
+          // borderRadius: isEndEdgerange || isEndEdge || isStartEdgerange || isStartEdge ? '100px' : ''
         }}
       />
     );
@@ -131,9 +131,7 @@ class DayCell extends Component {
     const { styles, ranges, day } = this.props;
     if (this.props.displayMode === 'date') {
       let isSelected = isSameDay(this.props.day, this.props.date);
-      return isSelected ? (
-        <span className={styles.selected} style={{ color: this.props.color, opacity: 0.2 }} />
-      ) : null;
+      return isSelected ? <span className={styles.selected} /> : null;
     }
 
     const inRanges = ranges.reduce((result, range) => {
@@ -171,9 +169,9 @@ class DayCell extends Component {
           [styles.inRange]: range.isInRange
         })}
         style={{
-          color: range.color || this.props.color,
-          opacity: range.isStartEdge || range.isEndEdge ? 1 : 0.2,
-          border: 'none'
+          color: range.color || this.props.color
+          // opacity: range.isStartEdge || range.isEndEdge ? 1 : 0.2,
+          // border: 'none'
         }}
       />
     ));
