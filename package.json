@@ -1,6 +1,6 @@
 {
   "name": "socialpilot-react-date-range",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
