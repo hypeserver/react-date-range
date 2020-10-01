@@ -116,7 +116,8 @@
 }
 
 .rdrMonth {
-  padding: 0 1.833em 1.666em 0.833em;
+  padding: 0 15px 1.666em 15px;
+  border-left: 1px solid #edf4ff;
   .rdrWeekDays {
     padding: 0;
   }
@@ -481,4 +482,13 @@
   font-weight: 600;
   color: #849095;
   padding: 0.833em;
+}
+.month-year-part {
+  border-top: 1px solid #edf4ff;
+}
+.pre-month-year-picker {
+  justify-content: left;
+}
+.next-month-year-picker {
+  justify-content: flex-end;
 }

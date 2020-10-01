@@ -201,7 +201,7 @@ class Calendar extends PureComponent {
       <div onMouseUp={e => e.stopPropagation()} className={styles.monthAndYearWrapper}>
         {showMonthAndYearPickers ? (
           <span className={styles.monthAndYearPickers}>
-            <div className={styles.monthAndYearPickers}>
+            <div className={`${styles.monthAndYearPickers} pre-month-year-picker`}>
               {showMonthArrow ? (
                 <button
                   type="button"
@@ -236,7 +236,7 @@ class Calendar extends PureComponent {
               </span>
             </div>
             <span className={styles.monthAndYearDivider} />
-            <div className={styles.monthAndYearPickers}>
+            <div className={`${styles.monthAndYearPickers} next-month-year-picker`}>
               <span className={styles.yearPicker}>
                 {/* <select
                   value={focusedDate.getMonth() + 1}
@@ -444,96 +444,98 @@ class Calendar extends PureComponent {
         }}
       >
         {showDateDisplay && this.renderDateDisplay()}
-        {monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)}
-        {scroll.enabled ? (
-          <div>
-            {isVertical && this.renderWeekdays(this.dateOptions)}
+        <div className="month-year-part">
+          {monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)}
+          {scroll.enabled ? (
+            <div>
+              {isVertical && this.renderWeekdays(this.dateOptions)}
+              <div
+                className={classnames(
+                  this.styles.infiniteMonths,
+                  isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
+                )}
+                onMouseLeave={() => onPreviewChange && onPreviewChange()}
+                style={{
+                  width: scrollArea.calendarWidth + 11,
+                  height: scrollArea.calendarHeight + 11
+                }}
+                onScroll={this.handleScroll}
+              >
+                <ReactList
+                  length={differenceInCalendarMonths(
+                    endOfMonth(maxDate),
+                    addDays(startOfMonth(minDate), -1),
+                    this.dateOptions
+                  )}
+                  treshold={500}
+                  type="variable"
+                  ref={target => (this.list = target)}
+                  itemSizeEstimator={this.estimateMonthSize}
+                  axis={isVertical ? 'y' : 'x'}
+                  itemRenderer={(index, key) => {
+                    const monthStep = addMonths(minDate, index);
+                    return (
+                      <Month
+                        {...this.props}
+                        onPreviewChange={onPreviewChange || this.updatePreview}
+                        preview={preview || this.state.preview}
+                        ranges={ranges}
+                        key={key}
+                        drag={this.state.drag}
+                        dateOptions={this.dateOptions}
+                        disabledDates={disabledDates}
+                        month={monthStep}
+                        onDragSelectionStart={this.onDragSelectionStart}
+                        onDragSelectionEnd={this.onDragSelectionEnd}
+                        onDragSelectionMove={this.onDragSelectionMove}
+                        onMouseLeave={() => onPreviewChange && onPreviewChange()}
+                        styles={this.styles}
+                        style={
+                          isVertical
+                            ? { height: this.estimateMonthSize(index) }
+                            : { height: scrollArea.monthHeight, width: this.estimateMonthSize(index) }
+                        }
+                        showMonthName={showMonthName}
+                        showWeekDays={!isVertical}
+                      />
+                    );
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
             <div
               className={classnames(
-                this.styles.infiniteMonths,
+                this.styles.months,
                 isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
               )}
-              onMouseLeave={() => onPreviewChange && onPreviewChange()}
-              style={{
-                width: scrollArea.calendarWidth + 11,
-                height: scrollArea.calendarHeight + 11
-              }}
-              onScroll={this.handleScroll}
             >
-              <ReactList
-                length={differenceInCalendarMonths(
-                  endOfMonth(maxDate),
-                  addDays(startOfMonth(minDate), -1),
-                  this.dateOptions
-                )}
-                treshold={500}
-                type="variable"
-                ref={target => (this.list = target)}
-                itemSizeEstimator={this.estimateMonthSize}
-                axis={isVertical ? 'y' : 'x'}
-                itemRenderer={(index, key) => {
-                  const monthStep = addMonths(minDate, index);
-                  return (
-                    <Month
-                      {...this.props}
-                      onPreviewChange={onPreviewChange || this.updatePreview}
-                      preview={preview || this.state.preview}
-                      ranges={ranges}
-                      key={key}
-                      drag={this.state.drag}
-                      dateOptions={this.dateOptions}
-                      disabledDates={disabledDates}
-                      month={monthStep}
-                      onDragSelectionStart={this.onDragSelectionStart}
-                      onDragSelectionEnd={this.onDragSelectionEnd}
-                      onDragSelectionMove={this.onDragSelectionMove}
-                      onMouseLeave={() => onPreviewChange && onPreviewChange()}
-                      styles={this.styles}
-                      style={
-                        isVertical
-                          ? { height: this.estimateMonthSize(index) }
-                          : { height: scrollArea.monthHeight, width: this.estimateMonthSize(index) }
-                      }
-                      showMonthName={showMonthName}
-                      showWeekDays={!isVertical}
-                    />
-                  );
-                }}
-              />
+              {new Array(this.props.months).fill(null).map((_, i) => {
+                const monthStep = addMonths(this.state.focusedDate, i);
+                return (
+                  <Month
+                    {...this.props}
+                    onPreviewChange={onPreviewChange || this.updatePreview}
+                    preview={preview || this.state.preview}
+                    ranges={ranges}
+                    key={i}
+                    drag={this.state.drag}
+                    dateOptions={this.dateOptions}
+                    disabledDates={disabledDates}
+                    month={monthStep}
+                    onDragSelectionStart={this.onDragSelectionStart}
+                    onDragSelectionEnd={this.onDragSelectionEnd}
+                    onDragSelectionMove={this.onDragSelectionMove}
+                    onMouseLeave={() => onPreviewChange && onPreviewChange()}
+                    styles={this.styles}
+                    showWeekDays={!isVertical || i === 0}
+                    showMonthName={(!isVertical || i > 0) && showMonthName}
+                  />
+                );
+              })}
             </div>
-          </div>
-        ) : (
-          <div
-            className={classnames(
-              this.styles.months,
-              isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
-            )}
-          >
-            {new Array(this.props.months).fill(null).map((_, i) => {
-              const monthStep = addMonths(this.state.focusedDate, i);
-              return (
-                <Month
-                  {...this.props}
-                  onPreviewChange={onPreviewChange || this.updatePreview}
-                  preview={preview || this.state.preview}
-                  ranges={ranges}
-                  key={i}
-                  drag={this.state.drag}
-                  dateOptions={this.dateOptions}
-                  disabledDates={disabledDates}
-                  month={monthStep}
-                  onDragSelectionStart={this.onDragSelectionStart}
-                  onDragSelectionEnd={this.onDragSelectionEnd}
-                  onDragSelectionMove={this.onDragSelectionMove}
-                  onMouseLeave={() => onPreviewChange && onPreviewChange()}
-                  styles={this.styles}
-                  showWeekDays={!isVertical || i === 0}
-                  showMonthName={(!isVertical || i > 0) && showMonthName}
-                />
-              );
-            })}
-          </div>
-        )}
+          )}
+        </div>
       </div>
     );
   }
