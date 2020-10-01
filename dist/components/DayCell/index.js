@@ -190,11 +190,11 @@ function (_Component) {
       return _react["default"].createElement("span", {
         className: (0, _classnames4["default"])((_classnames2 = {}, _defineProperty(_classnames2, styles.dayStartPreview, isStartEdge), _defineProperty(_classnames2, styles.dayInPreview, isInRange), _defineProperty(_classnames2, styles.dayEndPreview, isEndEdge), _classnames2)),
         style: {
-          backgroundColor: isEndEdgerange || isStartEdgerange ? '' : range.color || _this.props.color,
-          opacity: isStartEdge || isEndEdge ? 1 : 0.2,
-          zIndex: 0,
-          border: 'none',
-          borderRadius: isEndEdgerange || isEndEdge || isStartEdgerange || isStartEdge ? '100px' : ''
+          backgroundColor: range.color || _this.props.color // opacity: isStartEdge || isEndEdge ? 1 : 0.2,
+          // zIndex: 0,
+          // border: isEndEdgerange || isStartEdgerange ? 'none' : ''
+          // borderRadius: isEndEdgerange || isEndEdge || isStartEdgerange || isStartEdge ? '100px' : ''
+
         }
       });
     });
@@ -208,11 +208,7 @@ function (_Component) {
       if (_this.props.displayMode === 'date') {
         var isSelected = (0, _dateFns.isSameDay)(_this.props.day, _this.props.date);
         return isSelected ? _react["default"].createElement("span", {
-          className: styles.selected,
-          style: {
-            color: _this.props.color,
-            opacity: 0.2
-          }
+          className: styles.selected
         }) : null;
       }
 
@@ -250,9 +246,9 @@ function (_Component) {
           key: i,
           className: (0, _classnames4["default"])((_classnames3 = {}, _defineProperty(_classnames3, styles.startEdge, range.isStartEdge), _defineProperty(_classnames3, styles.endEdge, range.isEndEdge), _defineProperty(_classnames3, styles.inRange, range.isInRange), _classnames3)),
           style: {
-            color: range.color || _this.props.color,
-            opacity: range.isStartEdge || range.isEndEdge ? 1 : 0.2,
-            border: 'none'
+            color: range.color || _this.props.color // opacity: range.isStartEdge || range.isEndEdge ? 1 : 0.2,
+            // border: 'none'
+
           }
         });
       });
@@ -303,7 +299,7 @@ function (_Component) {
         style: {
           color: this.props.color
         }
-      }), this.renderSelectionPlaceholders(), this.renderPreviewPlaceholder(), _react["default"].createElement("span", {
+      }), this.renderSelectionPlaceholders(), _react["default"].createElement("span", {
         className: this.props.styles.dayNumber
       }, _react["default"].createElement("span", null, (0, _dateFns.format)(this.props.day, this.props.dayDisplayFormat))));
     }

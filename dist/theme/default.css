@@ -19,13 +19,12 @@
 }
 
 .rdrDateDisplayItem input {
-    margin-left: 10px;
     cursor: pointer;
     height: 2.5em;
     line-height: 2.5em;
     border: 0px;
     background: transparent;
-    width: 50%;
+    width: 100%;
     color: #849095;
   }
 
@@ -121,7 +120,7 @@
 }
 
 .rdrMonth {
-  padding: 0 0.833em 1.666em 0.833em;
+  padding: 0 1.833em 1.666em 0.833em;
 }
 
 .rdrMonth .rdrWeekDays {
@@ -196,20 +195,30 @@
     }
 
 .rdrDay:not(.rdrDayPassive) .rdrInRange ~ .rdrDayNumber span, .rdrDay:not(.rdrDayPassive) .rdrStartEdge ~ .rdrDayNumber span, .rdrDay:not(.rdrDayPassive) .rdrEndEdge ~ .rdrDayNumber span, .rdrDay:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span {
-        color: #18181a;
+        color: rgba(7, 6, 6, 0.85);
       }
 
 .rdrSelected,
-.rdrInRange,
 .rdrStartEdge,
-.rdrEndEdge {
+.rdrEndEdge,
+.rdrdayEndPreview,
+.rdrdayStartPreview {
   background: currentColor;
   position: absolute;
   top: 5px;
   left: 0;
   right: 0;
   bottom: 5px;
-  opacity: 0.6;
+}
+
+.rdrInRange {
+  background: currentColor;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  opacity: 0.5;
 }
 
 .rdrSelected {
@@ -221,25 +230,51 @@
 }
 
 .rdrStartEdge {
-  border-top-left-radius: 1.042em;
-  border-bottom-left-radius: 1.042em;
-
-  left: 5px;
-  width: 39px;
-  opacity: 1;
-  -webkit-transform: scale(1.135);
-          transform: scale(1.135);
+  border-radius: 15px;
+  left: 2px;
+  position: absolute
 }
+
+.rdrStartEdge::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-sizing: content-box;
+    background: #ffcb00;
+
+    border-top-left-radius: 1.042em;
+    border-bottom-left-radius: 1.042em;
+    min-height: 22px;
+    opacity: 0.5;
+    height: 100%;
+  }
 
 .rdrEndEdge {
-  right: 9px;
-  width: 39px;
-  border-top-right-radius: 1.042em;
-  border-bottom-right-radius: 1.042em;
-  -webkit-transform: scale(1.135);
-          transform: scale(1.135);
-  opacity: 1;
+  right: 2px;
+
+  border-radius: 15px;
+  position: absolute
 }
+
+.rdrEndEdge::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-sizing: content-box;
+    background: #ffcb00;
+
+    border-top-right-radius: 1.042em;
+    border-bottom-right-radius: 1.042em;
+    min-height: 22px;
+    opacity: 0.5;
+    height: 100%;
+  }
 
 .rdrSelected {
   border-radius: 1.042em;
@@ -249,8 +284,6 @@
   .rdrDayStartOfMonth .rdrEndEdge,
   .rdrDayStartOfWeek .rdrInRange,
   .rdrDayStartOfWeek .rdrEndEdge {
-    border-top-left-radius: 1.042em;
-    border-bottom-left-radius: 1.042em;
     left: 2px;
   }
 
@@ -258,8 +291,6 @@
   .rdrDayEndOfMonth .rdrStartEdge,
   .rdrDayEndOfWeek .rdrInRange,
   .rdrDayEndOfWeek .rdrStartEdge {
-    border-top-right-radius: 1.042em;
-    border-bottom-right-radius: 1.042em;
     right: 2px;
   }
 
@@ -284,14 +315,27 @@
   }
 
 .rdrDayStartPreview,
-.rdrDayInPreview,
 .rdrDayEndPreview {
-  background: rgba(255, 255, 255, 0.09);
+  background: currentColor;
+  position: absolute;
+  box-sizing: content-box;
+  top: 3px;
+  left: 0px;
+  right: 0px;
+  bottom: 3px;
+  pointer-events: none;
+  border: 0px solid #849095;
+  z-index: 0;
+}
+
+.rdrDayInPreview {
+  background: currentColor;
   position: absolute;
   top: 3px;
   left: 0px;
   right: 0px;
   bottom: 3px;
+  opacity: 0.5;
   pointer-events: none;
   border: 0px solid currentColor;
   z-index: 1;
@@ -385,6 +429,7 @@
 
 .rdrCalendarWrapper:not(.rdrDateRangeWrapper) .rdrDayHovered .rdrDayNumber:after {
   content: '';
+  border: 1px solid currentColor;
   border-radius: 1.333em;
   position: absolute;
   top: -2px;

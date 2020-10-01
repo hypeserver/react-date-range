@@ -33,6 +33,10 @@ var _leftArrow = _interopRequireDefault(require("../../Icons/left-arrow"));
 
 var _rightArrow = _interopRequireDefault(require("../../Icons/right-arrow"));
 
+var _left_double_arrow = _interopRequireDefault(require("../../Icons/left_double_arrow"));
+
+var _right_double_arrow = _interopRequireDefault(require("../../Icons/right_double_arrow"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -72,6 +76,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 var Calendar =
 /*#__PURE__*/
@@ -204,10 +210,12 @@ function (_PureComponent) {
       var showMonthArrow = props.showMonthArrow,
           minDate = props.minDate,
           maxDate = props.maxDate,
-          showMonthAndYearPickers = props.showMonthAndYearPickers;
-      var upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
-      var lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
+          showMonthAndYearPickers = props.showMonthAndYearPickers; // const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
+      // const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
+
+      var CurrYear = focusedDate.getFullYear();
       var styles = _this.styles;
+      var monthNames = _this.state.monthNames;
       return _react["default"].createElement("div", {
         onMouseUp: function onMouseUp(e) {
           return e.stopPropagation();
@@ -221,77 +229,35 @@ function (_PureComponent) {
         type: "button",
         className: (0, _classnames3["default"])(styles.nextPrevButton, styles.prevButton),
         onClick: function onClick() {
-          return changeShownDate(-1, 'monthOffset');
+          return changeShownDate(focusedDate.getFullYear() - 1, 'setYear');
         }
-      }, _react["default"].createElement(_leftArrow["default"], null)) : null, _react["default"].createElement("span", {
-        className: styles.monthPicker
-      }, _react["default"].createElement("select", {
-        value: focusedDate.getMonth(),
-        onChange: function onChange(e) {
-          return changeShownDate(e.target.value, 'setMonth');
-        }
-      }, _this.state.monthNames.map(function (monthName, i) {
-        return _react["default"].createElement("option", {
-          key: i,
-          value: i
-        }, monthName);
-      })), _react["default"].createElement("select", {
-        value: focusedDate.getFullYear(),
-        onChange: function onChange(e) {
-          return changeShownDate(e.target.value, 'setYear');
-        }
-      }, new Array(upperYearLimit - lowerYearLimit + 1).fill(upperYearLimit).map(function (val, i) {
-        var year = val - i;
-        return _react["default"].createElement("option", {
-          key: year,
-          value: year
-        }, year);
-      }))), showMonthArrow ? _react["default"].createElement("button", {
-        type: "button",
-        className: (0, _classnames3["default"])(styles.nextPrevButton, styles.nextButton),
-        onClick: function onClick() {
-          return changeShownDate(+1, 'monthOffset');
-        }
-      }, _react["default"].createElement(_rightArrow["default"], null)) : null), _react["default"].createElement("span", {
-        className: styles.monthAndYearDivider
-      }), _react["default"].createElement("div", {
-        className: styles.monthAndYearPickers
-      }, showMonthArrow ? _react["default"].createElement("button", {
+      }, _react["default"].createElement(_left_double_arrow["default"], null)) : null, showMonthArrow ? _react["default"].createElement("button", {
         type: "button",
         className: (0, _classnames3["default"])(styles.nextPrevButton, styles.prevButton),
         onClick: function onClick() {
           return changeShownDate(-1, 'monthOffset');
         }
       }, _react["default"].createElement(_leftArrow["default"], null)) : null, _react["default"].createElement("span", {
+        className: styles.monthPicker
+      }, monthNames[focusedDate.getMonth()], " ", focusedDate.getFullYear())), _react["default"].createElement("span", {
+        className: styles.monthAndYearDivider
+      }), _react["default"].createElement("div", {
+        className: styles.monthAndYearPickers
+      }, _react["default"].createElement("span", {
         className: styles.yearPicker
-      }, _react["default"].createElement("select", {
-        value: (0, _dateFns.addMonths)(focusedDate, 1).getFullYear(),
-        onChange: function onChange(e) {
-          return changeShownDate(e.target.value, 'setYear');
-        }
-      }, new Array(upperYearLimit - lowerYearLimit + 1).fill(upperYearLimit).reverse().map(function (val, i) {
-        var year = val - i;
-        return _react["default"].createElement("option", {
-          key: year,
-          value: year
-        }, year);
-      })), _react["default"].createElement("select", {
-        value: focusedDate.getMonth() + 1,
-        onChange: function onChange(e) {
-          return changeShownDate(e.target.value - 1, 'setMonth');
-        }
-      }, _this.state.monthNames.map(function (monthName, i) {
-        return _react["default"].createElement("option", {
-          key: i,
-          value: i
-        }, monthName);
-      }))), showMonthArrow ? _react["default"].createElement("button", {
+      }, monthNames[focusedDate.getMonth() + 1] || monthNames[0], " ", focusedDate.getFullYear()), showMonthArrow ? _react["default"].createElement("button", {
         type: "button",
         className: (0, _classnames3["default"])(styles.nextPrevButton, styles.nextButton),
         onClick: function onClick() {
           return changeShownDate(+1, 'monthOffset');
         }
-      }, _react["default"].createElement(_rightArrow["default"], null)) : null)) : _react["default"].createElement("span", {
+      }, _react["default"].createElement(_rightArrow["default"], null)) : null, showMonthArrow ? _react["default"].createElement("button", {
+        type: "button",
+        className: (0, _classnames3["default"])(styles.nextPrevButton, styles.nextButton),
+        onClick: function onClick() {
+          return changeShownDate(focusedDate.getFullYear() + 1, 'setYear');
+        }
+      }, _react["default"].createElement(_right_double_arrow["default"], null)) : null)) : _react["default"].createElement("span", {
         className: styles.monthAndYearPickers
       }, _this.state.monthNames[focusedDate.getMonth()], " ", focusedDate.getFullYear()));
     });

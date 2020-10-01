@@ -1,6 +1,6 @@
 .rdrCalendarWrapper {
   color: #000000;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .rdrDateDisplayWrapper {
@@ -116,7 +116,7 @@
 }
 
 .rdrMonth {
-  padding: 0 0.833em 1.666em 0.833em;
+  padding: 0 1.833em 1.666em 0.833em;
   .rdrWeekDays {
     padding: 0;
   }
@@ -202,7 +202,9 @@
 
 .rdrSelected,
 .rdrStartEdge,
-.rdrEndEdge {
+.rdrEndEdge,
+.rdrdayEndPreview,
+.rdrdayStartPreview {
   background: currentColor;
   position: absolute;
   top: 5px;
@@ -230,15 +232,50 @@
 }
 
 .rdrStartEdge {
-  border-top-left-radius: 1.042em;
-  border-bottom-left-radius: 1.042em;
+  border-radius: 15px;
   left: 2px;
+  position: absolute;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-sizing: content-box;
+    background: #ffcb00;
+
+    border-top-left-radius: 1.042em;
+    border-bottom-left-radius: 1.042em;
+    min-height: 22px;
+    opacity: 0.5;
+    height: 100%;
+  }
 }
 
 .rdrEndEdge {
-  border-top-right-radius: 1.042em;
-  border-bottom-right-radius: 1.042em;
   right: 2px;
+
+  border-radius: 15px;
+  position: absolute;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-sizing: content-box;
+    background: #ffcb00;
+
+    border-top-right-radius: 1.042em;
+    border-bottom-right-radius: 1.042em;
+    min-height: 22px;
+    opacity: 0.5;
+    height: 100%;
+  }
 }
 
 .rdrSelected {
@@ -249,8 +286,6 @@
 .rdrDayStartOfWeek {
   .rdrInRange,
   .rdrEndEdge {
-    border-top-left-radius: 1.042em;
-    border-bottom-left-radius: 1.042em;
     left: 2px;
   }
 }
@@ -259,8 +294,6 @@
 .rdrDayEndOfWeek {
   .rdrInRange,
   .rdrStartEdge {
-    border-top-right-radius: 1.042em;
-    border-bottom-right-radius: 1.042em;
     right: 2px;
   }
 }
