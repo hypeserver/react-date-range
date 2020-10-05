@@ -15,9 +15,9 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 - Drag n Drop selection
 - Keyboard friendly
 
-**Live Demo :** [http://adphorus.github.io/react-date-range](http://adphorus.github.io/react-date-range)
+**Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
 
-![](https://raw.githubusercontent.com/Adphorus/react-date-range/master/demo/ss.png)
+![](https://raw.githubusercontent.com/hypeserver/react-date-range/master/demo/ss.png)
 
 
 ## Getting Started
@@ -96,7 +96,7 @@ class MyComponent extends Component {
 
 Property                             | type      | Default Value    | Description
 -------------------------------------|-----------|------------------|-----------------------------------------------------------------
-locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/docs/I18n#supported-languages).
+locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/hypeserver/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/docs/I18n#supported-languages).
 className                            | String    |                  | wrapper classname
 months                               | Number    | 1                | rendered month count
 showSelectionPreview                 | Boolean   | true             | show preview on focused/hovered dates
@@ -135,8 +135,8 @@ startDatePlaceholder                 | String    | `Early`          | Start Date
 endDatePlaceholder                   | String    | `Continuous`     | End Date Placeholder
 fixedHeight                          | Boolean   | false            | Since some months require less than 6 lines to show, by setting this prop, you can force 6 lines for all months.
 renderStaticRangeLabel(`DefinedRange`)| Function |                  | Callback function to be triggered for the static range configurations that have `hasCustomRendering: true` on them. Instead of rendering `staticRange.label`, return value of this callback will be rendered.
-staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
-inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/Adphorus/react-date-range/blob/master/src/defaultRanges.js)             | -
+staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
+inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
 
  *shape of range:
  ```js
