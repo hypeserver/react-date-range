@@ -1,7 +1,5 @@
 import classnames from 'classnames';
 import {
-  addMonths,
-  areIntervalsOverlapping,
   startOfMonth,
   endOfMonth,
   startOfWeek,
