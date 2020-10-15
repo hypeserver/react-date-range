@@ -157,16 +157,16 @@ ariaLabels | **Object | {} | inserts aria-label to inner elements
  ```js
   {
     // The key of dateInput should be same as key in range.
-    dateInput: objectOf(
-      shape({ 
+    dateInput: PropTypes.objectOf(
+      PropTypes.shape({ 
         startDate: PropTypes.string,
         endDate: PropTypes.string 
       })
     ),
-    monthPicker: string,
-    yearPicker: string,
-    prevButton: string,
-    nextButton: string,
+    monthPicker: PropTypes.string,
+    yearPicker: PropTypes.string,
+    prevButton: PropTypes.string,
+    nextButton: PropTypes.string,
   }
 ```
 #### Infinite Scrolled Mode
