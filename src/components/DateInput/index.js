@@ -64,7 +64,7 @@ class DateInput extends PureComponent {
   };
 
   render() {
-    const { className, readOnly, placeholder, disabled, onFocus } = this.props;
+    const { className, readOnly, placeholder, ariaLabel, disabled, onFocus } = this.props;
     const { value, invalid } = this.state;
 
     return (
@@ -74,6 +74,7 @@ class DateInput extends PureComponent {
           disabled={disabled}
           value={value}
           placeholder={placeholder}
+          aria-label={ariaLabel}
           onKeyDown={this.onKeyDown}
           onChange={this.onChange}
           onBlur={this.onBlur}
@@ -92,6 +93,7 @@ DateInput.propTypes = {
   readOnly: PropTypes.bool,
   dateOptions: PropTypes.object,
   dateDisplayFormat: PropTypes.string,
+  ariaLabel: PropTypes.string,
   className: PropTypes.string,
   onFocus: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

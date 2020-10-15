@@ -138,6 +138,7 @@ fixedHeight                          | Boolean   | false            | Since some
 renderStaticRangeLabel(`DefinedRange`)| Function |                  | Callback function to be triggered for the static range configurations that have `hasCustomRendering: true` on them. Instead of rendering `staticRange.label`, return value of this callback will be rendered.
 staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
 inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
+ariaLabels | **Object | {} | inserts aria-label to inner elements 
 
  *shape of range:
  ```js
@@ -152,6 +153,22 @@ inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default i
   }
 ```
 
+ **shape of ariaLabels:
+ ```js
+  {
+    // The key of dateInput should be same as key in range.
+    dateInput: objectOf(
+      shape({ 
+        startDate: PropTypes.string,
+        endDate: PropTypes.string 
+      })
+    ),
+    monthPicker: string,
+    yearPicker: string,
+    prevButton: string,
+    nextButton: string,
+  }
+```
 #### Infinite Scrolled Mode
 
 To enable infinite scroll set `scroll={{enabled: true}}` basically. Infinite scroll feature is affected by `direction`(rendering direction for months) and `months`(for rendered months count) props directly.
