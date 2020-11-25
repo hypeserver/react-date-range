@@ -77,19 +77,39 @@ class DayCell extends Component {
       [styles.dayStartOfWeek]: isStartOfWeek,
       [styles.dayEndOfWeek]: isEndOfWeek,
       [styles.dayStartOfMonth]: isStartOfMonth,
-      [styles.dayEndOfMonth]: isEndOfMonth,
-      [styles.dayHovered]: this.state.hover,
-      [styles.dayActive]: this.state.active
+      [styles.dayEndOfMonth]: isEndOfMonth
+      // [styles.dayHovered]: this.state.hover,
+      // [styles.dayActive]: this.state.active
     });
   };
   renderPreviewPlaceholder = () => {
-    const { preview, day, styles } = this.props;
+    const { preview, day, styles, ranges } = this.props;
+    const [range] = ranges;
+
     if (!preview) return null;
+    // const [range] = ranges;
+
+    let startDateranges = range.startDate;
+    let endDateranges = range.endDate;
+    if (startDateranges && endDateranges && isBefore(endDateranges, startDateranges)) {
+      [startDateranges, endDateranges] = [endDateranges, startDateranges];
+    }
+    startDateranges = startDateranges ? endOfDay(startDateranges) : null;
+    endDateranges = endDateranges ? startOfDay(endDateranges) : null;
+    const isInRangeranges =
+      (!startDateranges || isAfter(day, startDateranges)) && (!endDateranges || isBefore(day, endDateranges));
+
+    if (isInRangeranges) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
     const isInRange = (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
     const isStartEdge = !isInRange && isSameDay(day, startDate);
     const isEndEdge = !isInRange && isSameDay(day, endDate);
+    const isInRangeStartEnd = startDateranges === day || endDateranges === day;
+
+    const isStartEdgerange = !isInRange && isSameDay(day, startDateranges);
+    const isEndEdgerange = !isInRange && isSameDay(day, endDateranges);
+
     return (
       <span
         className={classnames({
@@ -97,7 +117,13 @@ class DayCell extends Component {
           [styles.dayInPreview]: isInRange,
           [styles.dayEndPreview]: isEndEdge
         })}
-        style={{ color: preview.color }}
+        style={{
+          backgroundColor: range.color || this.props.color
+          // opacity: isStartEdge || isEndEdge ? 1 : 0.2,
+          // zIndex: 0,
+          // border: isEndEdgerange || isStartEdgerange ? 'none' : ''
+          // borderRadius: isEndEdgerange || isEndEdge || isStartEdgerange || isStartEdge ? '100px' : ''
+        }}
       />
     );
   };
@@ -105,7 +131,7 @@ class DayCell extends Component {
     const { styles, ranges, day } = this.props;
     if (this.props.displayMode === 'date') {
       let isSelected = isSameDay(this.props.day, this.props.date);
-      return isSelected ? <span className={styles.selected} style={{ color: this.props.color }} /> : null;
+      return isSelected ? <span className={styles.selected} /> : null;
     }
 
     const inRanges = ranges.reduce((result, range) => {
@@ -142,11 +168,29 @@ class DayCell extends Component {
           [styles.endEdge]: range.isEndEdge,
           [styles.inRange]: range.isInRange
         })}
-        style={{ color: range.color || this.props.color }}
+        style={{
+          color: range.color || this.props.color
+          // opacity: range.isStartEdge || range.isEndEdge ? 1 : 0.2,
+          // border: 'none'
+        }}
       />
     ));
   };
   render() {
+    const { preview, day, styles } = this.props;
+    let styleSpan = {};
+    if (preview) {
+      const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
+      const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
+      const isInRange = (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
+      const isStartEdge = !isInRange && isSameDay(day, startDate);
+      const isEndEdge = !isInRange && isSameDay(day, endDate);
+
+      if (isStartEdge || isEndEdge) {
+        // styleSpan = { backgroundColor: this.props.color };
+      }
+    }
+
     return (
       <button
         type="button"
@@ -164,7 +208,7 @@ class DayCell extends Component {
         style={{ color: this.props.color }}
       >
         {this.renderSelectionPlaceholders()}
-        {this.renderPreviewPlaceholder()}
+        {/* {this.renderPreviewPlaceholder()} */}
         <span className={this.props.styles.dayNumber}>
           <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
         </span>

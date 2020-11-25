@@ -6,28 +6,30 @@
   user-select: none;
 }
 
-.rdrDateDisplay{
+.rdrDateDisplay {
   display: flex;
   justify-content: space-between;
 }
 
-.rdrDateDisplayItem{
+.rdrDateDisplayItem {
   flex: 1 1;
   width: 0;
-  text-align: center;
+  text-align: left;
+  padding: 0 20px;
   color: inherit;
-  & + &{
+  & + & {
     margin-left: 0.833em;
   }
-  input{
+  input {
     text-align: inherit;
-    &:disabled{
+    &:disabled {
       cursor: default;
     }
   }
 }
 
-.rdrDateDisplayItemActive{}
+.rdrDateDisplayItemActive {
+}
 
 .rdrMonthAndYearWrapper {
   box-sizing: inherit;
@@ -35,16 +37,18 @@
   justify-content: space-between;
 }
 
-.rdrMonthAndYearPickers{
+.rdrMonthAndYearPickers {
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.rdrMonthPicker{}
+.rdrMonthPicker {
+}
 
-.rdrYearPicker{}
+.rdrYearPicker {
+}
 
 .rdrNextPrevButton {
   box-sizing: inherit;
@@ -52,28 +56,30 @@
   outline: none;
 }
 
-.rdrPprevButton {}
+.rdrPprevButton {
+}
 
-.rdrNextButton {}
+.rdrNextButton {
+}
 
-.rdrMonths{
+.rdrMonths {
   display: flex;
 }
 
-.rdrMonthsVertical{
+.rdrMonthsVertical {
   flex-direction: column;
 }
 
-.rdrMonthsHorizontal > div > div > div{
+.rdrMonthsHorizontal > div > div > div {
   display: flex;
   flex-direction: row;
 }
 
-.rdrMonth{
+.rdrMonth {
   width: 27.667em;
 }
 
-.rdrWeekDays{
+.rdrWeekDays {
   display: flex;
 }
 
@@ -83,15 +89,17 @@
   text-align: center;
 }
 
-.rdrDays{
+.rdrDays {
   display: flex;
   flex-wrap: wrap;
 }
 
-.rdrDateDisplayWrapper{}
+.rdrDateDisplayWrapper {
+}
 
-.rdrMonthName{}
+.rdrMonthName {
+}
 
-.rdrInfiniteMonths{
+.rdrInfiniteMonths {
   overflow: auto;
 }
