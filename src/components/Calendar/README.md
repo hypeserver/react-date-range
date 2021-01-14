@@ -2,7 +2,7 @@
 
 ```jsx inside Markdown
 import * as locales from 'react-date-range/dist/locale';
-import {useState} from 'react'
+import { useState } from 'react';
 
 const nameMapper = {
   ar: 'Arabic',
@@ -50,33 +50,27 @@ const nameMapper = {
   uk: 'Ukrainian',
   vi: 'Vietnamese',
   zhCN: 'Chinese Simplified',
-  zhTW: 'Chinese Traditional'
+  zhTW: 'Chinese Traditional',
 };
 
 const localeOptions = Object.keys(locales)
   .map(key => ({
     value: key,
-    label: `${key} - ${nameMapper[key] || ''}`
+    label: `${key} - ${nameMapper[key] || ''}`,
   }))
   .filter(item => nameMapper[item.value]);
 
 const [locale, setLocale] = React.useState('ja');
 const [date, setDate] = useState(null);
 
-
 <div style={{ display: 'flex', flexFlow: 'column nowrap' }}>
-  <select
-    style={{ margin: '20px auto' }}
-    onChange={e => setLocale(e.target.value)}
-    value={locale}
-  >
+  <select style={{ margin: '20px auto' }} onChange={e => setLocale(e.target.value)} value={locale}>
     {localeOptions.map((option, i) => (
       <option value={option.value} key={i}>
         {option.label}
       </option>
     ))}
   </select>
-  <Calendar onChange={item => setDate(item)}
- locale={locales[locale]} date={date} />
+  <Calendar onChange={item => setDate(item)} locale={locales[locale]} date={date} />
 </div>;
 ```

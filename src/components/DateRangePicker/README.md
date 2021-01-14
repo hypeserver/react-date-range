@@ -10,8 +10,8 @@ const [state, setState] = useState([
   {
     startDate: new Date(),
     endDate: addDays(new Date(), 7),
-    key: 'selection'
-  }
+    key: 'selection',
+  },
 ]);
 
 <DateRangePicker
@@ -34,13 +34,13 @@ const [state, setState] = useState({
   selection: {
     startDate: new Date(),
     endDate: null,
-    key: 'selection'
+    key: 'selection',
   },
   compare: {
     startDate: new Date(),
     endDate: addDays(new Date(), 3),
-    key: 'compare'
-  }
+    key: 'compare',
+  },
 });
 
 <DateRangePicker
@@ -64,19 +64,19 @@ const [state, setState] = useState({
   selection1: {
     startDate: addDays(new Date(), 1),
     endDate: null,
-    key: 'selection1'
+    key: 'selection1',
   },
   selection2: {
     startDate: addDays(new Date(), 4),
     endDate: addDays(new Date(), 8),
-    key: 'selection2'
+    key: 'selection2',
   },
   selection3: {
     startDate: addDays(new Date(), 8),
     endDate: addDays(new Date(), 10),
     key: 'selection3',
-    autoFocus: false
-  }
+    autoFocus: false,
+  },
 });
 
 <DateRangePicker

@@ -19,4 +19,3 @@ Make sure your issue or feature doesn't have any related issue at [react-date-ra
 . Run `yarn run build` compile the library and demo source.
 
 . Push your changes and create a PR and apply code review decisions.
-
