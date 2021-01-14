@@ -8,7 +8,7 @@
     "build": "yarn build:css & yarn build:js & styleguidist build",
     "build:css": "postcss 'src/styles.scss' -d dist --ext css & postcss 'src/theme/*.scss' -d 'dist/theme' --ext css",
     "build:js": "babel ./src --out-dir ./dist --ignore test.js",
-    "lint": "eslint 'src/**/*.js'",
+    "lint": "eslint .",
     "test": "jest",
     "preversion": "yarn clear & yarn build"
   },
@@ -36,6 +36,13 @@
   "browserslist": [
     "defaults"
   ],
+  "prettier": {
+    "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
   "dependencies": {
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
