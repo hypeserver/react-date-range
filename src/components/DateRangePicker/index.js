@@ -16,19 +16,24 @@ class DateRangePicker extends Component {
   }
   render() {
     const { focusedRange } = this.state;
+    const { showDefinedRange } = this.props;
     return (
       <div className={classnames(this.styles.dateRangePickerWrapper, this.props.className)}>
-        <DefinedRange
-          focusedRange={focusedRange}
-          onPreviewChange={value =>
-            this.dateRange.updatePreview(
-              value ? this.dateRange.calcNewSelection(value, typeof value === 'string') : null
-            )
-          }
-          {...this.props}
-          range={this.props.ranges[focusedRange[0]]}
-          className={undefined}
-        />
+        {
+          showDefinedRange && (
+            <DefinedRange
+              focusedRange={focusedRange}
+              onPreviewChange={value =>
+                this.dateRange.updatePreview(
+                  value ? this.dateRange.calcNewSelection(value, typeof value === 'string') : null
+                )
+              }
+              {...this.props}
+              range={this.props.ranges[focusedRange[0]]}
+              className={undefined}
+            />
+          )
+        }
         <DateRange
           onRangeFocusChange={focusedRange => this.setState({ focusedRange })}
           focusedRange={focusedRange}
@@ -41,11 +46,14 @@ class DateRangePicker extends Component {
   }
 }
 
-DateRangePicker.defaultProps = {};
+DateRangePicker.defaultProps = {
+  showDefinedRange: true
+};
 
 DateRangePicker.propTypes = {
   ...DateRange.propTypes,
   ...DefinedRange.propTypes,
+  showDefinedRange: PropTypes.bool,
   className: PropTypes.string,
 };
 

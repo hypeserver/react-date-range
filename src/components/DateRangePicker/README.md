@@ -19,6 +19,7 @@ const [state, setState] = useState([
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   allowDisabledSelection={false}
+  showDefinedRange={true}
   months={2}
   ranges={state}
   direction="horizontal"
