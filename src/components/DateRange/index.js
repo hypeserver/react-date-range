@@ -18,7 +18,7 @@ class DateRange extends Component {
   }
   calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates } = this.props;
+    const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates, allowDisabledSelection } = this.props;
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
     if (!selectedRange || !onChange) return {};
@@ -54,7 +54,7 @@ class DateRange extends Component {
       })
     );
 
-    if (inValidDatesWithinRange.length > 0) {
+    if (inValidDatesWithinRange.length > 0 && !allowDisabledSelection) {
       if (isStartDateSelected) {
         startDate = addDays(max(inValidDatesWithinRange), 1);
       } else {
@@ -67,8 +67,8 @@ class DateRange extends Component {
       nextFocusRange = [nextFocusRangeIndex, 0];
     }
     return {
-      wasValid: !(inValidDatesWithinRange.length > 0),
-      range: { startDate, endDate },
+      wasValid: !(inValidDatesWithinRange.length > 0 && !allowDisabledSelection),
+      range: !allowDisabledSelection ? { startDate, endDate } : { startDate, endDate, inValidDatesWithinRange },
       nextFocusRange: nextFocusRange,
     };
   };
@@ -131,6 +131,7 @@ DateRange.defaultProps = {
   classNames: {},
   ranges: [],
   moveRangeOnFirstSelection: false,
+  allowDisabledSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: [],
 };
@@ -142,6 +143,7 @@ DateRange.propTypes = {
   className: PropTypes.string,
   ranges: PropTypes.arrayOf(rangeShape),
   moveRangeOnFirstSelection: PropTypes.bool,
+  allowDisabledSelection: PropTypes.bool
 };
 
 export default DateRange;
