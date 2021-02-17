@@ -83,7 +83,7 @@ class Calendar extends PureComponent {
     const visibleMonths = this.list.getVisibleRange();
     if (preventUnnecessary && visibleMonths.includes(targetMonthIndex)) return;
     this.isFirstRender = true;
-    this.list.scrollTo(targetMonthIndex);
+    if (props.focusToDate) this.list.scrollTo(targetMonthIndex);
     this.setState({ focusedDate: date });
   };
   updateShownDate = (props = this.props) => {
@@ -528,6 +528,7 @@ Calendar.defaultProps = {
   editableDateInputs: false,
   dragSelectionEnabled: true,
   fixedHeight: false,
+  focusToDate: true,
 };
 
 Calendar.propTypes = {
@@ -581,6 +582,7 @@ Calendar.propTypes = {
   editableDateInputs: PropTypes.bool,
   dragSelectionEnabled: PropTypes.bool,
   fixedHeight: PropTypes.bool,
+  focusToDate: PropTypes.bool,
 };
 
 export default Calendar;

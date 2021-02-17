@@ -99,8 +99,7 @@ function (_PureComponent) {
 
       if (preventUnnecessary && visibleMonths.includes(targetMonthIndex)) return;
       _this.isFirstRender = true;
-
-      _this.list.scrollTo(targetMonthIndex);
+      if (props.focusToDate) _this.list.scrollTo(targetMonthIndex);
 
       _this.setState({
         focusedDate: date
@@ -678,7 +677,8 @@ Calendar.defaultProps = {
   endDatePlaceholder: 'Continuous',
   editableDateInputs: false,
   dragSelectionEnabled: true,
-  fixedHeight: false
+  fixedHeight: false,
+  focusToDate: true
 };
 Calendar.propTypes = {
   showMonthArrow: _propTypes["default"].bool,
@@ -730,7 +730,8 @@ Calendar.propTypes = {
   rangeColors: _propTypes["default"].arrayOf(_propTypes["default"].string),
   editableDateInputs: _propTypes["default"].bool,
   dragSelectionEnabled: _propTypes["default"].bool,
-  fixedHeight: _propTypes["default"].bool
+  fixedHeight: _propTypes["default"].bool,
+  focusToDate: _propTypes["default"].bool
 };
 var _default = Calendar;
 exports["default"] = _default;
