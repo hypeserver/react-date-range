@@ -540,7 +540,8 @@ function (_PureComponent) {
           color = _this$props7.color,
           navigatorRenderer = _this$props7.navigatorRenderer,
           className = _this$props7.className,
-          preview = _this$props7.preview;
+          preview = _this$props7.preview,
+          showWeekDaysInVertical = _this$props7.showWeekDaysInVertical;
       var _this$state = this.state,
           scrollArea = _this$state.scrollArea,
           focusedDate = _this$state.focusedDate;
@@ -569,7 +570,7 @@ function (_PureComponent) {
             }
           });
         }
-      }, showDateDisplay && this.renderDateDisplay(), monthAndYearRenderer(focusedDate, this.changeShownDate, this.props), scroll.enabled ? _react["default"].createElement("div", null, isVertical && this.renderWeekdays(this.dateOptions), _react["default"].createElement("div", {
+      }, showDateDisplay && this.renderDateDisplay(), monthAndYearRenderer(focusedDate, this.changeShownDate, this.props), scroll.enabled ? _react["default"].createElement("div", null, isVertical && !showWeekDaysInVertical && this.renderWeekdays(this.dateOptions), _react["default"].createElement("div", {
         className: (0, _classnames3["default"])(this.styles.infiniteMonths, isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal),
         onMouseLeave: function onMouseLeave() {
           return onPreviewChange && onPreviewChange();
@@ -614,7 +615,7 @@ function (_PureComponent) {
               width: _this5.estimateMonthSize(index)
             },
             showMonthName: true,
-            showWeekDays: !isVertical
+            showWeekDays: !isVertical || showWeekDaysInVertical
           }));
         }
       }))) : _react["default"].createElement("div", {
@@ -678,7 +679,8 @@ Calendar.defaultProps = {
   editableDateInputs: false,
   dragSelectionEnabled: true,
   fixedHeight: false,
-  focusToDate: true
+  focusToDate: true,
+  showWeekDaysInVertical: false
 };
 Calendar.propTypes = {
   showMonthArrow: _propTypes["default"].bool,
@@ -731,7 +733,8 @@ Calendar.propTypes = {
   editableDateInputs: _propTypes["default"].bool,
   dragSelectionEnabled: _propTypes["default"].bool,
   fixedHeight: _propTypes["default"].bool,
-  focusToDate: _propTypes["default"].bool
+  focusToDate: _propTypes["default"].bool,
+  showWeekDaysInVertical: _propTypes["default"].bool
 };
 var _default = Calendar;
 exports["default"] = _default;

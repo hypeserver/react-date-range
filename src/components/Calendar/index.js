@@ -386,6 +386,7 @@ class Calendar extends PureComponent {
       navigatorRenderer,
       className,
       preview,
+      showWeekDaysInVertical,
     } = this.props;
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
@@ -395,6 +396,7 @@ class Calendar extends PureComponent {
       ...range,
       color: range.color || rangeColors[i] || color,
     }));
+
     return (
       <div
         className={classnames(this.styles.calendarWrapper, className)}
@@ -406,7 +408,7 @@ class Calendar extends PureComponent {
         {monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)}
         {scroll.enabled ? (
           <div>
-            {isVertical && this.renderWeekdays(this.dateOptions)}
+            {isVertical && !showWeekDaysInVertical && this.renderWeekdays(this.dateOptions)}
             <div
               className={classnames(
                 this.styles.infiniteMonths,
@@ -454,7 +456,7 @@ class Calendar extends PureComponent {
                           : { height: scrollArea.monthHeight, width: this.estimateMonthSize(index) }
                       }
                       showMonthName
-                      showWeekDays={!isVertical}
+                      showWeekDays={!isVertical || showWeekDaysInVertical}
                     />
                   );
                 }}
@@ -529,6 +531,7 @@ Calendar.defaultProps = {
   dragSelectionEnabled: true,
   fixedHeight: false,
   focusToDate: true,
+  showWeekDaysInVertical: false,
 };
 
 Calendar.propTypes = {
@@ -583,6 +586,7 @@ Calendar.propTypes = {
   dragSelectionEnabled: PropTypes.bool,
   fixedHeight: PropTypes.bool,
   focusToDate: PropTypes.bool,
+  showWeekDaysInVertical: PropTypes.bool,
 };
 
 export default Calendar;
