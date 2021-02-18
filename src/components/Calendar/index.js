@@ -394,7 +394,7 @@ class Calendar extends PureComponent {
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
     const monthAndYearRenderer = navigatorRenderer || this.renderMonthAndYear;
-    console.log(this.props);
+
     const ranges = this.props.ranges.map((range, i) => ({
       ...range,
       color: range.color || rangeColors[i] || color,
