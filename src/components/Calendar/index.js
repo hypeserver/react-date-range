@@ -74,17 +74,19 @@ class Calendar extends PureComponent {
       calendarHeight: longMonthHeight || 300,
     };
   }
-  focusToDate = (date, props = this.props, preventUnnecessary = true) => {
-    if (!props.scroll.enabled) {
+  focusToDate = (date, props = this.props, preventUnnecessary = true, changeMonth = false) => {
+    if (changeMonth) {
+      if (!props.scroll.enabled) {
+        this.setState({ focusedDate: date });
+        return;
+      }
+      const targetMonthIndex = differenceInCalendarMonths(date, props.minDate, this.dateOptions);
+      const visibleMonths = this.list.getVisibleRange();
+      if (preventUnnecessary && visibleMonths.includes(targetMonthIndex)) return;
+      this.isFirstRender = true;
+      this.list.scrollTo(targetMonthIndex);
       this.setState({ focusedDate: date });
-      return;
     }
-    const targetMonthIndex = differenceInCalendarMonths(date, props.minDate, this.dateOptions);
-    const visibleMonths = this.list.getVisibleRange();
-    if (preventUnnecessary && visibleMonths.includes(targetMonthIndex)) return;
-    this.isFirstRender = true;
-    if (props.focusToDate) this.list.scrollTo(targetMonthIndex);
-    this.setState({ focusedDate: date });
   };
   updateShownDate = (props = this.props) => {
     const newProps = props.scroll.enabled
@@ -153,7 +155,8 @@ class Calendar extends PureComponent {
     };
 
     const newDate = min([max([modeMapper[mode](), minDate]), maxDate]);
-    this.focusToDate(newDate, this.props, false);
+
+    this.focusToDate(newDate, this.props, false, true);
     onShownDateChange && onShownDateChange(newDate);
   };
   handleRangeFocusChange = (rangesIndex, rangeItemIndex) => {
@@ -391,7 +394,7 @@ class Calendar extends PureComponent {
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
     const monthAndYearRenderer = navigatorRenderer || this.renderMonthAndYear;
-
+    console.log(this.props);
     const ranges = this.props.ranges.map((range, i) => ({
       ...range,
       color: range.color || rangeColors[i] || color,
@@ -530,7 +533,6 @@ Calendar.defaultProps = {
   editableDateInputs: false,
   dragSelectionEnabled: true,
   fixedHeight: false,
-  focusToDate: true,
   showWeekDaysInVertical: false,
 };
 
@@ -585,7 +587,6 @@ Calendar.propTypes = {
   editableDateInputs: PropTypes.bool,
   dragSelectionEnabled: PropTypes.bool,
   fixedHeight: PropTypes.bool,
-  focusToDate: PropTypes.bool,
   showWeekDaysInVertical: PropTypes.bool,
 };
 
