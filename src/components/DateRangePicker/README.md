@@ -8,8 +8,8 @@ import { useState } from 'react';
 
 const [state, setState] = useState([
   {
-    startDate: new Date(),
-    endDate: addDays(new Date(), 7),
+    startDate: null,
+    endDate: null,
     key: 'selection'
   }
 ]);
