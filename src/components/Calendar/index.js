@@ -393,6 +393,7 @@ class Calendar extends PureComponent {
 
     const ranges = this.props.ranges.map((range, i) => ({
       ...range,
+      index: i,
       color: range.color || rangeColors[i] || color,
     }));
     return (

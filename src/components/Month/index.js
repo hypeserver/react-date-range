@@ -113,7 +113,9 @@ class Month extends PureComponent {
   }
 }
 
-Month.defaultProps = {};
+Month.defaultProps = {
+  DayComponent: null,
+};
 
 Month.propTypes = {
   style: PropTypes.object,
@@ -143,6 +145,7 @@ Month.propTypes = {
   showWeekDays: PropTypes.bool,
   showMonthName: PropTypes.bool,
   fixedHeight: PropTypes.bool,
+  DayComponent: PropTypes.func,
 };
 
 export default Month;
