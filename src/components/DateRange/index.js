@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from '../Calendar';
 import { rangeShape } from '../DayCell';
-import { findNextRangeIndex, generateStyles } from '../../utils';
-import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
+import { findNextRangeIndex, generateStyles, getTime, setTime } from '../../utils';
+import {
+  isBefore,
+  differenceInCalendarDays,
+  addDays,
+  min,
+  isWithinInterval,
+  max,
+  isSameDay,
+} from 'date-fns';
 import classnames from 'classnames';
 import coreStyles from '../../styles';
 
@@ -25,6 +33,10 @@ class DateRange extends Component {
 
     let { startDate, endDate } = selectedRange;
     if (!endDate) endDate = new Date(startDate);
+
+    let startTime = getTime(startDate);
+    let endTime = getTime(endDate);
+
     let nextFocusRange;
     if (!isSingleValue) {
       startDate = value.startDate;
@@ -32,19 +44,22 @@ class DateRange extends Component {
     } else if (focusedRange[1] === 0) {
       // startDate selection
       const dayOffset = differenceInCalendarDays(endDate, startDate);
+      if (isSameDay(startDate, value)) startTime = getTime(value);
       startDate = value;
       endDate = moveRangeOnFirstSelection ? addDays(value, dayOffset) : value;
-      if (maxDate) endDate = min([endDate, maxDate]);
+      if (maxDate) endDate = min([setTime(endDate, endTime), maxDate]);
       nextFocusRange = [focusedRange[0], 1];
     } else {
+      if (isSameDay(endDate, value)) endTime = getTime(value);
       endDate = value;
     }
 
     // reverse dates if startDate before endDate
     let isStartDateSelected = focusedRange[1] === 0;
-    if (isBefore(endDate, startDate)) {
+    if (isBefore(setTime(endDate, endTime), setTime(startDate, startTime))) {
       isStartDateSelected = !isStartDateSelected;
       [startDate, endDate] = [endDate, startDate];
+      [startTime, endTime] = [endTime, startTime];
     }
 
     const inValidDatesWithinRange = disabledDates.filter(disabledDate =>
@@ -66,6 +81,10 @@ class DateRange extends Component {
       const nextFocusRangeIndex = findNextRangeIndex(this.props.ranges, focusedRange[0]);
       nextFocusRange = [nextFocusRangeIndex, 0];
     }
+
+    startDate = setTime(startDate, startTime);
+    endDate = setTime(endDate, endTime);
+
     return {
       wasValid: !(inValidDatesWithinRange.length > 0),
       range: { startDate, endDate },
