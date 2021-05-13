@@ -25,7 +25,9 @@ class TimePicker extends PureComponent {
   }
 
   componentDidMount() {
-    this.closest_interval.current.scrollIntoView();
+    if (this.closest_interval.current) {
+      this.closest_interval.current.scrollIntoView();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -81,7 +83,8 @@ class TimePicker extends PureComponent {
             className={minute === closest_interval ? 'active' : ''}
             key={i}
             onClick={() => this.update(minute)}
-            type="button">
+            type="button"
+            value={format(minute, 'T')}>
             {format(minute, 'h:mma')}
           </button>
         ))}
@@ -98,7 +101,6 @@ TimePicker.propTypes = {
   dateOptions: PropTypes.object,
   dateDisplayFormat: PropTypes.string,
   className: PropTypes.string,
-  onFocus: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

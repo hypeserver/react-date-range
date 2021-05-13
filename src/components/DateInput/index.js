@@ -17,6 +17,14 @@ class DateInput extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    if (this.props.showTimePicker && !dateFormatContainsTime(this.props.dateDisplayFormat)) {
+      console.warn(
+        'The `dateDisplayFormat` prop should contain time formatting when the `showTimePicker` prop is set to true. See the date-fns format table: https://date-fns.org/docs/format'
+      );
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { value, showTimePicker, dateDisplayFormat } = prevProps;
 
