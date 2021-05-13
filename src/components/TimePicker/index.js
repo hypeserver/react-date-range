@@ -105,7 +105,7 @@ TimePicker.propTypes = {
 TimePicker.defaultProps = {
   readOnly: true,
   disabled: false,
-  dateDisplayFormat: 'MMM D, YYYY',
+  dateDisplayFormat: 'MMM d, yyyy h:mma',
 };
 
 export default TimePicker;
