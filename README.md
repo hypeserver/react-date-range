@@ -127,6 +127,7 @@ showPreview(DateRange)               | bool      | true             | visibility
 editableDateInputs(Calendar)         | bool      | false            | whether dates can be edited in the Calendar's input fields
 dragSelectionEnabled(Calendar)       | bool      | true             | whether dates can be selected via drag n drop
 onPreviewChange(DateRange)           | Object    |                  | Callback function for preview changes
+showTimePicker                       | Boolean   | false            | Show a time picker when focusing on DateInputs. When set to `true`, `dateDisplayFormat` must include time formatting (e.g. `MMM d, yyyy h:mma`).
 dateDisplayFormat                    | String    | `MMM d, yyyy`    | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
 dayDisplayFormat                     | String    | `d`              | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
 weekdayDisplayFormat                 | String    | `E`              | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
