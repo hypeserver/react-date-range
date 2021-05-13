@@ -45,11 +45,13 @@ class TimePicker extends PureComponent {
     return '';
   }
 
-  update(value) {
-    const { onChange } = this.props;
+  handleClick = e => {
+    e.preventDefault();
 
-    onChange(value);
-  }
+    const { update } = this.props;
+
+    update(e.target.value, true);
+  };
 
   render() {
     const { value } = this.state;
@@ -82,9 +84,9 @@ class TimePicker extends PureComponent {
             ref={minute === closest_interval ? this.closest_interval : null}
             className={minute === closest_interval ? 'active' : ''}
             key={i}
-            onClick={() => this.update(minute)}
+            onClick={this.handleClick}
             type="button"
-            value={format(minute, 'T')}>
+            value={format(minute, dateDisplayFormat)}>
             {format(minute, 'h:mma')}
           </button>
         ))}
@@ -101,7 +103,7 @@ TimePicker.propTypes = {
   dateOptions: PropTypes.object,
   dateDisplayFormat: PropTypes.string,
   className: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 TimePicker.defaultProps = {

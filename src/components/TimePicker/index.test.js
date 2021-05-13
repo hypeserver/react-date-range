@@ -11,23 +11,23 @@ describe('TimePicker', () => {
   test('Should render buttons for every 15 minutes', () => {
     window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
-    const onChange = jest.fn();
-    const timePicker = mount(<TimePicker onChange={onChange} value={new Date()} />);
+    const update = jest.fn();
+    const timePicker = mount(<TimePicker update={update} value={new Date()} />);
 
     expect(timePicker.find('button')).toHaveLength(96);
   });
 
-  test('Should call onChange on button click', () => {
-    const onChange = jest.fn();
-    const timePicker = mount(<TimePicker onChange={onChange} value={new Date()} />);
+  test('Should call update on button click', () => {
+    const update = jest.fn();
+    const timePicker = mount(<TimePicker update={update} value={new Date()} />);
 
     timePicker.find('button').forEach(button => button.simulate('click'));
 
-    expect(onChange).toHaveBeenCalledTimes(96);
+    expect(update).toHaveBeenCalledTimes(96);
   });
 
   test('Should find closest interval', () => {
-    const onChange = jest.fn();
+    const update = jest.fn();
 
     const start = startOfDay(new Date());
     const end = endOfDay(start);
@@ -39,11 +39,11 @@ describe('TimePicker', () => {
       },
       { step: 4 } // Full coverage would be every 1 minute, but 4 is much faster and covers most cases
     ).forEach(interval => {
-      const timePicker = mount(<TimePicker onChange={onChange} value={interval} />);
+      const timePicker = mount(<TimePicker update={update} value={interval} />);
 
       const closest_interval = parse(
         timePicker.instance().closest_interval.current.value,
-        'T',
+        TimePicker.defaultProps.dateDisplayFormat,
         new Date()
       );
 

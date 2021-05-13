@@ -51,10 +51,10 @@ class DateInput extends PureComponent {
     return '';
   }
 
-  update(value) {
+  update = (value, force = false) => {
     const { invalid, changed } = this.state;
 
-    if (invalid || !changed || !value) {
+    if (invalid || (!changed && !force) || !value) {
       return;
     }
 
@@ -66,7 +66,7 @@ class DateInput extends PureComponent {
     } else {
       this.setState({ invalid: true });
     }
-  }
+  };
 
   onKeyDown = e => {
     const { value } = this.state;
@@ -83,7 +83,7 @@ class DateInput extends PureComponent {
   onBlur = () => {
     const { value } = this.state;
     this.update(value);
-    setTimeout(() => this.setState({ focus: false }), 100);
+    setTimeout(() => this.setState({ focus: false }), 250); // Delay 250ms to allow the click to register on the TimePicker before hiding it
   };
 
   onFocus = e => {
@@ -108,7 +108,9 @@ class DateInput extends PureComponent {
           onFocus={this.onFocus}
         />
         {invalid && <span className="rdrWarning">&#9888;</span>}
-        {this.props.showTimePicker && this.state.focus && <TimePicker {...this.props} />}
+        {this.props.showTimePicker && this.state.focus && (
+          <TimePicker {...this.props} update={this.update} />
+        )}
       </span>
     );
   }

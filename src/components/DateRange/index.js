@@ -43,10 +43,11 @@ class DateRange extends Component {
       endDate = value.endDate;
     } else if (focusedRange[1] === 0) {
       // startDate selection
+      const sameDay = isSameDay(startDate, value);
       const dayOffset = differenceInCalendarDays(endDate, startDate);
-      if (isSameDay(startDate, value)) startTime = getTime(value);
+      if (sameDay) startTime = getTime(value);
       startDate = value;
-      endDate = moveRangeOnFirstSelection ? addDays(value, dayOffset) : value;
+      endDate = moveRangeOnFirstSelection || sameDay ? addDays(value, dayOffset) : value;
       if (maxDate) endDate = min([setTime(endDate, endTime), maxDate]);
       nextFocusRange = [focusedRange[0], 1];
     } else {
