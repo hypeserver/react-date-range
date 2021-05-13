@@ -1,0 +1,22 @@
+.rdrTimePicker {
+	max-height: 200px;
+    overflow-y: scroll;
+    position: absolute;
+    background: #fff;
+    z-index: 1;
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 20%);
+
+	button {
+		min-width: 150px;
+	    padding: 0 15px;
+	    line-height: 40px;
+
+	    &.active {
+	    	background-color: #f1f3f4;
+	    }
+
+	    &:hover {
+    		background-color: #e8eaeb;
+	    }
+	}
+}

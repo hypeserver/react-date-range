@@ -262,6 +262,7 @@ class Calendar extends PureComponent {
       editableDateInputs,
       startDatePlaceholder,
       endDatePlaceholder,
+      showTimePicker,
     } = this.props;
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
@@ -289,6 +290,7 @@ class Calendar extends PureComponent {
                 dateDisplayFormat={dateDisplayFormat}
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 0)}
+                showTimePicker={showTimePicker}
               />
               <DateInput
                 className={classnames(styles.dateDisplayItem, {
@@ -302,6 +304,7 @@ class Calendar extends PureComponent {
                 dateDisplayFormat={dateDisplayFormat}
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 1)}
+                showTimePicker={showTimePicker}
               />
             </div>
           );
@@ -501,6 +504,7 @@ class Calendar extends PureComponent {
 Calendar.defaultProps = {
   showMonthArrow: true,
   showMonthAndYearPickers: true,
+  showTimePicker: false,
   disabledDates: [],
   disabledDay: () => {},
   classNames: {},
@@ -533,6 +537,7 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   showMonthArrow: PropTypes.bool,
   showMonthAndYearPickers: PropTypes.bool,
+  showTimePicker: PropTypes.bool,
   disabledDates: PropTypes.array,
   disabledDay: PropTypes.func,
   minDate: PropTypes.object,
