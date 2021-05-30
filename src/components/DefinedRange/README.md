@@ -7,15 +7,13 @@ const [state, setState] = useState([
   {
     startDate: new Date(),
     endDate: null,
-    key: 'selection'
-  }
+    key: 'selection',
+  },
 ]);
 
-<DefinedRange
-  onChange={item => setState([item.selection])}
-  ranges={state}
-/>;
+<DefinedRange onChange={item => setState([item.selection])} ranges={state} />;
 ```
+
 #### Example: Custom range labels
 
 ```jsx inside Markdown
@@ -65,8 +63,8 @@ const [state, setState] = useState([
   {
     startDate: new Date(),
     endDate: null,
-    key: 'selection'
-  }
+    key: 'selection',
+  },
 ]);
 
 <DefinedRange
@@ -79,12 +77,12 @@ const [state, setState] = useState([
       hasCustomRendering: true,
       range: () => ({
         startDate: new Date(),
-        endDate: new Date()
+        endDate: new Date(),
       }),
       isSelected() {
         return true;
-      }
-    }
+      },
+    },
   ]}
 />;
 ```

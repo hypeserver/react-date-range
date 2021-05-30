@@ -1,23 +1,27 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## 1.0.0
+
 ### Changed
+
 - BREAKING: `date-fns` is now loaded as a peerDependency. You can use this plugin with your own project's `date-fns` version. However if you want to keep using date-fns versions older than 2.0.0, (minimum version is 2.0.0-alpha.1) you need to pass the following props to your component. ([See the reason here](https://blog.date-fns.org/post/unicode-tokens-in-date-fns-v2-sreatyki91jg/), also see [this table](https://date-fns.org/docs/format))
 
 ```jsx
 <Calendar
-  dateDisplayFormat='MMM D, YYYY'
-  monthDisplayFormat='MMM YYYY'
-  weekdayDisplayFormat='ddd'
-  dayDisplayFormat='D'
+  dateDisplayFormat="MMM D, YYYY"
+  monthDisplayFormat="MMM YYYY"
+  weekdayDisplayFormat="ddd"
+  dayDisplayFormat="D"
 />
 ```
 
 ### Added
+
 - `weekStartsOn` prop: You can set the week start day. (Number, 0 - Sunday, 1 - Monday etc.) If not specified, gets the week start day from your locale.
 
 - `weekdayDisplayFormat`, `dayDisplayFormat` and `monthDisplayFormat` props: For being able to use different versions of date-fns
@@ -30,8 +34,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - `DateInput` and `InputRangeField` are exported as dedicated components.
 
-
 ### Fixed
+
 - Works with React 16, without warnings (Deprecated methods are removed: componentWillReceiveProps )
 - IE11 Bug where the last day of each week is not shown.
 - Now infinite scroll mode works as expected.
@@ -39,34 +43,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 1.0.0 beta
 
 ### Changed
+
 - BREAKING: `Calendar` and `DateRange` are now totally controlled components with stateless date management.
 
 - BREAKING: React-date-range is no longer use moment out of the box. Input and output values are native Date object. Until v2 version you don't depent on momentjs. You can keep continue to use moment if you want like below
 
 OLD
+
 ```js
 // this.state.eventDate: momentjs object
-<Calendar
-  date={this.state.eventDate}
-  onChange={date => this.setState({eventDate: date})}
-/>
+<Calendar date={this.state.eventDate} onChange={date => this.setState({ eventDate: date })} />
 ```
 
 NEW
+
 ```js
 <Calendar
   date={this.state.eventDate} // js object
-  onChange={date => this.setState({ eventDate: date })} // 
+  onChange={date => this.setState({ eventDate: date })} //
 />
 ```
 
 NEW with moment (or any other date libraries)
+
 ```js
 <Calendar
   date={this.state.eventDate.toDate()} // convert moment object to js Date
-  onChange={date => this.setState({ eventDate: moment(date) })} // 
+  onChange={date => this.setState({ eventDate: moment(date) })} //
 />
 ```
+
 - BREAKING: Theming and style approach complately changed. `react-date-range` don't use inline styles any more. At the new version you should import **skeleton styles** and **theme styles**
 
 ```js
@@ -78,21 +84,24 @@ import 'react-date-range/dist/theme/default.css';
 
 - BREAKING: `Calendar` and `DateRange` Components, no longer support string typed `lang` prop.
 
- OLD
- ```js
-  <Calendar lang="tr" />
+OLD
+
+```js
+<Calendar lang="tr" />
 ```
 
- NEW
- ```js
-  import turkish from 'react-date-range/locale/tr';
-  // you can view full list in https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js
-  <Calendar locale={turkish} />
+NEW
+
+```js
+import turkish from 'react-date-range/locale/tr';
+// you can view full list in https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js
+<Calendar locale={turkish} />;
 ```
 
 - BREAKING: `DateRange` handle range data with `ranges:Array` prop instead of `startDate` and `endDate` props.
 
 OLD
+
 ```js
   <DateRange
     startDate={new Date()}
@@ -110,16 +119,19 @@ OLD
 ```
 
 NEW
+
 ```js
-  <DateRange
-    ranges={[{
+<DateRange
+  ranges={[
+    {
       startDate: new Date(),
       endDate: new Date(2048, 06, 06),
       key: 'selection',
-    }]}
-    onChange={changes => {
-      console.log(changes);
-      /* prints
+    },
+  ]}
+  onChange={changes => {
+    console.log(changes);
+    /* prints
       {
         selection: {
           startDate: Date,
@@ -127,16 +139,18 @@ NEW
         }
       }
       */
-    }}
-  />
+  }}
+/>
 ```
+
 - `calendars` prop renamed as `months`. And `Calendar` component is accepting `months` prop just like `DateRange`. Default value changed to `1` from `2`.
+
 ### Removed
 
 - `format` prop removed. No longer accepts string input for `Calendar` or `DateRange`. You should parse dates like below:
-Native js: `new Date(dateString)`
-Date-fns: `fns.parse(dateString)`
-Momentjs: `moment(dateString).toDate()`
+  Native js: `new Date(dateString)`
+  Date-fns: `fns.parse(dateString)`
+  Momentjs: `moment(dateString).toDate()`
 
 - `disableDaysBeforeToday` prop removed. use `minDate={new Date()}` instead.
 - `firstDayOfWeek` prop removed. It is auto detecting from locale prop.
@@ -144,19 +158,23 @@ Momentjs: `moment(dateString).toDate()`
 - `specialDays` prop removed.
 
 ### Added
+
 - `disabledDates` prop: It's a set of disabled dates.
 - `DefinedRanges` component: It's a set of date presets. Receives `inputRanges`, `staticRanges` for setting date ranges.
 - `DateRangePicker` component. It's combined version of `DateRange` with `DefinedRanges` component.
 - Date range selection by drag.
 - Infinite scroll feature. Sample usage:
+
 ```js
   const horizontalScroll={enabled: true, monthHeight: 300, monthWidth: 300 };
   const verticalScroll={enabled: true, monthHeight: 220, longMonthHeight: 240 };
   <DateRangePicker scroll={horizontalScroll} />
   <DateRangePicker scroll={verticalScroll} months={2} />
 ```
+
 - `showPreview` prop added to control visibility of preview. Default value is `true`.
 - `preview` prop added: It displays a preview range and overwrite DateRange's default preview. You can set a controlled preview with below shape of object.
+
 ```js
 {
   startDate: [Date Object] || null,
@@ -164,6 +182,7 @@ Momentjs: `moment(dateString).toDate()`
   color: '#fed14c',
 }
 ```
+
 - `onPreviewChange(date)` prop added: Callback function for preview changes. You can set controlled custom previews with `preview` prop.
 - `focusedRange` prop added: It defines which range and step are focused. Common initial value is `[0, 0]`; first value is index of ranges, second value is which step on date range(startDate or endDate).
 - `initialFocusedRange` prop added: Initial value for focused range. See `focusedRange` for usage.
