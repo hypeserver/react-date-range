@@ -1,8 +1,8 @@
 name: "Build"
-on:
-    push:
-        tags:
-            - *
+on: [push]
+    # push:
+    #     tags:
+    #         - *
 jobs:
   build:
     name: Test
