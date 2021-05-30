@@ -1,8 +1,5 @@
-name: "Build"
+name: Publish
 on: [push]
-    # push:
-    #     tags:
-    #         - *
 jobs:
   build:
     name: Test
