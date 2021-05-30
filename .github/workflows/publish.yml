@@ -5,11 +5,12 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: publish
-      # - uses: borales/actions-yarn@v2.0.0
-      #   with:
-      #     cmd: build
-
+    - uses: actions/checkout@v2
+    - name: Publish new version to NPM
+      uses: actions/setup-node@v1
+      with:
+        node-version: 13.x
+        registry-url: 'https://registry.npmjs.org'
+    - run: yarn publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
