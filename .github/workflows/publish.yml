@@ -2,7 +2,7 @@ name: Publish
 on: [push]
 jobs:
   build:
-    name: Test
+    name: NPM Package
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -11,6 +11,7 @@ jobs:
       with:
         node-version: 13.x
         registry-url: 'https://registry.npmjs.org'
+    - run: yarn build
     - run: yarn publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
