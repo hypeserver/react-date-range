@@ -84,3 +84,42 @@ const [state, setState] = useState({
   ranges={[state.selection1, state.selection2, state.selection3]}
 />;
 ```
+
+#### Example: Insert Aria-label
+
+```jsx inside Markdown
+import { addDays } from 'date-fns';
+import { useState } from 'react';
+
+const [state, setState] = useState([
+  {
+    startDate: addDays(new Date(), -6),
+    endDate: new Date(),
+    key: 'selection1'
+  },
+  {
+    startDate: addDays(new Date(), 1),
+    endDate: addDays(new Date(), 7),
+    key: 'selection2'
+  }
+]);
+
+<DateRangePicker
+  onChange={item => setState([item.selection])}
+  showSelectionPreview={true}
+  moveRangeOnFirstSelection={false}
+  months={2}
+  ranges={state}
+  direction="horizontal"
+  ariaLabels={{
+    dateInput: {
+      selection1: { startDate: "start date input of selction 1", endDate: "end date input of selction 1" },
+      selection2: { startDate: "start date input of selction 2", endDate: "end date input of selction 2" }
+    },
+    monthPicker: "month picker",
+    yearPicker: "year picker",
+    prevButton: "previous month button",
+    nextButton: "next month button",
+  }}
+/>;
+```
