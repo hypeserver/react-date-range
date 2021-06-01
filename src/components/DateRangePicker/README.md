@@ -21,9 +21,16 @@ const [state, setState] = useState([
   months={2}
   ranges={state}
   direction="horizontal"
+  prices={[
+    { day: new Date(), price: '1000' },
+    { day: new Date(new Date().valueOf() + 1000 * 3600 * 24), price: '2000' },
+    { day: new Date(new Date().valueOf() + 1000 * 3600 * 24 * 2), price: '3000' },
+    { day: new Date(new Date().valueOf() + 1000 * 3600 * 24 * 44), price: '3000' }
+  ]}
 />;
 ```
 
+<!--
 #### Example: Vertical Infinite
 
 ```jsx inside Markdown
@@ -113,13 +120,13 @@ const [state, setState] = useState([
   direction="horizontal"
   ariaLabels={{
     dateInput: {
-      selection1: { startDate: "start date input of selction 1", endDate: "end date input of selction 1" },
-      selection2: { startDate: "start date input of selction 2", endDate: "end date input of selction 2" }
+      selection1: { startDate: 'start date input of selction 1', endDate: 'end date input of selction 1' },
+      selection2: { startDate: 'start date input of selction 2', endDate: 'end date input of selction 2' }
     },
-    monthPicker: "month picker",
-    yearPicker: "year picker",
-    prevButton: "previous month button",
-    nextButton: "next month button",
+    monthPicker: 'month picker',
+    yearPicker: 'year picker',
+    prevButton: 'previous month button',
+    nextButton: 'next month button'
   }}
 />;
-```
+``` -->

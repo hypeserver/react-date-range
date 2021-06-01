@@ -9,8 +9,15 @@
 .rdrDayNumber {
   display: block;
   position: relative;
-  span{
+  span {
     color: #1d2429;
+  }
+  span.price {
+    color: #1f2244 !important;
+    position: absolute;
+    top: 10px;
+
+    font-size: 10px;
   }
 }
 
@@ -24,16 +31,24 @@
   }
 }
 
-.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge{
+.rdrSelected,
+.rdrInRange,
+.rdrStartEdge,
+.rdrEndEdge {
   pointer-events: none;
 }
 
-.rdrInRange{}
+.rdrInRange {
+}
 
-.rdrDayStartPreview, .rdrDayInPreview, .rdrDayEndPreview{
+.rdrDayStartPreview,
+.rdrDayInPreview,
+.rdrDayEndPreview {
   pointer-events: none;
 }
 
-.rdrDayHovered{}
+.rdrDayHovered {
+}
 
-.rdrDayActive{}
+.rdrDayActive {
+}
