@@ -176,7 +176,7 @@ class DayCell extends Component {
         <span className={this.props.styles.dayNumber}>
           <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
           {!this.props.disabled && !this.props.isPassive && (
-            <span className="price">{this.getPriceForDay()}</span>
+            <div className="price">{this.getPriceForDay()}</div>
           )}
         </span>
       </button>
