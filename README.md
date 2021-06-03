@@ -147,6 +147,7 @@ ariaLabels                           | Object    | {}               | inserts ar
     startDate: PropTypes.object,
     endDate: PropTypes.object,
     color: PropTypes.string,
+    dayNumberColor: PropTypes.string,
     key: PropTypes.string,
     autoFocus: PropTypes.bool,
     disabled: PropTypes.bool,
