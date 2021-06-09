@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Make sure your issue or feature doesn't have any related issue at [react-date-range repo](https://github.com/Adphorus/react-date-range/issues). If it didn't exist already, create an issue.
+Make sure your issue or feature doesn't have any related issue at [react-date-range repo](https://github.com/hypeserver/react-date-range/issues). If it didn't exist already, create an issue.
 
 ## Getting Started
 

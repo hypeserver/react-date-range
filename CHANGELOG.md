@@ -56,7 +56,7 @@ NEW
 ```js
 <Calendar
   date={this.state.eventDate} // js object
-  onChange={date => this.setState({ eventDate: date })} // 
+  onChange={date => this.setState({ eventDate: date })} //
 />
 ```
 
@@ -64,7 +64,7 @@ NEW with moment (or any other date libraries)
 ```js
 <Calendar
   date={this.state.eventDate.toDate()} // convert moment object to js Date
-  onChange={date => this.setState({ eventDate: moment(date) })} // 
+  onChange={date => this.setState({ eventDate: moment(date) })} //
 />
 ```
 - BREAKING: Theming and style approach complately changed. `react-date-range` don't use inline styles any more. At the new version you should import **skeleton styles** and **theme styles**
@@ -86,7 +86,7 @@ import 'react-date-range/dist/theme/default.css';
  NEW
  ```js
   import turkish from 'react-date-range/locale/tr';
-  // you can view full list in https://github.com/Adphorus/react-date-range/tree/next/src/locale/index.js
+  // you can view full list in https://github.com/hypeserver/react-date-range/tree/next/src/locale/index.js
   <Calendar locale={turkish} />
 ```
 

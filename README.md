@@ -2,6 +2,7 @@
 [![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/react-date-range)
 [![npm](https://img.shields.io/npm/l/react-date-range)]()
 [![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/react-date-range)
+[![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver)
 
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
@@ -139,6 +140,7 @@ fixedHeight                          | Boolean   | false            | Since some
 renderStaticRangeLabel(`DefinedRange`)| Function |                  | Callback function to be triggered for the static range configurations that have `hasCustomRendering: true` on them. Instead of rendering `staticRange.label`, return value of this callback will be rendered.
 staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
 inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
+ariaLabels                           | Object    | {}               | inserts aria-label to inner elements
 
  *shape of range:
  ```js
@@ -153,6 +155,22 @@ inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default i
   }
 ```
 
+ **shape of ariaLabels:
+ ```js
+  {
+    // The key of dateInput should be same as key in range.
+    dateInput: PropTypes.objectOf(
+      PropTypes.shape({
+        startDate: PropTypes.string,
+        endDate: PropTypes.string
+      })
+    ),
+    monthPicker: PropTypes.string,
+    yearPicker: PropTypes.string,
+    prevButton: PropTypes.string,
+    nextButton: PropTypes.string,
+  }
+```
 #### Infinite Scrolled Mode
 
 To enable infinite scroll set `scroll={{enabled: true}}` basically. Infinite scroll feature is affected by `direction`(rendering direction for months) and `months`(for rendered months count) props directly.
