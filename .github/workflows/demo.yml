@@ -1,9 +1,8 @@
 name: Demo - Build and Deploy
-on: [push]
-# on:
-#     push:
-#         tags:
-#             - release/*
+on:
+    push:
+        tags:
+            - release/*
 jobs:
   demo-deploy:
     runs-on: ubuntu-latest
