@@ -192,7 +192,7 @@ function customDayContent(day) {
 
 
 #### Example: Restrict Date Selection
-
+Restricts access for range selection to (-30, +30) days of current date.
 ```jsx inside Markdown
 import { addDays } from 'date-fns';
 import { useState } from 'react';
