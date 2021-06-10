@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+*.log
+.idea
+*.orig
+lib/
+NOTES.txt
+styleguide/
+dist/
