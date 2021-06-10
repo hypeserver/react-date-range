@@ -189,3 +189,34 @@ function customDayContent(day) {
   }}
 />;
 ```
+
+
+#### Example: Restrict Date Selection
+
+```jsx inside Markdown
+import { addDays } from 'date-fns';
+import { useState } from 'react';
+
+const [state, setState] = useState({
+  selection: {
+    startDate: new Date(),
+    endDate: null,
+    key: 'selection'
+  },
+  compare: {
+    startDate: new Date(),
+    endDate: addDays(new Date(), 3),
+    key: 'compare'
+  }
+});
+
+<DateRangePicker
+  onChange={item => setState({ ...state, ...item })}
+  months={1}
+  minDate={addDays(new Date(), -30)}
+  maxDate={addDays(new Date(), 30)}
+  direction="vertical"
+  scroll={{ enabled: true }}
+  ranges={[state.selection, state.compare]}
+/>;
+```
