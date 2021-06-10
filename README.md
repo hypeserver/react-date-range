@@ -188,9 +188,17 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
 ```
 
 
-TODOs
+### Release workflow
+- Merge everything that needs to be in the release to master
+- Open a new release PR than:
+  - bumps version to appropriate one <new_version>
+  - Update CHANGELOG.md
+- Make sure the demo and important features are working as expected
+- After merging, tag the master commit with `release/<new_version>` and let Github Action handle publishing
+- = Profit 🙈
+
+### TODOs
 
 - Make mobile friendly (integrate tap and swipe actions)
-- Add complex booking customization example with exposed dayRenderer prop
 - Add tests
 - Improve documentation
