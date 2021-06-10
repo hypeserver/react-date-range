@@ -91,25 +91,25 @@ const [state, setState] = useState({
 import { addDays } from 'date-fns';
 import { useState } from 'react';
 
-const [state, setState] = useState([
-  {
+const [state, setState] = useState({
+  selection1: {
     startDate: addDays(new Date(), -6),
     endDate: new Date(),
     key: 'selection1'
   },
-  {
+  selection2: {
     startDate: addDays(new Date(), 1),
     endDate: addDays(new Date(), 7),
     key: 'selection2'
   }
-]);
+});
 
 <DateRangePicker
-  onChange={item => setState([item.selection])}
+  onChange={item => setState({ ...state, ...item })}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
-  ranges={state}
+  ranges={[state.selection1, state.selection2]}
   direction="horizontal"
   ariaLabels={{
     dateInput: {
@@ -131,18 +131,18 @@ Show orange dot only for weekend
 import { addDays, format, isWeekend } from 'date-fns';
 import { useState } from 'react';
 
-const [state, setState] = useState([
-  {
+const [state, setState] = useState({
+  selection1: {
     startDate: addDays(new Date(), -6),
     endDate: new Date(),
     key: 'selection1'
   },
-  {
+  selection2: {
     startDate: addDays(new Date(), 1),
     endDate: addDays(new Date(), 7),
     key: 'selection2'
   }
-]);
+});
 
 function customDayContent(day) {
   extraDot = null;
@@ -170,11 +170,11 @@ function customDayContent(day) {
 }
 
 <DateRangePicker
-  onChange={item => setState([item.selection])}
+  onChange={item => setState({ ...state, ...item })}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
-  ranges={state}
+  ranges={[state.selection1, state.selection2]}
   direction="horizontal"
   dayContentRenderer={customDayContent}
   ariaLabels={{
