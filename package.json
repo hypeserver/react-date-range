@@ -1,6 +1,6 @@
 {
   "name": "react-date-range",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -22,16 +22,17 @@
   "contributors": [
     "Burak Can <neoberg@gmail.com> (https://github.com/burakcan)",
     "Mehmet Kamil Morcay <mehmetmorcay@gmail.com> (https://github.com/mkg0)",
+    "Kamyar Ghasemlou <github@kamy.me> (https://github.com/kamyar)",
     "Engin Semih Basmacı <semih.basmaci@gmail.com> (https://github.com/mortargrind)",
     "Onur Kerimov <onurkerimov@gmail.com> (https://github.com/onurkerimov)"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/Adphorus/react-date-range"
+    "url": "http://github.com/hypeserver/react-date-range"
   },
   "bugs": {
-    "url": "http://github.com/Adphorus/react-date-range/issues"
+    "url": "http://github.com/hypeserver/react-date-range/issues"
   },
   "browserslist": [
     "defaults"
@@ -56,6 +57,7 @@
     "autoprefixer": "^9.7.3",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
+    "babel-plugin-date-fns": "^2.0.0",
     "css-loader": "^3.2.0",
     "date-fns": "^2.8.1",
     "enzyme": "^3.11.0",

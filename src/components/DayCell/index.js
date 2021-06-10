@@ -149,7 +149,9 @@ class DayCell extends Component {
       />
     ));
   };
+
   render() {
+    const { dayContentRenderer } = this.props;
     return (
       <button
         type="button"
@@ -168,7 +170,10 @@ class DayCell extends Component {
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
-          <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
+          {
+            dayContentRenderer?.(this.props.day) ||
+            <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
+          }
         </span>
       </button>
     );
@@ -213,6 +218,7 @@ DayCell.propTypes = {
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
   onMouseEnter: PropTypes.func,
+  dayContentRenderer: PropTypes.func,
 };
 
 export default DayCell;

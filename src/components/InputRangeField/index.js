@@ -51,7 +51,7 @@ class InputRangeField extends Component {
 
 InputRangeField.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  label: PropTypes.string.isRequired,
+  label: PropTypes.oneOfType([PropTypes.element, PropTypes.node]).isRequired,
   placeholder: PropTypes.string,
   styles: PropTypes.shape({
     inputRange: PropTypes.string,

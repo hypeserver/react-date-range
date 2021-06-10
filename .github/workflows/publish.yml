@@ -1,0 +1,22 @@
+name: Publish
+on:
+    push:
+        tags:
+            - release/*
+jobs:
+  build:
+    name: NPM Package
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Publish new version to NPM
+      uses: actions/setup-node@v1
+      with:
+        node-version: 13.x
+        registry-url: 'https://registry.npmjs.org'
+    - run: yarn install
+    - run: yarn build
+    - run: yarn publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+

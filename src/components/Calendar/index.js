@@ -29,6 +29,7 @@ import {
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles from '../../styles';
+import { ariaLabelsShape } from '../../accessibility';
 
 class Calendar extends PureComponent {
   constructor(props, context) {
@@ -189,7 +190,7 @@ class Calendar extends PureComponent {
     this.isFirstRender = false;
   };
   renderMonthAndYear = (focusedDate, changeShownDate, props) => {
-    const { showMonthArrow, minDate, maxDate, showMonthAndYearPickers } = props;
+    const { showMonthArrow, minDate, maxDate, showMonthAndYearPickers, ariaLabels } = props;
     const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
     const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
     const styles = this.styles;
@@ -199,7 +200,8 @@ class Calendar extends PureComponent {
           <button
             type="button"
             className={classnames(styles.nextPrevButton, styles.prevButton)}
-            onClick={() => changeShownDate(-1, 'monthOffset')}>
+            onClick={() => changeShownDate(-1, 'monthOffset')}
+            aria-label={ariaLabels.prevButton}>
             <i />
           </button>
         ) : null}
@@ -208,7 +210,8 @@ class Calendar extends PureComponent {
             <span className={styles.monthPicker}>
               <select
                 value={focusedDate.getMonth()}
-                onChange={e => changeShownDate(e.target.value, 'setMonth')}>
+                onChange={e => changeShownDate(e.target.value, 'setMonth')}
+                aria-label={ariaLabels.monthPicker}>
                 {this.state.monthNames.map((monthName, i) => (
                   <option key={i} value={i}>
                     {monthName}
@@ -220,7 +223,8 @@ class Calendar extends PureComponent {
             <span className={styles.yearPicker}>
               <select
                 value={focusedDate.getFullYear()}
-                onChange={e => changeShownDate(e.target.value, 'setYear')}>
+                onChange={e => changeShownDate(e.target.value, 'setYear')}
+                aria-label={ariaLabels.yearPicker}>
                 {new Array(upperYearLimit - lowerYearLimit + 1)
                   .fill(upperYearLimit)
                   .map((val, i) => {
@@ -243,7 +247,8 @@ class Calendar extends PureComponent {
           <button
             type="button"
             className={classnames(styles.nextPrevButton, styles.nextButton)}
-            onClick={() => changeShownDate(+1, 'monthOffset')}>
+            onClick={() => changeShownDate(+1, 'monthOffset')}
+            aria-label={ariaLabels.nextButton}>
             <i />
           </button>
         ) : null}
@@ -275,6 +280,7 @@ class Calendar extends PureComponent {
       editableDateInputs,
       startDatePlaceholder,
       endDatePlaceholder,
+      ariaLabels,
     } = this.props;
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
@@ -300,6 +306,11 @@ class Calendar extends PureComponent {
                 placeholder={startDatePlaceholder}
                 dateOptions={this.dateOptions}
                 dateDisplayFormat={dateDisplayFormat}
+                ariaLabel={
+                  ariaLabels.dateInput &&
+                  ariaLabels.dateInput[range.key] &&
+                  ariaLabels.dateInput[range.key].startDate
+                }
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 0)}
               />
@@ -313,6 +324,11 @@ class Calendar extends PureComponent {
                 placeholder={endDatePlaceholder}
                 dateOptions={this.dateOptions}
                 dateDisplayFormat={dateDisplayFormat}
+                ariaLabel={
+                  ariaLabels.dateInput &&
+                  ariaLabels.dateInput[range.key] &&
+                  ariaLabels.dateInput[range.key].endDate
+                }
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 1)}
               />
@@ -548,6 +564,7 @@ Calendar.defaultProps = {
   fixedHeight: false,
   calendarFocus: 'forwards',
   preventUnnecessaryRefocus: false,
+  ariaLabels: {},
 };
 
 Calendar.propTypes = {
@@ -603,6 +620,7 @@ Calendar.propTypes = {
   fixedHeight: PropTypes.bool,
   calendarFocus: PropTypes.string,
   preventUnnecessaryRefocus: PropTypes.bool,
+  ariaLabels: ariaLabelsShape,
 };
 
 export default Calendar;
