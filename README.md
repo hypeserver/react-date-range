@@ -191,6 +191,5 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
 TODOs
 
 - Make mobile friendly (integrate tap and swipe actions)
-- Add complex booking customization example with exposed dayRenderer prop
 - Add tests
 - Improve documentation
