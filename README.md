@@ -140,6 +140,7 @@ renderStaticRangeLabel(`DefinedRange`)| Function |                  | Callback f
 staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
 inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
 ariaLabels                           | Object    | {}               | inserts aria-label to inner elements
+dayContentRenderer                   | Function  | null             | Function to customize the rendering of Calendar Day. given a date is supposed to return what to render.
 
  *shape of range:
  ```js
