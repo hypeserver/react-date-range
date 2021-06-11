@@ -3,6 +3,8 @@ on:
     push:
         tags:
             - release/*
+    # Enable manual trigger
+    workflow_dispatch:
 jobs:
   demo-deploy:
     runs-on: ubuntu-latest
