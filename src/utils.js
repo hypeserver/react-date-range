@@ -7,6 +7,12 @@ import {
   differenceInCalendarDays,
   differenceInCalendarMonths,
   addDays,
+  getHours,
+  getMinutes,
+  getSeconds,
+  setHours,
+  setMinutes,
+  setSeconds,
 } from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
@@ -63,6 +69,28 @@ export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
     startDateOfMonth,
     endDateOfMonth,
   };
+}
+
+export function getTime(date) {
+  return {
+    hours: getHours(date),
+    minutes: getMinutes(date),
+    seconds: getSeconds(date),
+  };
+}
+
+export function setTime(date, { hours, minutes, seconds }) {
+  return setHours(setMinutes(setSeconds(date, seconds), minutes), hours);
+}
+
+export function dateFormatContainsTime(date_format) {
+  /* eslint-disable prettier/prettier */
+  return [
+    'h', 'ho', 'hh', 'H', 'Ho', 'HH', 'K', 'Ko', 'KK', 'k', 'ko', 'kk',
+    'm', 'mo', 'mm',
+    'p','pp', 'ppp', 'pppp', 'Pp', 'PPpp', 'PPPppp', 'PPPPpppp',
+  ].some(format => date_format.includes(format));
+  /* eslint-enable */
 }
 
 export function generateStyles(sources) {

@@ -44,7 +44,7 @@
     "shallow-equal": "^1.2.1"
   },
   "peerDependencies": {
-    "date-fns": "2.0.0-alpha.7 || >=2.0.0",
+    "date-fns": "^2.20.0",
     "react": "^0.14 || ^15.0.0-rc || >=15.0"
   },
   "devDependencies": {
@@ -59,7 +59,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-date-fns": "^2.0.0",
     "css-loader": "^3.2.0",
-    "date-fns": "^2.8.1",
+    "date-fns": "^2.20.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.3",
