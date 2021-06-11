@@ -1,8 +1,9 @@
 name: Demo - Build and Deploy
-on:
-    push:
-        tags:
-            - release/*
+on: [push]
+# on:
+#     push:
+#         tags:
+#             - release/*
 jobs:
   demo-deploy:
     runs-on: ubuntu-latest
@@ -14,7 +15,7 @@ jobs:
       - name: Build
         run: yarn build
       - run: cp -R dist styleguide/
-      - run: cp -R dist styleguide/
+      - run: cp -R demo styleguide/
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
