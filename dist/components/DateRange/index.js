@@ -181,6 +181,8 @@ var DateRange = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "updatePreview", function (val) {
+      var _ranges$focusedRange$;
+
       if (!val) {
         _this.setState({
           preview: null
@@ -193,7 +195,7 @@ var DateRange = /*#__PURE__*/function (_Component) {
           rangeColors = _this$props3.rangeColors,
           ranges = _this$props3.ranges;
       var focusedRange = _this.props.focusedRange || _this.state.focusedRange;
-      var color = ranges[focusedRange[0]].color || rangeColors[focusedRange[0]] || color;
+      var color = ((_ranges$focusedRange$ = ranges[focusedRange[0]]) === null || _ranges$focusedRange$ === void 0 ? void 0 : _ranges$focusedRange$.color) || rangeColors[focusedRange[0]] || color;
 
       _this.setState({
         preview: _objectSpread(_objectSpread({}, val.range), {}, {
