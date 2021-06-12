@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
-import React, { PureComponent } from 'react';
+import React, { MouseEventHandler, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import DayCell, { rangeShape } from '../DayCell';
+import DayCell, { DayEventHandler, DisplayMode, Preview, RangeShape, rangeShape } from '../DayCell';
 import {
   format,
   startOfDay,
@@ -33,7 +33,44 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat) {
   );
 }
 
-class Month extends PureComponent {
+interface Drag {
+  range: RangeShape
+  disablePreview: boolean
+}
+
+interface MonthProps {
+  displayMode: DisplayMode;
+  focusedRange: number[];
+  style: object,
+  styles: object,
+  month: Date,
+  dateOptions: object,
+  disabledDates: Date[],
+  disabledDay: (day: Date) => boolean,
+  preview: Preview,
+  showPreview: boolean,
+  minDate: Date,
+  maxDate: Date,
+  date: Date,
+  ranges: RangeShape[],
+  drag: Drag,
+  onDragSelectionStart: () => void,
+  onDragSelectionEnd: () => void,
+  onDragSelectionMove: () => void,
+  onMouseLeave: MouseEventHandler,
+  monthDisplayFormat: string,
+  weekdayDisplayFormat: string,
+  dayDisplayFormat: string,
+  showWeekDays: boolean,
+  showMonthName: boolean,
+  fixedHeight: boolean,
+  onPreviewChange: DayEventHandler,
+  dayContentRenderer?: (day: Date) => Element,
+  color: string,
+}
+
+
+class Month extends PureComponent<MonthProps> {
   render() {
     const now = new Date();
     const { displayMode, focusedRange, drag, styles, disabledDates, disabledDay } = this.props;
@@ -45,7 +82,7 @@ class Month extends PureComponent {
       this.props.fixedHeight
     );
     let ranges = this.props.ranges;
-    if (displayMode === 'dateRange' && drag.status) {
+    if (displayMode === 'dateRange') {
       let { startDate, endDate } = drag.range;
       ranges = ranges.map((range, i) => {
         if (i !== focusedRange[0]) return range;
@@ -83,7 +120,7 @@ class Month extends PureComponent {
                   ranges={ranges}
                   day={day}
                   preview={showPreview ? this.props.preview : null}
-                  isWeekend={isWeekend(day, this.props.dateOptions)}
+                  isWeekend={isWeekend(day)}
                   isToday={isSameDay(day, now)}
                   isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
                   isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
@@ -101,8 +138,6 @@ class Month extends PureComponent {
                   onMouseDown={this.props.onDragSelectionStart}
                   onMouseUp={this.props.onDragSelectionEnd}
                   onMouseEnter={this.props.onDragSelectionMove}
-                  dragRange={drag.range}
-                  drag={drag.status}
                 />
               );
             }
@@ -119,7 +154,6 @@ Month.propTypes = {
   style: PropTypes.object,
   styles: PropTypes.object,
   month: PropTypes.object,
-  drag: PropTypes.object,
   dateOptions: PropTypes.object,
   disabledDates: PropTypes.array,
   disabledDay: PropTypes.func,

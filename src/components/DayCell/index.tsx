@@ -1,12 +1,61 @@
 /* eslint-disable no-fallthrough */
-import React, { Component } from 'react';
+import React, { Component, EventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 
-class DayCell extends Component {
-  constructor(props, context) {
-    super(props, context);
+export interface Preview {
+  startDate: Date
+  endDate: Date
+  color: string
+}
+
+export interface RangeShape {
+  startDate: Date
+  endDate: Date
+  color: string
+  key: string
+  autoFocus: boolean
+  disabled: boolean
+  showDateDisplay: boolean
+}
+
+export type DisplayMode = 'date' | 'dateRange';
+
+export type DayEventHandler = (day?: Date) => void;
+
+interface DayCellProps {
+  day: Date,
+  dayDisplayFormat: string,
+  date: Date,
+  ranges: RangeShape[],
+  preview: Preview | null,
+  onPreviewChange: DayEventHandler,
+  disabled: boolean,
+  isPassive: boolean,
+  isToday: boolean,
+  isWeekend: boolean,
+  isStartOfWeek: boolean,
+  isEndOfWeek: boolean,
+  isStartOfMonth: boolean,
+  isEndOfMonth: boolean,
+  color: string,
+  displayMode: DisplayMode,
+  styles: object,
+  onMouseDown: DayEventHandler,
+  onMouseUp: DayEventHandler,
+  onMouseEnter: DayEventHandler,
+  dayContentRenderer?: (day: Date) => Element,
+}
+
+interface DayCellState {
+  hover: boolean,
+  active: boolean,
+}
+
+class DayCell extends Component<DayCellProps, DayCellState> {
+  constructor(props: DayCellProps) {
+    super(props);
 
     this.state = {
       hover: false,
@@ -14,16 +63,16 @@ class DayCell extends Component {
     };
   }
 
-  handleKeyEvent = event => {
+  handleKeyEvent: KeyboardEventHandler<Element> = (event) => {
     const { day, onMouseDown, onMouseUp } = this.props;
     if ([13 /* space */, 32 /* enter */].includes(event.keyCode)) {
       if (event.type === 'keydown') onMouseDown(day);
       else onMouseUp(day);
     }
   };
-  handleMouseEvent = event => {
+  handleMouseEvent: MouseEventHandler<Element> = event => {
     const { day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp } = this.props;
-    const stateChanges = {};
+    const stateChanges: Partial<DayCellState> = {};
     if (disabled) {
       onPreviewChange();
       return;
@@ -53,7 +102,7 @@ class DayCell extends Component {
         break;
     }
     if (Object.keys(stateChanges).length) {
-      this.setState(stateChanges);
+      this.setState(stateChanges as DayCellState);
     }
   };
   getClassNames = () => {
@@ -85,8 +134,8 @@ class DayCell extends Component {
   renderPreviewPlaceholder = () => {
     const { preview, day, styles } = this.props;
     if (!preview) return null;
-    const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
-    const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
+    const startDate = endOfDay(preview.startDate);
+    const endDate = startOfDay(preview.endDate);
     const isInRange =
       (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
     const isStartEdge = !isInRange && isSameDay(day, startDate);
@@ -103,9 +152,9 @@ class DayCell extends Component {
     );
   };
   renderSelectionPlaceholders = () => {
-    const { styles, ranges, day } = this.props;
+    const { styles, ranges, day, date } = this.props;
     if (this.props.displayMode === 'date') {
-      let isSelected = isSameDay(this.props.day, this.props.date);
+      let isSelected = isSameDay(day, date);
       return isSelected ? (
         <span className={styles.selected} style={{ color: this.props.color }} />
       ) : null;
@@ -117,8 +166,8 @@ class DayCell extends Component {
       if (startDate && endDate && isBefore(endDate, startDate)) {
         [startDate, endDate] = [endDate, startDate];
       }
-      startDate = startDate ? endOfDay(startDate) : null;
-      endDate = endDate ? startOfDay(endDate) : null;
+      startDate = endOfDay(startDate);
+      endDate = startOfDay(endDate);
       const isInRange =
         (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
       const isStartEdge = !isInRange && isSameDay(day, startDate);
@@ -203,7 +252,6 @@ DayCell.propTypes = {
     color: PropTypes.string,
   }),
   onPreviewChange: PropTypes.func,
-  previewColor: PropTypes.string,
   disabled: PropTypes.bool,
   isPassive: PropTypes.bool,
   isToday: PropTypes.bool,

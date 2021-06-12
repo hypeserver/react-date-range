@@ -1,4 +1,4 @@
-import DateRange from '../DateRange';
+import DateRange from '.';
 
 describe('DateRange', () => {
   test('Should resolve', () => {

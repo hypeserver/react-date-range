@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import InputRangeField from '../InputRangeField';
+import InputRangeField from '.';
 
 const styles = {
   inputRange: 'range',
