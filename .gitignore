@@ -7,3 +7,4 @@ lib/
 NOTES.txt
 dist/
 styleguide/
+build/
