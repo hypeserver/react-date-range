@@ -1,11 +1,1 @@
-
-
-
-
-function foo(bar: string): string {
-  return bar
-}
-
-
-
-export default foo
+export { defaultInputRanges, defaultStaticRanges, createStaticRanges } from './defaultRanges';

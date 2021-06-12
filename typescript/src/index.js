@@ -1,4 +1,1 @@
-function foo(bar) {
-    return bar;
-}
-export default foo;
+export { defaultInputRanges, defaultStaticRanges, createStaticRanges } from './defaultRanges';
