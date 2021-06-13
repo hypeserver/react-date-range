@@ -24,7 +24,6 @@ class DateRange extends Component {
     if (!selectedRange || !onChange) return {};
 
     let { startDate, endDate } = selectedRange;
-    if (!endDate) endDate = new Date(startDate);
     let nextFocusRange;
     if (!isSingleValue) {
       startDate = value.startDate;
@@ -35,6 +34,10 @@ class DateRange extends Component {
       const calculateEndDate = () => {
         if (moveRangeOnFirstSelection) {
           return addDays(value, dayOffset);
+        }
+        // allow continous range to stay as-is
+        if (!endDate) {
+          return endDate;
         }
         return !isBefore(value, endDate) ? value : endDate;
       };
