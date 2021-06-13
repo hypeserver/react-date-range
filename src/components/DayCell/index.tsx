@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 import { DisplayMode } from '../../utilsTypes';
 import { DateRange } from '../../defaultRangesTypes';
+import { ExtendedDateRange } from './types';
 
 
 interface DayCellProps {
@@ -138,9 +139,10 @@ class DayCell extends Component<DayCellProps, DayCellState> {
       ) : null;
     }
 
-    const inRanges = ranges.reduce((result, range) => {
-      let startDate = range.startDate;
-      let endDate = range.endDate;
+    const inRanges: ExtendedDateRange[] = []
+    ranges.forEach((range) => {
+      let startDate: Date | null = range.startDate;
+      let endDate: Date | null = range.endDate;
       if (startDate && endDate && isBefore(endDate, startDate)) {
         [startDate, endDate] = [endDate, startDate];
       }
@@ -148,21 +150,17 @@ class DayCell extends Component<DayCellProps, DayCellState> {
       endDate = endDate ? startOfDay(endDate) : null;
       const isInRange =
         (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
-      const isStartEdge = !isInRange && isSameDay(day, startDate);
-      const isEndEdge = !isInRange && isSameDay(day, endDate);
+      const isStartEdge = !isInRange && !!startDate && isSameDay(day, startDate);
+      const isEndEdge = !isInRange && !!endDate && isSameDay(day, endDate);
       if (isInRange || isStartEdge || isEndEdge) {
-        return [
-          ...result,
-          {
-            isStartEdge,
-            isEndEdge: isEndEdge,
-            isInRange,
-            ...range,
-          },
-        ];
+        inRanges.push({
+          isStartEdge,
+          isEndEdge,
+          isInRange,
+          ...range,
+        })
       }
-      return result;
-    }, []);
+    });
 
     return inRanges.map((range, i) => (
       <span

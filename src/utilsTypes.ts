@@ -11,6 +11,7 @@ export interface DateRange {
   endDate: Date
   autoFocus?: boolean
   disabled?: boolean
+  color?: string
 }
 
 export interface FocusDateProps {
