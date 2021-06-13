@@ -20,7 +20,7 @@ const compareRanges = (newRange, assertionRange) => {
       return expect(newRange[key]).toEqual(assertionRange[key]);
     }
     return expect(isSameDay(newRange[key], assertionRange[key])).toEqual(true);
-  })
+  });
 };
 
 beforeEach(() => {
@@ -68,11 +68,13 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection by retaining the unset end date, based on retainEndDateOnFirstSelection prop', () => {
-    testRenderer.update(<DateRange
-      {...commonProps}
-      ranges={[{ ...commonProps.ranges[0], endDate: null }]}
-      retainEndDateOnFirstSelection
-    />);
+    testRenderer.update(
+      <DateRange
+        {...commonProps}
+        ranges={[{ ...commonProps.ranges[0], endDate: null }]}
+        retainEndDateOnFirstSelection
+      />
+    );
     const methodResult = instance.calcNewSelection(subDays(endDate, 10), true);
     compareRanges(methodResult.range, {
       startDate: subDays(endDate, 10),

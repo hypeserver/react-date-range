@@ -43,11 +43,10 @@ class DateRange extends Component {
           return addDays(value, dayOffset);
         }
         if (retainEndDateOnFirstSelection) {
-          // allow the unset end date to stay as-is
-          if (!endDate) {
+          if (!endDate || isBefore(value, endDate)) {
             return endDate;
           }
-          return !isBefore(value, endDate) ? value : endDate;
+          return value;
         }
         return value || now;
       };
