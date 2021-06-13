@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 import { DisplayMode } from '../../utilsTypes';
 import { DateRange } from '../../defaultRangesTypes';
-import { ExtendedDateRange, Preview } from './types';
+import { ExtendedDateRange, Preview, Styles } from './types';
 
 
 interface DayCellProps {
@@ -23,6 +23,7 @@ interface DayCellProps {
   onPreviewChange: (date: Date) => void
   ranges: DateRange[]
   preview: Preview | null
+  styles: Styles
   isToday: Boolean
   isWeekend: Boolean
   isStartOfWeek: Boolean
@@ -39,6 +40,7 @@ interface DayCellState {
 class DayCell extends Component<DayCellProps, DayCellState> {
   public static propTypes = {};
   static defaultProps = {}
+  // FIXME: context is deprecated?
   constructor(props: DayCellProps, context) {
     super(props, context);
 
@@ -91,7 +93,7 @@ class DayCell extends Component<DayCellProps, DayCellState> {
       this.setState(stateChanges);
     }
   };
-  getClassNames = () => {
+  getClassNames = (): string => {
     const {
       isPassive,
       isToday,
@@ -199,7 +201,7 @@ class DayCell extends Component<DayCellProps, DayCellState> {
         onPauseCapture={this.handleMouseEvent}
         onKeyDown={this.handleKeyEvent}
         onKeyUp={this.handleKeyEvent}
-        className={this.getClassNames(styles)}
+        className={this.getClassNames()}
         {...(disabled || isPassive ? { tabIndex: -1 } : {})}
         style={{ color: color }}>
         {this.renderSelectionPlaceholders()}
