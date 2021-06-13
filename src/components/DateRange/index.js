@@ -18,28 +18,38 @@ class DateRange extends Component {
   }
   calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates } = this.props;
+    const {
+      ranges,
+      onChange,
+      maxDate,
+      moveRangeOnFirstSelection,
+      retainEndDateOnFirstSelection,
+      disabledDates,
+    } = this.props;
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
     if (!selectedRange || !onChange) return {};
-
     let { startDate, endDate } = selectedRange;
+    const now = new Date();
     let nextFocusRange;
     if (!isSingleValue) {
       startDate = value.startDate;
       endDate = value.endDate;
     } else if (focusedRange[1] === 0) {
       // startDate selection
-      const dayOffset = differenceInCalendarDays(endDate, startDate);
+      const dayOffset = differenceInCalendarDays(endDate || now, startDate);
       const calculateEndDate = () => {
         if (moveRangeOnFirstSelection) {
           return addDays(value, dayOffset);
         }
-        // allow continous range to stay as-is
-        if (!endDate) {
-          return endDate;
+        if (retainEndDateOnFirstSelection) {
+          // allow the unset end date to stay as-is
+          if (!endDate) {
+            return endDate;
+          }
+          return !isBefore(value, endDate) ? value : endDate;
         }
-        return !isBefore(value, endDate) ? value : endDate;
+        return value || now;
       };
       startDate = value;
       endDate = calculateEndDate();
@@ -140,6 +150,7 @@ DateRange.defaultProps = {
   classNames: {},
   ranges: [],
   moveRangeOnFirstSelection: false,
+  retainEndDateOnFirstSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: [],
 };
@@ -151,6 +162,7 @@ DateRange.propTypes = {
   className: PropTypes.string,
   ranges: PropTypes.arrayOf(rangeShape),
   moveRangeOnFirstSelection: PropTypes.bool,
+  retainEndDateOnFirstSelection: PropTypes.bool,
 };
 
 export default DateRange;
