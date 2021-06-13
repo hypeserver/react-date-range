@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
 import React, { MouseEventHandler, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import DayCell, { rangeShape } from '../DayCell';
+import DayCell, { DayCellProps, rangeShape } from '../DayCell';
 import {
   format,
   startOfDay,
@@ -18,10 +18,10 @@ import {
 import { getMonthDisplayRange } from '../../utils';
 import { DisplayMode } from '../../utilsTypes';
 import { DateRange } from '../../defaultRangesTypes';
-import { Preview } from '../DayCell/types';
+import { Preview, Styles } from '../DayCell/types';
 import { Drag } from './types';
 
-function renderWeekdays(styles, dateOptions: object, weekdayDisplayFormat: string) {
+function renderWeekdays(styles: Styles, dateOptions: object, weekdayDisplayFormat: string) {
   const now = new Date();
   return (
     <div className={styles.weekDays}>
@@ -37,7 +37,8 @@ function renderWeekdays(styles, dateOptions: object, weekdayDisplayFormat: strin
   );
 }
 
-interface MonthProps {
+// FIXME: Remove redundant props taht are already in DayCellProps
+export interface MonthProps extends DayCellProps {
   displayMode: DisplayMode
   minDate: Date
   maxDate: Date
@@ -61,6 +62,7 @@ interface MonthProps {
   // FIXME
   dateOptions: Object
   style?: React.CSSProperties
+  styles: Styles
 }
 
 class Month extends PureComponent<MonthProps> {

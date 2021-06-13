@@ -1,10 +1,6 @@
+import { DateRange } from "./utilsTypes";
 
 
-
-export interface DateRange {
-  startDate: Date
-  endDate: Date
-}
 
 
 export interface StaticRange {

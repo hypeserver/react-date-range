@@ -8,9 +8,11 @@ import {
   differenceInCalendarMonths,
   addDays,
 } from 'date-fns';
-import { DateRange, DisplayMode, FocusDateProps } from './utilsTypes';
+import { CalendarProps } from './components/Calendar';
+import { Styles } from './components/DayCell/types';
+import { DateRange, DisplayMode } from './utilsTypes';
 
-export function calcFocusDate(currentFocusedDate: Date, props: FocusDateProps) {
+export function calcFocusDate(currentFocusedDate: Date | null, props: CalendarProps) {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
   // find primary date according the props
   let targetInterval;
@@ -67,8 +69,8 @@ export function getMonthDisplayRange(month: Date, dateOptions: object, fixedHeig
   };
 }
 
-// FIXME
-export function generateStyles(sources: any[]) {
+// FIXME: replace any
+export function generateStyles(sources: any[]): Styles {
   if (!sources.length) return {};
   const generatedStyles = sources
     .filter(source => Boolean(source))

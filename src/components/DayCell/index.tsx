@@ -8,7 +8,7 @@ import { DateRange } from '../../defaultRangesTypes';
 import { ExtendedDateRange, Preview, Styles } from './types';
 
 
-interface DayCellProps {
+export interface DayCellProps {
   day: Date
   date: Date
   dayDisplayFormat: string
@@ -20,7 +20,7 @@ interface DayCellProps {
   onMouseDown: (date: Date) => void
   onMouseUp: (date: Date) => void
   onMouseEnter: (date: Date) => void
-  onPreviewChange: (date: Date) => void
+  onPreviewChange: (date?: Date) => void
   ranges: DateRange[]
   preview: Preview | null
   styles: Styles
@@ -39,7 +39,7 @@ interface DayCellState {
 
 class DayCell extends Component<DayCellProps, DayCellState> {
   public static propTypes = {};
-  static defaultProps = {}
+  static defaultProps = {};
   // FIXME: context is deprecated?
   constructor(props: DayCellProps, context) {
     super(props, context);

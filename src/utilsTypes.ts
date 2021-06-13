@@ -14,12 +14,12 @@ export interface DateRange {
   color?: string
 }
 
-export interface FocusDateProps {
-  shownDate: Date
-  date: Date
-  months: number
-  ranges: DateRange[]
-  // FIXME
-  focusedRange: any
-  displayMode: DisplayMode
-}
+// export interface FocusDateProps {
+//   shownDate: Date
+//   date: Date
+//   months: number
+//   ranges: DateRange[]
+//   displayMode: DisplayMode
+//   // FIXME
+//   focusedRange: any
+// }
