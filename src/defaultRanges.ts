@@ -10,6 +10,7 @@ import {
   isSameDay,
   differenceInCalendarDays,
 } from 'date-fns';
+import { DateRange, InputRange, StaticRange } from './defaultRangesTypes';
 
 const defineds = {
   startOfWeek: startOfWeek(new Date()),
@@ -26,9 +27,12 @@ const defineds = {
   endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
 };
 
-const staticRangeHandler = {
-  range: {},
-  isSelected(range) {
+const baseStaticRange: StaticRange = {
+  range: () => ({
+    startDate: new Date(),
+    endDate: new Date(),
+  }),
+  isSelected(range: DateRange) {
     const definedRange = this.range();
     return (
       isSameDay(range.startDate, definedRange.startDate) &&
@@ -37,8 +41,8 @@ const staticRangeHandler = {
   },
 };
 
-export function createStaticRanges(ranges) {
-  return ranges.map(range => ({ ...staticRangeHandler, ...range }));
+export function createStaticRanges(ranges: Partial<StaticRange>[]): StaticRange[] {
+  return ranges.map(range => ({ ...baseStaticRange, ...range }));
 }
 
 export const defaultStaticRanges = createStaticRanges([
@@ -87,7 +91,7 @@ export const defaultStaticRanges = createStaticRanges([
   },
 ]);
 
-export const defaultInputRanges = [
+export const defaultInputRanges: Partial<InputRange>[] = [
   {
     label: 'days up to today',
     range(value) {
