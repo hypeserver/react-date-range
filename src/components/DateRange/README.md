@@ -3,9 +3,10 @@ This component extends all the props of **[Calendar](#calendar)** component. In 
 | Prop Name  |  Type |
 |---|---|
 |  **moveRangeOnFirstSelection** |  boolean |
-|   **onRangeFocusChange** |  function |
-|   **rangeColors**  |  array |
-|   **ranges**  |  array |
+|  **retainEndDateOnFirstSelection** |  boolean |
+|  **onRangeFocusChange** |  function |
+|  **rangeColors**  |  array |
+|  **ranges**  |  array |
 
 
 #### Example: Editable Date Inputs

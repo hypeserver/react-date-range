@@ -18,22 +18,40 @@ class DateRange extends Component {
   }
   calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates } = this.props;
+    const {
+      ranges,
+      onChange,
+      maxDate,
+      moveRangeOnFirstSelection,
+      retainEndDateOnFirstSelection,
+      disabledDates,
+    } = this.props;
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
     if (!selectedRange || !onChange) return {};
-
     let { startDate, endDate } = selectedRange;
-    if (!endDate) endDate = new Date(startDate);
+    const now = new Date();
     let nextFocusRange;
     if (!isSingleValue) {
       startDate = value.startDate;
       endDate = value.endDate;
     } else if (focusedRange[1] === 0) {
       // startDate selection
-      const dayOffset = differenceInCalendarDays(endDate, startDate);
+      const dayOffset = differenceInCalendarDays(endDate || now, startDate);
+      const calculateEndDate = () => {
+        if (moveRangeOnFirstSelection) {
+          return addDays(value, dayOffset);
+        }
+        if (retainEndDateOnFirstSelection) {
+          if (!endDate || isBefore(value, endDate)) {
+            return endDate;
+          }
+          return value;
+        }
+        return value || now;
+      };
       startDate = value;
-      endDate = moveRangeOnFirstSelection ? addDays(value, dayOffset) : value;
+      endDate = calculateEndDate();
       if (maxDate) endDate = min([endDate, maxDate]);
       nextFocusRange = [focusedRange[0], 1];
     } else {
@@ -131,6 +149,7 @@ DateRange.defaultProps = {
   classNames: {},
   ranges: [],
   moveRangeOnFirstSelection: false,
+  retainEndDateOnFirstSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: [],
 };
@@ -142,6 +161,7 @@ DateRange.propTypes = {
   className: PropTypes.string,
   ranges: PropTypes.arrayOf(rangeShape),
   moveRangeOnFirstSelection: PropTypes.bool,
+  retainEndDateOnFirstSelection: PropTypes.bool,
 };
 
 export default DateRange;
