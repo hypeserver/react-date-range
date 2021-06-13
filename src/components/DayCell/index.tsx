@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 import { DisplayMode } from '../../utilsTypes';
 import { DateRange } from '../../defaultRangesTypes';
-import { ExtendedDateRange } from './types';
+import { ExtendedDateRange, Preview } from './types';
 
 
 interface DayCellProps {
@@ -22,6 +22,13 @@ interface DayCellProps {
   onMouseEnter: (date: Date) => void
   onPreviewChange: (date: Date) => void
   ranges: DateRange[]
+  preview: Preview | null
+  isToday: Boolean
+  isWeekend: Boolean
+  isStartOfWeek: Boolean
+  isEndOfWeek: Boolean
+  isStartOfMonth: Boolean
+  isEndOfMonth: Boolean
 }
 
 interface DayCellState {
@@ -32,7 +39,7 @@ interface DayCellState {
 class DayCell extends Component<DayCellProps, DayCellState> {
   public static propTypes = {};
   static defaultProps = {}
-  constructor(props, context) {
+  constructor(props: DayCellProps, context) {
     super(props, context);
 
     this.state = {

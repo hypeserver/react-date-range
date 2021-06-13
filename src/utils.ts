@@ -51,9 +51,9 @@ export function findNextRangeIndex(ranges: DateRange[], currentRangeIndex = -1) 
 }
 
 // define dateOptions type
-export function getMonthDisplayRange(date: Date, dateOptions: object, fixedHeight: boolean) {
-  const startDateOfMonth = startOfMonth(date);
-  const endDateOfMonth = endOfMonth(date);
+export function getMonthDisplayRange(month: Date, dateOptions: object, fixedHeight: boolean) {
+  const startDateOfMonth = startOfMonth(month);
+  const endDateOfMonth = endOfMonth(month);
   const startDateOfCalendar = startOfWeek(startDateOfMonth, dateOptions);
   let endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
   if (fixedHeight && differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34) {
