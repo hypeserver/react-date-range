@@ -53,6 +53,7 @@ export interface Styles {
   weekDay?: string
   weekDays?: string
   yearPicker?: string
+  dateRangeWrapper?: string
   // FIXME
   dateDisplayItemActive?: any
 }

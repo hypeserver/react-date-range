@@ -470,7 +470,8 @@ class Calendar extends PureComponent<CalendarProps, CalendarState> {
     });
   };
 
-  estimateMonthSize = (index: number, cache) => {
+  // FIXME
+  estimateMonthSize = (index: number, cache: any) => {
     const { direction, minDate } = this.props;
     const { scrollArea } = this.state;
     if (cache) {
@@ -561,8 +562,8 @@ class Calendar extends PureComponent<CalendarProps, CalendarState> {
                       styles={this.styles}
                       style={
                         isVertical
-                          ? { height: this.estimateMonthSize(index) }
-                          : { height: scrollArea.monthHeight, width: this.estimateMonthSize(index) }
+                          ? { height: this.estimateMonthSize(index, {}) }
+                          : { height: scrollArea.monthHeight, width: this.estimateMonthSize(index, {}) }
                       }
                       showMonthName
                       showWeekDays={!isVertical}
