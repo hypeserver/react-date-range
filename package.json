@@ -29,7 +29,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/hypeserver/react-date-range"
+    "url": "http://github.com/hypeserver/react-date-range/"
   },
   "bugs": {
     "url": "http://github.com/hypeserver/react-date-range/issues"
