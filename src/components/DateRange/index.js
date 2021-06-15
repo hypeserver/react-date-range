@@ -140,6 +140,10 @@ class DateRange extends Component {
         ref={target => {
           this.calendar = target;
         }}
+        selectablePassive={
+          !(this.props.scroll?.enabled || Calendar.defaultProps.scroll.enabled) &&
+          this.props.selectablePassive
+        }
       />
     );
   }
