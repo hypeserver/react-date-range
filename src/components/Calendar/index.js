@@ -545,6 +545,7 @@ Calendar.defaultProps = {
   dragSelectionEnabled: true,
   fixedHeight: false,
   ariaLabels: {},
+  selectablePassive: false,
 };
 
 Calendar.propTypes = {
@@ -599,6 +600,7 @@ Calendar.propTypes = {
   dragSelectionEnabled: PropTypes.bool,
   fixedHeight: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
+  selectablePassive: PropTypes.bool,
 };
 
 export default Calendar;

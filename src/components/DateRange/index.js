@@ -152,6 +152,7 @@ DateRange.defaultProps = {
   retainEndDateOnFirstSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: [],
+  selectablePassive: false,
 };
 
 DateRange.propTypes = {
@@ -162,6 +163,7 @@ DateRange.propTypes = {
   ranges: PropTypes.arrayOf(rangeShape),
   moveRangeOnFirstSelection: PropTypes.bool,
   retainEndDateOnFirstSelection: PropTypes.bool,
+  selectablePassive: PropTypes.bool,
 };
 
 export default DateRange;
