@@ -12,6 +12,13 @@ export interface DateRange {
   autoFocus?: boolean
   disabled?: boolean
   color?: string
+  label?: string
+  key?: string
+}
+
+export interface DateOptions {
+  locale?: Locale
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
 }
 
 // export interface FocusDateProps {

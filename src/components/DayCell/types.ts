@@ -6,10 +6,8 @@ export interface ExtendedDateRange extends DateRange {
   isInRange: Boolean
 }
 
-export interface Preview {
-  startDate?: Date
-  endDate?: Date
-  color: string
+export interface Preview extends DateRange {
+  range?: DateRange
 }
 
 export interface Styles {
@@ -18,24 +16,25 @@ export interface Styles {
   dateDisplayItem?: string
   dateDisplayWrapper?: string
   day?: string
-  dayActive?: string
-  dayDisabled?: string
-  dayEndOfMonth?: string
-  dayEndOfWeek?: string
-  dayEndPreview?: string
-  dayHovered?: string
-  dayInPreview?: string
+  dayActive: string
+  dayDisabled: string
+  dayEndOfMonth: string
+  dayEndOfWeek: string
+  dayEndPreview: string
+  dayHovered: string
+  dayInPreview: string
   dayNumber?: string
-  dayPassive?: string
+  dayPassive: string
   days?: string
-  dayStartOfMonth?: string
-  dayStartOfWeek?: string
-  dayStartPreview?: string
-  dayToday?: string
-  dayWeekend?: string
-  endEdge?: string
+  dayStartOfMonth: string
+  dayStartOfWeek: string
+  dayStartPreview: string
+  dateRangePickerWrapper?: string
+  dayToday: string
+  dayWeekend: string
+  endEdge: string
   infiniteMonths?: string
-  inRange?: string
+  inRange: string
   month?: string
   monthAndYearDivider?: string
   monthAndYearPickers?: string
@@ -49,11 +48,14 @@ export interface Styles {
   nextPrevButton?: string
   prevButton?: string
   selected?: string
-  startEdge?: string
+  startEdge: string
   weekDay?: string
   weekDays?: string
   yearPicker?: string
   dateRangeWrapper?: string
+  inputRange?: string
+  inputRangeInput?: string
+  inputRangeLabel?: string
   // FIXME
   dateDisplayItemActive?: any
 }

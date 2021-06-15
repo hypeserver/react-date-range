@@ -3,11 +3,30 @@ import React, { Component, EventHandler, FocusEvent, KeyboardEventHandler, Mouse
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
-import { DisplayMode } from '../../utilsTypes';
-import { DateRange } from '../../defaultRangesTypes';
+import { DateRange, DisplayMode } from '../../utilsTypes';
 import { ExtendedDateRange, Preview, Styles } from './types';
 
-
+// interface DayCellStyles {
+//   day: string
+//   dayActive: string
+//   dayDisabled: string
+//   dayEndOfMonth: string
+//   dayEndOfWeek: string
+//   dayEndPreview: string
+//   dayHovered: string
+//   dayInPreview: string
+//   dayNumber: string
+//   dayPassive: string
+//   dayStartOfMonth: string
+//   dayStartOfWeek: string
+//   dayStartPreview: string
+//   dayToday: string
+//   dayWeekend: string
+//   endEdge: string
+//   inRange: string
+//   selected: string
+//   startEdge: string
+// }
 export interface DayCellProps {
   day: Date
   date: Date
@@ -20,7 +39,7 @@ export interface DayCellProps {
   onMouseDown: (date: Date) => void
   onMouseUp: (date: Date) => void
   onMouseEnter: (date: Date) => void
-  onPreviewChange: (date?: Date) => void
+  onPreviewChange: (preview?: Preview) => void
   ranges: DateRange[]
   preview: Preview | null
   styles: Styles
@@ -38,10 +57,10 @@ interface DayCellState {
 }
 
 class DayCell extends Component<DayCellProps, DayCellState> {
-  public static propTypes = {};
+  static propTypes = {};
   static defaultProps = {};
-  // FIXME: context is deprecated?
-  constructor(props: DayCellProps, context) {
+  // FIXME: context
+  constructor(props: DayCellProps, context: any) {
     super(props, context);
 
     this.state = {

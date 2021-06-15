@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import DateRange from '../DateRange';
-import DefinedRange from '../DefinedRange';
+import DateRange, { DateRangeProps } from '../DateRange';
+import DefinedRange, { DefinedRangeProps } from '../DefinedRange';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import classnames from 'classnames';
 import coreStyles from '../../styles';
+import { DateRange as DateRangeObject  } from '../../utilsTypes';
+import { Preview, Styles } from '../DayCell/types';
 
-class DateRangePicker extends Component {
-  constructor(props) {
+
+interface DateRangePickerProps extends DateRangeProps, DefinedRangeProps  {
+  classNames: string[]
+  ranges: DateRangeObject[]
+  className: string
+  styles: Styles
+}
+
+interface DateRangePickerState {
+  focusedRange: number[]
+}
+
+
+class DateRangePicker extends Component<DateRangePickerProps, DateRangePickerState> {
+  static propTypes: any;
+  static defaultProps: Styles;
+
+  styles: Styles;
+  // FIXME
+  dateRange?: DateRange | null;
+
+  constructor(props: DateRangePickerProps) {
     super(props);
     this.state = {
       focusedRange: [findNextRangeIndex(props.ranges), 0],
@@ -19,29 +41,24 @@ class DateRangePicker extends Component {
     return (
       <div className={classnames(this.styles.dateRangePickerWrapper, this.props.className)}>
         <DefinedRange
+          {...this.props}
           focusedRange={focusedRange}
           onPreviewChange={value =>
-            this.dateRange.updatePreview(
-              value ? this.dateRange.calcNewSelection(value, typeof value === 'string') : null
+            value && this.dateRange?.updatePreview(
+              this.dateRange?.calcNewSelection(value, typeof value === 'string')
             )
           }
-          {...this.props}
-          range={this.props.ranges[focusedRange[0]]}
-          className={undefined}
         />
         <DateRange
+          {...this.props}
           onRangeFocusChange={focusedRange => this.setState({ focusedRange })}
           focusedRange={focusedRange}
-          {...this.props}
           ref={t => (this.dateRange = t)}
-          className={undefined}
         />
       </div>
     );
   }
 }
-
-DateRangePicker.defaultProps = {};
 
 DateRangePicker.propTypes = {
   ...DateRange.propTypes,

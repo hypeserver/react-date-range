@@ -31,7 +31,7 @@ import coreStyles from '../../styles';
 import { ariaLabelsShape } from '../../accessibility';
 import { ExtendedDateRange, Preview, Styles } from '../DayCell/types';
 import { AriaLabelsShape, CalendarDirection, ChangeDateMode, Scroll } from './types';
-import { DateRange, DisplayMode } from '../../utilsTypes';
+import { DateOptions, DateRange, DisplayMode } from '../../utilsTypes';
 
 const DEFAULT_PROPS: CalendarProps = {
   showMonthArrow: true,
@@ -64,12 +64,6 @@ const DEFAULT_PROPS: CalendarProps = {
   dragSelectionEnabled: true,
   fixedHeight: false,
 };
-
-
-interface DateOptions {
-  locale?: Locale
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
-}
 
 export interface CalendarProps extends MonthProps {
   locale: Locale
@@ -116,7 +110,8 @@ class Calendar extends PureComponent<CalendarProps, CalendarState> {
   list: ReactList | null = null
   defaultProps: CalendarProps = DEFAULT_PROPS
 
-  constructor(props: CalendarProps, context) {
+  // FIXME
+  constructor(props: CalendarProps, context: any) {
     super(props, context);
     this.dateOptions = { locale: props.locale };
     if (props.weekStartsOn !== undefined) this.dateOptions.weekStartsOn = props.weekStartsOn;
@@ -185,18 +180,20 @@ class Calendar extends PureComponent<CalendarProps, CalendarState> {
     const newFocus = calcFocusDate(this.state.focusedDate, newProps);
     this.focusToDate(newFocus, newProps);
   };
-  updatePreview = (val: Date) => {
+
+  updatePreview = (val: Date ) => {
     if (!val) {
       this.setState({ preview: null });
       return;
     }
-    const preview = {
+    const preview: Preview = {
       startDate: val,
       endDate: val,
       color: this.props.color,
     };
     this.setState({ preview });
   };
+
   componentDidMount() {
     if (this.props.scroll.enabled) {
       // prevent react-list's initial render focus problem
@@ -451,7 +448,7 @@ class Calendar extends PureComponent<CalendarProps, CalendarState> {
       endDate: date,
     };
     if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
-      this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
+      this.setState({ drag: { status: false, range: {} } }, () => onChange?.(date));
     } else {
       this.setState({ drag: { status: false, range: {} } }, () => {
         updateRange?.(newRange);

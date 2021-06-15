@@ -69,8 +69,10 @@ export function getMonthDisplayRange(month: Date, dateOptions: object, fixedHeig
   };
 }
 
+interface GenericStylesObject { [key: string]: string; }
+
 // FIXME: replace any
-export function generateStyles(sources: any[]): Styles {
+export function generateStyles(sources: any[]): any {
   if (!sources.length) return {};
   const generatedStyles = sources
     .filter(source => Boolean(source))

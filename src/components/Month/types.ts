@@ -1,4 +1,5 @@
-import { DateRange } from "../../defaultRangesTypes";
+import { DateRange } from "../../utilsTypes";
+
 
 
 export interface Drag {

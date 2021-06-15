@@ -16,8 +16,7 @@ import {
   eachDayOfInterval,
 } from 'date-fns';
 import { getMonthDisplayRange } from '../../utils';
-import { DisplayMode } from '../../utilsTypes';
-import { DateRange } from '../../defaultRangesTypes';
+import { DateRange, DisplayMode } from '../../utilsTypes';
 import { Preview, Styles } from '../DayCell/types';
 import { Drag } from './types';
 
@@ -46,7 +45,7 @@ export interface MonthProps extends DayCellProps {
   ranges: DateRange[]
   monthDisplayFormat: string
   drag: Drag
-  preview: Preview
+  preview: Preview | null
   disabledDates: Date[]
   focusedRange: number[]
   weekdayDisplayFormat: string
@@ -66,7 +65,7 @@ export interface MonthProps extends DayCellProps {
 }
 
 class Month extends PureComponent<MonthProps> {
-  public static propTypes = {};
+  static propTypes = {};
   static defaultProps = {}
 
   render() {

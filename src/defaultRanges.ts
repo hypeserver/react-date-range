@@ -10,7 +10,8 @@ import {
   isSameDay,
   differenceInCalendarDays,
 } from 'date-fns';
-import { DateRange, InputRange, StaticRange } from './defaultRangesTypes';
+import { InputRange, StaticRange } from './defaultRangesTypes';
+import { DateRange } from "./utilsTypes";
 
 const defineds = {
   startOfWeek: startOfWeek(new Date()),
