@@ -1,11 +1,12 @@
 import classnames from 'classnames';
 import {
-  addMonths,
-  areIntervalsOverlapping,
   startOfMonth,
   endOfMonth,
   startOfWeek,
   endOfWeek,
+  differenceInCalendarDays,
+  differenceInCalendarMonths,
+  addDays,
 } from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
@@ -33,11 +34,7 @@ export function calcFocusDate(currentFocusedDate, props) {
 
   // // just return targetDate for native scrolled calendars
   // if (props.scroll.enabled) return targetDate;
-  const currentFocusInterval = {
-    start: startOfMonth(currentFocusedDate),
-    end: endOfMonth(addMonths(currentFocusedDate, months - 1)),
-  };
-  if (areIntervalsOverlapping(targetInterval, currentFocusInterval)) {
+  if (differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
     // don't change focused if new selection in view area
     return currentFocusedDate;
   }
@@ -52,11 +49,14 @@ export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
   return ranges.findIndex(range => range.autoFocus !== false && !range.disabled);
 }
 
-export function getMonthDisplayRange(date, dateOptions) {
+export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
   const startDateOfMonth = startOfMonth(date, dateOptions);
   const endDateOfMonth = endOfMonth(date, dateOptions);
   const startDateOfCalendar = startOfWeek(startDateOfMonth, dateOptions);
-  const endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
+  let endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
+  if (fixedHeight && differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34) {
+    endDateOfCalendar = addDays(endDateOfCalendar, 7);
+  }
   return {
     start: startDateOfCalendar,
     end: endDateOfCalendar,
