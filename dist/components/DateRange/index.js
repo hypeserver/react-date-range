@@ -87,13 +87,14 @@ var DateRange = /*#__PURE__*/function (_Component) {
           onChange = _this$props.onChange,
           maxDate = _this$props.maxDate,
           moveRangeOnFirstSelection = _this$props.moveRangeOnFirstSelection,
+          retainEndDateOnFirstSelection = _this$props.retainEndDateOnFirstSelection,
           disabledDates = _this$props.disabledDates;
       var focusedRangeIndex = focusedRange[0];
       var selectedRange = ranges[focusedRangeIndex];
       if (!selectedRange || !onChange) return {};
       var startDate = selectedRange.startDate,
           endDate = selectedRange.endDate;
-      if (!endDate) endDate = new Date(startDate);
+      var now = new Date();
       var nextFocusRange;
 
       if (!isSingleValue) {
@@ -101,9 +102,26 @@ var DateRange = /*#__PURE__*/function (_Component) {
         endDate = value.endDate;
       } else if (focusedRange[1] === 0) {
         // startDate selection
-        var dayOffset = (0, _differenceInCalendarDays.default)(endDate, startDate);
+        var dayOffset = (0, _differenceInCalendarDays.default)(endDate || now, startDate);
+
+        var calculateEndDate = function calculateEndDate() {
+          if (moveRangeOnFirstSelection) {
+            return (0, _addDays.default)(value, dayOffset);
+          }
+
+          if (retainEndDateOnFirstSelection) {
+            if (!endDate || (0, _isBefore.default)(value, endDate)) {
+              return endDate;
+            }
+
+            return value;
+          }
+
+          return value || now;
+        };
+
         startDate = value;
-        endDate = moveRangeOnFirstSelection ? (0, _addDays.default)(value, dayOffset) : value;
+        endDate = calculateEndDate();
         if (maxDate) endDate = (0, _min.default)([endDate, maxDate]);
         nextFocusRange = [focusedRange[0], 1];
       } else {
@@ -245,6 +263,7 @@ DateRange.defaultProps = {
   classNames: {},
   ranges: [],
   moveRangeOnFirstSelection: false,
+  retainEndDateOnFirstSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: []
 };
@@ -253,7 +272,8 @@ DateRange.propTypes = _objectSpread(_objectSpread({}, _Calendar.default.propType
   onRangeFocusChange: _propTypes.default.func,
   className: _propTypes.default.string,
   ranges: _propTypes.default.arrayOf(_DayCell.rangeShape),
-  moveRangeOnFirstSelection: _propTypes.default.bool
+  moveRangeOnFirstSelection: _propTypes.default.bool,
+  retainEndDateOnFirstSelection: _propTypes.default.bool
 });
 var _default = DateRange;
 exports.default = _default;
