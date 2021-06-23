@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
-import { Displaymode, Preview, Range } from './types';
+import { DisplayMode, Preview, Range, IStyles } from '../../utils';
 
 interface IDayCellProps {
   day: Date
@@ -17,8 +17,8 @@ interface IDayCellProps {
   onMouseEnter: (day: Date) => void
   onPreviewChange: (day: Date) => void
   dayContentRenderer: (day: Date) => React.ReactNode
-  styles: {[key: string] : string}
-  displayMode: Displaymode
+  styles: IStyles
+  displayMode: DisplayMode
   disabled: boolean
   isPassive: boolean
   isToday: boolean
@@ -140,7 +140,7 @@ class DayCell extends Component<IDayCellProps, IDayCellState> {
   };
   renderSelectionPlaceholders = () => {
     const { styles, ranges, day } = this.props;
-    if (this.props.displayMode === Displaymode.DATE) {
+    if (this.props.displayMode === DisplayMode.DATE) {
       let isSelected = isSameDay(this.props.day, this.props.date);
       return isSelected ? (
         <span className={styles.selected} style={{ color: this.props.color }} />
