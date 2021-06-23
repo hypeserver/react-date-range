@@ -50,8 +50,8 @@
     "@types/react-test-renderer": "^16.9.2",
     "@types/styled-components": "^5.1.0",
     "classnames": "^2.2.6",
-    "prop-types": "^15.7.2",
     "node-sass": "4.14.1",
+    "prop-types": "^15.7.2",
     "react-dom": "^16.13.1",
     "react-list": "^0.8.13",
     "shallow-equal": "^1.2.1",
@@ -62,7 +62,6 @@
     "@types/react": "^15.0.0",
     "date-fns": ">=2.0.0"
   },
-
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -87,6 +86,9 @@
     "babel-jest": "^26.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "date-fns": "^2.8.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.2",
     "eslint": "^7.4.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
@@ -105,9 +107,9 @@
     "react-scripts": "3.4.1",
     "react-styleguidist": "^11.0.8",
     "react-test-renderer": "^16.13.1",
-    "semantic-release-cli": "^5.3.1",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1",
+    "semantic-release-cli": "^5.3.1",
     "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2",
     "typescript-plugin-styled-components": "^1.4.4"
