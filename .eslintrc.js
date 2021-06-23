@@ -8,6 +8,11 @@ module.exports = {
         "react",
         "prettier",
     ],
+    "settings": {
+        "react": {
+            "version": "latest"
+        }
+    },
     rules: {
         "prettier/prettier": ["error", {
             "singleQuote": true,
@@ -15,7 +20,7 @@ module.exports = {
             "bracketSpacing": true,
             "jsxBracketSameLine": true,
             "printWidth": 100,
-            "parser": "babylon",
+            "parser": "babel",
         }],
         "no-debugger": 0,
         "no-console": 0,
