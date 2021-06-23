@@ -204,3 +204,8 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
 - Make mobile friendly (integrate tap and swipe actions)
 - Add tests
 - Improve documentation
+
+
+TS TODO:
+- [ ] Add CI for publishing
+- [ ] Fix package.json info

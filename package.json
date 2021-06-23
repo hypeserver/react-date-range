@@ -4,13 +4,14 @@
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
-    "start": "yarn build:css & styleguidist server",
-    "build": "yarn build:css & yarn build:js & styleguidist build",
-    "build:css": "postcss 'src/styles.scss' -d dist --ext css & postcss 'src/theme/*.scss' -d 'dist/theme' --ext css",
-    "build:js": "babel ./src --out-dir ./dist --ignore test.js",
-    "lint": "eslint 'src/**/*.js'",
-    "test": "jest",
-    "preversion": "yarn clear & yarn build"
+    "start": "styleguidist server",
+    "styleguide:build": "styleguidist build",
+    "build": "rimraf ./dist && NODE_ENV=production tsc",
+    "test": "yarn run jest --collectCoverage",
+    "test:watch": "yarn run jest --watch",
+    "test:update": "yarn run jest -u",
+    "test:no-warnings": "yarn run jest --watch --silent",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "keywords": [
     "react",
@@ -38,50 +39,77 @@
     "defaults"
   ],
   "dependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-test-renderer": "^16.9.2",
+    "@types/styled-components": "^5.1.0",
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
+    "node-sass": "4.14.1",
+    "react-dom": "^16.13.1",
     "react-list": "^0.8.13",
-    "shallow-equal": "^1.2.1"
+    "shallow-equal": "^1.2.1",
+    "styled-components": "^5.1.1",
+    "typescript": "~3.7.2"
   },
   "peerDependencies": {
-    "date-fns": "2.0.0-alpha.7 || >=2.0.0",
-    "react": "^0.14 || ^15.0.0-rc || >=15.0"
+    "@types/react": "^15.0.0",
+    "date-fns": ">=2.0.0"
+  },
+
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss}": [
+      "prettier --single-quote --write",
+      "eslint --fix"
+    ]
+  },
+  "types": "dist/index.d.ts",
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.4.4",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-export-default-from": "^7.7.4",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/preset-react": "^7.7.4",
-    "autoprefixer": "^9.7.3",
-    "babel-eslint": "^10.0.3",
-    "babel-loader": "^8.0.6",
-    "babel-plugin-date-fns": "^2.0.0",
-    "css-loader": "^3.2.0",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-typescript": "^7.10.1",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "babel-jest": "^26.1.0",
+    "babel-plugin-styled-components": "^1.10.7",
     "date-fns": "^2.8.1",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "enzyme-to-json": "^3.4.3",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.17.0",
-    "jest": "^24.9.0",
-    "normalize.css": "^8.0.1",
-    "postcss": "^7.0.25",
-    "postcss-cli": "^6.1.3",
-    "postcss-import": "^12.0.1",
-    "postcss-loader": "^3.0.0",
-    "precss": "^4.0.0",
-    "prettier": "^1.19.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-styleguidist": "^10.4.0",
-    "style-loader": "^1.0.0",
-    "url-loader": "^3.0.0",
-    "webpack": "^4.41.5"
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.6",
+    "husky": "^4.2.5",
+    "jest": "^26.1.0",
+    "jest-styled-components": "^7.0.2",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-docgen-typescript": "^1.18.0",
+    "react-scripts": "3.4.1",
+    "react-styleguidist": "^11.0.8",
+    "react-test-renderer": "^16.13.1",
+    "semantic-release-cli": "^5.3.1",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^17.1.1",
+    "ts-loader": "^7.0.5",
+    "ts-node": "^8.10.2",
+    "typescript-plugin-styled-components": "^1.4.4"
   }
 }
