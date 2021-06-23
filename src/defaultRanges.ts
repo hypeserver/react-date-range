@@ -113,7 +113,7 @@ export const defaultInputRanges: IInputRange[] = [
       };
     },
     getCurrentValue(range) {
-      if (range.endDate && !isSameDay(range.endDate, defineds.endOfToday)) return '-';
+      if (!range.endDate || !isSameDay(range.endDate, defineds.endOfToday)) return '-';
       if (!range.startDate) return '∞';
       return differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
     },
@@ -128,7 +128,7 @@ export const defaultInputRanges: IInputRange[] = [
       };
     },
     getCurrentValue(range) {
-      if (range.startDate && !isSameDay(range.startDate, defineds.startOfToday)) return '-';
+      if (!range.startDate || !isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.endDate) return '∞';
       return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
     },
