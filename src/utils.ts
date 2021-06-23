@@ -27,7 +27,6 @@ export interface Preview {
   color?: string
 }
 
-
 export interface Range {
   startDate?: Date
   endDate?: Date

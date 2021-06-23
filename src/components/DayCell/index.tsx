@@ -149,8 +149,8 @@ class DayCell extends Component<IDayCellProps, IDayCellState> {
 
     const inRanges: Range[] = []
     ranges.forEach((range) => {
-      let startDate: Date | null = range.startDate;
-      let endDate: Date | null = range.endDate;
+      let startDate = range.startDate || null;
+      let endDate = range.endDate || null;
       if (startDate && endDate && isBefore(endDate, startDate)) {
         [startDate, endDate] = [endDate, startDate];
       }
