@@ -25,5 +25,6 @@ const [state, setState] = useState([
   onChange={item => setState([item.selection])}
   moveRangeOnFirstSelection={false}
   ranges={state}
+  selectablePassive={true}
 />
 ```

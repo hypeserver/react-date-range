@@ -92,6 +92,7 @@ class Month extends PureComponent {
                   key={index}
                   disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
                   isPassive={
+                     !this.props.selectablePassive &&
                     !isWithinInterval(day, {
                       start: monthDisplay.startDateOfMonth,
                       end: monthDisplay.endDateOfMonth,
@@ -113,7 +114,9 @@ class Month extends PureComponent {
   }
 }
 
-Month.defaultProps = {};
+Month.defaultProps = {
+  selectablePassive: false,
+};
 
 Month.propTypes = {
   style: PropTypes.object,
@@ -143,6 +146,7 @@ Month.propTypes = {
   showWeekDays: PropTypes.bool,
   showMonthName: PropTypes.bool,
   fixedHeight: PropTypes.bool,
+  selectablePassive: PropTypes.bool,
 };
 
 export default Month;
