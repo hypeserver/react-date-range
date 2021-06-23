@@ -29,8 +29,8 @@ export interface Preview {
 
 
 export interface Range {
-  startDate: Date
-  endDate: Date
+  startDate?: Date
+  endDate?: Date
   // FIXME?
   isStartEdge?: boolean | null
   isEndEdge?: boolean | null
@@ -52,7 +52,7 @@ interface CalFocusDAteOptions {
 export function calcFocusDate(currentFocusedDate: Date, props: CalFocusDAteOptions): Date {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
   // find primary date according the props
-  let targetInterval: {start: Date, end: Date};
+  let targetInterval: {start?: Date, end?: Date};
   if (displayMode === DisplayMode.DATE_RANGE) {
     const range = ranges[focusedRange[0]] || {};
     targetInterval = {
