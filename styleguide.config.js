@@ -12,9 +12,6 @@ module.exports = {
     const name = path.basename(componentPath, '.tsx');
     return `import { ${name} } from 'react-date-range';`;
   },
-  styleguideComponents: {
-    Wrapper: path.join(__dirname, 'src/styleguide/ThemeWrapper')
-  },
   skipComponentsWithoutExample: true,
   version,
   propsParser: require('react-docgen-typescript').withCustomConfig(
