@@ -1,13 +1,35 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../styles';
 import { defaultInputRanges, defaultStaticRanges } from '../../defaultRanges';
 import { rangeShape } from '../DayCell';
 import InputRangeField from '../InputRangeField';
 import cx from 'classnames';
+import { DateRange } from '../../utilsTypes';
+import { InputRange, StaticRange } from '../../defaultRangesTypes';
+import { Preview } from '../DayCell/types';
 
-class DefinedRange extends Component {
-  constructor(props) {
+
+export interface DefinedRangeProps {
+  ranges: DateRange[]
+  focusedRange: number[]
+  className: string
+  rangeColors: string[]
+  headerContent: ReactNode
+  footerContent: ReactNode
+  inputRanges: InputRange[]
+  staticRanges: StaticRange[]
+  onPreviewChange: (preview?: Preview) => void
+  renderStaticRangeLabel: (range: StaticRange) => string
+  // FIXME
+  onChange: (ranges: [{ [key: string]: DateRange }]) => void
+}
+
+class DefinedRange extends Component<DefinedRangeProps> {
+  static propTypes = {}
+  static defaultProps = {}
+
+  constructor(props: DefinedRangeProps) {
     super(props);
     this.state = {
       rangeOffset: 0,
@@ -15,7 +37,7 @@ class DefinedRange extends Component {
     };
   }
 
-  handleRangeChange = range => {
+  handleRangeChange = (range: DateRange) => {
     const { onChange, ranges, focusedRange } = this.props;
     const selectedRange = ranges[focusedRange[0]];
     if (!onChange || !selectedRange) return;
@@ -24,7 +46,8 @@ class DefinedRange extends Component {
     });
   };
 
-  getRangeOptionValue(option) {
+  // FIXME
+  getRangeOptionValue(option: any) {
     const { ranges = [], focusedRange = [] } = this.props;
 
     if (typeof option.getCurrentValue !== 'function') {
@@ -35,7 +58,7 @@ class DefinedRange extends Component {
     return option.getCurrentValue(selectedRange) || '';
   }
 
-  getSelectedRange(ranges, staticRange) {
+  getSelectedRange(ranges: DateRange[], staticRange: StaticRange) {
     const focusedRangeIndex = ranges.findIndex(range => {
       if (!range.startDate || !range.endDate || range.disabled) return false;
       return staticRange.isSelected(range);
@@ -61,7 +84,7 @@ class DefinedRange extends Component {
       <div className={cx(styles.definedRangesWrapper, className)}>
         {headerContent}
         <div className={styles.staticRanges}>
-          {staticRanges.map((staticRange, i) => {
+          {staticRanges.map((staticRange: StaticRange, i: number) => {
             const { selectedRange, focusedRangeIndex } = this.getSelectedRange(ranges, staticRange);
             let labelContent;
 
@@ -78,19 +101,13 @@ class DefinedRange extends Component {
                   [styles.staticRangeSelected]: Boolean(selectedRange),
                 })}
                 style={{
-                  color: selectedRange
-                    ? selectedRange.color || rangeColors[focusedRangeIndex]
-                    : null,
+                  color: selectedRange?.color || rangeColors[focusedRangeIndex]
                 }}
                 key={i}
                 onClick={() => this.handleRangeChange(staticRange.range(this.props))}
-                onFocus={() => onPreviewChange && onPreviewChange(staticRange.range(this.props))}
-                onMouseOver={() =>
-                  onPreviewChange && onPreviewChange(staticRange.range(this.props))
-                }
-                onMouseLeave={() => {
-                  onPreviewChange && onPreviewChange();
-                }}>
+                onFocus={() => onPreviewChange?.(staticRange.range(this.props))}
+                onMouseOver={() => onPreviewChange?.(staticRange.range(this.props))}
+                onMouseLeave={() => onPreviewChange?.()}>
                 <span tabIndex={-1} className={styles.staticRangeLabel}>
                   {labelContent}
                 </span>
@@ -99,14 +116,14 @@ class DefinedRange extends Component {
           })}
         </div>
         <div className={styles.inputRanges}>
-          {inputRanges.map((rangeOption, i) => (
+          {inputRanges.map((rangeOption: InputRange, i: number) => (
             <InputRangeField
               key={i}
               styles={styles}
-              label={rangeOption.label}
+              label={rangeOption.label || ''}
               onFocus={() => this.setState({ focusedInput: i, rangeOffset: 0 })}
               onBlur={() => this.setState({ rangeOffset: 0 })}
-              onChange={value => this.handleRangeChange(rangeOption.range(value, this.props))}
+              onChange={value => this.handleRangeChange(rangeOption.range(new Date(value)))}
               value={this.getRangeOptionValue(rangeOption)}
             />
           ))}

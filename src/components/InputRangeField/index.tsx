@@ -1,15 +1,31 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, Component } from 'react';
 import PropTypes from 'prop-types';
+import { Styles } from '../DayCell/types';
 
 const MIN = 0;
 const MAX = 99999;
 
-class InputRangeField extends Component {
-  constructor(props, context) {
+interface InputRangeFieldProps {
+  value: number | string
+  label: string
+  styles: Styles
+  onChange: (value: number) => void
+  onFocus: () => void
+  onBlur: () => void
+  placeholder?: string
+}
+
+
+class InputRangeField extends Component<InputRangeFieldProps> {
+  static propTypes = {};
+  static defaultProps = {}
+
+  // FIXME: context
+  constructor(props: InputRangeFieldProps, context: any) {
     super(props, context);
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: InputRangeFieldProps) {
     const { value, label, placeholder } = this.props;
 
     return (
@@ -19,7 +35,7 @@ class InputRangeField extends Component {
     );
   }
 
-  onChange = e => {
+  onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { onChange } = this.props;
 
     let value = parseInt(e.target.value, 10);

@@ -8,12 +8,15 @@ import {
   differenceInCalendarMonths,
   addDays,
 } from 'date-fns';
+import { CalendarProps } from './components/Calendar';
+import { Styles } from './components/DayCell/types';
+import { DateRange, DisplayMode } from './utilsTypes';
 
-export function calcFocusDate(currentFocusedDate, props) {
+export function calcFocusDate(currentFocusedDate: Date | null, props: CalendarProps) {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
   // find primary date according the props
   let targetInterval;
-  if (displayMode === 'dateRange') {
+  if (displayMode === DisplayMode.DATE_RANGE) {
     const range = ranges[focusedRange[0]] || {};
     targetInterval = {
       start: range.startDate,
@@ -41,7 +44,7 @@ export function calcFocusDate(currentFocusedDate, props) {
   return targetDate;
 }
 
-export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
+export function findNextRangeIndex(ranges: DateRange[], currentRangeIndex = -1) {
   const nextIndex = ranges.findIndex(
     (range, i) => i > currentRangeIndex && range.autoFocus !== false && !range.disabled
   );
@@ -49,9 +52,10 @@ export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
   return ranges.findIndex(range => range.autoFocus !== false && !range.disabled);
 }
 
-export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
-  const startDateOfMonth = startOfMonth(date, dateOptions);
-  const endDateOfMonth = endOfMonth(date, dateOptions);
+// define dateOptions type
+export function getMonthDisplayRange(month: Date, dateOptions: object, fixedHeight: boolean) {
+  const startDateOfMonth = startOfMonth(month);
+  const endDateOfMonth = endOfMonth(month);
   const startDateOfCalendar = startOfWeek(startDateOfMonth, dateOptions);
   let endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
   if (fixedHeight && differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34) {
@@ -65,12 +69,15 @@ export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
   };
 }
 
-export function generateStyles(sources) {
+interface GenericStylesObject { [key: string]: string; }
+
+// FIXME: replace any
+export function generateStyles(sources: any[]): any {
   if (!sources.length) return {};
   const generatedStyles = sources
     .filter(source => Boolean(source))
     .reduce((styles, styleSource) => {
-      Object.keys(styleSource).forEach(key => {
+      Object.keys(styleSource).forEach(key=> {
         styles[key] = classnames(styles[key], styleSource[key]);
       });
       return styles;

@@ -2,9 +2,33 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { format, parse, isValid, isEqual } from 'date-fns';
+import { DateOptions } from '../../utilsTypes';
 
-class DateInput extends PureComponent {
-  constructor(props, context) {
+interface DateInputProps {
+  value: number | Date // ???
+  onChange: (value: Date) => void
+  className: string
+  placeholder: string
+  readOnly: boolean
+  disabled: boolean
+  onFocus: React.FocusEventHandler<HTMLInputElement>
+  dateDisplayFormat: string
+  dateOptions: DateOptions
+  // FIXME
+  ariaLabel: any
+}
+
+interface DateInputState {
+  changed: boolean
+  invalid: boolean
+  value: string
+}
+
+class DateInput extends PureComponent<DateInputProps, DateInputState> {
+  static propTypes = {}
+  static defaultProps = {}
+  // FIXME: context
+  constructor(props: DateInputProps, context: any) {
     super(props, context);
 
     this.state = {
@@ -14,7 +38,7 @@ class DateInput extends PureComponent {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: DateInputProps) {
     const { value } = prevProps;
 
     if (!isEqual(value, this.props.value)) {
@@ -22,14 +46,14 @@ class DateInput extends PureComponent {
     }
   }
 
-  formatDate({ value, dateDisplayFormat, dateOptions }) {
+  formatDate({ value, dateDisplayFormat, dateOptions }: { value: number | Date, dateDisplayFormat: string, dateOptions: object}) {
     if (value && isValid(value)) {
       return format(value, dateDisplayFormat, dateOptions);
     }
     return '';
   }
 
-  update(value) {
+  update(value: string) {
     const { invalid, changed } = this.state;
 
     if (invalid || !changed || !value) {
