@@ -73,6 +73,7 @@
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-list": "^0.8.5",
     "@types/react-test-renderer": "^16.9.2",
     "@typescript-eslint/eslint-plugin": "^3.6.0",
     "@typescript-eslint/parser": "^3.6.0",

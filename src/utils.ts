@@ -9,7 +9,14 @@ import {
   addDays,
 } from 'date-fns';
 
+export interface Drag {
+  status: any
+  range: Range
+  disablePreview: boolean
+}
+
 export interface IStyles { [key: string]: string }
+export interface IAriaLabels { [key: string]: string }
 
 export interface DateOptions {
   locale?: Locale
@@ -28,8 +35,8 @@ export interface Preview {
 }
 
 export interface Range {
-  startDate?: Date
-  endDate?: Date
+  startDate?: Date | null
+  endDate?: Date | null
   // FIXME?
   isStartEdge?: boolean | null
   isEndEdge?: boolean | null
@@ -37,26 +44,27 @@ export interface Range {
   color?: string | null
   autoFocus?: boolean
   disabled?: boolean
+  showDateDisplay?: boolean
 }
 
-interface CalFocusDAteOptions {
+interface CalFocusDateOptions {
   shownDate: Date
   date: Date
   months: number
   ranges: Range[]
-  focusedRange: number
+  focusedRange: number[]
   displayMode: DisplayMode
 }
 
-export function calcFocusDate(currentFocusedDate: Date, props: CalFocusDAteOptions): Date {
+export function calcFocusDate(currentFocusedDate: Date | null, props: CalFocusDateOptions): Date {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
   // find primary date according the props
   let targetInterval: {start?: Date, end?: Date};
   if (displayMode === DisplayMode.DATE_RANGE) {
     const range = ranges[focusedRange[0]] || {};
     targetInterval = {
-      start: range.startDate,
-      end: range.endDate,
+      start: range.startDate || undefined,
+      end: range.endDate || undefined,
     };
   } else {
     targetInterval = {

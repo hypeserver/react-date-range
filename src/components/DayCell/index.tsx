@@ -5,10 +5,10 @@ import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 import { DisplayMode, Preview, Range, IStyles } from '../../utils';
 
-interface IDayCellProps {
+export interface IDayCellProps {
   day: Date
   date: Date
-  preview: Preview
+  preview: Preview | null
   color: string
   dayDisplayFormat: string
   ranges: Range[]
@@ -35,7 +35,7 @@ interface IDayCellState {
 }
 
 class DayCell extends Component<IDayCellProps, IDayCellState> {
-  static defaultProps;
+  static defaultProps: Partial<IDayCellProps>;
   static propTypes;
 
   constructor(props, context) {
