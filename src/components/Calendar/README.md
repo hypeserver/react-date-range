@@ -1,8 +1,8 @@
 #### Example: Internationalization
 
 ```jsx inside Markdown
-import * as locales from 'react-date-range/dist/locale';
-import {useState} from 'react'
+import { locales } from 'react-date-range';
+import { useState } from 'react'
 
 const nameMapper = {
   ar: 'Arabic',
@@ -63,7 +63,6 @@ const localeOptions = Object.keys(locales)
 const [locale, setLocale] = React.useState('ja');
 const [date, setDate] = useState(null);
 
-
 <div style={{ display: 'flex', flexFlow: 'column nowrap' }}>
   <select
     style={{ margin: '20px auto' }}
@@ -76,7 +75,9 @@ const [date, setDate] = useState(null);
       </option>
     ))}
   </select>
-  <Calendar onChange={item => setDate(item)}
- locale={locales[locale]} date={date} />
+  <Calendar
+    onChange={item => setDate(item)}
+    locale={locales[locale]}
+    date={date} />
 </div>;
 ```
