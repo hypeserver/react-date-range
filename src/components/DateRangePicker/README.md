@@ -24,7 +24,7 @@ const [state, setState] = useState([
 />;
 ```
 
-#### Example: Backwards 2 Month View with preventUnnecessaryRefocus
+#### Example: Backwards 2 Month View with preventSnapRefocus
 
 ```jsx inside Markdown
 import { addDays } from 'date-fns';
@@ -45,7 +45,7 @@ const [state, setState] = useState([
   months={2}
   ranges={state}
   direction="horizontal"
-  preventUnnecessaryRefocus={true}
+  preventSnapRefocus={true}
   calendarFocus="backwards"
 />;
 ```

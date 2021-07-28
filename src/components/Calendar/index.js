@@ -78,12 +78,8 @@ class Calendar extends PureComponent {
   }
   focusToDate = (date, props = this.props, preventUnnecessary = true) => {
     if (!props.scroll.enabled) {
-      if (preventUnnecessary && props.preventUnnecessaryRefocus) {
-        const focusedDateDiff = differenceInCalendarMonths(
-          date,
-          this.state.focusedDate,
-          this.dateOptions
-        );
+      if (preventUnnecessary && props.preventSnapRefocus) {
+        const focusedDateDiff = differenceInCalendarMonths(date, this.state.focusedDate);
         const isAllowedForward = props.calendarFocus === 'forwards' && focusedDateDiff >= 0;
         const isAllowedBackward = props.calendarFocus === 'backwards' && focusedDateDiff <= 0;
         if ((isAllowedForward || isAllowedBackward) && Math.abs(focusedDateDiff) < props.months) {
@@ -561,7 +557,7 @@ Calendar.defaultProps = {
   dragSelectionEnabled: true,
   fixedHeight: false,
   calendarFocus: 'forwards',
-  preventUnnecessaryRefocus: false,
+  preventSnapRefocus: false,
   ariaLabels: {},
 };
 
@@ -617,7 +613,7 @@ Calendar.propTypes = {
   dragSelectionEnabled: PropTypes.bool,
   fixedHeight: PropTypes.bool,
   calendarFocus: PropTypes.string,
-  preventUnnecessaryRefocus: PropTypes.bool,
+  preventSnapRefocus: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
 };
 
