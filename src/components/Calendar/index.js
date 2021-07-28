@@ -497,10 +497,8 @@ class Calendar extends PureComponent {
               isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
-              let monthStep;
-              if (this.props.calendarFocus === 'forwards') {
-                monthStep = addMonths(this.state.focusedDate, i);
-              } else {
+              let monthStep = addMonths(this.state.focusedDate, i);;
+              if (this.props.calendarFocus === 'backwards') {
                 monthStep = subMonths(this.state.focusedDate, this.props.months - 1 - i);
               }
               return (
