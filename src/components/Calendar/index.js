@@ -122,7 +122,10 @@ class Calendar extends PureComponent {
       date: 'date',
     };
     const targetProp = propMapper[this.props.displayMode];
-    if (this.props[targetProp] !== prevProps[targetProp]) {
+    if (
+      this.props[targetProp] !== prevProps[targetProp] ||
+      this.props.focusedRange != prevProps.focusedRange
+    ) {
       this.updateShownDate(this.props);
     }
 
