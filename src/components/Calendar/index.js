@@ -9,6 +9,7 @@ import ReactList from 'react-list';
 import { shallowEqualObjects } from 'shallow-equal';
 import {
   addMonths,
+  subMonths,
   format,
   eachDayOfInterval,
   startOfWeek,
@@ -77,6 +78,14 @@ class Calendar extends PureComponent {
   }
   focusToDate = (date, props = this.props, preventUnnecessary = true) => {
     if (!props.scroll.enabled) {
+      if (preventUnnecessary && props.preventSnapRefocus) {
+        const focusedDateDiff = differenceInCalendarMonths(date, this.state.focusedDate);
+        const isAllowedForward = props.calendarFocus === 'forwards' && focusedDateDiff >= 0;
+        const isAllowedBackward = props.calendarFocus === 'backwards' && focusedDateDiff <= 0;
+        if ((isAllowedForward || isAllowedBackward) && Math.abs(focusedDateDiff) < props.months) {
+          return;
+        }
+      }
       this.setState({ focusedDate: date });
       return;
     }
@@ -484,7 +493,10 @@ class Calendar extends PureComponent {
               isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
-              const monthStep = addMonths(this.state.focusedDate, i);
+              let monthStep = addMonths(this.state.focusedDate, i);;
+              if (this.props.calendarFocus === 'backwards') {
+                monthStep = subMonths(this.state.focusedDate, this.props.months - 1 - i);
+              }
               return (
                 <Month
                   {...this.props}
@@ -544,6 +556,8 @@ Calendar.defaultProps = {
   editableDateInputs: false,
   dragSelectionEnabled: true,
   fixedHeight: false,
+  calendarFocus: 'forwards',
+  preventSnapRefocus: false,
   ariaLabels: {},
 };
 
@@ -598,6 +612,8 @@ Calendar.propTypes = {
   editableDateInputs: PropTypes.bool,
   dragSelectionEnabled: PropTypes.bool,
   fixedHeight: PropTypes.bool,
+  calendarFocus: PropTypes.string,
+  preventSnapRefocus: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
 };
 
