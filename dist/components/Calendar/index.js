@@ -57,6 +57,8 @@ var _eachDayOfInterval = _interopRequireDefault(require("date-fns/eachDayOfInter
 
 var _format = _interopRequireDefault(require("date-fns/format"));
 
+var _subMonths = _interopRequireDefault(require("date-fns/subMonths"));
+
 var _addMonths = _interopRequireDefault(require("date-fns/addMonths"));
 
 var _enUS = _interopRequireDefault(require("date-fns/locale/en-US"));
@@ -128,6 +130,16 @@ var Calendar = /*#__PURE__*/function (_PureComponent) {
       var preventUnnecessary = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
       if (!props.scroll.enabled) {
+        if (preventUnnecessary && props.preventSnapRefocus) {
+          var focusedDateDiff = (0, _differenceInCalendarMonths.default)(date, _this.state.focusedDate);
+          var isAllowedForward = props.calendarFocus === 'forwards' && focusedDateDiff >= 0;
+          var isAllowedBackward = props.calendarFocus === 'backwards' && focusedDateDiff <= 0;
+
+          if ((isAllowedForward || isAllowedBackward) && Math.abs(focusedDateDiff) < props.months) {
+            return;
+          }
+        }
+
         _this.setState({
           focusedDate: date
         });
@@ -692,6 +704,12 @@ var Calendar = /*#__PURE__*/function (_PureComponent) {
         className: (0, _classnames3.default)(this.styles.months, isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal)
       }, new Array(this.props.months).fill(null).map(function (_, i) {
         var monthStep = (0, _addMonths.default)(_this5.state.focusedDate, i);
+        ;
+
+        if (_this5.props.calendarFocus === 'backwards') {
+          monthStep = (0, _subMonths.default)(_this5.state.focusedDate, _this5.props.months - 1 - i);
+        }
+
         return /*#__PURE__*/_react.default.createElement(_Month.default, _extends({}, _this5.props, {
           onPreviewChange: onPreviewChange || _this5.updatePreview,
           preview: preview || _this5.state.preview,
@@ -749,6 +767,8 @@ Calendar.defaultProps = {
   editableDateInputs: false,
   dragSelectionEnabled: true,
   fixedHeight: false,
+  calendarFocus: 'forwards',
+  preventSnapRefocus: false,
   ariaLabels: {}
 };
 Calendar.propTypes = {
@@ -802,6 +822,8 @@ Calendar.propTypes = {
   editableDateInputs: _propTypes.default.bool,
   dragSelectionEnabled: _propTypes.default.bool,
   fixedHeight: _propTypes.default.bool,
+  calendarFocus: _propTypes.default.string,
+  preventSnapRefocus: _propTypes.default.bool,
   ariaLabels: _accessibility.ariaLabelsShape
 };
 var _default = Calendar;
