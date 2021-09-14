@@ -10,7 +10,15 @@ import {
 } from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
-  const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
+  const {
+    shownDate,
+    date,
+    months,
+    ranges,
+    focusedRange,
+    displayMode,
+    preventFocusOnDateChange,
+  } = props;
   // find primary date according the props
   let targetInterval;
   if (displayMode === 'dateRange') {
@@ -34,6 +42,10 @@ export function calcFocusDate(currentFocusedDate, props) {
 
   // // just return targetDate for native scrolled calendars
   // if (props.scroll.enabled) return targetDate;
+  if (preventFocusOnDateChange) {
+    return currentFocusedDate;
+  }
+
   if (differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
     // don't change focused if new selection in view area
     return currentFocusedDate;

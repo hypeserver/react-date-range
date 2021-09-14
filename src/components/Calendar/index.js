@@ -558,6 +558,7 @@ Calendar.defaultProps = {
   fixedHeight: false,
   calendarFocus: 'forwards',
   preventSnapRefocus: false,
+  preventFocusOnDateChange: false,
   ariaLabels: {},
 };
 
@@ -614,6 +615,7 @@ Calendar.propTypes = {
   fixedHeight: PropTypes.bool,
   calendarFocus: PropTypes.string,
   preventSnapRefocus: PropTypes.bool,
+  preventFocusOnDateChange: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
 };
 
