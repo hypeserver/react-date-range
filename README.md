@@ -129,7 +129,8 @@ showPreview(DateRange)               | bool      | true             | visibility
 editableDateInputs(Calendar)         | bool      | false            | whether dates can be edited in the Calendar's input fields
 dragSelectionEnabled(Calendar)       | bool      | true             | whether dates can be selected via drag n drop
 calendarFocus(Calendar)              | String    | 'forwards'       | Whether calendar focus month should be forward-driven or backwards-driven. can be 'forwards' or 'backwards'
-preventSnapRefocus(Calendar)  | bool      | false            | prevents unneceessary refocus of shown range on selection
+preventSnapRefocus(Calendar)         | bool      | false            | prevents unneceessary refocus of shown range on selection
+preventFocusOnDateChange(Calendar)   | bool      | false            | prevents any focus except the initial
 onPreviewChange(DateRange)           | Object    |                  | Callback function for preview changes
 dateDisplayFormat                    | String    | `MMM d, yyyy`    | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
 dayDisplayFormat                     | String    | `d`              | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
