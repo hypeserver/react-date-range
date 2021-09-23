@@ -15,6 +15,7 @@ export default {
   dayNumber: 'rdrDayNumber',
   dayPassive: 'rdrDayPassive',
   dayToday: 'rdrDayToday',
+  dayEnabledFirst: 'rdrDayEnabledFirst',
   dayStartOfWeek: 'rdrDayStartOfWeek',
   dayEndOfWeek: 'rdrDayEndOfWeek',
   daySelected: 'rdrDaySelected',

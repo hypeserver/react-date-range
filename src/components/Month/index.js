@@ -85,6 +85,7 @@ class Month extends PureComponent {
                   preview={showPreview ? this.props.preview : null}
                   isWeekend={isWeekend(day, this.props.dateOptions)}
                   isToday={isSameDay(day, now)}
+                  isFirstEnabledDay={minDate && isSameDay(day, minDate)}
                   isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
                   isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
                   isStartOfMonth={isStartOfMonth}

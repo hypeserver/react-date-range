@@ -60,6 +60,7 @@ class DayCell extends Component {
     const {
       isPassive,
       isToday,
+      isFirstEnabledDay,
       isWeekend,
       isStartOfWeek,
       isEndOfWeek,
@@ -73,6 +74,7 @@ class DayCell extends Component {
       [styles.dayPassive]: isPassive,
       [styles.dayDisabled]: disabled,
       [styles.dayToday]: isToday,
+      [styles.dayEnabledFirst]: isFirstEnabledDay,
       [styles.dayWeekend]: isWeekend,
       [styles.dayStartOfWeek]: isStartOfWeek,
       [styles.dayEndOfWeek]: isEndOfWeek,
@@ -170,10 +172,9 @@ class DayCell extends Component {
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
-          {
-            dayContentRenderer?.(this.props.day) ||
+          {dayContentRenderer?.(this.props.day) || (
             <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
-          }
+          )}
         </span>
       </button>
     );
@@ -207,6 +208,7 @@ DayCell.propTypes = {
   disabled: PropTypes.bool,
   isPassive: PropTypes.bool,
   isToday: PropTypes.bool,
+  isFirstEnabledDay: PropTypes.bool,
   isWeekend: PropTypes.bool,
   isStartOfWeek: PropTypes.bool,
   isEndOfWeek: PropTypes.bool,
