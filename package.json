@@ -1,6 +1,6 @@
 {
   "name": "react-date-range",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -24,7 +24,8 @@
     "Mehmet Kamil Morcay <mehmetmorcay@gmail.com> (https://github.com/mkg0)",
     "Kamyar Ghasemlou <github@kamy.me> (https://github.com/kamyar)",
     "Engin Semih Basmacı <semih.basmaci@gmail.com> (https://github.com/mortargrind)",
-    "Onur Kerimov <onurkerimov@gmail.com> (https://github.com/onurkerimov)"
+    "Onur Kerimov <onurkerimov@gmail.com> (https://github.com/onurkerimov)",
+    "Guillermo Pages<mail@guillermo.at> (https://github.com/gbili)"
   ],
   "license": "MIT",
   "repository": {
