@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../styles';
-import { defaultInputRanges, defaultStaticRanges } from '../../defaultRanges';
+import { defaultInputRangesGen, defaultStaticRangesGen } from '../../defaultRanges';
 import { rangeShape } from '../DayCell';
 import InputRangeField from '../InputRangeField';
 import cx from 'classnames';
@@ -9,6 +9,17 @@ import cx from 'classnames';
 class DefinedRange extends Component {
   constructor(props) {
     super(props);
+    this.dateOptions = {};
+    const weekStartsOn = props.weekStartsOn !== undefined ? props.weekStartsOn : 0;
+    this.dateOptions = {
+      weekStartsOn,
+      inputRanges:
+        props.inputRanges !== undefined ? props.inputRanges : defaultInputRangesGen(weekStartsOn),
+      staticRanges:
+        props.staticRanges !== undefined
+          ? props.staticRanges
+          : defaultStaticRangesGen(weekStartsOn),
+    };
     this.state = {
       rangeOffset: 0,
       focusedInput: -1,
@@ -49,13 +60,13 @@ class DefinedRange extends Component {
       headerContent,
       footerContent,
       onPreviewChange,
-      inputRanges,
-      staticRanges,
       ranges,
       renderStaticRangeLabel,
       rangeColors,
       className,
     } = this.props;
+
+    const { inputRanges, staticRanges } = this.dateOptions;
 
     return (
       <div className={cx(styles.definedRangesWrapper, className)}>
@@ -118,6 +129,7 @@ class DefinedRange extends Component {
 }
 
 DefinedRange.propTypes = {
+  weekStartsOn: PropTypes.number,
   inputRanges: PropTypes.array,
   staticRanges: PropTypes.array,
   ranges: PropTypes.arrayOf(rangeShape),
@@ -132,8 +144,6 @@ DefinedRange.propTypes = {
 };
 
 DefinedRange.defaultProps = {
-  inputRanges: defaultInputRanges,
-  staticRanges: defaultStaticRanges,
   ranges: [],
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   focusedRange: [0, 0],

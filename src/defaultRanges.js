@@ -11,11 +11,11 @@ import {
   differenceInCalendarDays,
 } from 'date-fns';
 
-const defineds = {
-  startOfWeek: startOfWeek(new Date()),
-  endOfWeek: endOfWeek(new Date()),
-  startOfLastWeek: startOfWeek(addDays(new Date(), -7)),
-  endOfLastWeek: endOfWeek(addDays(new Date(), -7)),
+const definedsGen = ({ weekStartsOn }) => ({
+  startOfWeek: startOfWeek(new Date(), { weekStartsOn }),
+  endOfWeek: endOfWeek(new Date(), { weekStartsOn }),
+  startOfLastWeek: startOfWeek(addDays(new Date(), -7), { weekStartsOn }),
+  endOfLastWeek: endOfWeek(addDays(new Date(), -7), { weekStartsOn }),
   startOfToday: startOfDay(new Date()),
   endOfToday: endOfDay(new Date()),
   startOfYesterday: startOfDay(addDays(new Date(), -1)),
@@ -24,7 +24,9 @@ const defineds = {
   endOfMonth: endOfMonth(new Date()),
   startOfLastMonth: startOfMonth(addMonths(new Date(), -1)),
   endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
-};
+});
+
+const defineds = definedsGen({ weekStartsOn: 0 });
 
 const staticRangeHandler = {
   range: {},
@@ -41,53 +43,55 @@ export function createStaticRanges(ranges) {
   return ranges.map(range => ({ ...staticRangeHandler, ...range }));
 }
 
-export const defaultStaticRanges = createStaticRanges([
-  {
-    label: 'Today',
-    range: () => ({
-      startDate: defineds.startOfToday,
-      endDate: defineds.endOfToday,
-    }),
-  },
-  {
-    label: 'Yesterday',
-    range: () => ({
-      startDate: defineds.startOfYesterday,
-      endDate: defineds.endOfYesterday,
-    }),
-  },
+export const defaultStaticRangesGen = defineds =>
+  createStaticRanges([
+    {
+      label: 'Last Month',
+      range: () => ({
+        startDate: defineds.startOfLastMonth,
+        endDate: defineds.endOfLastMonth,
+      }),
+    },
+    {
+      label: 'Last Week',
+      range: () => ({
+        startDate: defineds.startOfLastWeek,
+        endDate: defineds.endOfLastWeek,
+      }),
+    },
+    {
+      label: 'Yesterday',
+      range: () => ({
+        startDate: defineds.startOfYesterday,
+        endDate: defineds.endOfYesterday,
+      }),
+    },
+    {
+      label: 'Today',
+      range: () => ({
+        startDate: defineds.startOfToday,
+        endDate: defineds.endOfToday,
+      }),
+    },
+    {
+      label: 'This Week',
+      range: () => ({
+        startDate: defineds.startOfWeek,
+        endDate: defineds.endOfWeek,
+      }),
+    },
+    {
+      label: 'This Month',
+      range: () => ({
+        startDate: defineds.startOfMonth,
+        endDate: defineds.endOfMonth,
+      }),
+    },
+  ]);
 
-  {
-    label: 'This Week',
-    range: () => ({
-      startDate: defineds.startOfWeek,
-      endDate: defineds.endOfWeek,
-    }),
-  },
-  {
-    label: 'Last Week',
-    range: () => ({
-      startDate: defineds.startOfLastWeek,
-      endDate: defineds.endOfLastWeek,
-    }),
-  },
-  {
-    label: 'This Month',
-    range: () => ({
-      startDate: defineds.startOfMonth,
-      endDate: defineds.endOfMonth,
-    }),
-  },
-  {
-    label: 'Last Month',
-    range: () => ({
-      startDate: defineds.startOfLastMonth,
-      endDate: defineds.endOfLastMonth,
-    }),
-  },
-]);
+export const defaultStaticRanges = defaultStaticRangesGen(defineds);
 
-export const defaultInputRanges = [
+export const defaultInputRangesGen = defineds => [
   {
     label: 'days up to today',
     range(value) {
@@ -118,3 +122,5 @@ export const defaultInputRanges = [
     },
   },
 ];
+
+export const defaultInputRanges = defaultInputRangesGen(defineds);
