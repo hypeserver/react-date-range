@@ -1,6 +1,6 @@
 {
-  "name": "react-date-range",
-  "version": "1.4.1",
+  "name": "react-date-range-won",
+  "version": "1.5.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -41,6 +41,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
+    "ramda": "^0.27.1",
     "react-list": "^0.8.13",
     "shallow-equal": "^1.2.1"
   },
@@ -55,6 +56,11 @@
     "@babel/plugin-proposal-export-default-from": "^7.7.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.7.4",
+    "@types/jest": "^27.0.2",
+    "@types/ramda": "^0.27.45",
+    "@types/react": "^17.0.27",
+    "@types/react-list": "^0.8.6",
+    "@typescript-eslint/parser": "^4.33.0",
     "autoprefixer": "^9.7.3",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
@@ -82,6 +88,7 @@
     "react-dom": "^16.12.0",
     "react-styleguidist": "^10.4.0",
     "style-loader": "^1.0.0",
+    "typescript": "^4.4.3",
     "url-loader": "^3.0.0",
     "webpack": "^4.41.5"
   }

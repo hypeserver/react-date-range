@@ -10,8 +10,10 @@ import {
   isSameDay,
   differenceInCalendarDays,
 } from 'date-fns';
+import { LabeledStartEndDateGen, StartEndDateGen, SureStartEndDate, WeekStartsOn } from './types';
 
-const definedsGen = ({ weekStartsOn }) => ({
+type GenProps = { weekStartsOn: WeekStartsOn; }
+const definedsGen = ({ weekStartsOn }: GenProps): DefinedDates => ({
   startOfWeek: startOfWeek(new Date(), { weekStartsOn }),
   endOfWeek: endOfWeek(new Date(), { weekStartsOn }),
   startOfLastWeek: startOfWeek(addDays(new Date(), -7), { weekStartsOn }),
@@ -26,24 +28,39 @@ const definedsGen = ({ weekStartsOn }) => ({
   endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
 });
 
-const defineds = definedsGen({ weekStartsOn: 0 });
+type DefinedDates = {
+  startOfWeek: Date;
+  endOfWeek: Date;
+  startOfLastWeek: Date;
+  endOfLastWeek: Date;
+  startOfToday: Date;
+  endOfToday: Date;
+  startOfYesterday: Date;
+  endOfYesterday: Date;
+  startOfMonth: Date;
+  endOfMonth: Date;
+  startOfLastMonth: Date;
+  endOfLastMonth: Date;
+};
 
-const staticRangeHandler = {
-  range: {},
-  isSelected(range) {
+const defineds: DefinedDates = definedsGen({ weekStartsOn: 0 });
+
+const staticRangeHandler = (withRangeGen: { range: StartEndDateGen; }) => ({
+  ...withRangeGen,
+  isSelected(range: SureStartEndDate) {
     const definedRange = this.range();
     return (
       isSameDay(range.startDate, definedRange.startDate) &&
       isSameDay(range.endDate, definedRange.endDate)
     );
   },
-};
+});
 
-export function createStaticRanges(ranges) {
-  return ranges.map(range => ({ ...staticRangeHandler, ...range }));
+export function createStaticRanges(ranges: LabeledStartEndDateGen[]) {
+  return ranges.map(staticRangeHandler);
 }
 
-export const defaultStaticRangesGen = defineds =>
+export const defaultStaticRangesGen = (defineds: DefinedDates) =>
   createStaticRanges([
     {
       label: 'Last Month',
@@ -91,16 +108,16 @@ export const defaultStaticRangesGen = defineds =>
 
 export const defaultStaticRanges = defaultStaticRangesGen(defineds);
 
-export const defaultInputRangesGen = defineds => [
+export const defaultInputRangesGen = (defineds: DefinedDates) => [
   {
     label: 'days up to today',
-    range(value) {
+    range(value: any) {
       return {
         startDate: addDays(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
         endDate: defineds.endOfToday,
       };
     },
-    getCurrentValue(range) {
+    getCurrentValue(range: SureStartEndDate) {
       if (!isSameDay(range.endDate, defineds.endOfToday)) return '-';
       if (!range.startDate) return '∞';
       return differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
@@ -108,14 +125,14 @@ export const defaultInputRangesGen = defineds => [
   },
   {
     label: 'days starting today',
-    range(value) {
+    range(value: any) {
       const today = new Date();
       return {
         startDate: today,
         endDate: addDays(today, Math.max(Number(value), 1) - 1),
       };
     },
-    getCurrentValue(range) {
+    getCurrentValue(range: SureStartEndDate) {
       if (!isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.endDate) return '∞';
       return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
