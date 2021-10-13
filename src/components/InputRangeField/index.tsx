@@ -1,5 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler, Component, FocusEvent, FocusEventHandler } from 'react';
-import PropTypes from 'prop-types';
+import React, { ChangeEvent, Component, FocusEventHandler } from 'react';
 
 const MIN = 0;
 const MAX = 99999;
@@ -20,14 +19,15 @@ type ComponentProps = {
   onChange: (n: number) => void;
 };
 
-const defaultProps = {
-  value: '',
-  placeholder: '-',
-};
 
 class InputRangeField extends Component<ComponentProps> {
+  public static defaultProps = {
+    value: '',
+    placeholder: '-',
+  };
+
   constructor(props: ComponentProps) {
-    super({...defaultProps, ...props });
+    super(props);
   }
 
   shouldComponentUpdate(nextProps: ComponentProps) {

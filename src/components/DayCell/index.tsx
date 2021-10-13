@@ -22,7 +22,7 @@ type ComponentProps = {
   dayContentRenderer?: DateReceivingFunc;
   dayDisplayFormat: string;
   disabled: boolean;
-  displayMode: 'dateRange' | 'date';
+  displayMode?: 'dateRange' | 'date';
   isEndOfMonth: boolean;
   isEndOfWeek: boolean;
   isPassive: boolean;
@@ -217,16 +217,5 @@ class DayCell extends Component<ComponentProps, ComponentState> {
     );
   }
 }
-
-export const rangeShape = PropTypes.shape({
-  startDate: PropTypes.object,
-  endDate: PropTypes.object,
-  color: PropTypes.string,
-  key: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  disabled: PropTypes.bool,
-  showDateDisplay: PropTypes.bool,
-});
-
 
 export default DayCell;

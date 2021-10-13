@@ -19,6 +19,17 @@ export interface DateContainerType {
   date: Date;
 }
 
+export type AriaLabelShape = {
+  dateInput?: {
+    [x: string]: StartEndDate<Date | string>;
+  };
+  monthPicker?: string;
+  yearPicker?: string;
+  prevButton?: string;
+  nextButton?: string;
+}
+
+
 export interface CalendarTheme {
   DateRange?: React.CSSProperties;
   Calendar?: React.CSSProperties;
@@ -44,6 +55,17 @@ export interface CalendarTheme {
   PredefinedRangesItemActive?: React.CSSProperties;
 }
 
+export type ModeMapper = {
+  monthOffset: () => Date,
+  setMonth: () => Date,
+  setYear: () => Date,
+  set: () => number,
+}
+
+export function isModeMapperKey(s: string, o: ModeMapper): s is keyof ModeMapper {
+  return Object.keys(o).indexOf(s) !== -1;
+}
+
 export interface RangeWithKey extends Range {
   key: 'selection';
 }
@@ -59,7 +81,11 @@ export type DateOptions = { locale: Locale; weekStartsOn?: WeekStartsOn; };
 export function isRangeValue(value: Range | Date): value is Range {
   return value.hasOwnProperty('startDate') && value.hasOwnProperty('endDate');
 }
-export function isSureRange(range: Range): range is SureStartEndDate {
+
+export function isOnlyWithStartDate(value: Range | Date): value is Range {
+  return value.hasOwnProperty('startDate') && value.hasOwnProperty('endDate');
+}
+export function isSureRange<T>(range: Range & T): range is SureStartEndDate & T {
   return range.startDate instanceof Date && range.endDate instanceof Date;
 }
 
@@ -203,15 +229,54 @@ export type SureStartEndDate<D = Date> = {
   endDate: D;
 }
 
+export type SureStartMaybeEndDate<D = Date> = {
+  startDate: D;
+  endDate: D | null;
+}
+
+export type SureStartNoEndDate<D = Date> = {
+  startDate: D;
+  endDate: null;
+}
+
+export type MaybeMaybeRange<D = Date> = OtherRangeProps & (SureStartEndDate<D> | SureStartMaybeEndDate<D> | SureStartNoEndDate<D>);
+
+export function isNoEndDateRange(r: MaybeMaybeRange): r is SureStartNoEndDate {
+  return r.hasOwnProperty('startDate') && r.endDate === null;
+}
+
 export type StartEndDate<D = Date> = Partial<SureStartEndDate<D>>;
 
 export type StartEndDateGen = () => SureStartEndDate;
-export type LabeledStartEndDateGen = {
-  label: string;
-  range: StartEndDateGen;
+export type RangeGen = (props?: CommonCalendarProps) => Range;
+
+export type WithSureRangeGen = { range: StartEndDateGen; };
+export type WithRangeGen = { range: RangeGen; };
+export type WithRange = { range: Range; };
+export type WithRangeOrRangeGen = { range: Range | RangeGen; };
+
+export function isWithRangeGen(wr: WithRangeOrRangeGen): wr is WithRangeGen {
+  return typeof wr.range === 'function';
+}
+export function isWithRange(wr: WithRangeOrRangeGen): wr is WithRange {
+  return typeof wr.range !== 'function';
 }
 
-interface OtherRangeProps {
+export type LabeledStartEndDateGen = WithSureRangeGen & {
+  label: string;
+}
+
+export type Json =
+  | null
+  | string
+  | number
+  | boolean
+  | Array<JSON>
+  | {
+    [prop: string]: Json
+  }
+
+export interface OtherRangeProps {
   color?: string;
   key?: string;
   autoFocus?: boolean;
@@ -232,20 +297,26 @@ export interface ScrollOptions {
   calendarHeight?: number;
 }
 
-export interface DefinedRangeCommon {
-  label: string;
-  isSelected: (range: Range) => boolean;
+export type WithLabel = { label: string; };
+export type WithMaybeLabel = { label?: string; };
+export type WithMaybeId = { id?: string; };
+export type WithIsSelected = { isSelected: (range: SureStartEndDate) => boolean; }
+export interface DefinedRangeCommon extends WithMaybeLabel, WithMaybeId {
   hasCustomRendering?: boolean;
 }
 
-export interface StaticRange extends DefinedRangeCommon {
-  range: (props: CommonCalendarProps) => Range;
+export type WithRangeCallback = { range: (props?: CommonCalendarProps) => SureRange; }
+
+export interface StaticRange extends DefinedRangeCommon, WithRangeOrRangeGen, WithIsSelected {
 }
 
-export interface InputRange extends DefinedRangeCommon {
-  range: (value: string, props: CommonCalendarProps) => Range;
-  getCurrentValue: (range: Range) => string;
+export type StaticRangeWihLabel = StaticRange & WithLabel & WithIsSelected;
+
+export interface InputRange {
+  range: (value: Date | number, props?: CommonCalendarProps) => Range;
+  getCurrentValue: (range: SureStartEndDate) => number | "-" | "∞";
 }
+export type InputRangeWihLabel = InputRange & WithLabel;
 
 export type DefinedRange = StaticRange | InputRange;
 
@@ -256,8 +327,6 @@ export type DefinedRange = StaticRange | InputRange;
  */
 export type RangeFocus = [number, number];
 
-export interface Preview {
-  startDate: Date;
-  endDate: Date;
+export type Preview = MaybeMaybeRange & {
   color?: string;
 }

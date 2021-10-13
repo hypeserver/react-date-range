@@ -2,12 +2,20 @@ import type { Config } from '@jest/types';
 import { defaults } from 'jest-config';
 
 // Sync object
-const config: Config.InitialOptions = {
+const config = {
   verbose: true,
   testURL: 'http://localhost/',
   setupFiles: ['<rootDir>/setupTests.ts'],
-  moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
-  testPathIgnorePatterns: ['/node_modules/', '/src/', '/demo/dist/'],
+  maxWorkers: 100,
+  roots: ['<rootDir>/src'],
+  testMatch: [
+    "**/__tests__/**/*.+(ts|tsx|js)",
+    "**/?(*.)+(spec|test).+(ts|tsx|js)"
+  ],
+  testEnvironment: "jsdom",
+  transform: { "^.+\\.(ts|tsx)$": "ts-jest" },
+  moduleFileExtensions: ['ts', 'tsx', 'js'], //...defaults.moduleFileExtensions,
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/demo/dist/'],
   snapshotSerializers: ['enzyme-to-json/serializer'],
 };
 export default config;

@@ -29,6 +29,7 @@ const coreStyles = {
   infiniteMonths: 'rdrInfiniteMonths',
   inputRange: 'rdrInputRange',
   inputRangeInput: 'rdrInputRangeInput',
+  inputRangeLabel: 'rdrInputRangeLabel',
   inputRanges: 'rdrInputRanges',
   month: 'rdrMonth',
   monthAndYearDivider: 'rdrMonthAndYearDivider',

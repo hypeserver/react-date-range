@@ -1,7 +1,6 @@
 // /* -eslint-disable no-fallthrough */
 import React, { MouseEvent, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import DayCell, { DateReceivingFunc, OptionalDateReceivingFunc, rangeShape } from '../DayCell';
+import DayCell, { DateReceivingFunc, OptionalDateReceivingFunc } from '../DayCell';
 import {
   format,
   startOfDay,
@@ -14,26 +13,11 @@ import {
   isWeekend,
   isWithinInterval,
   eachDayOfInterval,
+  isValid,
 } from 'date-fns';
-import { getMonthDisplayRange } from '../../utils';
+import { getMonthDisplayRange, renderWeekdays } from '../../utils';
 import { CoreStyles } from '../../styles';
 import { DateOptions, Preview, Range } from '../../types';
-
-function renderWeekdays(styles: CoreStyles, dateOptions: DateOptions, weekdayDisplayFormat: string) {
-  const now = new Date();
-  return (
-    <div className={styles.weekDays}>
-      {eachDayOfInterval({
-        start: startOfWeek(now, dateOptions),
-        end: endOfWeek(now, dateOptions),
-      }).map((day, i) => (
-        <span className={styles.weekDay} key={i}>
-          {format(day, weekdayDisplayFormat, dateOptions)}
-        </span>
-      ))}
-    </div>
-  );
-}
 
 export type Drag = {
   range: Range;
@@ -42,44 +26,40 @@ export type Drag = {
 }
 
 type ComponentProps = {
-  style?: React.CSSProperties;
-  styles: CoreStyles;
-  month: Date;
-  drag: Drag,
   dateOptions: DateOptions,
+  dayDisplayFormat: string;
   disabledDates: Date[];
   disabledDay: (date: Date) => boolean;
-  preview?: Preview | null;
-  showPreview: boolean;
-  displayMode: 'dateRange' | 'date';
-  minDate: Date;
-  maxDate: Date;
-  ranges: Range[];
+  displayMode?: 'dateRange' | 'date';
+  drag: Drag,
+  fixedHeight: boolean;
   focusedRange: number[];
-  onDragSelectionStart: DateReceivingFunc;
+  maxDate: Date;
+  minDate: Date;
+  month: Date;
+  monthDisplayFormat: string;
   onDragSelectionEnd: DateReceivingFunc;
   onDragSelectionMove: DateReceivingFunc;
-  onPreviewChange?: OptionalDateReceivingFunc;
+  onDragSelectionStart: DateReceivingFunc;
   onMouseLeave: (e: MouseEvent<HTMLDivElement>) => void;
-  monthDisplayFormat: string;
-  weekdayDisplayFormat: string;
-  dayDisplayFormat: string;
-  showWeekDays: boolean,
+  onPreviewChange?: OptionalDateReceivingFunc;
+  preview?: Preview | null;
+  ranges: Range[];
   showMonthName: boolean;
-  fixedHeight: boolean;
+  showPreview: boolean;
+  showWeekDays: boolean,
+  style?: React.CSSProperties;
+  styles: CoreStyles;
+  weekdayDisplayFormat: string;
 };
 
 class Month extends PureComponent<ComponentProps> {
   render() {
     const now = new Date();
-    const { displayMode, focusedRange, drag, styles, disabledDates, disabledDay } = this.props;
+    const { dateOptions, displayMode, month, fixedHeight, focusedRange, drag, styles, disabledDates, disabledDay } = this.props;
     const minDate = this.props.minDate && startOfDay(this.props.minDate);
     const maxDate = this.props.maxDate && endOfDay(this.props.maxDate);
-    const monthDisplay = getMonthDisplayRange(
-      this.props.month,
-      this.props.dateOptions,
-      this.props.fixedHeight
-    );
+    const monthDisplay = getMonthDisplayRange(month, dateOptions, fixedHeight);
     let ranges = this.props.ranges;
     if (displayMode === 'dateRange' && drag.status) {
       const { startDate, endDate } = drag.range;
@@ -97,11 +77,11 @@ class Month extends PureComponent<ComponentProps> {
       <div className={styles.month} style={this.props.style}>
         {this.props.showMonthName ? (
           <div className={styles.monthName}>
-            {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
+            {format(month, this.props.monthDisplayFormat, dateOptions)}
           </div>
         ) : null}
         {this.props.showWeekDays &&
-          renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat)}
+          renderWeekdays(styles, dateOptions, this.props.weekdayDisplayFormat)}
         <div className={styles.days} onMouseLeave={this.props.onMouseLeave}>
           {eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end }).map(
             (day, index) => {
@@ -121,8 +101,8 @@ class Month extends PureComponent<ComponentProps> {
                   preview={this.props.preview && showPreview ? this.props.preview : null}
                   isWeekend={isWeekend(day)}
                   isToday={isSameDay(day, now)}
-                  isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
-                  isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
+                  isStartOfWeek={isSameDay(day, startOfWeek(day, dateOptions))}
+                  isEndOfWeek={isSameDay(day, endOfWeek(day, dateOptions))}
                   isStartOfMonth={isStartOfMonth}
                   isEndOfMonth={isEndOfMonth}
                   key={index}

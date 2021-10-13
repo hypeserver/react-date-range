@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DefinedRange tests Should render dynamic static label contents correctly 1`] = `
+<div
+  className="rdrDefinedRangesWrapper"
+>
+  <div
+    className="rdrStaticRanges"
+  >
+    <button
+      className="rdrStaticRange"
+      key="0"
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+      type="button"
+    >
+      <span
+        className="rdrStaticRangeLabel"
+        tabIndex={-1}
+      >
+        <i
+          className="italic-label-content"
+        >
+          Italic Content
+        </i>
+      </span>
+    </button>
+    <button
+      className="rdrStaticRange"
+      key="1"
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+      type="button"
+    >
+      <span
+        className="rdrStaticRangeLabel"
+        tabIndex={-1}
+      >
+        Static Label
+      </span>
+    </button>
+    <button
+      className="rdrStaticRange"
+      key="2"
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+      type="button"
+    >
+      <span
+        className="rdrStaticRangeLabel"
+        tabIndex={-1}
+      >
+        <img
+          className="random-image"
+        />
+      </span>
+    </button>
+    <button
+      className="rdrStaticRange"
+      key="3"
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+      type="button"
+    >
+      <span
+        className="rdrStaticRangeLabel"
+        tabIndex={-1}
+      >
+        <b
+          className="bold-label-content"
+        >
+          Bold Content
+        </b>
+      </span>
+    </button>
+  </div>
+  <div
+    className="rdrInputRanges"
+  />
+</div>
+`;

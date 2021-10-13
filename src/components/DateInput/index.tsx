@@ -3,12 +3,6 @@ import classnames from 'classnames';
 import { format, parse, isValid, isEqual } from 'date-fns';
 import { DateOptions } from '../../types';
 
-const defaultProps = {
-  readOnly: true,
-  disabled: false,
-  dateDisplayFormat: 'MMM D, YYYY',
-};
-
 type FormatDateProps = {
   value?: Date;
   dateDisplayFormat: string;
@@ -32,8 +26,14 @@ type ComponentState = {
 }
 
 class DateInput extends PureComponent<CompontentProps, ComponentState> {
+  public static defaultProps = {
+    readOnly: true,
+    disabled: false,
+    dateDisplayFormat: 'MMM D, YYYY',
+  };
+
   constructor(props: CompontentProps) {
-    super({...defaultProps, ...props});
+    super(props);
 
     this.state = {
       invalid: false,

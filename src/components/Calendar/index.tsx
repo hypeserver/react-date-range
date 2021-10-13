@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import Month, { Drag } from '../Month';
 import DateInput from '../DateInput';
-import { calcFocusDate, generateStyles, getMonthDisplayRange, PartialStyles } from '../../utils';
+import { calcFocusDate, CalcFocusDateProps, generateStyles, getMonthDisplayRange, inferAriaLabel, renderWeekdays } from '../../utils';
 import { enUS } from '../../locale'
 import classnames from 'classnames';
 import ReactList from 'react-list';
@@ -10,10 +10,6 @@ import { shallowEqualObjects } from 'shallow-equal';
 import {
   addMonths,
   subMonths,
-  format,
-  eachDayOfInterval,
-  startOfWeek,
-  endOfWeek,
   isSameDay,
   addYears,
   setYear,
@@ -27,10 +23,11 @@ import {
   min,
   max,
   Locale,
+  isValid,
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
-import coreStyles, { ClassNames, CoreStyles } from '../../styles';
-import { CalendarDirection, CalendarFocus, CommonCalendarProps, DateOptions, DisplayMode, isSureRange, Preview, Range, RangeFocus, ScrollOptions, StartEndDate, SureStartEndDate } from '../../types';
+import coreStyles, { ClassNames } from '../../styles';
+import { AriaLabelShape, CalendarDirection, CalendarFocus, CommonCalendarProps, DateOptions, DisplayMode, isModeMapperKey, isSureRange, Preview, Range, RangeFocus, ScrollOptions, SureStartEndDate } from '../../types';
 import { DateReceivingFunc, OptionalDateReceivingFunc } from '../DayCell';
 
 type ScrollArea = {
@@ -51,18 +48,8 @@ type ComponentState = {
 
 }
 
-type AriaLabelShape = {
-  dateInput?: {
-    [x: string]: StartEndDate<Date | string>;
-  };
-  monthPicker?: string;
-  yearPicker?: string;
-  prevButton?: string;
-  nextButton?: string;
-}
-
-type DefaultCalendarProps = {
-  ariaLabels: AriaLabelShape;
+type DefaultCalendarProps = CalcFocusDateProps & {
+  ariaLabels?: AriaLabelShape;
   calendarFocus: CalendarFocus;
   classNames: Partial<ClassNames>;
   color: string;
@@ -71,7 +58,6 @@ type DefaultCalendarProps = {
   direction: CalendarDirection;
   disabledDates: Date[];
   disabledDay: (day: Date) => boolean;
-  displayMode: DisplayMode;
   dragSelectionEnabled: boolean;
   editableDateInputs: boolean;
   endDatePlaceholder: string;
@@ -95,6 +81,8 @@ type DefaultCalendarProps = {
   showPreview: boolean;
   startDatePlaceholder: string;
   weekdayDisplayFormat: string;
+  //added by g
+  date: Date | number;
 };
 
 export type CalendarProps = CommonCalendarProps & {
@@ -110,34 +98,6 @@ export type CalendarProps = CommonCalendarProps & {
   displayMode?: DisplayMode;
 }
 
-
-type ModeMapper = {
-  monthOffset: () => Date,
-  setMonth: () => Date,
-  setYear: () => Date,
-  set: () => number,
-}
-
-;
-
-const inferAriaLabel = (ariaLabels: AriaLabelShape, range: Range): string => {
-  const sd = ariaLabels.dateInput && range.key
-    && ariaLabels.dateInput[range.key]
-    && ariaLabels.dateInput[range.key].startDate;
-  if (sd instanceof Date) {
-    return sd.toLocaleString();
-  } else if (typeof sd === 'string') {
-    return sd;
-  } else {
-    console.log(ariaLabels);
-    throw new Error('Unsupported ariaLabel type');
-  }
-}
-
-function isModeMapperKey(s: string, o: ModeMapper): s is keyof ModeMapper {
-  return Object.keys(o).indexOf(s) !== -1;
-}
-
 type ComponentProps = CalendarProps & DefaultCalendarProps;
 
 class Calendar extends PureComponent<ComponentProps, ComponentState> {
@@ -149,10 +109,16 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
   list: ReactList | null;
 
   public static defaultProps: DefaultCalendarProps = {
-    ariaLabels: {},
+    ariaLabels: {
+      monthPicker: "month picker",
+      yearPicker: "year picker",
+      prevButton: "previous month button",
+      nextButton: "next month button",
+    },
     calendarFocus: 'forwards',
     classNames: {},
     color: '#3d91ff',
+    date: new Date(),
     dateDisplayFormat: 'MMM d, yyyy',
     dayDisplayFormat: 'd',
     direction: 'vertical',
@@ -190,9 +156,10 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
     this.listSizeCache = {};
     this.isFirstRender = true;
     this.list = null;
+    const focusedDate = calcFocusDate(null, this.props);
     this.state = {
       monthNames: this.getMonthNames(),
-      focusedDate: calcFocusDate(null, this.props),
+      focusedDate,
       drag: {
         status: false,
         range: { startDate: null, endDate: null },
@@ -246,7 +213,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
       this.setState({ focusedDate: date });
       return;
     }
-    const targetMonthIndex = differenceInCalendarMonths(date, props.minDate || new Date());
+    const targetMonthIndex = differenceInCalendarMonths(date, props.minDate);
     const visibleMonths = this.list?.getVisibleRange();
     if (preventUnnecessary && visibleMonths?.includes(targetMonthIndex)) return;
     this.isFirstRender = true;
@@ -286,11 +253,12 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
   }
 
   componentDidUpdate(prevProps: ComponentProps) {
+    const displayMode: DisplayMode = this.props.displayMode || 'date';
     const propMapper = {
       dateRange: 'ranges',
       date: 'date',
     };
-    const targetProp = propMapper[this.props.displayMode] as 'ranges' | 'date';
+    const targetProp = propMapper[displayMode] as 'ranges' | 'date';
     if (this.props[targetProp] !== prevProps[targetProp]) {
       this.updateShownDate(this.props);
     }
@@ -369,7 +337,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
             type="button"
             className={classnames(styles.nextPrevButton, styles.prevButton)}
             onClick={() => changeShownDate(-1, 'monthOffset')}
-            aria-label={ariaLabels.prevButton}>
+            aria-label={ariaLabels?.prevButton}>
             <i />
           </button>
         ) : null}
@@ -379,7 +347,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
               <select
                 value={focusedDate.getMonth()}
                 onChange={e => changeShownDate(e.target.value, 'setMonth')}
-                aria-label={ariaLabels.monthPicker}>
+                aria-label={ariaLabels?.monthPicker}>
                 {this.state.monthNames.map((monthName, i) => (
                   <option key={i} value={i}>
                     {monthName}
@@ -392,7 +360,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
               <select
                 value={focusedDate.getFullYear()}
                 onChange={e => changeShownDate(e.target.value, 'setYear')}
-                aria-label={ariaLabels.yearPicker}>
+                aria-label={ariaLabels?.yearPicker}>
                 {new Array(upperYearLimit - lowerYearLimit + 1)
                   .fill(upperYearLimit)
                   .map((val, i) => {
@@ -416,26 +384,10 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
             type="button"
             className={classnames(styles.nextPrevButton, styles.nextButton)}
             onClick={() => changeShownDate(+1, 'monthOffset')}
-            aria-label={ariaLabels.nextButton}>
+            aria-label={ariaLabels?.nextButton}>
             <i />
           </button>
         ) : null}
-      </div>
-    );
-  }
-
-  renderWeekdays() {
-    const now = new Date();
-    return (
-      <div className={this.styles.weekDays}>
-        {eachDayOfInterval({
-          start: startOfWeek(now, this.dateOptions),
-          end: endOfWeek(now, this.dateOptions),
-        }).map((day, i) => (
-          <span className={this.styles.weekDay} key={i}>
-            {format(day, this.props.weekdayDisplayFormat, this.dateOptions)}
-          </span>
-        ))}
       </div>
     );
   }
@@ -455,7 +407,6 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
     const styles = this.styles;
-
 
     return (
       <div className={styles.dateDisplayWrapper}>
@@ -477,7 +428,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
                 placeholder={startDatePlaceholder}
                 dateOptions={this.dateOptions}
                 dateDisplayFormat={dateDisplayFormat}
-                ariaLabel={inferAriaLabel(ariaLabels, range)}
+                ariaLabel={inferAriaLabel(range, ariaLabels, 'startDate')}
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 0)}
               />
@@ -491,7 +442,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
                 placeholder={endDatePlaceholder}
                 dateOptions={this.dateOptions}
                 dateDisplayFormat={dateDisplayFormat}
-                ariaLabel={inferAriaLabel(ariaLabels, range)}
+                ariaLabel={inferAriaLabel(range, ariaLabels, 'endDate')}
                 onChange={_ => this.onDragSelectionEnd}
                 onFocus={_ => this.handleRangeFocusChange(i, 1)}
               />
@@ -588,6 +539,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
       return scrollArea.monthHeight;
     }
   };
+
   render() {
     const {
       showDateDisplay,
@@ -612,6 +564,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
       ...range,
       color: range.color || rangeColors[i] || color,
     }));
+
     return (
       <div
         className={classnames(this.styles.calendarWrapper, className)}
@@ -623,7 +576,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
         {monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)}
         {scroll.enabled ? (
           <div>
-            {isVertical && this.renderWeekdays()}
+            {isVertical && renderWeekdays(this.styles, this.dateOptions, this.props.weekdayDisplayFormat)}
             <div
               className={classnames(
                 this.styles.infiniteMonths,
@@ -684,10 +637,9 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
               isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
-              let monthStep = addMonths(this.state.focusedDate, i);
-              if (this.props.calendarFocus === 'backwards') {
-                monthStep = subMonths(this.state.focusedDate, this.props.months - 1 - i);
-              }
+              const monthStep = this.props.calendarFocus === 'backwards'
+                ? subMonths(this.state.focusedDate, this.props.months - 1 - i)
+                : addMonths(this.state.focusedDate, i);
               return (
                 <Month
                   {...this.props}

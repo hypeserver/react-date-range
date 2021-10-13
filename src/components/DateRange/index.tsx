@@ -3,13 +3,13 @@ import Calendar from '../Calendar';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
 import coreStyles, { ClassNames } from '../../styles';
-import { DateRangeProps, isRangeValue, isSureRange, Preview, Range, RangeFocus, SureRange, SureStartEndDate } from '../../types';
+import { DateRangeProps, isNoEndDateRange, isRangeValue, isSureRange, MaybeMaybeRange, Preview, Range, RangeFocus, SureRange, SureStartEndDate } from '../../types';
 import classnames from 'classnames';
 import { compose } from 'ramda';
 
 type DefaultComponentProps = {
   classNames: Partial<ClassNames>;
-  ranges: Range[];
+  ranges: MaybeMaybeRange[];
   moveRangeOnFirstSelection: boolean;
   retainEndDateOnFirstSelection: boolean;
   rangeColors: string[];
@@ -20,15 +20,6 @@ type ComponentState = {
   focusedRange: RangeFocus;
   preview: null | Preview;
 }
-
-const defaultProps: DefaultComponentProps = {
-  classNames: {},
-  ranges: [],
-  moveRangeOnFirstSelection: false,
-  retainEndDateOnFirstSelection: false,
-  rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
-  disabledDates: [],
-};
 
 const calculateEndDate = (value: Date, now: Date, endDate: Date | null, dayOffset: number, moveRangeOnFirstSelection: boolean, retainEndDateOnFirstSelection: boolean, maxDate?: Date) => {
   const userEndDate = (() => {
@@ -44,15 +35,15 @@ const calculateEndDate = (value: Date, now: Date, endDate: Date | null, dayOffse
     return value || now;
   })();
   const nextEndDate = maxDate ? (userEndDate ? min([userEndDate, maxDate]) : maxDate) : userEndDate ;
-  if (nextEndDate === null) {
-    throw new Error('Bug! endDate is null, and it should not. RetainEndDateOnFirstSelection tiggers buggy behavior, what should the endDate be now that retainEDFS is true?');
-  }
+  // if (nextEndDate === null) {
+  //   throw new Error('Bug! endDate is null, and it should not. RetainEndDateOnFirstSelection tiggers buggy behavior, what should the endDate be now that retainEDFS is true?');
+  // }
   return nextEndDate;
 };
 
 type ShapeChangingParams = { value: Date | Range; };
 type BaseParams = { focusedRange: RangeFocus; disabledDates: Date[]; ranges: Range[]; }
-type ComputeProps = BaseParams & ShapeChangingParams & { selectedRange: SureStartEndDate; moveRangeOnFirstSelection: boolean; retainEndDateOnFirstSelection: boolean; maxDate?: Date; };
+type ComputeProps = BaseParams & ShapeChangingParams & { selectedRange: MaybeMaybeRange; moveRangeOnFirstSelection: boolean; retainEndDateOnFirstSelection: boolean; maxDate?: Date; };
 function computeStartDateEndDate({ value, selectedRange, focusedRange, disabledDates, moveRangeOnFirstSelection, retainEndDateOnFirstSelection, ranges, maxDate }: ComputeProps) {
   const base = {
     isStartDateSelected: focusedRange[1] === 0,
@@ -90,10 +81,10 @@ function computeStartDateEndDate({ value, selectedRange, focusedRange, disabledD
   }
 }
 
-type FlipProps = BaseParams & SureStartEndDate & { nextFocusRange?: RangeFocus; isStartDateSelected: boolean; };
+type FlipProps = BaseParams & MaybeMaybeRange & { nextFocusRange?: RangeFocus; isStartDateSelected: boolean; };
 const flipIfReversed = (params: FlipProps) => {
   const { startDate, endDate, isStartDateSelected } = params;
-  return isBefore(endDate, startDate)
+  return endDate && isBefore(endDate, startDate)
     ? {
       ...params,
       isStartDateSelected: !isStartDateSelected,
@@ -111,11 +102,10 @@ const getNextFocusRange = (ranges: Range[], focusedRange: RangeFocus, nextFocusR
 
 const computeRange = ({ disabledDates, startDate, endDate, isStartDateSelected, focusedRange, nextFocusRange, ranges }: FlipProps) => {
   const inValidDatesWithinRange = disabledDates.filter(disabledDate =>
-    isWithinInterval(disabledDate, {
+    endDate && isWithinInterval(disabledDate, {
       start: startDate,
       end: endDate,
-    })
-  );
+  }));
 
   const wasValid = !(inValidDatesWithinRange.length > 0);
 
@@ -139,7 +129,7 @@ type CalcNewSelectionRet = {
   wasValid: boolean;
   range: {
     startDate: Date;
-    endDate: Date;
+    endDate: Date | null;
   };
   nextFocusRange: RangeFocus;
 } | undefined;
@@ -149,16 +139,24 @@ const getRes = compose(computeRange, flipIfReversed, computeStartDateEndDate);
 type ComponentProps = DateRangeProps & DefaultComponentProps;
 
 class DateRange extends Component<ComponentProps, ComponentState> {
+  public static defaultProps: DefaultComponentProps = {
+    classNames: {},
+    ranges: [],
+    moveRangeOnFirstSelection: false,
+    retainEndDateOnFirstSelection: false,
+    rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+    disabledDates: [],
+  };
   styles: Partial<ClassNames>;
   calendar: Calendar | null;
 
   constructor(props: ComponentProps) {
-    super({ ...defaultProps, ...props });
+    super(props);
     this.state = {
-      focusedRange: props.initialFocusedRange || [findNextRangeIndex(props.ranges), 0],
+      focusedRange: props.initialFocusedRange || [findNextRangeIndex(this.props.ranges), 0],
       preview: null,
     };
-    this.styles = generateStyles([coreStyles, props.classNames]);
+    this.styles = generateStyles([coreStyles, this.props.classNames]);
     this.calendar = null;
   }
 
@@ -177,8 +175,10 @@ class DateRange extends Component<ComponentProps, ComponentState> {
 
     if (!selectedRange || !onChange) return;
 
-    if (!isSureRange(selectedRange)) {
-      throw new Error('Bug, expecting selected range to be a sure range, but it is not');
+    if (!isSureRange(selectedRange) && !isNoEndDateRange(selectedRange)) {
+      console.log('selectedRange', selectedRange);
+      console.log('value', value);
+      throw new Error('Bug, expecting selected range to be a sure range or no end date range, but it is neither');
     }
 
     return getRes({
@@ -221,7 +221,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
   };
 
-  updatePreview = (val?: { range: SureRange; }) => {
+  updatePreview = (val?: { range: MaybeMaybeRange; }) => {
     if (!val) {
       this.setState({ preview: null });
       return;
@@ -234,7 +234,6 @@ class DateRange extends Component<ComponentProps, ComponentState> {
   render() {
     return (
       <Calendar
-        date={new Date()}
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
         preview={this.state.preview}
@@ -243,7 +242,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
           this.updatePreview(newSelection);
         } }
         {...this.props}
-        displayMode="dateRange"
+        displayMode={"dateRange"}
         className={classnames(this.styles.dateRangeWrapper, this.props.className)}
         onChange={this.setSelection}
         updateRange={this.setSelection}

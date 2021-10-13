@@ -1,5 +1,6 @@
+import React from 'react';
 import classnames from 'classnames';
-import { DateInputType, Range } from '../src/types'
+import { AriaLabelShape, DateInputType, DateOptions, Range, SureRange, SureStartEndDate } from './types'
 import {
   startOfMonth,
   endOfMonth,
@@ -8,53 +9,45 @@ import {
   differenceInCalendarDays,
   differenceInCalendarMonths,
   addDays,
+  eachDayOfInterval,
+  format,
 } from 'date-fns';
-import coreStyles, { ClassNames, CoreStyles } from './styles';
-
-export type DateRange = {
-  dateStart: Date;
-  dateEnd: Date;
-}
+import { ClassNames, CoreStyles } from './styles';
 
 export type CalcFocusDateBaseProps = {
-  date: Date | number;
   months: number;
   shownDate?: Date;
   focusedRange?: number[];
 }
 
 export type CalcFocusDateRangeModeProps = CalcFocusDateBaseProps & {
-  ranges?: DateRange[];
+  ranges: Range[];
   displayMode: 'dateRange';
 };
 
-export type CalcFocusRangeModeProps = CalcFocusDateBaseProps & {
+export type CalcFocusDateModeProps = CalcFocusDateBaseProps & {
+  date?: Date | number;
   ranges?: Range[];
-  displayMode: 'date';
+  displayMode?: 'date';
 };
 
-export type CalcFocusDateProps = CalcFocusDateBaseProps & {
-  ranges?: DateRange[] | Range[];
-  displayMode: 'dateRange' | 'date';
-};
+export type CalcFocusDateProps = CalcFocusDateModeProps | CalcFocusDateRangeModeProps;
 
 function isDateRangeMode(p: CalcFocusDateProps): p is CalcFocusDateRangeModeProps {
   return p.displayMode === 'dateRange';
 }
 
-function isRangeMode(p: CalcFocusDateProps): p is CalcFocusRangeModeProps {
-  return p.displayMode === 'date';
+function isDateMode(p: CalcFocusDateProps): p is CalcFocusDateModeProps {
+  return !isDateRangeMode(p);
 }
 
-export function calcFocusDateMode(currentFocusedDate: Date | null, props: CalcFocusRangeModeProps) {
-  const { shownDate, date, months } = props;
-  // find primary date according the props
+export function calcFocusDateRangeModeLastPart(currentFocusedDate: Date | null, months: number, startInput: Date | number, endInput?: Date | number | null, shownDate?: Date) {
+
   const targetInterval = {
-    start: date,
-    end: date,
+    start: startOfMonth(startInput),
+    end: endOfMonth(endInput || startInput),
   };
-  targetInterval.start = startOfMonth(date || new Date());
-  targetInterval.end = endOfMonth(date);
+
   const targetDate = targetInterval.start || targetInterval.end || shownDate || new Date();
 
   // initial focus
@@ -67,6 +60,15 @@ export function calcFocusDateMode(currentFocusedDate: Date | null, props: CalcFo
     return currentFocusedDate;
   }
   return targetDate;
+}
+
+export function calcFocusDateMode(currentFocusedDate: Date | null, props: CalcFocusDateModeProps) {
+  const { shownDate, date, months } = props;
+  // find primary date according the props
+  const startInput = date || new Date();
+  const endInput = date;
+
+  return calcFocusDateRangeModeLastPart(currentFocusedDate, months, startInput, endInput, shownDate);
 }
 
 export function calcFocusDateRangeMode(currentFocusedDate: Date | null, props: CalcFocusDateRangeModeProps): Date {
@@ -74,19 +76,43 @@ export function calcFocusDateRangeMode(currentFocusedDate: Date | null, props: C
   // find primary date according the props
   const now = new Date();
   const range = (ranges && focusedRange && ranges.length > 0 && ranges[focusedRange[0]]) || {
-    dateStart: now,
-    dateEnd: now,
+    startDate: now,
+    endDate: now,
   };
-  const targetIntervalInput = {
-    start: range.dateStart,
-    end: range.dateEnd,
-  };
+  const startInput = range.startDate || new Date()
+  const endInput = range.endDate;
 
-  const targetInterval = {
-    start: startOfMonth(targetIntervalInput.start),
-    end: endOfMonth(targetIntervalInput.end || targetIntervalInput.start),
-  };
+  return calcFocusDateRangeModeLastPart(currentFocusedDate, months, startInput, endInput, shownDate);
+}
 
+export function calcFocusDate(currentFocusedDate: Date | null, props: CalcFocusDateProps) {
+  if (isDateRangeMode(props)) {
+    return calcFocusDateRangeMode(currentFocusedDate, props);
+  } else if (isDateMode(props)) {
+    return calcFocusDateMode(currentFocusedDate, props);
+  } else {
+    throw new Error('Never happened');
+  }
+}
+
+export function calcFocusDateBis(currentFocusedDate: Date | null, props: CalcFocusDateProps) {
+  const { shownDate, months } = props;
+  // find primary date according the props
+  let targetInterval;
+  if (isDateRangeMode(props)) {
+    const range = props.focusedRange && props.ranges[props.focusedRange[0]] || { startDate: undefined, endDate: undefined };
+    targetInterval = {
+      start: range.startDate,
+      end: range.endDate,
+    };
+  } else {
+    targetInterval = {
+      start: props.date,
+      end: props.date,
+    };
+  }
+  targetInterval.start = startOfMonth(targetInterval.start || new Date());
+  targetInterval.end = endOfMonth(targetInterval.end || targetInterval.start);
   const targetDate = targetInterval.start || targetInterval.end || shownDate || new Date();
 
   // initial focus
@@ -99,16 +125,6 @@ export function calcFocusDateRangeMode(currentFocusedDate: Date | null, props: C
     return currentFocusedDate;
   }
   return targetDate;
-}
-
-export function calcFocusDate(currentFocusedDate: Date | null, props: CalcFocusDateProps) {
-  if (isDateRangeMode(props)) {
-    return calcFocusDateRangeMode(currentFocusedDate, props);
-  } else if (isRangeMode(props)) {
-    return calcFocusDateMode(currentFocusedDate, props);
-  } else {
-    throw new Error('Never happened');
-  }
 }
 
 export function findNextRangeIndex(ranges: Range[], currentRangeIndex: number = -1) {
@@ -138,6 +154,23 @@ export function getMonthDisplayRange(date: Date, dateOptions: GetMonthDisplayRan
     endDateOfMonth,
   };
 }
+
+export function renderWeekdays(styles: CoreStyles, dateOptions: DateOptions, weekdayDisplayFormat: string) {
+  const now = new Date();
+  return (
+    <div className={styles.weekDays}>
+      {eachDayOfInterval({
+        start: startOfWeek(now, dateOptions),
+        end: endOfWeek(now, dateOptions),
+      }).map((day, i) => (
+        <span className={styles.weekDay} key={i}>
+          {format(day, weekdayDisplayFormat, dateOptions)}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 
 type JoinedStyles = Partial<CoreStyles & ClassNames>;
 
@@ -170,3 +203,30 @@ export function generateStyles(sources: [CoreStyles, PartialStyles | {} | undefi
     }, emptyStyles);
   return generatedStyles;
 }
+
+
+export function inferAriaLabel<T extends keyof SureStartEndDate<string>>(range: Range, ariaLabels: AriaLabelShape | undefined, key: T): string | undefined {
+  if (!ariaLabels) {
+    return undefined;
+  }
+
+  if (ariaLabels.dateInput && range.key && !ariaLabels.dateInput[range.key]) {
+    console.log('range', range);
+    console.log('ariaLabels', ariaLabels);
+    throw new Error('Range "key" property refering an ariaLabel prop name which does not exist ariaLabels.dateInput[range.key]: string');
+  }
+  const sd = (ariaLabels.dateInput && range.key
+    && ariaLabels.dateInput[range.key]) || ({
+      startDate: 'range start date',
+      endDate: 'range end date',
+    })[key];
+  if (sd instanceof Date) {
+    return sd.toLocaleString();
+  } else if (typeof sd === 'string') {
+    return sd;
+  } else {
+    console.log(ariaLabels);
+    throw new Error('Unsupported ariaLabel type');
+  }
+}
+

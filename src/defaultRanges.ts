@@ -10,7 +10,8 @@ import {
   isSameDay,
   differenceInCalendarDays,
 } from 'date-fns';
-import { LabeledStartEndDateGen, StartEndDateGen, SureStartEndDate, WeekStartsOn } from './types';
+import { compose } from 'ramda';
+import { InputRangeWihLabel, isWithRangeGen, Range, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
 
 type GenProps = { weekStartsOn: WeekStartsOn; }
 const definedsGen = ({ weekStartsOn }: GenProps): DefinedDates => ({
@@ -45,22 +46,41 @@ type DefinedDates = {
 
 const defineds: DefinedDates = definedsGen({ weekStartsOn: 0 });
 
-const staticRangeHandler = (withRangeGen: { range: StartEndDateGen; }) => ({
-  ...withRangeGen,
+export function getEmptyRange(startDate: Date | number = 0, endDate: Date | number = 0): SureStartEndDate<Date | number> {
+  return {
+    startDate,
+    endDate,
+  }
+}
+
+export function isSameRangeDay(someRange: Range, otherRange: Range): boolean {
+  const isSameStart = (someRange.startDate && otherRange.startDate && isSameDay(someRange.startDate, otherRange.startDate))
+    || (!someRange.startDate && !otherRange.startDate);
+  const isSameEnd = (someRange.endDate && otherRange.endDate && isSameDay(someRange.endDate, otherRange.endDate))
+    || (!someRange.endDate && !otherRange.endDate);
+  console.log('isSame start end', isSameStart, isSameEnd);
+  return isSameStart && isSameEnd;
+}
+
+export function extractRange(wr: WithRangeOrRangeGen): Range {
+  if (isWithRangeGen(wr)) {
+    return wr.range();
+  }
+  return wr.range as Range;
+}
+
+const staticRangeHandler = <B, U extends { [k: PropertyKey]: B; }, T extends WithRangeOrRangeGen & U>(withRangeOrRangeGen: T): T & WithIsSelected => ({
+  ...withRangeOrRangeGen,
   isSelected(range: SureStartEndDate) {
-    const definedRange = this.range();
-    return (
-      isSameDay(range.startDate, definedRange.startDate) &&
-      isSameDay(range.endDate, definedRange.endDate)
-    );
+    return isSameRangeDay(range, extractRange(this));
   },
 });
 
-export function createStaticRanges(ranges: LabeledStartEndDateGen[]) {
+export function createStaticRanges<B, U extends { [k: PropertyKey]: B; }, T extends WithRangeOrRangeGen & U>(ranges: T[]) {
   return ranges.map(staticRangeHandler);
 }
 
-export const defaultStaticRangesGen = (defineds: DefinedDates) =>
+export const defaultStaticRangesGenerator = (defineds: DefinedDates) =>
   createStaticRanges([
     {
       label: 'Last Month',
@@ -106,12 +126,13 @@ export const defaultStaticRangesGen = (defineds: DefinedDates) =>
     },
   ]);
 
-export const defaultStaticRanges = defaultStaticRangesGen(defineds);
+export const defaultStaticRangesGen = compose(defaultStaticRangesGenerator, definedsGen);
+export const defaultStaticRanges = defaultStaticRangesGenerator(defineds);
 
-export const defaultInputRangesGen = (defineds: DefinedDates) => [
+export const defaultInputRangesGenerator = (defineds: DefinedDates): InputRangeWihLabel[] => [
   {
     label: 'days up to today',
-    range(value: any) {
+    range(value: Date | number) {
       return {
         startDate: addDays(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
         endDate: defineds.endOfToday,
@@ -125,7 +146,7 @@ export const defaultInputRangesGen = (defineds: DefinedDates) => [
   },
   {
     label: 'days starting today',
-    range(value: any) {
+    range(value: Date | number) {
       const today = new Date();
       return {
         startDate: today,
@@ -140,4 +161,5 @@ export const defaultInputRangesGen = (defineds: DefinedDates) => [
   },
 ];
 
-export const defaultInputRanges = defaultInputRangesGen(defineds);
+export const defaultInputRangesGen = compose(defaultInputRangesGenerator, definedsGen);
+export const defaultInputRanges = defaultInputRangesGenerator(defineds);
