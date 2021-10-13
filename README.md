@@ -16,9 +16,9 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 - Keyboard friendly
 - Fully Typed with Typescript
 
-**Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
+**Live Demo :** [http://gbili.github.io/react-date-range-ts](http://gbili.github.io/react-date-range-ts)
 
-![image](https://raw.githubusercontent.com/hypeserver/react-date-range/master/demo/ss.png)
+![demo-calendar-screenshot](https://raw.githubusercontent.com/gbili/react-date-range-ts/master/demo/ss.png)
 
 ## Getting Started
 
