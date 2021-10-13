@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { AriaLabelShape, DateInputType, DateOptions, Range, SureRange, SureStartEndDate } from './types'
+import { AriaLabelShape, DateInputType, DateOptions, MaybeEmptyRange, SureRange, SureStartEndDate } from './types'
 import {
   startOfMonth,
   endOfMonth,
@@ -21,13 +21,13 @@ export type CalcFocusDateBaseProps = {
 }
 
 export type CalcFocusDateRangeModeProps = CalcFocusDateBaseProps & {
-  ranges: Range[];
+  ranges: MaybeEmptyRange[];
   displayMode: 'dateRange';
 };
 
 export type CalcFocusDateModeProps = CalcFocusDateBaseProps & {
   date?: Date | number;
-  ranges?: Range[];
+  ranges?: MaybeEmptyRange[];
   displayMode?: 'date';
 };
 
@@ -127,7 +127,7 @@ export function calcFocusDateBis(currentFocusedDate: Date | null, props: CalcFoc
   return targetDate;
 }
 
-export function findNextRangeIndex(ranges: Range[], currentRangeIndex: number = -1) {
+export function findNextRangeIndex(ranges: MaybeEmptyRange[], currentRangeIndex: number = -1) {
   const nextIndex = ranges.findIndex(
     (range, i) => i > currentRangeIndex && range.autoFocus !== false && !range.disabled
   );
@@ -205,7 +205,7 @@ export function generateStyles(sources: [CoreStyles, PartialStyles | {} | undefi
 }
 
 
-export function inferAriaLabel<T extends keyof SureStartEndDate<string>>(range: Range, ariaLabels: AriaLabelShape | undefined, key: T): string | undefined {
+export function inferAriaLabel<T extends keyof SureStartEndDate<string>>(range: MaybeEmptyRange, ariaLabels: AriaLabelShape | undefined, key: T): string | undefined {
   if (!ariaLabels) {
     return undefined;
   }

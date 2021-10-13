@@ -66,26 +66,26 @@ export function isModeMapperKey(s: string, o: ModeMapper): s is keyof ModeMapper
   return Object.keys(o).indexOf(s) !== -1;
 }
 
-export interface RangeWithKey extends Range {
+export interface RangeWithKey extends MaybeEmptyRange {
   key: 'selection';
 }
 
 export interface OnDateRangeChangeProps {
-  [key: string]: Range;
+  [key: string]: MaybeEmptyRange;
 }
 
 export type WeekStartsOn = 0|1|2|3|4|5|6;
 
 export type DateOptions = { locale: Locale; weekStartsOn?: WeekStartsOn; };
 
-export function isRangeValue(value: Range | Date): value is Range {
+export function isRangeValue(value: MaybeEmptyRange | Date): value is MaybeEmptyRange {
   return value.hasOwnProperty('startDate') && value.hasOwnProperty('endDate');
 }
 
-export function isOnlyWithStartDate(value: Range | Date): value is Range {
+export function isOnlyWithStartDate(value: MaybeEmptyRange | Date): value is MaybeEmptyRange {
   return value.hasOwnProperty('startDate') && value.hasOwnProperty('endDate');
 }
-export function isSureRange<T>(range: Range & T): range is SureStartEndDate & T {
+export function isSureRange<T>(range: MaybeEmptyRange & T): range is SureStartEndDate & T {
   return range.startDate instanceof Date && range.endDate instanceof Date;
 }
 
@@ -95,7 +95,7 @@ export interface CommonCalendarProps {
   firstDayOfWeek?: number;
   theme?: CalendarTheme;
   /** default: none */
-  onInit?: ((range: Range) => void);
+  onInit?: ((range: MaybeEmptyRange) => void);
   /** default: none */
   minDate?: Date;
   /** default: none */
@@ -141,7 +141,7 @@ export interface CalendarProps extends CommonCalendarProps {
 
 export class Calendar extends React.Component<CalendarProps> {}
 
-export interface DateRangeProps extends Range, CommonCalendarProps {
+export interface DateRangeProps extends MaybeEmptyRange, CommonCalendarProps {
   /** default: enUs from locale. Complete list here https://github.com/Adphorus/react-date-range/blob/next/src/locale/index.js */
   locale?: Locale;
   /** default: false */
@@ -149,7 +149,7 @@ export interface DateRangeProps extends Range, CommonCalendarProps {
   /** default: 2 */
   calendars?: number;
   /** default: none */
-  ranges?: Range[];
+  ranges?: MaybeEmptyRange[];
   /** default: { enabled: false } */
   scroll?: ScrollOptions;
   /** default: false */
@@ -248,12 +248,12 @@ export function isNoEndDateRange(r: NotFullyEmptyRange): r is SureStartNoEndDate
 export type StartEndDate<D = Date> = Partial<SureStartEndDate<D>>;
 
 export type StartEndDateGen = () => SureStartEndDate;
-export type RangeGen = (props?: CommonCalendarProps) => Range;
+export type RangeGen = (props?: CommonCalendarProps) => MaybeEmptyRange;
 
 export type WithSureRangeGen = { range: StartEndDateGen; };
 export type WithRangeGen = { range: RangeGen; };
-export type WithRange = { range: Range; };
-export type WithRangeOrRangeGen = { range: Range | RangeGen; };
+export type WithRange = { range: MaybeEmptyRange; };
+export type WithRangeOrRangeGen = { range: MaybeEmptyRange | RangeGen; };
 
 export function isWithRangeGen(wr: WithRangeOrRangeGen): wr is WithRangeGen {
   return typeof wr.range === 'function';
@@ -286,7 +286,7 @@ export interface OtherRangeProps {
 
 export interface SureRange<D = Date> extends SureStartEndDate<D>, OtherRangeProps {}
 
-export interface Range<D = Date | null> extends StartEndDate<D>, OtherRangeProps {}
+export interface MaybeEmptyRange<D = Date | null> extends StartEndDate<D>, OtherRangeProps {}
 
 export interface ScrollOptions {
   enabled: boolean;
@@ -313,8 +313,8 @@ export interface StaticRange extends DefinedRangeCommon, WithRangeOrRangeGen, Wi
 export type StaticRangeWihLabel = StaticRange & WithLabel & WithIsSelected;
 
 export interface InputRange {
-  range: (value: Date | number, props?: CommonCalendarProps) => Range;
-  getCurrentValue: (range: Range) => number | "-" | "∞";
+  range: (value: Date | number, props?: CommonCalendarProps) => MaybeEmptyRange;
+  getCurrentValue: (range: MaybeEmptyRange) => number | "-" | "∞";
 }
 export type InputRangeWihLabel = InputRange & WithLabel;
 

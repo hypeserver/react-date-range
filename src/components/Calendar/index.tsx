@@ -27,7 +27,7 @@ import {
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles, { ClassNames } from '../../styles';
-import { AriaLabelShape, CalendarDirection, CalendarFocus, CommonCalendarProps, DateOptions, DisplayMode, isModeMapperKey, isSureRange, Preview, Range, RangeFocus, ScrollOptions, SureStartEndDate } from '../../types';
+import { AriaLabelShape, CalendarDirection, CalendarFocus, CommonCalendarProps, DateOptions, DisplayMode, isModeMapperKey, isSureRange, Preview, MaybeEmptyRange, RangeFocus, ScrollOptions, SureStartEndDate } from '../../types';
 import { DateReceivingFunc, OptionalDateReceivingFunc } from '../DayCell';
 
 type ScrollArea = {
@@ -71,7 +71,7 @@ type DefaultCalendarProps = CalcFocusDateProps & {
   preventSnapRefocus: boolean;
   preview?: Preview | null;
   rangeColors: string[];
-  ranges: Range[];
+  ranges: MaybeEmptyRange[];
   scroll: {
     enabled: boolean;
   },
@@ -481,7 +481,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
       onChange && onChange(date);
       return;
     }
-    const newRange: Range = {
+    const newRange: MaybeEmptyRange = {
       startDate: this.state.drag.range.startDate || date,
       endDate: date,
     };

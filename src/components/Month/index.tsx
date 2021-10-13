@@ -1,4 +1,3 @@
-// /* -eslint-disable no-fallthrough */
 import React, { MouseEvent, PureComponent } from 'react';
 import DayCell, { DateReceivingFunc, OptionalDateReceivingFunc } from '../DayCell';
 import {
@@ -13,14 +12,13 @@ import {
   isWeekend,
   isWithinInterval,
   eachDayOfInterval,
-  isValid,
 } from 'date-fns';
 import { getMonthDisplayRange, renderWeekdays } from '../../utils';
 import { CoreStyles } from '../../styles';
-import { DateOptions, Preview, Range } from '../../types';
+import { DateOptions, Preview, MaybeEmptyRange } from '../../types';
 
 export type Drag = {
-  range: Range;
+  range: MaybeEmptyRange;
   status: boolean;
   disablePreview: boolean;
 }
@@ -44,7 +42,7 @@ type ComponentProps = {
   onMouseLeave: (e: MouseEvent<HTMLDivElement>) => void;
   onPreviewChange?: OptionalDateReceivingFunc;
   preview?: Preview | null;
-  ranges: Range[];
+  ranges: MaybeEmptyRange[];
   showMonthName: boolean;
   showPreview: boolean;
   showWeekDays: boolean,

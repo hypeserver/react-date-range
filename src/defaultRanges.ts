@@ -11,7 +11,7 @@ import {
   differenceInCalendarDays,
 } from 'date-fns';
 import { compose } from 'ramda';
-import { InputRangeWihLabel, isWithRangeGen, MaybeMaybeRange, Range, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
+import { InputRangeWihLabel, isWithRangeGen, NotFullyEmptyRange, MaybeEmptyRange, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
 
 type GenProps = { weekStartsOn: WeekStartsOn; }
 const definedsGen = ({ weekStartsOn }: GenProps): DefinedDates => ({
@@ -53,7 +53,7 @@ export function getEmptyRange(startDate: Date | number = 0, endDate: Date | numb
   }
 }
 
-export function isSameRangeDay(someRange: Range, otherRange: Range): boolean {
+export function isSameRangeDay(someRange: MaybeEmptyRange, otherRange: MaybeEmptyRange): boolean {
   const isSameStart = (someRange.startDate && otherRange.startDate && isSameDay(someRange.startDate, otherRange.startDate))
     || (!someRange.startDate && !otherRange.startDate);
   const isSameEnd = (someRange.endDate && otherRange.endDate && isSameDay(someRange.endDate, otherRange.endDate))
@@ -61,11 +61,11 @@ export function isSameRangeDay(someRange: Range, otherRange: Range): boolean {
   return isSameStart && isSameEnd;
 }
 
-export function extractRange(wr: WithRangeOrRangeGen): Range {
+export function extractRange(wr: WithRangeOrRangeGen): MaybeEmptyRange {
   if (isWithRangeGen(wr)) {
     return wr.range();
   }
-  return wr.range as Range;
+  return wr.range as MaybeEmptyRange;
 }
 
 const staticRangeHandler = <B, U extends { [k: PropertyKey]: B; }, T extends WithRangeOrRangeGen & U>(withRangeOrRangeGen: T): T & WithIsSelected => ({
@@ -137,7 +137,7 @@ export const defaultInputRangesGenerator = (defineds: DefinedDates): InputRangeW
         endDate: defineds.endOfToday,
       };
     },
-    getCurrentValue(range: Range) {
+    getCurrentValue(range: MaybeEmptyRange) {
       if (!range.startDate || !isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.startDate) return '∞';
       return differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
@@ -152,7 +152,7 @@ export const defaultInputRangesGenerator = (defineds: DefinedDates): InputRangeW
         endDate: addDays(today, Math.max(Number(value), 1) - 1),
       };
     },
-    getCurrentValue(range: Range) {
+    getCurrentValue(range: MaybeEmptyRange) {
       if (!range.startDate || !isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.endDate) return '∞';
       return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;

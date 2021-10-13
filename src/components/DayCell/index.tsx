@@ -1,16 +1,15 @@
 /* eslint-disable no-fallthrough */
 import React, { Component, FocusEvent, KeyboardEvent, MouseEvent } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
-import { Preview, Range } from '../../types';
+import { Preview, MaybeEmptyRange } from '../../types';
 import { CoreStyles } from '../../styles';
 
 export type InRange = ({
   isStartEdge: boolean;
   isEndEdge: boolean;
   isInRange: boolean;
-} & Range);
+} & MaybeEmptyRange);
 
 export type DateReceivingFunc = (date: Date) => void;
 export type OptionalDateReceivingFunc = (date?: Date) => void;
@@ -36,7 +35,7 @@ type ComponentProps = {
   onPreviewChange?: OptionalDateReceivingFunc;
   preview?: Preview | null;
   previewColor?: string;
-  ranges: Range[],
+  ranges: MaybeEmptyRange[],
   styles: CoreStyles;
 };
 
@@ -151,7 +150,7 @@ class DayCell extends Component<ComponentProps, ComponentState> {
       ) : null;
     }
 
-    const inRanges = ranges.reduce((result: InRange[], range: Range) => {
+    const inRanges = ranges.reduce((result: InRange[], range: MaybeEmptyRange) => {
       const st = range.startDate;
       const en = range.endDate;
       const [start, end] = (st && en && isBefore(en, st)) ? [en, st] : [st, en];

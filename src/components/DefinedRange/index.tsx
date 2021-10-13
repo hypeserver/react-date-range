@@ -3,7 +3,7 @@ import styles from '../../styles';
 import { defaultInputRangesGen, defaultStaticRangesGen } from '../../defaultRanges';
 import InputRangeField from '../InputRangeField';
 import cx from 'classnames';
-import { InputRange, InputRangeWihLabel, isSureRange, isWithRangeGen, NotFullyEmptyRange, OtherRangeProps, Range, RangeFocus, StaticRange, WeekStartsOn } from '../../types';
+import { InputRange, InputRangeWihLabel, isSureRange, isWithRangeGen, NotFullyEmptyRange, OtherRangeProps, MaybeEmptyRange, RangeFocus, StaticRange, WeekStartsOn } from '../../types';
 import { defaultInputRanges, defaultStaticRanges } from '../..';
 
 type ComponentProps = {
@@ -12,8 +12,8 @@ type ComponentProps = {
   footerContent?: JSX.Element;
   headerContent?: JSX.Element;
   inputRanges: InputRangeWihLabel[];
-  onChange?: (keyedRange: { [k: string]: Range; }) => void;
-  onPreviewChange?: (r?: Range) => void;
+  onChange?: (keyedRange: { [k: string]: MaybeEmptyRange; }) => void;
+  onPreviewChange?: (r?: MaybeEmptyRange) => void;
   rangeColors: string[];
   ranges: NotFullyEmptyRange[];
   renderStaticRangeLabel?: (r: StaticRange) => JSX.Element;
@@ -42,7 +42,7 @@ class DefinedRange extends Component<ComponentProps> {
     };
   }
 
-  handleRangeChange = (range: Range) => {
+  handleRangeChange = (range: MaybeEmptyRange) => {
     const { onChange, ranges, focusedRange } = this.props;
     const selectedRange = ranges[focusedRange[0]];
     if (!onChange || !selectedRange) return;
@@ -62,7 +62,7 @@ class DefinedRange extends Component<ComponentProps> {
     return option.getCurrentValue(selectedRange) || '';
   }
 
-  getSelectedRange(ranges: Range[], staticRange: StaticRange) {
+  getSelectedRange(ranges: MaybeEmptyRange[], staticRange: StaticRange) {
     const focusedRangeIndex = ranges.findIndex(range => {
       if (!isSureRange<OtherRangeProps>(range) || range.disabled) return false;
       return staticRange.isSelected(range);
@@ -99,7 +99,7 @@ class DefinedRange extends Component<ComponentProps> {
             const labelContent = renderStaticRangeLabel && staticRange.hasCustomRendering
               ? renderStaticRangeLabel(staticRange)
               : staticRange.label;
-            const actualStaticRange = isWithRangeGen(staticRange) ? staticRange.range(this.props) : staticRange.range as Range;
+            const actualStaticRange = isWithRangeGen(staticRange) ? staticRange.range(this.props) : staticRange.range as MaybeEmptyRange;
 
             return (
               <button

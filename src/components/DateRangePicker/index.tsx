@@ -3,8 +3,8 @@ import DateRange from '../DateRange';
 import DefinedRange, { DefinedRangeProps } from '../DefinedRange';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import classnames from 'classnames';
-import coreStyles, { ClassNames, CoreStyles } from '../../styles';
-import { DateRangeProps, Range, RangeFocus } from '../../types';
+import coreStyles, { ClassNames } from '../../styles';
+import { DateRangeProps, RangeFocus } from '../../types';
 
 type ComponentProps = DateRangeProps & DefinedRangeProps & {
   className: string,

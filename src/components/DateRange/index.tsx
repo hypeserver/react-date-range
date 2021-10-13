@@ -3,7 +3,7 @@ import Calendar from '../Calendar';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
 import coreStyles, { ClassNames } from '../../styles';
-import { DateRangeProps, isNoEndDateRange, isRangeValue, isSureRange, NotFullyEmptyRange, Preview, Range, RangeFocus, SureRange, SureStartEndDate } from '../../types';
+import { DateRangeProps, isNoEndDateRange, isRangeValue, isSureRange, NotFullyEmptyRange, Preview, MaybeEmptyRange, RangeFocus, SureRange, SureStartEndDate } from '../../types';
 import classnames from 'classnames';
 import { compose } from 'ramda';
 
@@ -41,8 +41,8 @@ const calculateEndDate = (value: Date, now: Date, endDate: Date | null, dayOffse
   return nextEndDate;
 };
 
-type ShapeChangingParams = { value: Date | Range; };
-type BaseParams = { focusedRange: RangeFocus; disabledDates: Date[]; ranges: Range[]; }
+type ShapeChangingParams = { value: Date | MaybeEmptyRange; };
+type BaseParams = { focusedRange: RangeFocus; disabledDates: Date[]; ranges: MaybeEmptyRange[]; }
 type ComputeProps = BaseParams & ShapeChangingParams & { selectedRange: NotFullyEmptyRange; moveRangeOnFirstSelection: boolean; retainEndDateOnFirstSelection: boolean; maxDate?: Date; };
 function computeStartDateEndDate({ value, selectedRange, focusedRange, disabledDates, moveRangeOnFirstSelection, retainEndDateOnFirstSelection, ranges, maxDate }: ComputeProps) {
   const base = {
@@ -94,7 +94,7 @@ const flipIfReversed = (params: FlipProps) => {
     : params;
 }
 
-const getNextFocusRange = (ranges: Range[], focusedRange: RangeFocus, nextFocusRange?: RangeFocus): RangeFocus => {
+const getNextFocusRange = (ranges: MaybeEmptyRange[], focusedRange: RangeFocus, nextFocusRange?: RangeFocus): RangeFocus => {
   if (nextFocusRange) return nextFocusRange;
   const nextFocusRangeIndex = findNextRangeIndex(ranges, focusedRange[0]);
   return [nextFocusRangeIndex, 0];
@@ -160,7 +160,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
     this.calendar = null;
   }
 
-  calcNewSelection = (value: Date | Range): CalcNewSelectionRet => {
+  calcNewSelection = (value: Date | MaybeEmptyRange): CalcNewSelectionRet => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const {
       ranges,
