@@ -39,14 +39,14 @@ npm install --save react date-fns
 You need to import skeleton and theme styles first.
 
 ```javascript
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import 'react-date-range-ts/dist/styles.css'; // main style file
+import 'react-date-range-ts/dist/theme/default.css'; // theme css file
 ```
 
 ### `DatePicker`
 
 ```javascript
-import { Calendar } from 'react-date-range';
+import { Calendar } from 'react-date-range-ts';
 
 class MyComponent extends Component {
   handleSelect(date){
@@ -67,7 +67,7 @@ class MyComponent extends Component {
 ### `DateRangePicker / DateRange`
 
 ```javascript
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range-ts';
 
 class MyComponent extends Component {
   handleSelect(ranges){
