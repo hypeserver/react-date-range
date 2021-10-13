@@ -33,20 +33,9 @@ class DefinedRange extends Component<ComponentProps> {
     focusedRange: [0, 0],
     weekStartsOn: 1,
   };
-  // dateOptions: { weekStartsOn: any; inputRanges: InputRangeWihLabel[]; staticRanges: StaticRange[]; };
 
   constructor(props: ComponentProps) {
     super(props);
-    // const weekStartsOn = this.props.weekStartsOn !== undefined ? this.props.weekStartsOn : 0;
-    // this.dateOptions = {
-    //   weekStartsOn,
-    //   inputRanges:
-    //     this.props.inputRanges !== undefined ? this.props.inputRanges : defaultInputRangesGen({ weekStartsOn }),
-    //   staticRanges:
-    //     this.props.staticRanges !== undefined
-    //       ? this.props.staticRanges
-    //       : defaultStaticRangesGen({ weekStartsOn }),
-    // };
     this.state = {
       rangeOffset: 0,
       focusedInput: -1,
