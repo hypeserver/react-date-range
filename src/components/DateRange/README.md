@@ -1,4 +1,6 @@
-This component extends all the props of **[Calendar](#calendar)** component. In addition to those props, it has the following props: 
+# DateRange
+
+This component extends all the props of **[Calendar](#calendar)** component. In addition to those props, it has the following props:
 
 | Prop Name  |  Type |
 |---|---|
@@ -8,8 +10,8 @@ This component extends all the props of **[Calendar](#calendar)** component. In 
 |  **rangeColors**  |  array |
 |  **ranges**  |  array |
 
+## Example: Editable Date Inputs
 
-#### Example: Editable Date Inputs
 ```jsx inside Markdown
 import {useState} from 'react'
 const [state, setState] = useState([
@@ -19,7 +21,7 @@ const [state, setState] = useState([
       key: 'selection'
     }
   ]);
-  
+
 <DateRange
   editableDateInputs={true}
   onChange={item => setState([item.selection])}
