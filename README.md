@@ -1,13 +1,12 @@
 # react-date-range
-[![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![npm](https://img.shields.io/npm/l/react-date-range)]()
-[![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver)
 
+[![npm](https://img.shields.io/npm/v/react-date-range-ts)](https://www.npmjs.com/package/react-date-range-ts)
+[![npm](https://img.shields.io/npm/dw/react-date-range-ts)](https://www.npmjs.com/package/react-date-range-ts)
+[![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver-ts)
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
 
-### Why should you use `react-date-range`?
+## Why should you use `react-date-range-ts`
 
 - Stateless date operations
 - Highly configurable
@@ -15,21 +14,23 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 - Based on native js dates
 - Drag n Drop selection
 - Keyboard friendly
+- Fully Typed with Typescript
 
 **Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
 
-![](https://raw.githubusercontent.com/hypeserver/react-date-range/master/demo/ss.png)
-
+![image](https://raw.githubusercontent.com/hypeserver/react-date-range/master/demo/ss.png)
 
 ## Getting Started
+
 ### Installation
 
-```
+```sh
 npm install --save react-date-range
 ```
+
 This plugin expects `react` and `date-fns` as peerDependencies, It means that you need to install them in your project folder.
 
-```
+```sh
 npm install --save react date-fns
 ```
 
@@ -43,6 +44,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 ```
 
 ### `DatePicker`
+
 ```javascript
 import { Calendar } from 'react-date-range';
 
@@ -63,6 +65,7 @@ class MyComponent extends Component {
 ```
 
 ### `DateRangePicker / DateRange`
+
 ```javascript
 import { DateRangePicker } from 'react-date-range';
 
@@ -146,6 +149,7 @@ ariaLabels                           | Object    | {}               | inserts ar
 dayContentRenderer                   | Function  | null             | Function to customize the rendering of Calendar Day. given a date is supposed to return what to render.
 
  *shape of range:
+
  ```js
   {
     startDate: PropTypes.object,
@@ -159,6 +163,7 @@ dayContentRenderer                   | Function  | null             | Function t
 ```
 
  **shape of ariaLabels:
+
  ```js
   {
     // The key of dateInput should be same as key in range.
@@ -174,6 +179,7 @@ dayContentRenderer                   | Function  | null             | Function t
     nextButton: PropTypes.string,
   }
 ```
+
 #### Infinite Scrolled Mode
 
 To enable infinite scroll set `scroll={{enabled: true}}` basically. Infinite scroll feature is affected by `direction`(rendering direction for months) and `months`(for rendered months count) props directly.
@@ -191,8 +197,8 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
   }),
 ```
 
-
 ### Release workflow
+
 - Merge everything that needs to be in the release to master
 - Open a new release PR than:
   - bumps version to appropriate one <new_version>

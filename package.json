@@ -1,7 +1,7 @@
 {
   "name": "react-date-range-ts",
   "version": "1.5.0",
-  "description": "A React component for choosing dates and date ranges.",
+  "description": "A React component for choosing dates and date ranges ported to Typescript.",
   "main": "dist/index.js",
   "scripts": {
     "start": "yarn build:css & styleguidist server",
@@ -30,10 +30,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/hypeserver/react-date-range"
+    "url": "http://github.com/gbili/react-date-range-ts"
   },
   "bugs": {
-    "url": "http://github.com/hypeserver/react-date-range/issues"
+    "url": "http://github.com/gbili/react-date-range-ts/issues"
   },
   "browserslist": [
     "defaults"
