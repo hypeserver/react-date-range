@@ -1,6 +1,6 @@
 {
   "name": "react-date-range-ts",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "description": "A React component for choosing dates and date ranges ported to Typescript.",
   "main": "dist/index.js",
   "scripts": {
