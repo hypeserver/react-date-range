@@ -6,28 +6,35 @@ import classnames from 'classnames';
 import coreStyles, { ClassNames } from '../../styles';
 import { DateRangeProps, RangeFocus } from '../../types';
 
-type ComponentProps = DateRangeProps & DefinedRangeProps & {
-  className: string,
-};
+type ComponentDefaultProps = {
+  className?: string,
+}
+
+type ComponentProps = DateRangeProps & DefinedRangeProps & ComponentDefaultProps;
 
 type ComponentState = { focusedRange: RangeFocus; };
 
 class DateRangePicker extends Component<ComponentProps, ComponentState> {
-  dateRange: any;
+  dateRange: DateRange | null = null;
   styles: Partial<ClassNames>;
+  public static defaultProps: ComponentDefaultProps = {
+    className: '',
+  }
 
   constructor(props: ComponentProps) {
     super(props);
     this.state = {
-      focusedRange: [findNextRangeIndex(props.ranges), 0],
+      focusedRange: (props.ranges && [findNextRangeIndex(props.ranges), 0]) || [0, 0],
     };
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
   render() {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const onPreviewChange = this.props.onPreviewChange || (value =>
-      this.dateRange.updatePreview(
-        value ? this.dateRange.calcNewSelection(value, typeof value === 'string') : null
+      this.dateRange?.updatePreview(
+        value
+          ? this.dateRange?.calcNewSelection(value)
+          : undefined
       )
     )
     return (
@@ -38,14 +45,12 @@ class DateRangePicker extends Component<ComponentProps, ComponentState> {
           onPreviewChange={onPreviewChange}
           // range={this.props.ranges[focusedRange[0]]}
           ranges={this.props.ranges} // replaces the single range above (added by g)
-          className={undefined}
         />
         <DateRange
           onRangeFocusChange={focusedRange => this.setState({ focusedRange })}
           {...this.props}
           focusedRange={focusedRange}
           ref={t => (this.dateRange = t)}
-          className={undefined}
         />
       </div>
     );

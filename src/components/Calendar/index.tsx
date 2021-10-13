@@ -69,7 +69,7 @@ type DefaultCalendarProps = CalcFocusDateProps & {
   months: number;
   preventSnapRefocus: boolean;
   preview?: Preview | null;
-  rangeColors: string[];
+  rangeColors?: string[];
   ranges: MaybeEmptyRange[];
   scroll: {
     enabled: boolean;
@@ -404,7 +404,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
       ariaLabels,
     } = this.props;
 
-    const defaultColor = rangeColors[focusedRange[0]] || color;
+    const defaultColor = rangeColors && rangeColors[focusedRange[0]] || color;
     const styles = this.styles;
 
     return (
@@ -561,7 +561,7 @@ class Calendar extends PureComponent<ComponentProps, ComponentState> {
 
     const ranges = this.props.ranges.map((range, i) => ({
       ...range,
-      color: range.color || rangeColors[i] || color,
+      color: range.color || (rangeColors && rangeColors[i]) || color,
     }));
 
     return (

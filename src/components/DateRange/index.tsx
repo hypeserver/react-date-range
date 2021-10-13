@@ -8,12 +8,12 @@ import classnames from 'classnames';
 import { compose } from 'ramda';
 
 type DefaultComponentProps = {
-  classNames: Partial<ClassNames>;
-  ranges: NotFullyEmptyRange[];
-  moveRangeOnFirstSelection: boolean;
-  retainEndDateOnFirstSelection: boolean;
-  rangeColors: string[];
-  disabledDates: Date[],
+  classNames?: Partial<ClassNames>;
+  ranges?: NotFullyEmptyRange[];
+  moveRangeOnFirstSelection?: boolean;
+  retainEndDateOnFirstSelection?: boolean;
+  rangeColors?: string[];
+  disabledDates?: Date[],
 }
 
 type ComponentState = {
@@ -153,7 +153,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
     super(props);
     this.state = {
-      focusedRange: props.initialFocusedRange || [findNextRangeIndex(this.props.ranges), 0],
+      focusedRange: props.initialFocusedRange || [findNextRangeIndex(this.props.ranges || []), 0],
       preview: null,
     };
     this.styles = generateStyles([coreStyles, this.props.classNames]);
@@ -171,7 +171,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
       disabledDates,
     } = this.props;
     const focusedRangeIndex = focusedRange[0];
-    const selectedRange = ranges[focusedRangeIndex];
+    const selectedRange = ranges && ranges[focusedRangeIndex];
 
     if (!selectedRange || !onChange) return;
 
@@ -185,10 +185,10 @@ class DateRange extends Component<ComponentProps, ComponentState> {
       value,
       selectedRange,
       focusedRange,
-      disabledDates,
-      moveRangeOnFirstSelection,
+      disabledDates: disabledDates || [],
+      moveRangeOnFirstSelection: moveRangeOnFirstSelection || false,
       ranges,
-      retainEndDateOnFirstSelection,
+      retainEndDateOnFirstSelection: retainEndDateOnFirstSelection || false,
       maxDate,
     });
 
@@ -198,7 +198,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
     const { onChange, ranges, onRangeFocusChange } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const focusedRangeIndex = focusedRange[0];
-    const selectedRange = ranges[focusedRangeIndex];
+    const selectedRange = ranges && ranges[focusedRangeIndex];
     if (!selectedRange) return;
     const newSelection = this.calcNewSelection(value);
     if (!newSelection) {
@@ -228,7 +228,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
     }
     const { rangeColors, ranges } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const color = ranges[focusedRange[0]]?.color || rangeColors[focusedRange[0]];
+    const color = (ranges && ranges[focusedRange[0]]?.color) || (rangeColors && rangeColors[focusedRange[0]]);
     this.setState({ preview: { ...val.range, color } });
   };
   render() {

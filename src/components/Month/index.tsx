@@ -15,7 +15,7 @@ import {
 } from 'date-fns';
 import { getMonthDisplayRange, renderWeekdays } from '../../utils';
 import { CoreStyles } from '../../styles';
-import { DateOptions, Preview, MaybeEmptyRange } from '../../types';
+import { DateOptions, Preview, MaybeEmptyRange, RangeFocus } from '../../types';
 
 export type Drag = {
   range: MaybeEmptyRange;
@@ -31,7 +31,7 @@ type ComponentProps = {
   displayMode?: 'dateRange' | 'date';
   drag: Drag,
   fixedHeight: boolean;
-  focusedRange: number[];
+  focusedRange: RangeFocus;
   maxDate: Date;
   minDate: Date;
   month: Date;

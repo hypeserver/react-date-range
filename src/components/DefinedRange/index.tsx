@@ -8,17 +8,17 @@ import { defaultInputRanges, defaultStaticRanges } from '../..';
 
 type ComponentProps = {
   className?: string;
-  focusedRange: RangeFocus;
+  focusedRange?: RangeFocus;
   footerContent?: JSX.Element;
   headerContent?: JSX.Element;
-  inputRanges: InputRangeWihLabel[];
+  inputRanges?: InputRangeWihLabel[];
   onChange?: (keyedRange: { [k: string]: MaybeEmptyRange; }) => void;
   onPreviewChange?: (r?: MaybeEmptyRange) => void;
-  rangeColors: string[];
-  ranges: NotFullyEmptyRange[];
+  rangeColors?: string[];
+  ranges?: NotFullyEmptyRange[];
   renderStaticRangeLabel?: (r: StaticRange) => JSX.Element;
-  staticRanges: StaticRange[];
-  weekStartsOn: WeekStartsOn;
+  staticRanges?: StaticRange[];
+  weekStartsOn?: WeekStartsOn;
 }
 
 export type DefinedRangeProps = ComponentProps;
@@ -47,23 +47,25 @@ class DefinedRange extends Component<ComponentProps> {
       rangeOffset: 0,
       focusedInput: -1,
     };
-    this.rangesRespectingWeekStartsOn = (this.props.weekStartsOn !== defaultWeekStartsOn)
+    const weekStartsOn = this.props.weekStartsOn !== undefined && this.props.weekStartsOn || defaultWeekStartsOn;
+    this.rangesRespectingWeekStartsOn = (this.props.weekStartsOn !== undefined && this.props.weekStartsOn !== defaultWeekStartsOn)
       ? {
-        staticRanges: defaultStaticRangesGen(this.props),
-        inputRanges: defaultInputRangesGen(this.props),
+        staticRanges: defaultStaticRangesGen({ weekStartsOn }),
+        inputRanges: defaultInputRangesGen({ weekStartsOn }),
       }
       : {
-        staticRanges: this.props.staticRanges,
-        inputRanges: this.props.inputRanges,
+        staticRanges: this.props.staticRanges || defaultStaticRanges,
+        inputRanges: this.props.inputRanges || defaultInputRanges,
       };
   }
 
   handleRangeChange = (range: MaybeEmptyRange) => {
     const { onChange, ranges, focusedRange } = this.props;
-    const selectedRange = ranges[focusedRange[0]];
+    const frange = focusedRange || [0, 0];
+    const selectedRange = ranges && ranges[frange[0]];
     if (!onChange || !selectedRange) return;
     onChange({
-      [selectedRange.key || `range${focusedRange[0] + 1}`]: { ...selectedRange, ...range },
+      [selectedRange.key || `range${frange[0] + 1}`]: { ...selectedRange, ...range },
     });
   }
 
@@ -108,7 +110,7 @@ class DefinedRange extends Component<ComponentProps> {
         {headerContent}
         <div className={styles.staticRanges}>
           {staticRanges.map((staticRange, i) => {
-            const { selectedRange, focusedRangeIndex } = this.getSelectedRange(ranges, staticRange);
+            const { selectedRange, focusedRangeIndex } = this.getSelectedRange(ranges || [], staticRange);
             if (staticRange.hasCustomRendering && !renderStaticRangeLabel) {
               throw new Error('You should provie a renderStaticRangeLabel function when setting staticRange.hasCustomRendering = true');
             }
@@ -128,7 +130,7 @@ class DefinedRange extends Component<ComponentProps> {
                 })}
                 style={{
                   color: selectedRange
-                    ? selectedRange.color || rangeColors[focusedRangeIndex]
+                    ? selectedRange.color || (rangeColors && rangeColors[focusedRangeIndex])
                     : undefined,
                 }}
                 key={i}

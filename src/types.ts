@@ -29,7 +29,6 @@ export type AriaLabelShape = {
   nextButton?: string;
 }
 
-
 export interface CalendarTheme {
   DateRange?: React.CSSProperties;
   Calendar?: React.CSSProperties;
