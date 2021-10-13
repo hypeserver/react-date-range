@@ -314,7 +314,7 @@ export type StaticRangeWihLabel = StaticRange & WithLabel & WithIsSelected;
 
 export interface InputRange {
   range: (value: Date | number, props?: CommonCalendarProps) => Range;
-  getCurrentValue: (range: SureStartEndDate) => number | "-" | "∞";
+  getCurrentValue: (range: Range) => number | "-" | "∞";
 }
 export type InputRangeWihLabel = InputRange & WithLabel;
 

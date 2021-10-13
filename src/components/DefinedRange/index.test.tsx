@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 
 import DefinedRange from '.';
 import { StaticRange } from '../../types';
-import { createStaticRanges } from '../..';
+import { createStaticRanges, defaultInputRanges } from '../..';
 
 describe('DefinedRange tests', () => {
   test('Should call "renderStaticRangeLabel" callback correct amount of times according to the "hasCustomRendering" option', () => {
@@ -24,7 +24,6 @@ describe('DefinedRange tests', () => {
         hasCustomRendering: true,
       },
     ]);
-    console.log('staticRanges', staticRanges);
     mount(
       <DefinedRange
         staticRanges={staticRanges}

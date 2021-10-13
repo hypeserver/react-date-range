@@ -11,7 +11,7 @@ import {
   differenceInCalendarDays,
 } from 'date-fns';
 import { compose } from 'ramda';
-import { InputRangeWihLabel, isWithRangeGen, Range, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
+import { InputRangeWihLabel, isWithRangeGen, MaybeMaybeRange, Range, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
 
 type GenProps = { weekStartsOn: WeekStartsOn; }
 const definedsGen = ({ weekStartsOn }: GenProps): DefinedDates => ({
@@ -58,7 +58,6 @@ export function isSameRangeDay(someRange: Range, otherRange: Range): boolean {
     || (!someRange.startDate && !otherRange.startDate);
   const isSameEnd = (someRange.endDate && otherRange.endDate && isSameDay(someRange.endDate, otherRange.endDate))
     || (!someRange.endDate && !otherRange.endDate);
-  console.log('isSame start end', isSameStart, isSameEnd);
   return isSameStart && isSameEnd;
 }
 
@@ -138,8 +137,8 @@ export const defaultInputRangesGenerator = (defineds: DefinedDates): InputRangeW
         endDate: defineds.endOfToday,
       };
     },
-    getCurrentValue(range: SureStartEndDate) {
-      if (!isSameDay(range.endDate, defineds.endOfToday)) return '-';
+    getCurrentValue(range: Range) {
+      if (!range.startDate || !isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.startDate) return '∞';
       return differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
     },
@@ -153,8 +152,8 @@ export const defaultInputRangesGenerator = (defineds: DefinedDates): InputRangeW
         endDate: addDays(today, Math.max(Number(value), 1) - 1),
       };
     },
-    getCurrentValue(range: SureStartEndDate) {
-      if (!isSameDay(range.startDate, defineds.startOfToday)) return '-';
+    getCurrentValue(range: Range) {
+      if (!range.startDate || !isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.endDate) return '∞';
       return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
     },

@@ -4,6 +4,7 @@ import { defaultInputRangesGen, defaultStaticRangesGen } from '../../defaultRang
 import InputRangeField from '../InputRangeField';
 import cx from 'classnames';
 import { InputRange, InputRangeWihLabel, isSureRange, isWithRangeGen, MaybeMaybeRange, OtherRangeProps, Range, RangeFocus, StaticRange, WeekStartsOn } from '../../types';
+import { defaultInputRanges, defaultStaticRanges } from '../..';
 
 type ComponentProps = {
   className?: string;
@@ -26,8 +27,8 @@ class DefinedRange extends Component<ComponentProps> {
 
   public static defaultProps = {
     ranges: [],
-    inputRanges: [],
-    staticRanges: [],
+    staticRanges: defaultStaticRanges,
+    inputRanges: defaultInputRanges,
     rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
     focusedRange: [0, 0],
     weekStartsOn: 1,
@@ -69,9 +70,6 @@ class DefinedRange extends Component<ComponentProps> {
     }
 
     const selectedRange = (focusedRange[0] && ranges[focusedRange[0]]) || {};
-    if (!isSureRange(selectedRange)) {
-      throw new Error('Bug, expecting sure range at this stage');
-    }
     return option.getCurrentValue(selectedRange) || '';
   }
 
@@ -96,9 +94,6 @@ class DefinedRange extends Component<ComponentProps> {
       renderStaticRangeLabel,
       staticRanges,
     } = this.props;
-
-    console.log('ir', inputRanges);
-    console.log('sr', staticRanges);
 
     return (
       <div className={cx(styles.definedRangesWrapper, className)}>
