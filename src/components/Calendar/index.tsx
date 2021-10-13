@@ -23,7 +23,6 @@ import {
   min,
   max,
   Locale,
-  isValid,
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles, { ClassNames } from '../../styles';

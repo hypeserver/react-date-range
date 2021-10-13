@@ -11,7 +11,7 @@ import {
   differenceInCalendarDays,
 } from 'date-fns';
 import { compose } from 'ramda';
-import { InputRangeWihLabel, isWithRangeGen, NotFullyEmptyRange, MaybeEmptyRange, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
+import { InputRangeWihLabel, isWithRangeGen, MaybeEmptyRange, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
 
 type GenProps = { weekStartsOn: WeekStartsOn; }
 export const definedsGen = ({ weekStartsOn }: GenProps): DefinedDates => ({

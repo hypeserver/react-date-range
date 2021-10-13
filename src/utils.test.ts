@@ -1,6 +1,5 @@
 import { isValid, subDays } from "date-fns";
-import { calcFocusDate, calcFocusDateBis, CalcFocusDateProps, findNextRangeIndex, getMonthDisplayRange } from "./utils";
-
+import { calcFocusDate, CalcFocusDateProps, findNextRangeIndex, getMonthDisplayRange } from "./utils";
 
 describe('Utils:getMonthDisplayRange', () => {
   test('should have all properties with proper value types', () => {

@@ -1,4 +1,4 @@
-**react-date-range** can be installed with **npm**, by the following command:
+**react-date-range-ts** can be installed with **npm**, by the following command:
 
 ```bash static
 npm install react-date-range-ts
