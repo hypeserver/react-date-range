@@ -4,7 +4,7 @@ const moduleSource = isDEV ? 'src' : 'src';
 
 module.exports = {
   //ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
-  title: 'react-date-range',
+  title: 'react-date-range-ts',
   showSidebar: false,
   template: {
     head: {
@@ -42,7 +42,7 @@ module.exports = {
   getComponentPathLine(componentPath) {
     const arr = componentPath.split('/');
     const name = arr[arr.length - 2];
-    return `import { ${name} } from 'react-date-range';`;
+    return `import { ${name} } from 'react-date-range-ts';`;
   },
 
   styles: function styles(theme) {
@@ -71,8 +71,8 @@ module.exports = {
     SectionsRenderer: path.join(__dirname, 'demo/components/SectionsRenderer'),
   },
   moduleAliases: {
-    'react-date-range/dist': path.resolve(__dirname, moduleSource),
-    'react-date-range': path.resolve(__dirname, moduleSource),
+    'react-date-range-ts/dist': path.resolve(__dirname, moduleSource),
+    'react-date-range-ts': path.resolve(__dirname, moduleSource),
   },
   webpackConfig: {
     module: {
