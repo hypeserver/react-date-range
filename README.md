@@ -25,7 +25,7 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 ### Installation
 
 ```sh
-npm install --save react-date-range
+npm install --save react-date-range-ts
 ```
 
 This plugin expects `react` and `date-fns` as peerDependencies, It means that you need to install them in your project folder.
