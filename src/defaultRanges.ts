@@ -14,7 +14,7 @@ import { compose } from 'ramda';
 import { InputRangeWihLabel, isWithRangeGen, NotFullyEmptyRange, MaybeEmptyRange, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
 
 type GenProps = { weekStartsOn: WeekStartsOn; }
-const definedsGen = ({ weekStartsOn }: GenProps): DefinedDates => ({
+export const definedsGen = ({ weekStartsOn }: GenProps): DefinedDates => ({
   startOfWeek: startOfWeek(new Date(), { weekStartsOn }),
   endOfWeek: endOfWeek(new Date(), { weekStartsOn }),
   startOfLastWeek: startOfWeek(addDays(new Date(), -7), { weekStartsOn }),

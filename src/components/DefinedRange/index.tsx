@@ -23,6 +23,8 @@ type ComponentProps = {
 
 export type DefinedRangeProps = ComponentProps;
 
+const defaultWeekStartsOn: WeekStartsOn = 0;
+
 class DefinedRange extends Component<ComponentProps> {
 
   public static defaultProps = {
@@ -31,8 +33,13 @@ class DefinedRange extends Component<ComponentProps> {
     inputRanges: defaultInputRanges,
     rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
     focusedRange: [0, 0],
-    weekStartsOn: 1,
+    weekStartsOn: defaultWeekStartsOn,
   };
+
+  rangesRespectingWeekStartsOn: {
+    staticRanges: StaticRange[];
+    inputRanges: InputRangeWihLabel[];
+  }
 
   constructor(props: ComponentProps) {
     super(props);
@@ -40,6 +47,15 @@ class DefinedRange extends Component<ComponentProps> {
       rangeOffset: 0,
       focusedInput: -1,
     };
+    this.rangesRespectingWeekStartsOn = (this.props.weekStartsOn !== defaultWeekStartsOn)
+      ? {
+        staticRanges: defaultStaticRangesGen(this.props),
+        inputRanges: defaultInputRangesGen(this.props),
+      }
+      : {
+        staticRanges: this.props.staticRanges,
+        inputRanges: this.props.inputRanges,
+      };
   }
 
   handleRangeChange = (range: MaybeEmptyRange) => {
@@ -76,13 +92,16 @@ class DefinedRange extends Component<ComponentProps> {
       className,
       footerContent,
       headerContent,
-      inputRanges,
       onPreviewChange,
       rangeColors,
       ranges,
       renderStaticRangeLabel,
-      staticRanges,
     } = this.props;
+
+    const {
+      inputRanges,
+      staticRanges,
+    } = this.rangesRespectingWeekStartsOn;
 
     return (
       <div className={cx(styles.definedRangesWrapper, className)}>

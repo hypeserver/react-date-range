@@ -1,5 +1,5 @@
 {
-  "name": "react-date-range-won",
+  "name": "react-date-range-ts",
   "version": "1.5.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
