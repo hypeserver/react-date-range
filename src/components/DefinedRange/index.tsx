@@ -3,7 +3,7 @@ import styles from '../../styles';
 import { defaultInputRangesGen, defaultStaticRangesGen } from '../../defaultRanges';
 import InputRangeField from '../InputRangeField';
 import cx from 'classnames';
-import { InputRange, InputRangeWihLabel, isSureRange, isWithRangeGen, MaybeMaybeRange, OtherRangeProps, Range, RangeFocus, StaticRange, WeekStartsOn } from '../../types';
+import { InputRange, InputRangeWihLabel, isSureRange, isWithRangeGen, NotFullyEmptyRange, OtherRangeProps, Range, RangeFocus, StaticRange, WeekStartsOn } from '../../types';
 import { defaultInputRanges, defaultStaticRanges } from '../..';
 
 type ComponentProps = {
@@ -15,7 +15,7 @@ type ComponentProps = {
   onChange?: (keyedRange: { [k: string]: Range; }) => void;
   onPreviewChange?: (r?: Range) => void;
   rangeColors: string[];
-  ranges: MaybeMaybeRange[];
+  ranges: NotFullyEmptyRange[];
   renderStaticRangeLabel?: (r: StaticRange) => JSX.Element;
   staticRanges: StaticRange[];
   weekStartsOn: WeekStartsOn;

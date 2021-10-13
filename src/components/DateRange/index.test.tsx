@@ -2,7 +2,7 @@ import React from 'react';
 import { subDays, addDays, isSameDay } from 'date-fns';
 import DateRange from '.';
 import renderer, { ReactTestRenderer } from 'react-test-renderer';
-import { isSureRange, MaybeMaybeRange, SureStartEndDate } from '../../types';
+import { isSureRange, NotFullyEmptyRange, SureStartEndDate } from '../../types';
 
 let testRenderer: ReactTestRenderer;
 let instance: DateRange;
@@ -15,7 +15,7 @@ const commonProps = {
   moveRangeOnFirstSelection: false,
 };
 
-const compareRanges = (assertionRange: MaybeMaybeRange, newRange?: MaybeMaybeRange) => {
+const compareRanges = (assertionRange: NotFullyEmptyRange, newRange?: NotFullyEmptyRange) => {
   if (!newRange) {
     return expect(typeof newRange).toEqual(typeof assertionRange);
   }

@@ -239,9 +239,9 @@ export type SureStartNoEndDate<D = Date> = {
   endDate: null;
 }
 
-export type MaybeMaybeRange<D = Date> = OtherRangeProps & (SureStartEndDate<D> | SureStartMaybeEndDate<D> | SureStartNoEndDate<D>);
+export type NotFullyEmptyRange<D = Date> = OtherRangeProps & (SureStartEndDate<D> | SureStartMaybeEndDate<D> | SureStartNoEndDate<D>);
 
-export function isNoEndDateRange(r: MaybeMaybeRange): r is SureStartNoEndDate {
+export function isNoEndDateRange(r: NotFullyEmptyRange): r is SureStartNoEndDate {
   return r.hasOwnProperty('startDate') && r.endDate === null;
 }
 
@@ -327,6 +327,6 @@ export type DefinedRange = StaticRange | InputRange;
  */
 export type RangeFocus = [number, number];
 
-export type Preview = MaybeMaybeRange & {
+export type Preview = NotFullyEmptyRange & {
   color?: string;
 }

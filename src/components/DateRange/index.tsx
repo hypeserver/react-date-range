@@ -3,13 +3,13 @@ import Calendar from '../Calendar';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
 import coreStyles, { ClassNames } from '../../styles';
-import { DateRangeProps, isNoEndDateRange, isRangeValue, isSureRange, MaybeMaybeRange, Preview, Range, RangeFocus, SureRange, SureStartEndDate } from '../../types';
+import { DateRangeProps, isNoEndDateRange, isRangeValue, isSureRange, NotFullyEmptyRange, Preview, Range, RangeFocus, SureRange, SureStartEndDate } from '../../types';
 import classnames from 'classnames';
 import { compose } from 'ramda';
 
 type DefaultComponentProps = {
   classNames: Partial<ClassNames>;
-  ranges: MaybeMaybeRange[];
+  ranges: NotFullyEmptyRange[];
   moveRangeOnFirstSelection: boolean;
   retainEndDateOnFirstSelection: boolean;
   rangeColors: string[];
@@ -43,7 +43,7 @@ const calculateEndDate = (value: Date, now: Date, endDate: Date | null, dayOffse
 
 type ShapeChangingParams = { value: Date | Range; };
 type BaseParams = { focusedRange: RangeFocus; disabledDates: Date[]; ranges: Range[]; }
-type ComputeProps = BaseParams & ShapeChangingParams & { selectedRange: MaybeMaybeRange; moveRangeOnFirstSelection: boolean; retainEndDateOnFirstSelection: boolean; maxDate?: Date; };
+type ComputeProps = BaseParams & ShapeChangingParams & { selectedRange: NotFullyEmptyRange; moveRangeOnFirstSelection: boolean; retainEndDateOnFirstSelection: boolean; maxDate?: Date; };
 function computeStartDateEndDate({ value, selectedRange, focusedRange, disabledDates, moveRangeOnFirstSelection, retainEndDateOnFirstSelection, ranges, maxDate }: ComputeProps) {
   const base = {
     isStartDateSelected: focusedRange[1] === 0,
@@ -81,7 +81,7 @@ function computeStartDateEndDate({ value, selectedRange, focusedRange, disabledD
   }
 }
 
-type FlipProps = BaseParams & MaybeMaybeRange & { nextFocusRange?: RangeFocus; isStartDateSelected: boolean; };
+type FlipProps = BaseParams & NotFullyEmptyRange & { nextFocusRange?: RangeFocus; isStartDateSelected: boolean; };
 const flipIfReversed = (params: FlipProps) => {
   const { startDate, endDate, isStartDateSelected } = params;
   return endDate && isBefore(endDate, startDate)
@@ -221,7 +221,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
   };
 
-  updatePreview = (val?: { range: MaybeMaybeRange; }) => {
+  updatePreview = (val?: { range: NotFullyEmptyRange; }) => {
     if (!val) {
       this.setState({ preview: null });
       return;
