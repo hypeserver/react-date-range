@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { AriaLabelShape, DateInputType, DateOptions, MaybeEmptyRange, SureRange, SureStartEndDate } from './types'
+import { AriaLabelShape, DateOptions, MaybeEmptyRange, SureStartEndDate } from './types'
 import {
   startOfMonth,
   endOfMonth,

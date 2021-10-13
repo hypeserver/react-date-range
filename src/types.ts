@@ -139,8 +139,6 @@ export interface CalendarProps extends CommonCalendarProps {
   months: number;
 }
 
-export class Calendar extends React.Component<CalendarProps> {}
-
 export interface DateRangeProps extends MaybeEmptyRange, CommonCalendarProps {
   /** default: enUs from locale. Complete list here https://github.com/Adphorus/react-date-range/blob/next/src/locale/index.js */
   locale?: Locale;
@@ -218,10 +216,6 @@ export interface DateRangePickerProps extends DateRangeProps {
   inputRanges?: InputRange[];
 }
 
-export class DateRange extends React.Component<DateRangeProps> {}
-
-export class DateRangePicker extends React.Component<DateRangePickerProps> {}
-
 export type DateRangeIndex = 'Today' | 'Yesterday' | 'Last 7 Days' | 'Last 30 Days';
 
 export type SureStartEndDate<D = Date> = {
@@ -266,16 +260,6 @@ export type LabeledStartEndDateGen = WithSureRangeGen & {
   label: string;
 }
 
-export type Json =
-  | null
-  | string
-  | number
-  | boolean
-  | Array<JSON>
-  | {
-    [prop: string]: Json
-  }
-
 export interface OtherRangeProps {
   color?: string;
   key?: string;
@@ -309,8 +293,6 @@ export type WithRangeCallback = { range: (props?: CommonCalendarProps) => SureRa
 
 export interface StaticRange extends DefinedRangeCommon, WithRangeOrRangeGen, WithIsSelected {
 }
-
-export type StaticRangeWihLabel = StaticRange & WithLabel & WithIsSelected;
 
 export interface InputRange {
   range: (value: Date | number, props?: CommonCalendarProps) => MaybeEmptyRange;

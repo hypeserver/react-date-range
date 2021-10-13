@@ -3,7 +3,7 @@ import Calendar from '../Calendar';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
 import coreStyles, { ClassNames } from '../../styles';
-import { DateRangeProps, isNoEndDateRange, isRangeValue, isSureRange, NotFullyEmptyRange, Preview, MaybeEmptyRange, RangeFocus, SureRange, SureStartEndDate } from '../../types';
+import { DateRangeProps, isNoEndDateRange, isRangeValue, isSureRange, NotFullyEmptyRange, Preview, MaybeEmptyRange, RangeFocus, SureStartEndDate } from '../../types';
 import classnames from 'classnames';
 import { compose } from 'ramda';
 
