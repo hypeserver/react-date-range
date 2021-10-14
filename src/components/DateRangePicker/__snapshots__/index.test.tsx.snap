@@ -2,7 +2,7 @@
 
 exports[`DateRangePicker tests Should render dynamic static label contents correctly 1`] = `
 <div
-  className=""
+  className="rdrDateRangePickerWrapper"
 >
   <DefinedRange
     className=""

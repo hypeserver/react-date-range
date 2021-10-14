@@ -178,29 +178,31 @@ function isStyleSourceKey(a: JoinedStyles, k: string): k is keyof JoinedStyles {
   return a.hasOwnProperty(k);
 }
 
-function isStylesMap(s: CoreStyles | Partial<ClassNames> | {} | undefined): s is JoinedStyles {
-  return Boolean(s);
-}
-
+export type GeneratedStylesPropPart = CoreStyles | PartialStyles | {} | undefined;
 export type PartialStyles = Partial<ClassNames>;
 
+export function isStylesMap(s: GeneratedStylesPropPart): s is PartialStyles {
+  return typeof s === 'object';
+}
+
+export function augmentStyles(styles: PartialStyles, augmentingStyles: PartialStyles) {
+  return Object.keys(augmentingStyles).reduce((styles, key) => {
+    const alreadyAddedClassNames = styles.hasOwnProperty(key)
+      ? styles[key as keyof typeof styles]
+      : [];
+    return {
+      ...styles,
+      [key]: classnames(alreadyAddedClassNames, isStyleSourceKey(augmentingStyles, key) ? augmentingStyles[key] : []),
+    };
+  }, styles);
+}
+
 export function generateStyles(sources: [CoreStyles, PartialStyles | {} | undefined]) {
-  const emptyStyles: JoinedStyles = {};
+  const emptyStyles: PartialStyles = {};
   if (!sources.length) return emptyStyles;
   const generatedStyles = sources
     .filter(isStylesMap)
-    .reduce((styles, styleSource) => {
-      Object.keys(styleSource).forEach(key => {
-        const alreadyAddedClassNames = styles.hasOwnProperty(key)
-          ? styles[key as keyof typeof styles]
-          : [];
-        return {
-          ...styles,
-          [key]: classnames(alreadyAddedClassNames, isStyleSourceKey(styleSource, key) ? styleSource[key] : []),
-        };
-      });
-      return styles;
-    }, emptyStyles);
+    .reduce(augmentStyles, emptyStyles);
   return generatedStyles;
 }
 
