@@ -121,6 +121,7 @@ class DayCell extends Component<ComponentProps, ComponentState> {
       [styles.dayActive]: this.state.active,
     });
   };
+
   renderPreviewPlaceholder = () => {
     const { preview, day, styles } = this.props;
     if (!preview) return null;
@@ -141,6 +142,7 @@ class DayCell extends Component<ComponentProps, ComponentState> {
       />
     );
   };
+
   renderSelectionPlaceholders = () => {
     const { styles, ranges, day } = this.props;
     if (this.props.displayMode === 'date') {
@@ -203,13 +205,14 @@ class DayCell extends Component<ComponentProps, ComponentState> {
         onKeyUp={this.handleKeyEvent}
         className={this.getClassNames()}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
-        style={{ color: this.props.color }}>
+        style={{ color: this.props.color }}
+      >
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
           {
-            dayContentRenderer?.(this.props.day) ||
-            <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
+            (dayContentRenderer && dayContentRenderer(this.props.day))
+            || <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
           }
         </span>
       </button>
