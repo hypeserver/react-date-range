@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DateRangePicker tests Should render dynamic static label contents correctly 1`] = `
+exports[`DateRangePicker tests Should render 1`] = `
 <div
   className="rdrDateRangePickerWrapper"
 >
@@ -71,7 +71,7 @@ exports[`DateRangePicker tests Should render dynamic static label contents corre
         },
       ]
     }
-    weekStartsOn={1}
+    weekStartsOn={0}
   />
   <DateRange
     className=""
@@ -95,7 +95,7 @@ exports[`DateRangePicker tests Should render dynamic static label contents corre
     }
     ranges={Array []}
     retainEndDateOnFirstSelection={false}
-    weekStartsOn={1}
+    weekStartsOn={0}
   />
 </div>
 `;

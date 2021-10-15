@@ -23,12 +23,12 @@ describe('DateRangePicker tests', () => {
     expect(renderStaticRangeLabel).toHaveBeenCalledTimes(0);
   });
 
-  test('Should render dynamic static label contents correctly', () => {
-
+  test('Should render', () => {
+    Date.now = jest.fn(() => 1482363367071);
     const wrapper = shallow(
       <DateRangePicker
         retainEndDateOnFirstSelection={false}
-        weekStartsOn={1}
+        weekStartsOn={0}
         onChange={item => {
           if (!item || item.selection === undefined)
             return;

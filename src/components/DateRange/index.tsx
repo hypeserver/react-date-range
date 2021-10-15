@@ -237,10 +237,7 @@ class DateRange extends Component<ComponentProps, ComponentState> {
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
         preview={this.state.preview}
-        onPreviewChange={(date?: Date) => {
-          const newSelection = date ? this.calcNewSelection(date) : undefined;
-          this.updatePreview(newSelection);
-        } }
+        onPreviewChange={(date?: Date) => this.updatePreview(date && this.calcNewSelection(date))}
         {...this.props}
         displayMode={"dateRange"}
         className={classnames(this.styles.dateRangeWrapper, this.props.className)}
