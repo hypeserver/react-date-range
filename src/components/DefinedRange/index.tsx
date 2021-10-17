@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from '../../styles';
 import { defaultInputRangesGen, defaultStaticRangesGen } from '../../defaultRanges';
 import InputRangeField from '../InputRangeField';
-import cx from 'classnames';
+import classnames from 'classnames';
 import { InputRange, InputRangeWihLabel, isSureRange, isWithRangeGen, NotFullyEmptyRange, OtherRangeProps, MaybeEmptyRange, RangeFocus, StaticRange, WeekStartsOn } from '../../types';
 import { defaultInputRanges, defaultStaticRanges } from '../..';
 
@@ -106,7 +106,7 @@ class DefinedRange extends Component<ComponentProps> {
     } = this.rangesRespectingWeekStartsOn;
 
     return (
-      <div className={cx(styles.definedRangesWrapper, className)}>
+      <div className={classnames(styles.definedRangesWrapper, className)}>
         {headerContent}
         <div className={styles.staticRanges}>
           {staticRanges.map((staticRange, i) => {
@@ -125,7 +125,7 @@ class DefinedRange extends Component<ComponentProps> {
             return (
               <button
                 type="button"
-                className={cx(styles.staticRange, {
+                className={classnames(styles.staticRange, {
                   [styles.staticRangeSelected]: Boolean(selectedRange),
                 })}
                 style={{
