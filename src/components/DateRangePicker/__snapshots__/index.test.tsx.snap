@@ -12,65 +12,9 @@ exports[`DateRangePicker tests Should render 1`] = `
         0,
       ]
     }
-    inputRanges={
-      Array [
-        Object {
-          "getCurrentValue": [Function],
-          "label": "days up to today",
-          "range": [Function],
-        },
-        Object {
-          "getCurrentValue": [Function],
-          "label": "days starting today",
-          "range": [Function],
-        },
-      ]
-    }
     onChange={[Function]}
     onPreviewChange={[Function]}
-    rangeColors={
-      Array [
-        "#3d91ff",
-        "#3ecf8e",
-        "#fed14c",
-      ]
-    }
-    ranges={Array []}
     retainEndDateOnFirstSelection={false}
-    staticRanges={
-      Array [
-        Object {
-          "isSelected": [Function],
-          "label": "Last Month",
-          "range": [Function],
-        },
-        Object {
-          "isSelected": [Function],
-          "label": "Last Week",
-          "range": [Function],
-        },
-        Object {
-          "isSelected": [Function],
-          "label": "Yesterday",
-          "range": [Function],
-        },
-        Object {
-          "isSelected": [Function],
-          "label": "Today",
-          "range": [Function],
-        },
-        Object {
-          "isSelected": [Function],
-          "label": "This Week",
-          "range": [Function],
-        },
-        Object {
-          "isSelected": [Function],
-          "label": "This Month",
-          "range": [Function],
-        },
-      ]
-    }
     weekStartsOn={0}
   />
   <DateRange

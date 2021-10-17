@@ -248,10 +248,10 @@ export type WithRangeGen = { range: RangeGen; };
 export type WithRange = { range: MaybeEmptyRange; };
 export type WithRangeOrRangeGen = { range: MaybeEmptyRange | RangeGen; };
 
-export function isWithRangeGen(wr: WithRangeOrRangeGen): wr is WithRangeGen {
+export function hasRangeGen(wr: WithRangeOrRangeGen): wr is WithRangeGen {
   return typeof wr.range === 'function';
 }
-export function isWithRange(wr: WithRangeOrRangeGen): wr is WithRange {
+export function hasRange(wr: WithRangeOrRangeGen): wr is WithRange {
   return typeof wr.range !== 'function';
 }
 

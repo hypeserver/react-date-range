@@ -870,7 +870,7 @@ exports[`Calendar tests Should render 1`] = `
       calendarFocus="forwards"
       classNames={Object {}}
       color="#3d91ff"
-      date={2021-10-17T10:52:41.672Z}
+      date={2021-10-17T11:38:00.056Z}
       dateDisplayFormat="MMM d, yyyy"
       dateOptions={
         Object {
@@ -965,8 +965,8 @@ exports[`Calendar tests Should render 1`] = `
           },
         }
       }
-      maxDate={2041-10-17T10:52:41.672Z}
-      minDate={1921-10-17T11:52:41.672Z}
+      maxDate={2041-10-17T11:38:00.056Z}
+      minDate={1921-10-17T12:38:00.057Z}
       month={2021-09-30T22:00:00.000Z}
       monthDisplayFormat="MMM yyyy"
       months={1}

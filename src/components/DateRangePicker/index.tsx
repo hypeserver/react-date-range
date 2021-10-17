@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DateRange from '../DateRange';
-import DefinedRange, { DefinedRangeProps } from '../DefinedRange';
+import DefinedRange, { DefinedRangeCP } from '../DefinedRange';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import classnames from 'classnames';
 import coreStyles from '../../styles';
@@ -11,7 +11,7 @@ type ComponentDefaultProps = {
 }
 export type DateRangePickerCDP = ComponentDefaultProps;
 
-type ComponentProps = DateRangeProps & DefinedRangeProps & ComponentDefaultProps;
+type ComponentProps = DateRangeProps & DefinedRangeCP & ComponentDefaultProps;
 export type DateRangePickerCP = ComponentProps;
 
 const defaultProps: ComponentDefaultProps = {

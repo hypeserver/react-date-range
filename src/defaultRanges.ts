@@ -11,7 +11,9 @@ import {
   differenceInCalendarDays,
 } from 'date-fns';
 import { compose } from 'ramda';
-import { InputRangeWihLabel, isWithRangeGen, MaybeEmptyRange, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
+import { InputRangeWihLabel, hasRangeGen, MaybeEmptyRange, SureStartEndDate, WeekStartsOn, WithIsSelected, WithRangeOrRangeGen } from './types';
+
+export const DEFAULT_WEEK_STARTS_ON: WeekStartsOn = 0;
 
 type GenProps = { weekStartsOn: WeekStartsOn; }
 export const definedsGen = ({ weekStartsOn }: GenProps): DefinedDates => ({
@@ -44,7 +46,7 @@ type DefinedDates = {
   endOfLastMonth: Date;
 };
 
-const defineds: DefinedDates = definedsGen({ weekStartsOn: 0 });
+const defineds: DefinedDates = definedsGen({ weekStartsOn: DEFAULT_WEEK_STARTS_ON });
 
 export function getEmptyRange(startDate: Date | number = 0, endDate: Date | number = 0): SureStartEndDate<Date | number> {
   return {
@@ -62,7 +64,7 @@ export function isSameRangeDay(someRange: MaybeEmptyRange, otherRange: MaybeEmpt
 }
 
 export function extractRange(wr: WithRangeOrRangeGen): MaybeEmptyRange {
-  if (isWithRangeGen(wr)) {
+  if (hasRangeGen(wr)) {
     return wr.range();
   }
   return wr.range as MaybeEmptyRange;
