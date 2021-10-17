@@ -232,3 +232,7 @@ export function inferAriaLabel<T extends keyof SureStartEndDate<string>>(range: 
   }
 }
 
+export function combineProps<T, U>(base: T, augmentOverwrite: U): T & U {
+  return { ...base, ...augmentOverwrite };
+}
+

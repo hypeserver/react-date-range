@@ -75,25 +75,14 @@ exports[`DateRangePicker tests Should render 1`] = `
   />
   <DateRange
     className=""
-    classNames={Object {}}
-    disabledDates={Array []}
     focusedRange={
       Array [
         0,
         0,
       ]
     }
-    moveRangeOnFirstSelection={false}
     onChange={[Function]}
     onRangeFocusChange={[Function]}
-    rangeColors={
-      Array [
-        "#3d91ff",
-        "#3ecf8e",
-        "#fed14c",
-      ]
-    }
-    ranges={Array []}
     retainEndDateOnFirstSelection={false}
     weekStartsOn={0}
   />

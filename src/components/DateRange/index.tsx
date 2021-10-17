@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Calendar from '../Calendar';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
@@ -14,12 +14,21 @@ type DefaultComponentProps = {
   retainEndDateOnFirstSelection?: boolean;
   rangeColors?: string[];
   disabledDates?: Date[],
-}
+};
+export type DateRangeDCP = DefaultComponentProps;
 
-type ComponentState = {
-  focusedRange: RangeFocus;
-  preview: null | Preview;
-}
+type ComponentProps = DateRangeProps & DefaultComponentProps & { nextPreviewRange?: MaybeEmptyRange; };
+export type DateRangeCP = ComponentProps;
+
+export type RangeSelection = {
+  wasValid: boolean;
+  range: {
+    startDate: Date;
+    endDate: Date | null;
+  };
+  nextFocusRange: RangeFocus;
+};
+
 
 const calculateEndDate = (value: Date, now: Date, endDate: Date | null, dayOffset: number, moveRangeOnFirstSelection: boolean, retainEndDateOnFirstSelection: boolean, maxDate?: Date) => {
   const userEndDate = (() => {
@@ -125,130 +134,131 @@ const computeRange = ({ disabledDates, startDate, endDate, isStartDateSelected, 
   };
 }
 
-type CalcNewSelectionRet = {
-  wasValid: boolean;
-  range: {
-    startDate: Date;
-    endDate: Date | null;
-  };
-  nextFocusRange: RangeFocus;
-} | undefined;
-
 const getRes = compose(computeRange, flipIfReversed, computeStartDateEndDate);
 
-type ComponentProps = DateRangeProps & DefaultComponentProps;
+export const calcNewSelectionGen = (props: Readonly<ComponentProps>, stateFocusedRange: RangeFocus) => (value: Date | MaybeEmptyRange | undefined): RangeSelection | undefined => {
 
-class DateRange extends Component<ComponentProps, ComponentState> {
-  public static defaultProps: DefaultComponentProps = {
-    classNames: {},
-    ranges: [],
-    moveRangeOnFirstSelection: false,
-    retainEndDateOnFirstSelection: false,
-    rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
-    disabledDates: [],
-  };
-  styles: Partial<ClassNames>;
-  calendar: Calendar | null;
+  if (value === undefined) return undefined;
 
-  constructor(props: ComponentProps) {
-    super(props);
-    this.state = {
-      focusedRange: props.initialFocusedRange || [findNextRangeIndex(this.props.ranges || []), 0],
-      preview: null,
-    };
-    this.styles = generateStyles([coreStyles, this.props.classNames]);
-    this.calendar = null;
+  const focusedRange = props.focusedRange || stateFocusedRange;
+  const {
+    ranges,
+    onChange,
+    maxDate,
+    moveRangeOnFirstSelection,
+    retainEndDateOnFirstSelection,
+    disabledDates,
+  } = props;
+  const focusedRangeIndex = focusedRange[0];
+  const selectedRange = ranges && ranges[focusedRangeIndex];
+
+  if (!selectedRange || !onChange) return;
+
+  if (!isSureRange(selectedRange) && !isNoEndDateRange(selectedRange)) {
+    console.log('selectedRange', selectedRange);
+    console.log('value', value);
+    throw new Error('Bug, expecting selected range to be a sure range or no end date range, but it is neither');
   }
 
-  calcNewSelection = (value: Date | MaybeEmptyRange): CalcNewSelectionRet => {
-    const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const {
-      ranges,
-      onChange,
-      maxDate,
-      moveRangeOnFirstSelection,
-      retainEndDateOnFirstSelection,
-      disabledDates,
-    } = this.props;
-    const focusedRangeIndex = focusedRange[0];
-    const selectedRange = ranges && ranges[focusedRangeIndex];
+  return getRes({
+    value,
+    selectedRange,
+    focusedRange,
+    disabledDates: disabledDates || [],
+    moveRangeOnFirstSelection: moveRangeOnFirstSelection || false,
+    ranges,
+    retainEndDateOnFirstSelection: retainEndDateOnFirstSelection || false,
+    maxDate,
+  });
 
-    if (!selectedRange || !onChange) return;
+};
 
-    if (!isSureRange(selectedRange) && !isNoEndDateRange(selectedRange)) {
-      console.log('selectedRange', selectedRange);
-      console.log('value', value);
-      throw new Error('Bug, expecting selected range to be a sure range or no end date range, but it is neither');
-    }
-
-    return getRes({
-      value,
-      selectedRange,
-      focusedRange,
-      disabledDates: disabledDates || [],
-      moveRangeOnFirstSelection: moveRangeOnFirstSelection || false,
-      ranges,
-      retainEndDateOnFirstSelection: retainEndDateOnFirstSelection || false,
-      maxDate,
-    });
-
-  };
-
-  setSelection = (value: Date | SureStartEndDate<Date>) => {
-    const { onChange, ranges, onRangeFocusChange } = this.props;
-    const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const focusedRangeIndex = focusedRange[0];
-    const selectedRange = ranges && ranges[focusedRangeIndex];
-    if (!selectedRange) return;
-    const newSelection = this.calcNewSelection(value);
-    if (!newSelection) {
-      throw new Error('Bug, expecting new selection to not be undefined');
-    }
-    onChange && onChange({
-      [selectedRange.key || `range${focusedRangeIndex + 1}`]: {
-        ...selectedRange,
-        ...newSelection.range,
-      },
-    });
-    this.setState({
-      focusedRange: newSelection.nextFocusRange,
-      preview: null,
-    });
-    onRangeFocusChange && onRangeFocusChange(newSelection.nextFocusRange);
-  };
-  handleRangeFocusChange = (focusedRange: RangeFocus) => {
-    this.setState({ focusedRange });
-    this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
-  };
-
-  updatePreview = (val?: { range: NotFullyEmptyRange; }) => {
-    if (!val) {
-      this.setState({ preview: null });
-      return;
-    }
-    const { rangeColors, ranges } = this.props;
-    const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const color = (ranges && ranges[focusedRange[0]]?.color) || (rangeColors && rangeColors[focusedRange[0]]);
-    this.setState({ preview: { ...val.range, color } });
-  };
-  render() {
-    return (
-      <Calendar
-        focusedRange={this.state.focusedRange}
-        onRangeFocusChange={this.handleRangeFocusChange}
-        preview={this.state.preview}
-        onPreviewChange={(date?: Date) => this.updatePreview(date && this.calcNewSelection(date))}
-        {...this.props}
-        displayMode={"dateRange"}
-        className={classnames(this.styles.dateRangeWrapper, this.props.className)}
-        onChange={this.setSelection}
-        updateRange={this.setSelection}
-        ref={target => {
-          this.calendar = target;
-        } }
-      />
-    );
+const setSelectionGen = (props: ComponentProps, stateFocusedRange: RangeFocus, setFocusedRange: React.Dispatch<React.SetStateAction<RangeFocus>>, setPreview: React.Dispatch<React.SetStateAction<Preview | null>>) => (value: Date | SureStartEndDate<Date>) => {
+  const { onChange, ranges, onRangeFocusChange } = props;
+  const focusedRange = props.focusedRange || stateFocusedRange;
+  const focusedRangeIndex = focusedRange[0];
+  const selectedRange = ranges && ranges[focusedRangeIndex];
+  if (!selectedRange) return;
+  const newSelection = calcNewSelectionGen(props, focusedRange)(value);
+  if (!newSelection) {
+    throw new Error('Bug, expecting new selection to not be undefined');
   }
+  onChange && onChange({
+    [selectedRange.key || `range${focusedRangeIndex + 1}`]: {
+      ...selectedRange,
+      ...newSelection.range,
+    },
+  });
+
+  setFocusedRange(newSelection.nextFocusRange);
+  setPreview(null);
+  onRangeFocusChange && onRangeFocusChange(newSelection.nextFocusRange);
+};
+
+const handleRangeFocusChangeGen = (setFocusedRange: React.Dispatch<React.SetStateAction<RangeFocus>>, props: ComponentProps) => (focusedRange: RangeFocus) => {
+  setFocusedRange(focusedRange);
+  props.onRangeFocusChange && props.onRangeFocusChange(focusedRange);
+};
+
+const updatePreviewGen = (setPreview: React.Dispatch<React.SetStateAction<Preview | null>>, props: ComponentProps, stateFocusedRange: RangeFocus) => (newSelection?: RangeSelection) => {
+  if (newSelection === undefined) {
+    setPreview(null);
+    return;
+  }
+  const { rangeColors, ranges } = props;
+  const focusedRange = props.focusedRange || stateFocusedRange;
+  const color = (ranges && ranges[focusedRange[0]]?.color) || (rangeColors && rangeColors[focusedRange[0]]);
+  setPreview({ ...newSelection.range, color });
+};
+
+export const defaultProps: DefaultComponentProps = {
+  classNames: {},
+  ranges: [],
+  moveRangeOnFirstSelection: false,
+  retainEndDateOnFirstSelection: false,
+  rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+  disabledDates: [],
+}
+
+export function getInitialFocusedRange(initialFocusedRange: ComponentProps["initialFocusedRange"], ranges: ComponentProps["ranges"]) {
+  return initialFocusedRange || [findNextRangeIndex(ranges || []), 0];
+}
+
+const DateRange: React.FC<ComponentProps> = props => {
+
+  const allProps: ComponentProps = { ...defaultProps, ...props };
+  const { initialFocusedRange, ranges, classNames, className, nextPreviewRange } = allProps;
+  const [focusedRange, setFocusedRange] = useState<RangeFocus>(getInitialFocusedRange(initialFocusedRange, ranges));
+  const [preview, setPreview] = useState<Preview | null>(null);
+  const styles = generateStyles([coreStyles, classNames]);
+  const calendarRef = useRef(null);
+  const setSelection = setSelectionGen(allProps, focusedRange, setFocusedRange, setPreview);
+  const handleRangeFocusChange = handleRangeFocusChangeGen(setFocusedRange, allProps);
+  const updatePreview = updatePreviewGen(setPreview, allProps, focusedRange);
+  const calcNewSelection = calcNewSelectionGen(props, focusedRange);
+  const fullUpdatePreview = compose(updatePreview, calcNewSelection);
+
+  useEffect(() => {
+    fullUpdatePreview(nextPreviewRange);
+    return () => {
+    }
+  }, [nextPreviewRange, fullUpdatePreview])
+
+  return (
+    <Calendar
+      {...allProps}
+      ref={calendarRef}
+      focusedRange={focusedRange}
+      onRangeFocusChange={handleRangeFocusChange}
+      preview={preview}
+      onPreviewChange={fullUpdatePreview}
+      displayMode={"dateRange"}
+      className={classnames(styles.dateRangeWrapper, className)}
+      onChange={setSelection}
+      updateRange={setSelection}
+    />
+  );
+
 }
 
 export default DateRange;

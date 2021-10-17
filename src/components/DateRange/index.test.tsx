@@ -1,13 +1,20 @@
 import React from 'react';
 import { subDays, addDays, isSameDay } from 'date-fns';
-import DateRange from '.';
+import DateRange, { calcNewSelectionGen, DateRangeCP, DateRangeDCP, defaultProps, getInitialFocusedRange } from '.';
 import renderer, { ReactTestRenderer } from 'react-test-renderer';
 import { isSureRange, NotFullyEmptyRange, SureStartEndDate } from '../../types';
+import { combineProps } from '../../utils';
 
+type DateRange = typeof DateRange;
 let testRenderer: ReactTestRenderer;
-let instance: DateRange;
 const endDate = new Date();
 const startDate = subDays(endDate, 7);
+
+function getCalcNewSelection(componentProps: DateRangeCP) {
+  const allProps = combineProps<DateRangeDCP, DateRangeCP>(defaultProps, componentProps);
+  const calcNewSelection = calcNewSelectionGen(allProps, getInitialFocusedRange(allProps?.initialFocusedRange, allProps.ranges));
+  return calcNewSelection;
+}
 
 const commonProps = {
   ranges: [{ startDate, endDate, key: 'selection' }],
@@ -29,7 +36,6 @@ const compareRanges = (assertionRange: NotFullyEmptyRange, newRange?: NotFullyEm
 
 beforeEach(() => {
   testRenderer = renderer.create(<DateRange {...commonProps} />);
-  instance = testRenderer.getInstance() as unknown as DateRange;
 });
 
 describe('DateRange', () => {
@@ -38,7 +44,8 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection by resetting end date', () => {
-    const methodResult = instance.calcNewSelection(subDays(endDate, 10));
+    const calcNewSelection = getCalcNewSelection(commonProps);
+    const methodResult = calcNewSelection(subDays(endDate, 10));
     compareRanges({
       startDate: subDays(endDate, 10),
       endDate: subDays(endDate, 10),
@@ -46,7 +53,8 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection by resetting end date if start date is not before', () => {
-    const methodResult = instance.calcNewSelection(addDays(endDate, 2));
+    const calcNewSelection = getCalcNewSelection(commonProps);
+    const methodResult = calcNewSelection(addDays(endDate, 2));
     compareRanges({
       startDate: addDays(endDate, 2),
       endDate: addDays(endDate, 2),
@@ -54,8 +62,13 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection based on moveRangeOnFirstSelection prop', () => {
-    testRenderer.update(<DateRange {...commonProps} moveRangeOnFirstSelection />);
-    const methodResult = instance.calcNewSelection(subDays(endDate, 10));
+    const componentProps: DateRangeCP = {
+      ...commonProps,
+      moveRangeOnFirstSelection: true,
+    };
+    testRenderer.update(<DateRange {...componentProps} />);
+    const calcNewSelection = getCalcNewSelection(componentProps);
+    const methodResult = calcNewSelection(subDays(endDate, 10));
     compareRanges({
       startDate: subDays(endDate, 10),
       endDate: subDays(endDate, 3),
@@ -63,8 +76,13 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection by retaining end date, based on retainEndDateOnFirstSelection prop', () => {
-    testRenderer.update(<DateRange {...commonProps} retainEndDateOnFirstSelection />);
-    const methodResult = instance.calcNewSelection(subDays(endDate, 10));
+    const componentProps: DateRangeCP = {
+      ...commonProps,
+      retainEndDateOnFirstSelection: true,
+    };
+    testRenderer.update(<DateRange {...componentProps} />);
+    const calcNewSelection = getCalcNewSelection(componentProps);
+    const methodResult = calcNewSelection(subDays(endDate, 10));
     compareRanges({
       startDate: subDays(endDate, 10),
       endDate,
@@ -72,14 +90,14 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection by retaining the unset end date, based on retainEndDateOnFirstSelection prop', () => {
-    testRenderer.update(
-      <DateRange
-        {...commonProps}
-        ranges={[{ ...commonProps.ranges[0], endDate: null }]}
-        retainEndDateOnFirstSelection
-      />
-    );
-    const methodResult = instance.calcNewSelection(subDays(endDate, 10));
+    const componentProps: DateRangeCP = {
+      ...commonProps,
+      ranges: [{ ...commonProps.ranges[0], endDate: null }],
+      retainEndDateOnFirstSelection: true,
+    };
+    testRenderer.update(<DateRange {...componentProps} />);
+    const calcNewSelection = getCalcNewSelection(componentProps);
+    const methodResult = calcNewSelection(subDays(endDate, 10));
     compareRanges({
       startDate: subDays(endDate, 10),
       endDate: null,
