@@ -46,18 +46,17 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 ```javascript
 import { Calendar } from 'react-date-range';
 
-class MyComponent extends Component {
-  handleSelect(date){
+function MyComponent() {
+  function handleSelect(date) {
     console.log(date); // native Date object
   }
-  render(){
-    return (
-      <Calendar
-        date={new Date()}
-        onChange={this.handleSelect}
-      />
-    )
-  }
+  
+  return (
+    <Calendar
+      date={new Date()}
+      onChange={this.handleSelect}
+    />
+  );
 }
 
 ```
@@ -66,8 +65,8 @@ class MyComponent extends Component {
 ```javascript
 import { DateRangePicker } from 'react-date-range';
 
-class MyComponent extends Component {
-  handleSelect(ranges){
+function MyComponent() {
+  function handleSelect(ranges) {
     console.log(ranges);
     // {
     //   selection: {
@@ -76,19 +75,20 @@ class MyComponent extends Component {
     //   }
     // }
   }
-  render(){
-    const selectionRange = {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection',
-    }
-    return (
-      <DateRangePicker
-        ranges={[selectionRange]}
-        onChange={this.handleSelect}
-      />
-    )
+  
+  
+  const selectionRange = {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection',
   }
+  
+  return (
+    <DateRangePicker
+      ranges={[selectionRange]}
+      onChange={this.handleSelect}
+    />
+  )
 }
 
 ```
