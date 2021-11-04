@@ -1,11 +1,31 @@
 const path = require('path');
-const isDEV = process.env.NODE_ENV === 'development';
-const moduleSource = isDEV ? 'src' : 'src';
+const { version } = require('./package');
 
 module.exports = {
-  //ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
   title: 'react-date-range',
   showSidebar: false,
+  require: [
+    path.join(__dirname, './src/styles.scss'),
+    path.join(__dirname, './src/theme/default.scss')
+  ],
+  getComponentPathLine(componentPath) {
+    const name = path.basename(componentPath, '.tsx');
+    return `import { ${name} } from 'react-date-range';`;
+  },
+  skipComponentsWithoutExample: true,
+  version,
+  propsParser: require('react-docgen-typescript').withCustomConfig(
+    './tsconfig.json'
+  ).parse,
+  ignore: [
+    '**/assets/**',
+    '**/data/**',
+    '**/__tests__/**',
+    '**/*.test.{js,jsx,ts,tsx}',
+    '**/*.spec.{js,jsx,ts,tsx}',
+    '**/*.d.ts',
+    '**/*.style.{js,jsx,ts,tsx}'
+  ],
   template: {
     head: {
       links: [
@@ -15,15 +35,15 @@ module.exports = {
         },
         {
           rel: 'stylesheet',
-          href: './dist/styles.css',
+          href: './src/styles.scss',
         },
         {
           rel: 'stylesheet',
-          href: './dist/theme/default.css',
+          href: './src/theme/default.scss',
         },
         {
           rel: 'stylesheet',
-          href: './demo/styles.css',
+          href: './src/theme/demo.css',
         },
       ],
     },
@@ -38,13 +58,6 @@ module.exports = {
       base: '"Open Sans", "Helvetica", sans-serif',
     },
   },
-
-  getComponentPathLine(componentPath) {
-    const arr = componentPath.split('/');
-    const name = arr[arr.length - 2];
-    return `import { ${name} } from 'react-date-range';`;
-  },
-
   styles: function styles(theme) {
     return {
       Playground: {
@@ -64,61 +77,32 @@ module.exports = {
       },
     };
   },
-  // Override Styleguidist components
-  styleguideComponents: {
-    LogoRenderer: path.join(__dirname, 'demo/components/Logo'),
-    StyleGuideRenderer: path.join(__dirname, 'demo/components/StyleGuide'),
-    SectionsRenderer: path.join(__dirname, 'demo/components/SectionsRenderer'),
-  },
   moduleAliases: {
-    'react-date-range/dist': path.resolve(__dirname, moduleSource),
-    'react-date-range': path.resolve(__dirname, moduleSource),
+    'react-date-range': path.resolve(__dirname, 'src/'),
   },
-  webpackConfig: {
-    module: {
-      rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader',
-        },
-        {
-          test: /\.css$/,
-          loader: 'style-loader!css-loader?modules',
-        },
-        {
-          test: /\.svg$/,
-          loader: 'url-loader',
-        },
-      ],
-    },
-  },
-  pagePerSection: false,
   sections: [
-    {
-      name: 'Getting Started',
-      content: 'demo/README.md',
-      sectionDepth: 0,
-    },
     {
       name: 'Components',
       sections: [
+        // {
+        //   components: 'src/components/Atoms/*/**.tsx',
+        // },
         {
-          components: () => ['src/components/DateRangePicker/index.js'],
-          usageMode: 'hide',
+          components: 'src/components/DateRangePicker/*.js',
+          // usageMode: 'hide',
         },
         {
-          components: () => ['src/components/DateRange/index.js'],
-          usageMode: 'hide',
+          components: 'src/components/DateRange/*.js',
+          // usageMode: 'hide',
         },
         {
-          components: () => ['src/components/Calendar/index.js'],
+          components: 'src/components/Calendar/*.js',
         },
         {
-          components: () => ['src/components/DefinedRange/index.js'],
+          components: 'src/components/DefinedRange/*.js',
         },
       ],
       sectionDepth: 0,
-    },
-  ],
+    }
+  ]
 };

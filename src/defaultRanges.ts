@@ -10,6 +10,7 @@ import {
   isSameDay,
   differenceInCalendarDays,
 } from 'date-fns';
+import { Range } from './utils';
 
 const defineds = {
   startOfWeek: startOfWeek(new Date()),
@@ -26,18 +27,27 @@ const defineds = {
   endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
 };
 
-const staticRangeHandler = {
-  range: {},
+interface IStaticRange {
+    label?: string
+    range: () => Range
+    isSelected: (range: Range) => boolean
+}
+
+const staticRangeHandler: IStaticRange = {
+  range: () => ({}),
   isSelected(range) {
-    const definedRange = this.range();
+    const { startDate, endDate} = this.range();
+    if (!startDate || !endDate || !range.startDate || !range.endDate) {
+      return false;
+    }
     return (
-      isSameDay(range.startDate, definedRange.startDate) &&
-      isSameDay(range.endDate, definedRange.endDate)
+      isSameDay(range.startDate, startDate) &&
+      isSameDay(range.endDate, endDate)
     );
   },
 };
 
-export function createStaticRanges(ranges) {
+export function createStaticRanges(ranges: Partial<IStaticRange>[]) {
   return ranges.map(range => ({ ...staticRangeHandler, ...range }));
 }
 
@@ -87,7 +97,13 @@ export const defaultStaticRanges = createStaticRanges([
   },
 ]);
 
-export const defaultInputRanges = [
+interface IInputRange {
+  label?: string
+  range: (range: Range) => Range
+  getCurrentValue: (range: Range) => number | string
+}
+
+export const defaultInputRanges: IInputRange[] = [
   {
     label: 'days up to today',
     range(value) {
@@ -97,7 +113,7 @@ export const defaultInputRanges = [
       };
     },
     getCurrentValue(range) {
-      if (!isSameDay(range.endDate, defineds.endOfToday)) return '-';
+      if (!range.endDate || !isSameDay(range.endDate, defineds.endOfToday)) return '-';
       if (!range.startDate) return '∞';
       return differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
     },
@@ -112,7 +128,7 @@ export const defaultInputRanges = [
       };
     },
     getCurrentValue(range) {
-      if (!isSameDay(range.startDate, defineds.startOfToday)) return '-';
+      if (!range.startDate || !isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.endDate) return '∞';
       return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
     },

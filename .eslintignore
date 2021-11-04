@@ -1,0 +1,9 @@
+node_modules
+dist
+tests
+coverage
+styleguide.config.js
+
+src/**/*.test.tsx
+src/**/*.md
+src/serviceWorker.ts

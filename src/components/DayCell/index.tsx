@@ -3,8 +3,41 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
+import { DisplayMode, Preview, Range, IStyles } from '../../utils';
 
-class DayCell extends Component {
+export interface IDayCellProps {
+  day: Date
+  date: Date
+  preview: Preview | null
+  color: string
+  dayDisplayFormat: string
+  ranges: Range[]
+  onMouseDown: (day: Date) => void
+  onMouseUp: (day: Date) => void
+  onMouseEnter: (day: Date) => void
+  onPreviewChange: (day: Date) => void
+  dayContentRenderer: (day: Date) => React.ReactNode
+  styles: IStyles
+  displayMode: DisplayMode
+  disabled: boolean
+  isPassive: boolean
+  isToday: boolean
+  isWeekend: boolean
+  isStartOfWeek: boolean
+  isEndOfWeek: boolean
+  isStartOfMonth: boolean
+  isEndOfMonth: boolean
+}
+
+interface IDayCellState {
+  hover: boolean
+  active: boolean
+}
+
+class DayCell extends Component<IDayCellProps, IDayCellState> {
+  static defaultProps: Partial<IDayCellProps>;
+  static propTypes;
+
   constructor(props, context) {
     super(props, context);
 
@@ -23,9 +56,9 @@ class DayCell extends Component {
   };
   handleMouseEvent = event => {
     const { day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp } = this.props;
-    const stateChanges = {};
+    const stateChanges: IDayCellState = this.state;
     if (disabled) {
-      onPreviewChange();
+      onPreviewChange(day);
       return;
     }
 
@@ -51,6 +84,9 @@ class DayCell extends Component {
       case 'focus':
         onPreviewChange(day);
         break;
+      default:
+        // FIXME?
+        break
     }
     if (Object.keys(stateChanges).length) {
       this.setState(stateChanges);
@@ -89,8 +125,8 @@ class DayCell extends Component {
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
     const isInRange =
       (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
-    const isStartEdge = !isInRange && isSameDay(day, startDate);
-    const isEndEdge = !isInRange && isSameDay(day, endDate);
+    const isStartEdge = !isInRange && startDate && isSameDay(day, startDate);
+    const isEndEdge = !isInRange && endDate && isSameDay(day, endDate);
     return (
       <span
         className={classnames({
@@ -104,16 +140,17 @@ class DayCell extends Component {
   };
   renderSelectionPlaceholders = () => {
     const { styles, ranges, day } = this.props;
-    if (this.props.displayMode === 'date') {
+    if (this.props.displayMode === DisplayMode.DATE) {
       let isSelected = isSameDay(this.props.day, this.props.date);
       return isSelected ? (
         <span className={styles.selected} style={{ color: this.props.color }} />
       ) : null;
     }
 
-    const inRanges = ranges.reduce((result, range) => {
-      let startDate = range.startDate;
-      let endDate = range.endDate;
+    const inRanges: Range[] = []
+    ranges.forEach((range) => {
+      let startDate = range.startDate || null;
+      let endDate = range.endDate || null;
       if (startDate && endDate && isBefore(endDate, startDate)) {
         [startDate, endDate] = [endDate, startDate];
       }
@@ -121,21 +158,18 @@ class DayCell extends Component {
       endDate = endDate ? startOfDay(endDate) : null;
       const isInRange =
         (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
-      const isStartEdge = !isInRange && isSameDay(day, startDate);
-      const isEndEdge = !isInRange && isSameDay(day, endDate);
+      const isStartEdge = !isInRange && startDate && isSameDay(day, startDate);
+      const isEndEdge = !isInRange && endDate && isSameDay(day, endDate);
       if (isInRange || isStartEdge || isEndEdge) {
-        return [
-          ...result,
-          {
+
+        inRanges.push({
             isStartEdge,
-            isEndEdge: isEndEdge,
+            isEndEdge,
             isInRange,
             ...range,
-          },
-        ];
+          })
       }
-      return result;
-    }, []);
+    });
 
     return inRanges.map((range, i) => (
       <span
@@ -164,7 +198,7 @@ class DayCell extends Component {
         onPauseCapture={this.handleMouseEvent}
         onKeyDown={this.handleKeyEvent}
         onKeyUp={this.handleKeyEvent}
-        className={this.getClassNames(this.props.styles)}
+        className={this.getClassNames()}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
         style={{ color: this.props.color }}>
         {this.renderSelectionPlaceholders()}

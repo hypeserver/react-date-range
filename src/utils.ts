@@ -9,15 +9,62 @@ import {
   addDays,
 } from 'date-fns';
 
-export function calcFocusDate(currentFocusedDate, props) {
+export interface Drag {
+  status: any
+  range: Range
+  disablePreview: boolean
+}
+
+export interface IStyles { [key: string]: string }
+export interface IAriaLabels { [key: string]: string }
+
+export interface DateOptions {
+  locale?: Locale
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+}
+
+export enum DisplayMode {
+  DATE = 'date',
+  DATE_RANGE = 'dateRange',
+}
+
+export interface Preview {
+  startDate: Date
+  endDate: Date
+  color?: string
+}
+
+export interface Range {
+  startDate?: Date | null
+  endDate?: Date | null
+  // FIXME?
+  isStartEdge?: boolean | null
+  isEndEdge?: boolean | null
+  isInRange?: boolean | null
+  color?: string | null
+  autoFocus?: boolean
+  disabled?: boolean
+  showDateDisplay?: boolean
+}
+
+interface CalFocusDateOptions {
+  shownDate: Date
+  date: Date
+  months: number
+  ranges: Range[]
+  focusedRange: number[]
+  displayMode: DisplayMode
+}
+
+export function calcFocusDate(currentFocusedDate: Date | null, props: CalFocusDateOptions): Date {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
   // find primary date according the props
-  let targetInterval;
-  if (displayMode === 'dateRange') {
+  let targetInterval: {start?: Date, end?: Date};
+  if (displayMode === DisplayMode.DATE_RANGE) {
     const range = ranges[focusedRange[0]] || {};
     targetInterval = {
-      start: range.startDate,
-      end: range.endDate,
+      start: range.startDate || undefined,
+      end: range.endDate || undefined,
     };
   } else {
     targetInterval = {
@@ -41,7 +88,7 @@ export function calcFocusDate(currentFocusedDate, props) {
   return targetDate;
 }
 
-export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
+export function findNextRangeIndex(ranges: Range[], currentRangeIndex = -1) {
   const nextIndex = ranges.findIndex(
     (range, i) => i > currentRangeIndex && range.autoFocus !== false && !range.disabled
   );
@@ -49,9 +96,9 @@ export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
   return ranges.findIndex(range => range.autoFocus !== false && !range.disabled);
 }
 
-export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
-  const startDateOfMonth = startOfMonth(date, dateOptions);
-  const endDateOfMonth = endOfMonth(date, dateOptions);
+export function getMonthDisplayRange(date: Date, dateOptions: DateOptions, fixedHeight: boolean) {
+  const startDateOfMonth = startOfMonth(date);
+  const endDateOfMonth = endOfMonth(date);
   const startDateOfCalendar = startOfWeek(startDateOfMonth, dateOptions);
   let endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
   if (fixedHeight && differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34) {
@@ -65,7 +112,7 @@ export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
   };
 }
 
-export function generateStyles(sources) {
+export function generateStyles(sources: IStyles[]) {
   if (!sources.length) return {};
   const generatedStyles = sources
     .filter(source => Boolean(source))

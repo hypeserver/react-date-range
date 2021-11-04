@@ -5,9 +5,6 @@ const MIN = 0;
 const MAX = 99999;
 
 class InputRangeField extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
 
   shouldComponentUpdate(nextProps) {
     const { value, label, placeholder } = this.props;
