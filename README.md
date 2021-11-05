@@ -1,13 +1,13 @@
-# react-date-range
-[![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![npm](https://img.shields.io/npm/l/react-date-range)]()
-[![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver)
+# @atefbena/react-date-range 
+### A fork of the great `react-date-range` package 
+[![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/@atefbena/react-date-range)
+[![npm](https://img.shields.io/npm/l/@atefbena/react-date-range)]()
+[![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/@atefbena/react-date-range)
 
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
 
-### Why should you use `react-date-range`?
+### Why should you use `@atefbena/react-date-range`?
 
 - Stateless date operations
 - Highly configurable
@@ -17,8 +17,6 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 - Keyboard friendly
 
 **Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
-
-![](https://raw.githubusercontent.com/hypeserver/react-date-range/master/demo/ss.png)
 
 
 ## Getting Started
