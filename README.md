@@ -25,12 +25,12 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 ### Installation
 
 ```
-npm install --save react-date-range
+yarn add @atefbena/react-date-range
 ```
 This plugin expects `react` and `date-fns` as peerDependencies, It means that you need to install them in your project folder.
 
 ```
-npm install --save react date-fns
+yarn add react date-fns
 ```
 
 ## Usage
@@ -38,13 +38,13 @@ npm install --save react date-fns
 You need to import skeleton and theme styles first.
 
 ```javascript
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import '@atefbena/react-date-range/dist/styles.css'; // main style file
+import '@atefbena/react-date-range/dist/theme/default.css'; // theme css file
 ```
 
 ### `DatePicker`
 ```javascript
-import { Calendar } from 'react-date-range';
+import { Calendar } from '@atefbena/react-date-range';
 
 function MyComponent() {
   function handleSelect(date) {
@@ -63,7 +63,7 @@ function MyComponent() {
 
 ### `DateRangePicker / DateRange`
 ```javascript
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker } from '@atefbena/react-date-range';
 
 function MyComponent() {
   function handleSelect(ranges) {
@@ -86,7 +86,7 @@ function MyComponent() {
   return (
     <DateRangePicker
       ranges={[selectionRange]}
-      onChange={this.handleSelect}
+      onChange={handleSelect}
     />
   )
 }
