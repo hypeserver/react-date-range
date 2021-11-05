@@ -205,3 +205,4 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
 - Make mobile friendly (integrate tap and swipe actions)
 - Add tests
 - Improve documentation
+- Migrate to Typescript
