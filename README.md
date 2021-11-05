@@ -52,7 +52,7 @@ function MyComponent() {
   return (
     <Calendar
       date={new Date()}
-      onChange={this.handleSelect}
+      onChange={handleSelect}
     />
   );
 }
