@@ -1,6 +1,6 @@
 {
-  "name": "react-date-range",
-  "version": "1.4.0",
+  "name": "@atefbena/react-date-range",
+  "version": "1.0.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -29,10 +29,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/hypeserver/react-date-range"
+    "url": "git+ssh://git@github.com/atefBB/react-date-range.git"
   },
   "bugs": {
-    "url": "http://github.com/hypeserver/react-date-range/issues"
+    "url": "http://github.com/atefBB/react-date-range/issues"
   },
   "browserslist": [
     "defaults"
@@ -83,5 +83,7 @@
     "style-loader": "^1.0.0",
     "url-loader": "^3.0.0",
     "webpack": "^4.41.5"
-  }
+  },
+  "homepage": "https://github.com/atefBB/react-date-range#readme",
+  "author": "Atef Ben Ali <atef.bettaib@gmail.com>"
 }
