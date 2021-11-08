@@ -114,6 +114,7 @@ class DayCell extends Component {
     const inRanges = ranges.reduce((result, range) => {
       let startDate = range.startDate;
       let endDate = range.endDate;
+      if (startDate === null || endDate === null) return result;
       if (startDate && endDate && isBefore(endDate, startDate)) {
         [startDate, endDate] = [endDate, startDate];
       }
