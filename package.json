@@ -1,6 +1,6 @@
 {
   "name": "@atefbena/react-date-range",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
