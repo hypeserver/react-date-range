@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateRangePicker tests Should render 1`] = `
+<div
+  className="rdrDateRangePickerWrapper"
+>
+  <DefinedRange
+    className=""
+    focusedRange={
+      Array [
+        0,
+        0,
+      ]
+    }
+    onChange={[Function]}
+    onPreviewChange={[Function]}
+    retainEndDateOnFirstSelection={false}
+    weekStartsOn={0}
+  />
+  <DateRange
+    className=""
+    focusedRange={
+      Array [
+        0,
+        0,
+      ]
+    }
+    onChange={[Function]}
+    onRangeFocusChange={[Function]}
+    retainEndDateOnFirstSelection={false}
+    weekStartsOn={0}
+  />
+</div>
+`;

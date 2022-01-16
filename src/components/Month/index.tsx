@@ -1,7 +1,5 @@
-/* eslint-disable no-fallthrough */
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import DayCell, { rangeShape } from '../DayCell';
+import React, { MouseEvent, PureComponent } from 'react';
+import DayCell, { DateReceivingFunc, OptionalDateReceivingFunc } from '../DayCell';
 import {
   format,
   startOfDay,
@@ -15,38 +13,54 @@ import {
   isWithinInterval,
   eachDayOfInterval,
 } from 'date-fns';
-import { getMonthDisplayRange } from '../../utils';
+import { getMonthDisplayRange, renderWeekdays } from '../../utils';
+import { CoreStyles } from '../../styles';
+import { DateOptions, Preview, MaybeEmptyRange, RangeFocus } from '../../types';
 
-function renderWeekdays(styles, dateOptions, weekdayDisplayFormat) {
-  const now = new Date();
-  return (
-    <div className={styles.weekDays}>
-      {eachDayOfInterval({
-        start: startOfWeek(now, dateOptions),
-        end: endOfWeek(now, dateOptions),
-      }).map((day, i) => (
-        <span className={styles.weekDay} key={i}>
-          {format(day, weekdayDisplayFormat, dateOptions)}
-        </span>
-      ))}
-    </div>
-  );
+export type Drag = {
+  range: MaybeEmptyRange;
+  status: boolean;
+  disablePreview: boolean;
 }
 
-class Month extends PureComponent {
+type ComponentProps = {
+  dateOptions: DateOptions,
+  dayDisplayFormat: string;
+  disabledDates: Date[];
+  disabledDay: (date: Date) => boolean;
+  displayMode?: 'dateRange' | 'date';
+  drag: Drag,
+  fixedHeight: boolean;
+  focusedRange: RangeFocus;
+  maxDate: Date;
+  minDate: Date;
+  month: Date;
+  monthDisplayFormat: string;
+  onDragSelectionEnd: DateReceivingFunc;
+  onDragSelectionMove: DateReceivingFunc;
+  onDragSelectionStart: DateReceivingFunc;
+  onMouseLeave: (e: MouseEvent<HTMLDivElement>) => void;
+  onPreviewChange?: OptionalDateReceivingFunc;
+  preview?: Preview | null;
+  ranges: MaybeEmptyRange[];
+  showMonthName: boolean;
+  showPreview: boolean;
+  showWeekDays: boolean,
+  style?: React.CSSProperties;
+  styles: CoreStyles;
+  weekdayDisplayFormat: string;
+};
+
+class Month extends PureComponent<ComponentProps> {
   render() {
     const now = new Date();
-    const { displayMode, focusedRange, drag, styles, disabledDates, disabledDay } = this.props;
+    const { dateOptions, displayMode, month, fixedHeight, focusedRange, drag, styles, disabledDates, disabledDay } = this.props;
     const minDate = this.props.minDate && startOfDay(this.props.minDate);
     const maxDate = this.props.maxDate && endOfDay(this.props.maxDate);
-    const monthDisplay = getMonthDisplayRange(
-      this.props.month,
-      this.props.dateOptions,
-      this.props.fixedHeight
-    );
+    const monthDisplay = getMonthDisplayRange(month, dateOptions, fixedHeight);
     let ranges = this.props.ranges;
     if (displayMode === 'dateRange' && drag.status) {
-      let { startDate, endDate } = drag.range;
+      const { startDate, endDate } = drag.range;
       ranges = ranges.map((range, i) => {
         if (i !== focusedRange[0]) return range;
         return {
@@ -61,11 +75,11 @@ class Month extends PureComponent {
       <div className={styles.month} style={this.props.style}>
         {this.props.showMonthName ? (
           <div className={styles.monthName}>
-            {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
+            {format(month, this.props.monthDisplayFormat, dateOptions)}
           </div>
         ) : null}
         {this.props.showWeekDays &&
-          renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat)}
+          renderWeekdays(styles, dateOptions, this.props.weekdayDisplayFormat)}
         <div className={styles.days} onMouseLeave={this.props.onMouseLeave}>
           {eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end }).map(
             (day, index) => {
@@ -82,11 +96,11 @@ class Month extends PureComponent {
                   {...this.props}
                   ranges={ranges}
                   day={day}
-                  preview={showPreview ? this.props.preview : null}
-                  isWeekend={isWeekend(day, this.props.dateOptions)}
+                  preview={this.props.preview && showPreview ? this.props.preview : null}
+                  isWeekend={isWeekend(day)}
                   isToday={isSameDay(day, now)}
-                  isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
-                  isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
+                  isStartOfWeek={isSameDay(day, startOfWeek(day, dateOptions))}
+                  isEndOfWeek={isSameDay(day, endOfWeek(day, dateOptions))}
                   isStartOfMonth={isStartOfMonth}
                   isEndOfMonth={isEndOfMonth}
                   key={index}
@@ -101,8 +115,6 @@ class Month extends PureComponent {
                   onMouseDown={this.props.onDragSelectionStart}
                   onMouseUp={this.props.onDragSelectionEnd}
                   onMouseEnter={this.props.onDragSelectionMove}
-                  dragRange={drag.range}
-                  drag={drag.status}
                 />
               );
             }
@@ -112,37 +124,5 @@ class Month extends PureComponent {
     );
   }
 }
-
-Month.defaultProps = {};
-
-Month.propTypes = {
-  style: PropTypes.object,
-  styles: PropTypes.object,
-  month: PropTypes.object,
-  drag: PropTypes.object,
-  dateOptions: PropTypes.object,
-  disabledDates: PropTypes.array,
-  disabledDay: PropTypes.func,
-  preview: PropTypes.shape({
-    startDate: PropTypes.object,
-    endDate: PropTypes.object,
-  }),
-  showPreview: PropTypes.bool,
-  displayMode: PropTypes.oneOf(['dateRange', 'date']),
-  minDate: PropTypes.object,
-  maxDate: PropTypes.object,
-  ranges: PropTypes.arrayOf(rangeShape),
-  focusedRange: PropTypes.arrayOf(PropTypes.number),
-  onDragSelectionStart: PropTypes.func,
-  onDragSelectionEnd: PropTypes.func,
-  onDragSelectionMove: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  monthDisplayFormat: PropTypes.string,
-  weekdayDisplayFormat: PropTypes.string,
-  dayDisplayFormat: PropTypes.string,
-  showWeekDays: PropTypes.bool,
-  showMonthName: PropTypes.bool,
-  fixedHeight: PropTypes.bool,
-};
 
 export default Month;

@@ -16,7 +16,7 @@ exports[`DefinedRange tests Should render dynamic static label contents correctl
       onMouseOver={[Function]}
       style={
         Object {
-          "color": null,
+          "color": undefined,
         }
       }
       type="button"
@@ -41,7 +41,7 @@ exports[`DefinedRange tests Should render dynamic static label contents correctl
       onMouseOver={[Function]}
       style={
         Object {
-          "color": null,
+          "color": undefined,
         }
       }
       type="button"
@@ -62,7 +62,7 @@ exports[`DefinedRange tests Should render dynamic static label contents correctl
       onMouseOver={[Function]}
       style={
         Object {
-          "color": null,
+          "color": undefined,
         }
       }
       type="button"
@@ -85,7 +85,7 @@ exports[`DefinedRange tests Should render dynamic static label contents correctl
       onMouseOver={[Function]}
       style={
         Object {
-          "color": null,
+          "color": undefined,
         }
       }
       type="button"
@@ -144,8 +144,10 @@ exports[`DefinedRange tests Should render dynamic static label contents correctl
           "infiniteMonths": "rdrInfiniteMonths",
           "inputRange": "rdrInputRange",
           "inputRangeInput": "rdrInputRangeInput",
+          "inputRangeLabel": "rdrInputRangeLabel",
           "inputRanges": "rdrInputRanges",
           "month": "rdrMonth",
+          "monthAndYearDivider": "rdrMonthAndYearDivider",
           "monthAndYearPickers": "rdrMonthAndYearPickers",
           "monthAndYearWrapper": "rdrMonthAndYearWrapper",
           "monthName": "rdrMonthName",
@@ -208,8 +210,10 @@ exports[`DefinedRange tests Should render dynamic static label contents correctl
           "infiniteMonths": "rdrInfiniteMonths",
           "inputRange": "rdrInputRange",
           "inputRangeInput": "rdrInputRangeInput",
+          "inputRangeLabel": "rdrInputRangeLabel",
           "inputRanges": "rdrInputRanges",
           "month": "rdrMonth",
+          "monthAndYearDivider": "rdrMonthAndYearDivider",
           "monthAndYearPickers": "rdrMonthAndYearPickers",
           "monthAndYearWrapper": "rdrMonthAndYearWrapper",
           "monthName": "rdrMonthName",

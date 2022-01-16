@@ -1,14 +1,14 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import InputRangeField from '../InputRangeField';
+import InputRangeField from '.';
 
 const styles = {
   inputRange: 'range',
   inputRangeInput: 'input',
   inputRangeLabel: 'label',
 };
-const toChangeEvent = value => ({ target: { value } });
+const toChangeEvent = (value: string | number) => ({ target: { value } });
 
 describe('InputRangeField tests', () => {
   test('Should parse input value to number', () => {
