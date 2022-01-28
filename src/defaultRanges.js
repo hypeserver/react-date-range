@@ -7,6 +7,8 @@ import {
   addMonths,
   startOfWeek,
   endOfWeek,
+  startOfYear,
+  endOfYear,
   isSameDay,
   differenceInCalendarDays,
 } from 'date-fns';
@@ -22,6 +24,8 @@ const defineds = {
   endOfYesterday: endOfDay(addDays(new Date(), -1)),
   startOfMonth: startOfMonth(new Date()),
   endOfMonth: endOfMonth(new Date()),
+  startOfYear: startOfYear(new Date()),
+  endOfYear: endOfYear(new Date()),
   startOfLastMonth: startOfMonth(addMonths(new Date(), -1)),
   endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
 };
@@ -83,6 +87,13 @@ export const defaultStaticRanges = createStaticRanges([
     range: () => ({
       startDate: defineds.startOfLastMonth,
       endDate: defineds.endOfLastMonth,
+    }),
+  },
+  {
+    label: 'This Year',
+    range: () => ({
+      startDate: defineds.startOfYear,
+      endDate: defineds.endOfYear,
     }),
   },
 ]);
