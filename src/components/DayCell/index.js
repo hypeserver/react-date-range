@@ -1,8 +1,8 @@
 /* eslint-disable no-fallthrough */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 class DayCell extends Component {
   constructor(props, context) {
@@ -58,6 +58,7 @@ class DayCell extends Component {
   };
   getClassNames = () => {
     const {
+      broadcastCalendar,
       isPassive,
       isToday,
       isWeekend,
@@ -76,7 +77,7 @@ class DayCell extends Component {
       [styles.dayWeekend]: isWeekend,
       [styles.dayStartOfWeek]: isStartOfWeek,
       [styles.dayEndOfWeek]: isEndOfWeek,
-      [styles.dayStartOfMonth]: isStartOfMonth,
+      [styles.dayStartOfMonth]: isStartOfMonth && !broadcastCalendar,
       [styles.dayEndOfMonth]: isEndOfMonth,
       [styles.dayHovered]: this.state.hover,
       [styles.dayActive]: this.state.active,
@@ -128,7 +129,7 @@ class DayCell extends Component {
           ...result,
           {
             isStartEdge,
-            isEndEdge: isEndEdge,
+            isEndEdge,
             isInRange,
             ...range,
           },
@@ -166,21 +167,32 @@ class DayCell extends Component {
         onKeyUp={this.handleKeyEvent}
         className={this.getClassNames(this.props.styles)}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
-        style={{ color: this.props.color }}>
+        style={{
+          color: this.props.color,
+          backgroundColor: this.props.weekNumber ? '#fff' : '',
+          width: this.props.broadcastCalendar ? 'calc(100% / 8)' : 'calc(100% / 7)',
+        }}>
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
-        <span className={this.props.styles.dayNumber}>
-          {
-            dayContentRenderer?.(this.props.day) ||
-            <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
-          }
-        </span>
+        {this.props.weekNumber
+          ? (<span style={{ color: this.props.weekNumberColor }}>
+            {this.props.weekNumber}
+          </span>)
+          : (<span className={this.props.styles.dayNumber}>
+            {
+              dayContentRenderer?.(this.props.day) ||
+              <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
+            }
+          </span>)
+        }
       </button>
     );
   }
 }
 
-DayCell.defaultProps = {};
+DayCell.defaultProps = {
+  weekNumberColor: '#B86EF3',
+};
 
 export const rangeShape = PropTypes.shape({
   startDate: PropTypes.object,
@@ -219,6 +231,8 @@ DayCell.propTypes = {
   onMouseUp: PropTypes.func,
   onMouseEnter: PropTypes.func,
   dayContentRenderer: PropTypes.func,
+  weekNumber: PropTypes.number,
+  weekNumberColor: PropTypes.string,
 };
 
 export default DayCell;

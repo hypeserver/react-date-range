@@ -1,7 +1,4 @@
 /* eslint-disable no-fallthrough */
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import DayCell, { rangeShape } from '../DayCell';
 import {
   format,
   startOfDay,
@@ -15,20 +12,41 @@ import {
   isWithinInterval,
   eachDayOfInterval,
 } from 'date-fns';
-import { getMonthDisplayRange } from '../../utils';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+import {
+  getMonthDisplayRange,
+  calculateBroadcastWeekNumber,
+  shouldRenderBroadcastDay
+} from '../../utils';
+import DayCell, { rangeShape } from '../DayCell';
 
-function renderWeekdays(styles, dateOptions, weekdayDisplayFormat) {
+function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, broadcastCalendar) {
   const now = new Date();
   return (
     <div className={styles.weekDays}>
       {eachDayOfInterval({
         start: startOfWeek(now, dateOptions),
         end: endOfWeek(now, dateOptions),
-      }).map((day, i) => (
-        <span className={styles.weekDay} key={i}>
-          {format(day, weekdayDisplayFormat, dateOptions)}
-        </span>
-      ))}
+      }).map((day, i) => {
+        if (i === 0 && broadcastCalendar) {
+          return (
+            <>
+              <span className={styles.weekDay} key='week-number'>
+                #
+              </span>
+              <span className={styles.weekDay} key={i}>
+                {format(day, weekdayDisplayFormat, dateOptions)}
+              </span>
+            </>
+          );
+        }
+        return (
+          <span className={styles.weekDay} key={i}>
+            {format(day, weekdayDisplayFormat, dateOptions)}
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -57,6 +75,7 @@ class Month extends PureComponent {
       });
     }
     const showPreview = this.props.showPreview && !drag.disablePreview;
+    const indexToAddWeekNumber = [0, 7, 14, 21, 28, 35];
     return (
       <div className={styles.month} style={this.props.style}>
         {this.props.showMonthName ? (
@@ -65,7 +84,7 @@ class Month extends PureComponent {
           </div>
         ) : null}
         {this.props.showWeekDays &&
-          renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat)}
+          renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat, this.props.broadcastCalendar)}
         <div className={styles.days} onMouseLeave={this.props.onMouseLeave}>
           {eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end }).map(
             (day, index) => {
@@ -77,6 +96,45 @@ class Month extends PureComponent {
                 isSameDay(disabledDate, day)
               );
               const isDisabledDay = disabledDay(day);
+              if (this.props.broadcastCalendar && !shouldRenderBroadcastDay(day, this.props.month.getMonth())) {
+                return null;
+              }
+              if (indexToAddWeekNumber.includes(index) && this.props.broadcastCalendar) {
+                const weekNumber = calculateBroadcastWeekNumber(day);
+                return (
+                  <>
+                    <DayCell
+                      {...this.props}
+                      weekNumber={weekNumber}
+                      key={`weekNumber-${weekNumber}`}
+                      disabled
+                      isPassive={false}
+                      styles={styles}
+                    />
+                    <DayCell
+                      {...this.props}
+                      ranges={ranges}
+                      day={day}
+                      preview={showPreview ? this.props.preview : null}
+                      isWeekend={isWeekend(day, this.props.dateOptions)}
+                      isToday={isSameDay(day, now)}
+                      isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
+                      isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
+                      isStartOfMonth={isStartOfMonth}
+                      isEndOfMonth={isEndOfMonth}
+                      key={index}
+                      disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
+                      isPassive={false}
+                      styles={styles}
+                      onMouseDown={this.props.onDragSelectionStart}
+                      onMouseUp={this.props.onDragSelectionEnd}
+                      onMouseEnter={this.props.onDragSelectionMove}
+                      dragRange={drag.range}
+                      drag={drag.status}
+                    />
+                  </>
+                );
+              }
               return (
                 <DayCell
                   {...this.props}
@@ -91,7 +149,7 @@ class Month extends PureComponent {
                   isEndOfMonth={isEndOfMonth}
                   key={index}
                   disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
-                  isPassive={
+                  isPassive={this.props.broadcastCalendar ? false :
                     !isWithinInterval(day, {
                       start: monthDisplay.startDateOfMonth,
                       end: monthDisplay.endDateOfMonth,
