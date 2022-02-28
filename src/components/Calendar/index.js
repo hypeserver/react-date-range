@@ -1,12 +1,4 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { rangeShape } from '../DayCell';
-import Month from '../Month';
-import DateInput from '../DateInput';
-import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../../utils';
 import classnames from 'classnames';
-import ReactList from 'react-list';
-import { shallowEqualObjects } from 'shallow-equal';
 import {
   addMonths,
   subMonths,
@@ -28,14 +20,26 @@ import {
   max,
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
-import coreStyles from '../../styles';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+import ReactList from 'react-list';
+import { shallowEqualObjects } from 'shallow-equal';
 import { ariaLabelsShape } from '../../accessibility';
+import coreStyles from '../../styles';
+import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../../utils';
+import DateInput from '../DateInput';
+import { rangeShape } from '../DayCell';
+import Month from '../Month';
 
 class Calendar extends PureComponent {
   constructor(props, context) {
     super(props, context);
     this.dateOptions = { locale: props.locale };
-    if (props.weekStartsOn !== undefined) this.dateOptions.weekStartsOn = props.weekStartsOn;
+    if (props.broadcastCalendar) {
+      this.dateOptions.weekStartsOn = 1;
+    } else if (props.weekStartsOn !== undefined) {
+      this.dateOptions.weekStartsOn = props.weekStartsOn;
+    };
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
     this.isFirstRender = true;
@@ -131,7 +135,10 @@ class Calendar extends PureComponent {
       date: 'date',
     };
     const targetProp = propMapper[this.props.displayMode];
-    if (this.props[targetProp] !== prevProps[targetProp]) {
+    if (
+      this.props[targetProp] !== prevProps[targetProp] ||
+      this.props.focusedRange != prevProps.focusedRange
+    ) {
       this.updateShownDate(this.props);
     }
 
@@ -538,6 +545,7 @@ Calendar.defaultProps = {
   dateDisplayFormat: 'MMM d, yyyy',
   monthDisplayFormat: 'MMM yyyy',
   weekdayDisplayFormat: 'E',
+  broadcastCalendar: false,
   dayDisplayFormat: 'd',
   showDateDisplay: true,
   showPreview: true,
@@ -559,6 +567,7 @@ Calendar.defaultProps = {
   calendarFocus: 'forwards',
   preventSnapRefocus: false,
   ariaLabels: {},
+  weekNumberColor: '#B86EF3',
 };
 
 Calendar.propTypes = {
@@ -586,6 +595,8 @@ Calendar.propTypes = {
   monthDisplayFormat: PropTypes.string,
   weekdayDisplayFormat: PropTypes.string,
   weekStartsOn: PropTypes.number,
+  broadcastCalendar: PropTypes.bool,
+  weekNumberColor: PropTypes.string,
   dayDisplayFormat: PropTypes.string,
   focusedRange: PropTypes.arrayOf(PropTypes.number),
   initialFocusedRange: PropTypes.arrayOf(PropTypes.number),
