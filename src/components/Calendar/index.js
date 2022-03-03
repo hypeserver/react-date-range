@@ -409,6 +409,8 @@ class Calendar extends PureComponent {
       navigatorRenderer,
       className,
       preview,
+      smartSelection,
+      smartSelectionThemeColor,
     } = this.props;
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
@@ -420,6 +422,7 @@ class Calendar extends PureComponent {
     }));
     return (
       <div
+        style={{ backgroundColor: smartSelection ? smartSelectionThemeColor : '' }}
         className={classnames(this.styles.calendarWrapper, className)}
         onMouseUp={() => this.setState({ drag: { status: false, range: {} } })}
         onMouseLeave={() => {
@@ -534,6 +537,8 @@ Calendar.defaultProps = {
   monthDisplayFormat: 'MMM yyyy',
   weekdayDisplayFormat: 'E',
   broadcastCalendar: false,
+  smartSelection: false,
+  smartSelectionThemeColor: '#F0F0F0',
   dayDisplayFormat: 'd',
   showDateDisplay: true,
   showPreview: true,
@@ -582,6 +587,8 @@ Calendar.propTypes = {
   weekdayDisplayFormat: PropTypes.string,
   weekStartsOn: PropTypes.number,
   broadcastCalendar: PropTypes.bool,
+  smartSelection: PropTypes.bool,
+  smartSelectionThemeColor: PropTypes.string,
   weekNumberColor: PropTypes.string,
   dayDisplayFormat: PropTypes.string,
   focusedRange: PropTypes.arrayOf(PropTypes.number),
