@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 import Calendar from '../Calendar';
 import { rangeShape } from '../DayCell';
 import { findNextRangeIndex, generateStyles } from '../../utils';
-import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
+import {
+  isBefore,
+  differenceInCalendarDays,
+  addDays,
+  min,
+  isWithinInterval,
+  max,
+  endOfDay,
+} from 'date-fns';
 import classnames from 'classnames';
 import coreStyles from '../../styles';
 
@@ -78,6 +86,11 @@ class DateRange extends Component {
       } else {
         endDate = addDays(min(inValidDatesWithinRange), -1);
       }
+    }
+
+    if (endDate) {
+      // The returned range should include the end date
+      endDate = endOfDay(endDate);
     }
 
     if (!nextFocusRange) {
