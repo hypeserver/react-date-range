@@ -24,6 +24,7 @@ class DateRange extends Component {
     };
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
+
   calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const {
@@ -136,6 +137,7 @@ class DateRange extends Component {
     const color = ranges[focusedRange[0]]?.color || rangeColors[focusedRange[0]] || color;
     this.setState({ preview: { ...val.range, color } });
   };
+
   render() {
     return (
       <Calendar
