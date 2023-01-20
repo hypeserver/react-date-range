@@ -1,14 +1,11 @@
-# react-date-range
-[![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![npm](https://img.shields.io/npm/l/react-date-range)]()
-[![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver)
+# @atefbena/react-date-range 
+### A fork of the great `react-date-range` package 
+[![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/@atefbena/react-date-range)
+[![npm](https://img.shields.io/npm/l/@atefbena/react-date-range)]()
+[![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/@atefbena/react-date-range)
 
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
-
-# Notice ⚠️
-This project is currently unmaintained because the original maintainers are busy with other things. It should be pretty stable in it's current state but we won't be updating it in the foreseeable future. **If you are willing to maintain it, please fork and open a pr adding your fork's link to this readme.**
 
 ### Why should you use `react-date-range`?
 
@@ -21,19 +18,17 @@ This project is currently unmaintained because the original maintainers are busy
 
 **Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
 
-![](https://raw.githubusercontent.com/hypeserver/react-date-range/master/demo/ss.png)
-
 
 ## Getting Started
 ### Installation
 
 ```
-npm install --save react-date-range
+yarn add @atefbena/react-date-range
 ```
 This plugin expects `react` and `date-fns` as peerDependencies, It means that you need to install them in your project folder.
 
 ```
-npm install --save react date-fns
+yarn add react date-fns
 ```
 
 ## Usage
@@ -41,57 +36,58 @@ npm install --save react date-fns
 You need to import skeleton and theme styles first.
 
 ```javascript
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import '@atefbena/react-date-range/dist/styles.css'; // main style file
+import '@atefbena/react-date-range/dist/theme/default.css'; // theme css file
 ```
 
 ### `DatePicker`
 ```javascript
-import { Calendar } from 'react-date-range';
+import { Calendar } from '@atefbena/react-date-range';
 
-class MyComponent extends Component {
-  handleSelect(date){
+function MyComponent() {
+  function handleSelect(date) {
     console.log(date); // native Date object
   }
-  render(){
-    return (
-      <Calendar
-        date={new Date()}
-        onChange={this.handleSelect}
-      />
-    )
-  }
+  
+  return (
+    <Calendar
+      date={new Date()}
+      onChange={handleSelect}
+    />
+  );
 }
 
 ```
 
 ### `DateRangePicker / DateRange`
 ```javascript
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker } from '@atefbena/react-date-range';
 
-class MyComponent extends Component {
-  handleSelect(ranges){
+function MyComponent() {
+  function handleSelect(ranges) {
     console.log(ranges);
     // {
     //   selection: {
     //     startDate: [native Date Object],
     //     endDate: [native Date Object],
+    //     label: [string] // selected range label 
     //   }
     // }
   }
-  render(){
-    const selectionRange = {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection',
-    }
-    return (
-      <DateRangePicker
-        ranges={[selectionRange]}
-        onChange={this.handleSelect}
-      />
-    )
+  
+  
+  const selectionRange = {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection',
   }
+  
+  return (
+    <DateRangePicker
+      ranges={[selectionRange]}
+      onChange={handleSelect}
+    />
+  )
 }
 
 ```
@@ -209,3 +205,4 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
 - Make mobile friendly (integrate tap and swipe actions)
 - Add tests
 - Improve documentation
+- Migrate to Typescript
