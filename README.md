@@ -7,7 +7,7 @@
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
 
-### Why should you use `@atefbena/react-date-range`?
+### Why should you use `react-date-range`?
 
 - Stateless date operations
 - Highly configurable
