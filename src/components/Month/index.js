@@ -95,7 +95,7 @@ class Month extends PureComponent {
                     !isWithinInterval(day, {
                       start: monthDisplay.startDateOfMonth,
                       end: monthDisplay.endDateOfMonth,
-                    })
+                    }) || isBefore(day, drag.range.startDate)
                   }
                   styles={styles}
                   onMouseDown={this.props.onDragSelectionStart}

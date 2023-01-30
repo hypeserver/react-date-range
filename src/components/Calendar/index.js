@@ -24,7 +24,7 @@ import {
   isSameMonth,
   differenceInDays,
   min,
-  max,
+  max, isBefore,
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles from '../../styles';
@@ -269,7 +269,6 @@ class Calendar extends PureComponent {
       endDatePlaceholder,
       ariaLabels,
     } = this.props;
-
     const defaultColor = rangeColors[focusedRange[0]] || color;
     const styles = this.styles;
 
@@ -329,13 +328,13 @@ class Calendar extends PureComponent {
     const { onChange, dragSelectionEnabled } = this.props;
 
     if (dragSelectionEnabled) {
-      this.setState({
-        drag: {
-          status: true,
-          range: { startDate: date, endDate: date },
-          disablePreview: true,
-        },
-      });
+        this.setState({
+          drag: {
+            status: true,
+            range: { startDate: date, endDate: date },
+            disablePreview: true,
+          },
+        });
     } else {
       onChange && onChange(date);
     }
@@ -344,7 +343,7 @@ class Calendar extends PureComponent {
   onDragSelectionEnd = date => {
     const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
 
-    if (!dragSelectionEnabled) return;
+    if (!dragSelectionEnabled || isBefore(date, this.state.drag.range.startDate)) return;
 
     if (displayMode === 'date' || !this.state.drag.status) {
       onChange && onChange(date);
@@ -364,7 +363,8 @@ class Calendar extends PureComponent {
   };
   onDragSelectionMove = date => {
     const { drag } = this.state;
-    if (!drag.status || !this.props.dragSelectionEnabled) return;
+    if (!drag.status || !this.props.dragSelectionEnabled || isBefore(date, drag.range.startDate)) return;
+
     this.setState({
       drag: {
         status: drag.status,
