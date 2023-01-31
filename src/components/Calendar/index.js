@@ -24,7 +24,7 @@ import {
   isSameMonth,
   differenceInDays,
   min,
-  max, isBefore,
+  max, isBefore, isWithinInterval, isAfter,
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles from '../../styles';
@@ -39,6 +39,7 @@ class Calendar extends PureComponent {
     this.listSizeCache = {};
     this.isFirstRender = true;
     this.state = {
+      timeout: null,
       monthNames: this.getMonthNames(),
       focusedDate: calcFocusDate(null, props),
       drag: {
@@ -326,52 +327,53 @@ class Calendar extends PureComponent {
   };
   onDragSelectionStart = date => {
     const { onChange, dragSelectionEnabled } = this.props;
-
-    if (dragSelectionEnabled) {
+      if(dragSelectionEnabled) {
+        const timeout = setTimeout(() => {
+          this.setState({
+            drag: {
+              status: true,
+              range: { startDate: date, endDate: date },
+              disablePreview: true,
+            },
+          });
+        },100)
         this.setState({
-          drag: {
-            status: true,
-            range: { startDate: date, endDate: date },
-            disablePreview: true,
-          },
-        });
-    } else {
+          timeout
+        })
+      }
       onChange && onChange(date);
-    }
   };
 
-  onDragSelectionEnd = date => {
-    const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
-
-    if (!dragSelectionEnabled || isBefore(date, this.state.drag.range.startDate)) return;
-
-    if (displayMode === 'date' || !this.state.drag.status) {
-      onChange && onChange(date);
-      return;
-    }
-    const newRange = {
-      startDate: this.state.drag.range.startDate,
-      endDate: date,
-    };
-    if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
-      this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
-    } else {
-      this.setState({ drag: { status: false, range: {} } }, () => {
-        updateRange && updateRange(newRange);
-      });
-    }
+  onDragSelectionEnd = () => {
+    const { dragSelectionEnabled } = this.props;
+    if (!dragSelectionEnabled) return;
+    this.setState({ drag: { status: false, range: {} } });
+    clearTimeout(this.state.timeout)
   };
   onDragSelectionMove = date => {
     const { drag } = this.state;
-    if (!drag.status || !this.props.dragSelectionEnabled || isBefore(date, drag.range.startDate)) return;
-
+    const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
+    if (!drag.status || !drag.range.startDate || !dragSelectionEnabled) return;
+    const disabledInRange = this.props.disabledDates.some((d) => isSameDay(d, date))
+    if (disabledInRange) return;
+    const newRange = {
+      ...(isBefore(date, drag.range.startDate) || disabledInRange
+        ? { startDate: drag.range.startDate, endDate: drag.range.endDate }
+        : { startDate: drag.range.startDate, endDate: date}
+      )
+    }
     this.setState({
       drag: {
         status: drag.status,
-        range: { startDate: drag.range.startDate, endDate: date },
+        range: newRange,
         disablePreview: true,
       },
     });
+
+    if ((displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) || (displayMode === 'date' || !drag.status)) {
+      return onChange && onChange(date);
+    }
+    updateRange && updateRange(newRange);
   };
 
   estimateMonthSize = (index, cache) => {

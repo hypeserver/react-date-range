@@ -13,7 +13,7 @@ import {
   isAfter,
   isWeekend,
   isWithinInterval,
-  eachDayOfInterval,
+  eachDayOfInterval, closestTo,
 } from 'date-fns';
 import { getMonthDisplayRange } from '../../utils';
 
@@ -77,6 +77,7 @@ class Month extends PureComponent {
                 isSameDay(disabledDate, day)
               );
               const isDisabledDay = disabledDay(day);
+
               return (
                 <DayCell
                   {...this.props}
@@ -95,7 +96,7 @@ class Month extends PureComponent {
                     !isWithinInterval(day, {
                       start: monthDisplay.startDateOfMonth,
                       end: monthDisplay.endDateOfMonth,
-                    }) || isBefore(day, drag.range.startDate)
+                    }) || isBefore(day, drag.range.startDate) || (drag.status && isAfter(day, closestTo(drag.range?.endDate, disabledDates.filter(d => !isBefore(d, drag.range?.endDate)))))
                   }
                   styles={styles}
                   onMouseDown={this.props.onDragSelectionStart}
