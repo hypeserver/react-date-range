@@ -34,6 +34,14 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat) {
 }
 
 class Month extends PureComponent {
+   minDate = (date1, date2) => {
+    if(isBefore(date1, date2) || isSameDay(date1,date2)) return date1
+    return date2
+  }
+  maxDate = (date1, date2) => {
+    if(isBefore(date2, date1) || isSameDay(date2,date1)) return date1
+    return date2
+  }
   render() {
     const now = new Date();
     const { displayMode, focusedRange, drag, styles, disabledDates, disabledDay } = this.props;
@@ -77,6 +85,8 @@ class Month extends PureComponent {
                 isSameDay(disabledDate, day)
               );
               const isDisabledDay = disabledDay(day);
+              const hasPastUnavailabilities = (ranges.length > 0 && isAfter(day, closestTo(this.maxDate(ranges?.[0]?.startDate, ranges?.[0]?.endDate), disabledDates.filter(d => !isBefore(d, this.maxDate(ranges?.[0]?.startDate, ranges?.[0]?.endDate))))))
+              const isPastDay = (drag.status && isBefore(day, drag.range.startDate))
 
               return (
                 <DayCell
@@ -96,7 +106,9 @@ class Month extends PureComponent {
                     !isWithinInterval(day, {
                       start: monthDisplay.startDateOfMonth,
                       end: monthDisplay.endDateOfMonth,
-                    }) || isBefore(day, drag.range.startDate) || (drag.status && isAfter(day, closestTo(drag.range?.endDate, disabledDates.filter(d => !isBefore(d, drag.range?.endDate)))))
+                    })
+                    || isPastDay
+                    || hasPastUnavailabilities
                   }
                   styles={styles}
                   onMouseDown={this.props.onDragSelectionStart}
