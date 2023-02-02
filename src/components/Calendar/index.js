@@ -326,7 +326,7 @@ class Calendar extends PureComponent {
     );
   };
   onDragSelectionStart = date => {
-    const { onChange, dragSelectionEnabled } = this.props;
+    const { onChange, dragSelectionEnabled, displayMode } = this.props;
       if(dragSelectionEnabled) {
         const timeout = setTimeout(() => {
           this.setState({
@@ -344,15 +344,22 @@ class Calendar extends PureComponent {
       onChange && onChange(date);
   };
 
-  onDragSelectionEnd = () => {
-    const { dragSelectionEnabled } = this.props;
+  onDragSelectionEnd = date => {
+    const { dragSelectionEnabled, onChange, submitOnDragEnd } = this.props;
+    const { drag } = this.state;
     if (!dragSelectionEnabled) return;
-    this.setState({ drag: { status: false, range: {} } });
+
     clearTimeout(this.state.timeout)
+    const disabledInRange = this.props.disabledDates.some((d) => isSameDay(d, date))
+    if (disabledInRange) return;
+    if (submitOnDragEnd && drag.status) {
+      onChange && onChange(date);
+    }
+    this.setState({ drag: { status: false, range: {} } });
   };
   onDragSelectionMove = date => {
     const { drag } = this.state;
-    const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
+    const { updateRange, onChange, dragSelectionEnabled } = this.props;
     if (!drag.status || !drag.range.startDate || !dragSelectionEnabled) return;
     const disabledInRange = this.props.disabledDates.some((d) => isSameDay(d, date))
     if (disabledInRange) return;
@@ -370,10 +377,10 @@ class Calendar extends PureComponent {
       },
     });
 
-    if ((displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) || (displayMode === 'date' || !drag.status)) {
+    if (!this.props.submitOnDragEnd && !drag.status) {
       return onChange && onChange(date);
     }
-    updateRange && updateRange(newRange);
+    !this.props.submitOnDragEnd && updateRange && updateRange(newRange);
   };
 
   estimateMonthSize = (index, cache) => {
@@ -546,6 +553,7 @@ Calendar.defaultProps = {
   editableDateInputs: false,
   dragSelectionEnabled: true,
   fixedHeight: false,
+  submitOnDragEnd: true,
   ariaLabels: {},
 };
 
@@ -600,6 +608,7 @@ Calendar.propTypes = {
   editableDateInputs: PropTypes.bool,
   dragSelectionEnabled: PropTypes.bool,
   fixedHeight: PropTypes.bool,
+  submitOnDragEnd: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
 };
 

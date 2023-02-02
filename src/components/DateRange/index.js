@@ -48,11 +48,13 @@ class DateRange extends Component {
       nextFocusRange = [focusedRange[0], 1];
     }
 
-    const inValidDatesWithinRange = disabledDates.filter(disabledDate =>
-      isWithinInterval(disabledDate, {
-        start: startDate,
-        end: endDate
-      })
+    const inValidDatesWithinRange = disabledDates.filter(disabledDate => {
+        if (!startDate || !endDate) return false;
+        return isWithinInterval(disabledDate, {
+          start: startDate,
+          end: endDate
+        })
+      }
     );
 
     if (inValidDatesWithinRange.length > 0) {
@@ -109,6 +111,7 @@ class DateRange extends Component {
   render() {
     return (
       <Calendar
+        submitOnDragEnd={this.props.submitOnDragEnd}
         prices={this.props.prices}
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
@@ -133,6 +136,7 @@ DateRange.defaultProps = {
   classNames: {},
   ranges: [],
   moveRangeOnFirstSelection: false,
+  submitOnDragEnd: true,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: []
 };
@@ -143,7 +147,8 @@ DateRange.propTypes = {
   onRangeFocusChange: PropTypes.func,
   className: PropTypes.string,
   ranges: PropTypes.arrayOf(rangeShape),
-  moveRangeOnFirstSelection: PropTypes.bool
+  moveRangeOnFirstSelection: PropTypes.bool,
+  submitOnDragEnd: PropTypes.bool
 };
 
 export default DateRange;
