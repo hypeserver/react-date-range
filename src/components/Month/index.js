@@ -89,6 +89,7 @@ class Month extends PureComponent {
               const hasPastUnavailabilities = (ranges.length > 0 && isAfter(day, closestTo(maxRangeDate, disabledDates.filter(d => !isBefore(d, maxRangeDate)))))
               const isPastDay = (drag.status && isBefore(day, drag.range.startDate))
               const isOnlyPickup = isAfter(addDays(day, 1), closestTo(maxRangeDate, this.props?.pickUpOnlyDates?.map((d) => new Date(d))?.filter(d => !isBefore(d, maxRangeDate) && !isSameDay(d, maxRangeDate))))
+              const isOnlyDropOff = isBefore(day, ranges?.[0]?.startDate) ? this.props?.dropOffOnlyDates?.some((d) => isSameDay(new Date(d), day)) : isAfter(day, closestTo(maxRangeDate, this.props?.dropOffOnlyDates?.map((d) => new Date(d))?.filter(d => !isBefore(d, maxRangeDate) && !isSameDay(d, maxRangeDate))))
 
               return (
                 <DayCell
@@ -112,6 +113,7 @@ class Month extends PureComponent {
                     || isPastDay
                     || hasPastUnavailabilities
                     || isOnlyPickup
+                    || isOnlyDropOff
                   }
                   styles={styles}
                   onMouseDown={this.props.onDragSelectionStart}
