@@ -13,7 +13,7 @@ import {
   isAfter,
   isWeekend,
   isWithinInterval,
-  eachDayOfInterval, closestTo,
+  eachDayOfInterval, closestTo, addDays,
 } from 'date-fns';
 import { getMonthDisplayRange } from '../../utils';
 
@@ -85,8 +85,10 @@ class Month extends PureComponent {
                 isSameDay(disabledDate, day)
               );
               const isDisabledDay = disabledDay(day);
-              const hasPastUnavailabilities = (ranges.length > 0 && isAfter(day, closestTo(this.maxDate(ranges?.[0]?.startDate, ranges?.[0]?.endDate), disabledDates.filter(d => !isBefore(d, this.maxDate(ranges?.[0]?.startDate, ranges?.[0]?.endDate))))))
+              const maxRangeDate = this.maxDate(ranges?.[0]?.startDate, ranges?.[0]?.endDate)
+              const hasPastUnavailabilities = (ranges.length > 0 && isAfter(day, closestTo(maxRangeDate, disabledDates.filter(d => !isBefore(d, maxRangeDate)))))
               const isPastDay = (drag.status && isBefore(day, drag.range.startDate))
+              const isOnlyPickup = isAfter(addDays(day, 1), closestTo(maxRangeDate, this.props?.pickUpOnlyDates?.map((d) => new Date(d))?.filter(d => !isBefore(d, maxRangeDate) && !isSameDay(d, maxRangeDate))))
 
               return (
                 <DayCell
@@ -109,6 +111,7 @@ class Month extends PureComponent {
                     })
                     || isPastDay
                     || hasPastUnavailabilities
+                    || isOnlyPickup
                   }
                   styles={styles}
                   onMouseDown={this.props.onDragSelectionStart}

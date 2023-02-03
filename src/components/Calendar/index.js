@@ -359,12 +359,13 @@ class Calendar extends PureComponent {
   };
   onDragSelectionMove = date => {
     const { drag } = this.state;
-    const { updateRange, onChange, dragSelectionEnabled } = this.props;
+    const { updateRange, onChange, dragSelectionEnabled, pickUpOnlyDates, ranges } = this.props;
     if (!drag.status || !drag.range.startDate || !dragSelectionEnabled) return;
     const disabledInRange = this.props.disabledDates.some((d) => isSameDay(d, date))
-    if (disabledInRange) return;
+    const isOnlyPickUp =  pickUpOnlyDates?.some(d => isSameDay(new Date(d), date))
+    if (disabledInRange || isOnlyPickUp) return;
     const newRange = {
-      ...(isBefore(date, drag.range.startDate) || disabledInRange
+      ...(isBefore(date, drag.range.startDate)
         ? { startDate: drag.range.startDate, endDate: drag.range.endDate }
         : { startDate: drag.range.startDate, endDate: date}
       )
@@ -411,6 +412,7 @@ class Calendar extends PureComponent {
       navigatorRenderer,
       className,
       preview,
+      pickUpOnlyDates, dropOffOnlyDates, oneDayAvailableDates
     } = this.props;
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
@@ -465,6 +467,9 @@ class Calendar extends PureComponent {
                       key={key}
                       drag={this.state.drag}
                       dateOptions={this.dateOptions}
+                      pickUpOnlyDates={pickUpOnlyDates}
+                      dropOffOnlyDates={dropOffOnlyDates}
+                      oneDayAvailableDates={oneDayAvailableDates}
                       disabledDates={disabledDates}
                       disabledDay={disabledDay}
                       month={monthStep}
@@ -504,6 +509,9 @@ class Calendar extends PureComponent {
                   drag={this.state.drag}
                   dateOptions={this.dateOptions}
                   disabledDates={disabledDates}
+                  pickUpOnlyDates={pickUpOnlyDates}
+              dropOffOnlyDates={dropOffOnlyDates}
+              oneDayAvailableDates={oneDayAvailableDates}
                   disabledDay={disabledDay}
                   month={monthStep}
                   onDragSelectionStart={this.onDragSelectionStart}

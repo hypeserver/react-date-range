@@ -18,7 +18,8 @@ class DateRange extends Component {
   }
   calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates } = this.props;
+    const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates, pickUpOnlyDates, dropOffOnlyDates, oneDayAvailableDates } = this.props;
+
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
     if (!selectedRange || !onChange) return {};
@@ -113,6 +114,9 @@ class DateRange extends Component {
       <Calendar
         submitOnDragEnd={this.props.submitOnDragEnd}
         prices={this.props.prices}
+        pickUpOnlyDates={this.props?.pickupOnlyDays}
+        dropOffOnlyDates={this.props?.dropOffOnlyDays}
+        oneDayAvailableDates={this.props?.oneDayAvailableDays}
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
         preview={this.state.preview}
