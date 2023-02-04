@@ -359,12 +359,13 @@ class Calendar extends PureComponent {
   };
   onDragSelectionMove = date => {
     const { drag } = this.state;
-    const { updateRange, onChange, dragSelectionEnabled, pickUpOnlyDates, ranges, dropOffOnlyDates } = this.props;
+    const { updateRange, onChange, dragSelectionEnabled, pickUpOnlyDates, ranges, dropOffOnlyDates, oneDayAvailableDates } = this.props;
     if (!drag.status || !drag.range.startDate || !dragSelectionEnabled) return;
     const disabledInRange = this.props.disabledDates.some((d) => isSameDay(d, date))
     const isOnlyPickUp =  pickUpOnlyDates?.some(d => isSameDay(new Date(d), date))
     const isOnlyDropOff =  dropOffOnlyDates?.some(d => isSameDay(addDays(new Date(d), 1), date))
-    if (disabledInRange || isOnlyPickUp || isOnlyDropOff) return;
+    const isOneDayAvailable =  oneDayAvailableDates?.some(d => isSameDay(addDays(new Date(d), 1), date))
+    if (disabledInRange || isOnlyPickUp || isOnlyDropOff || isOneDayAvailable) return;
     const newRange = {
       ...(isBefore(date, drag.range.startDate)
         ? { startDate: drag.range.startDate, endDate: drag.range.endDate }

@@ -18,7 +18,7 @@ class DateRange extends Component {
   }
   calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates, pickUpOnlyDates, dropOffOnlyDates, oneDayAvailableDates } = this.props;
+    const { ranges, onChange, maxDate, moveRangeOnFirstSelection, disabledDates } = this.props;
 
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
@@ -37,10 +37,10 @@ class DateRange extends Component {
       endDate = moveRangeOnFirstSelection ? addDays(value, dayOffset) : value;
       if (maxDate) endDate = min([endDate, maxDate]);
       nextFocusRange = [focusedRange[0], 1];
-    } else {
+    }
+    else {
       endDate = value;
     }
-
     // reverse dates if startDate before endDate
     let isStartDateSelected = focusedRange[1] === 0;
     if (isBefore(endDate, startDate)) {
@@ -48,6 +48,11 @@ class DateRange extends Component {
       [startDate, endDate] = [endDate, endDate];
       nextFocusRange = [focusedRange[0], 1];
     }
+    if (focusedRange[1] === 1 && startDate == null) {
+      startDate = value;
+      nextFocusRange = [focusedRange[0], 0];
+    }
+
 
     const inValidDatesWithinRange = disabledDates.filter(disabledDate => {
         if (!startDate || !endDate) return false;
