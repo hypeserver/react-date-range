@@ -50,7 +50,8 @@ class DateRange extends Component {
     }
     if (focusedRange[1] === 1 && startDate == null) {
       startDate = value;
-      nextFocusRange = [focusedRange[0], 0];
+      isStartDateSelected = !isStartDateSelected;
+      nextFocusRange = [focusedRange[0], 1];
     }
 
 

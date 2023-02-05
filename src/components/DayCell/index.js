@@ -68,7 +68,7 @@ const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMo
     });
   };
   const renderPreviewPlaceholder = () => {
-    if (!preview) return null;
+    if (!preview || isUnselectable) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
     const isInRange = (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
