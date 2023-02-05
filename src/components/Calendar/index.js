@@ -462,7 +462,7 @@ class Calendar extends PureComponent {
                   const monthStep = addMonths(minDate, index);
                   return (
                     <Month
-                      translations={this.props.translations}
+                      translations={this.props?.translations}
                       {...this.props}
                       onPreviewChange={onPreviewChange || this.updatePreview}
                       preview={preview || this.state.preview}
