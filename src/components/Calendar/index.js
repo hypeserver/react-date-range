@@ -462,6 +462,7 @@ class Calendar extends PureComponent {
                   const monthStep = addMonths(minDate, index);
                   return (
                     <Month
+                      translations={this.props.translations}
                       {...this.props}
                       onPreviewChange={onPreviewChange || this.updatePreview}
                       preview={preview || this.state.preview}
@@ -620,6 +621,7 @@ Calendar.propTypes = {
   fixedHeight: PropTypes.bool,
   submitOnDragEnd: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
+  translations: PropTypes.object,
 };
 
 export default Calendar;

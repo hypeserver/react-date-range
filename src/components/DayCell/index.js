@@ -6,7 +6,7 @@ import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date
 
 const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp,
                               isPassive, isWeekend, isStartOfWeek, isEndOfWeek, isStartOfMonth, isEndOfMonth,
-                              isToday, displayMode, styles, color, ranges, preview, dayDisplayFormat, isTooltip, prices,
+                              isToday, displayMode, styles, color, ranges, preview, dayDisplayFormat, isTooltip, isUnselectable, prices,
                               tooltipContent,
 }) => {
   const [hover, setHover] = useState(false)
@@ -22,10 +22,8 @@ const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMo
   const handleMouseEvent = event => {
     if (isTooltip) {
       setIsTooltipOpened(['mousedown', 'mouseup'].includes(event.type))
-      onPreviewChange();
-      return;
     }
-    if (disabled) {
+    if (disabled || isUnselectable) {
       onPreviewChange();
       return;
     }
@@ -157,18 +155,19 @@ const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMo
         onKeyDown={handleKeyEvent}
         onKeyUp={handleKeyEvent}
         className={getClassNames(styles)}
-        {...(disabled || isPassive || isTooltip ? { tabIndex: -1 } : {})}
+        {...(disabled || isPassive || isUnselectable ? { tabIndex: -1 } : {})}
         style={{ color }}
       >
         {renderSelectionPlaceholders()}
         {renderPreviewPlaceholder()}
         <span className={styles.dayNumber}>
           <span>{format(day, dayDisplayFormat)}</span>
-          {!disabled && !isPassive && !isTooltip && (
+          {!disabled && !isPassive && !isUnselectable && (
             <div className="price">{getPriceForDay()}</div>
           )}
+          {isTooltip && isTooltipOpened && getTooltip()}
         </span>
-        {isTooltip && isTooltipOpened && getTooltip()}
+
       </button>
     );
 })

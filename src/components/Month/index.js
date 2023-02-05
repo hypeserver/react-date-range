@@ -16,7 +16,6 @@ import {
   eachDayOfInterval, closestTo, addDays,
 } from 'date-fns';
 import { getMonthDisplayRange } from '../../utils';
-import {Trans} from "@lingui/react";
 
 function renderWeekdays(styles, dateOptions, weekdayDisplayFormat) {
   const now = new Date();
@@ -118,8 +117,9 @@ class Month extends PureComponent {
                     || isOneDayAvailable
                     || isAfterOnlyDropOff
                   }
-                  tooltipContent={isOnlyDropOff && <Trans message={'Available for return only'} id={'calendar.tooltip.dropOffOnly'}/>}
+                  tooltipContent={isOnlyDropOff && this.props?.translations?.dropOffOnly}
                   isTooltip={isOnlyDropOff}
+                  isUnselectable={isOnlyDropOff}
                   styles={styles}
                   onMouseDown={this.props.onDragSelectionStart}
                   onMouseUp={this.props.onDragSelectionEnd}
@@ -166,6 +166,7 @@ Month.propTypes = {
   showWeekDays: PropTypes.bool,
   showMonthName: PropTypes.bool,
   fixedHeight: PropTypes.bool,
+  translations: PropTypes.object
 };
 
 export default Month;

@@ -132,6 +132,7 @@ class DateRange extends Component {
         displayMode="dateRange"
         className={classnames(this.styles.dateRangeWrapper, this.props.className)}
         onChange={this.setSelection}
+        translations={this.props?.translations}
         updateRange={val => this.setSelection(val, false)}
         ref={target => {
           this.calendar = target;
@@ -157,7 +158,8 @@ DateRange.propTypes = {
   className: PropTypes.string,
   ranges: PropTypes.arrayOf(rangeShape),
   moveRangeOnFirstSelection: PropTypes.bool,
-  submitOnDragEnd: PropTypes.bool
+  submitOnDragEnd: PropTypes.bool,
+  translations: PropTypes.object
 };
 
 export default DateRange;
