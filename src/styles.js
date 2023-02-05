@@ -27,6 +27,8 @@ export default {
   dayEndPreview: 'rdrDayEndPreview',
   dayHovered: 'rdrDayHovered',
   dayActive: 'rdrDayActive',
+  isTooltip: 'rdrDayIsTooltip',
+  dayTooltip: 'rdrDayTooltip',
   inRange: 'rdrInRange',
   endEdge: 'rdrEndEdge',
   startEdge: 'rdrStartEdge',

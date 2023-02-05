@@ -1,29 +1,30 @@
 /* eslint-disable no-fallthrough */
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 
-class DayCell extends Component {
-  constructor(props, context) {
-    super(props, context);
+const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp,
+                              isPassive, isWeekend, isStartOfWeek, isEndOfWeek, isStartOfMonth, isEndOfMonth,
+                              isToday, displayMode, styles, color, ranges, preview, dayDisplayFormat, isTooltip, prices,
+                              tooltipContent,
+}) => {
+  const [hover, setHover] = useState(false)
+  const [active, setActive] = useState(false)
+  const [isTooltipOpened, setIsTooltipOpened] = useState(false)
 
-    this.state = {
-      hover: false,
-      active: false
-    };
-  }
-
-  handleKeyEvent = event => {
-    const { day, onMouseDown, onMouseUp } = this.props;
+  const handleKeyEvent = event => {
     if ([13 /* space */, 32 /* enter */].includes(event.keyCode)) {
       if (event.type === 'keydown') onMouseDown(day);
       else onMouseUp(day);
     }
   };
-  handleMouseEvent = event => {
-    const { day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp } = this.props;
-    const stateChanges = {};
+  const handleMouseEvent = event => {
+    if (isTooltip) {
+      setIsTooltipOpened(['mousedown', 'mouseup'].includes(event.type))
+      onPreviewChange();
+      return;
+    }
     if (disabled) {
       onPreviewChange();
       return;
@@ -33,44 +34,30 @@ class DayCell extends Component {
       case 'mouseenter':
         onMouseEnter(day);
         onPreviewChange(day);
-        stateChanges.hover = true;
+        setHover(true)
         break;
       case 'blur':
       case 'mouseleave':
-        stateChanges.hover = false;
+        setHover(false)
         break;
       case 'mousedown':
-        stateChanges.active = true;
+        setActive(true)
         onMouseDown(day);
         break;
       case 'mouseup':
         event.stopPropagation();
-        stateChanges.active = false;
+        setActive(false)
         onMouseUp(day);
         break;
       case 'focus':
         onPreviewChange(day);
         break;
     }
-    if (Object.keys(stateChanges).length) {
-      this.setState(stateChanges);
-    }
   };
-  getClassNames = () => {
-    const {
-      isPassive,
-      isToday,
-      isWeekend,
-      isStartOfWeek,
-      isEndOfWeek,
-      isStartOfMonth,
-      isEndOfMonth,
-      disabled,
-      styles
-    } = this.props;
-
+  const getClassNames = () => {
     return classnames(styles.day, {
       [styles.dayPassive]: isPassive,
+      [styles.dayTooltip]: isTooltip,
       [styles.dayDisabled]: disabled,
       [styles.dayToday]: isToday,
       [styles.dayWeekend]: isWeekend,
@@ -78,12 +65,11 @@ class DayCell extends Component {
       [styles.dayEndOfWeek]: isEndOfWeek,
       [styles.dayStartOfMonth]: isStartOfMonth,
       [styles.dayEndOfMonth]: isEndOfMonth,
-      [styles.dayHovered]: this.state.hover,
-      [styles.dayActive]: this.state.active
+      [styles.dayHovered]: hover,
+      [styles.dayActive]: active
     });
   };
-  renderPreviewPlaceholder = () => {
-    const { preview, day, styles } = this.props;
+  const renderPreviewPlaceholder = () => {
     if (!preview) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
@@ -101,11 +87,10 @@ class DayCell extends Component {
       />
     );
   };
-  renderSelectionPlaceholders = () => {
-    const { styles, ranges, day } = this.props;
-    if (this.props.displayMode === 'date') {
-      let isSelected = isSameDay(this.props.day, this.props.date);
-      return isSelected ? <span className={styles.selected} style={{ color: this.props.color }} /> : null;
+  const renderSelectionPlaceholders = () => {
+    if (displayMode === 'date') {
+      let isSelected = isSameDay(day, date);
+      return isSelected ? <span className={styles.selected} style={{ color }} /> : null;
     }
 
     const inRanges = ranges.reduce((result, range) => {
@@ -135,56 +120,58 @@ class DayCell extends Component {
 
     return inRanges.map((range, i) => (
       <span
-        key={i}
+        key={`${i}-${range.day}`}
         className={classnames({
           [styles.startEdge]: range.isStartEdge,
           [styles.endEdge]: range.isEndEdge,
           [styles.inRange]: range.isInRange
         })}
-        style={{ color: range.color || this.props.color }}
+        style={{ color: range.color || color }}
       />
     ));
   };
+  const getTooltip = () => {
+    if(!tooltipContent) return;
+    return <div className={classnames({[styles.isTooltip]: isTooltip})}>
+      {tooltipContent}
+    </div>
+  }
+  const getPriceForDay = () => {
+    const pricesArr = prices;
 
-  getPriceForDay = () => {
-    const pricesArr = this.props.prices;
-
-    const found = pricesArr.find(element => isSameDay(this.props.day, element.day));
+    const found = pricesArr.find(element => isSameDay(day, element.day));
 
     return found?.price || '';
   };
 
-  render() {
     return (
       <button
         type="button"
-        onMouseEnter={this.handleMouseEvent}
-        onMouseLeave={this.handleMouseEvent}
-        onFocus={this.handleMouseEvent}
-        onMouseDown={this.handleMouseEvent}
-        onMouseUp={this.handleMouseEvent}
-        onBlur={this.handleMouseEvent}
-        onPauseCapture={this.handleMouseEvent}
-        onKeyDown={this.handleKeyEvent}
-        onKeyUp={this.handleKeyEvent}
-        className={this.getClassNames(this.props.styles)}
-        {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
-        style={{ color: this.props.color }}
+        onMouseEnter={handleMouseEvent}
+        onMouseLeave={handleMouseEvent}
+        onFocus={handleMouseEvent}
+        onMouseDown={handleMouseEvent}
+        onMouseUp={handleMouseEvent}
+        onBlur={handleMouseEvent}
+        onPauseCapture={handleMouseEvent}
+        onKeyDown={handleKeyEvent}
+        onKeyUp={handleKeyEvent}
+        className={getClassNames(styles)}
+        {...(disabled || isPassive || isTooltip ? { tabIndex: -1 } : {})}
+        style={{ color }}
       >
-        {this.renderSelectionPlaceholders()}
-        {this.renderPreviewPlaceholder()}
-        <span className={this.props.styles.dayNumber}>
-          <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
-          {!this.props.disabled && !this.props.isPassive && (
-            <div className="price">{this.getPriceForDay()}</div>
+        {renderSelectionPlaceholders()}
+        {renderPreviewPlaceholder()}
+        <span className={styles.dayNumber}>
+          <span>{format(day, dayDisplayFormat)}</span>
+          {!disabled && !isPassive && !isTooltip && (
+            <div className="price">{getPriceForDay()}</div>
           )}
         </span>
+        {isTooltip && isTooltipOpened && getTooltip()}
       </button>
     );
-  }
-}
-
-DayCell.defaultProps = {};
+})
 
 export const rangeShape = PropTypes.shape({
   startDate: PropTypes.object,
@@ -210,6 +197,7 @@ DayCell.propTypes = {
   previewColor: PropTypes.string,
   disabled: PropTypes.bool,
   isPassive: PropTypes.bool,
+  isTooltip: PropTypes.bool,
   isToday: PropTypes.bool,
   isWeekend: PropTypes.bool,
   isStartOfWeek: PropTypes.bool,
