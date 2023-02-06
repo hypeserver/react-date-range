@@ -77,6 +77,7 @@ class Month extends PureComponent {
         <div className={styles.days} onMouseLeave={this.props.onMouseLeave}>
           {eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end }).map(
             (day, index) => {
+              const {oneDayAvailableDates,dropOffOnlyDates,pickUpOnlyDates } = this.props
               const isStartOfMonth = isSameDay(day, monthDisplay.startDateOfMonth);
               const isEndOfMonth = isSameDay(day, monthDisplay.endDateOfMonth);
               const isOutsideMinMax =
@@ -84,15 +85,18 @@ class Month extends PureComponent {
               const isDisabledSpecifically = disabledDates.some(disabledDate =>
                 isSameDay(disabledDate, day)
               );
+              const endDate = ranges?.[0]?.endDate
+              const startDate = ranges?.[0]?.startDate
               const isDisabledDay = disabledDay(day);
-              const maxRangeDate = this.maxDate(ranges?.[0]?.startDate, ranges?.[0]?.endDate)
+              const maxRangeDate = this.maxDate(ranges?.[0]?.startDate, endDate)
               const hasPastUnavailabilities = (ranges.length > 0 && isAfter(day, closestTo(maxRangeDate, disabledDates.filter(d => !isBefore(d, maxRangeDate)))))
               const isPastDay = (drag.status && isBefore(day, drag.range.startDate))
-              const isOnlyPickup = isAfter(addDays(day, 1), closestTo(maxRangeDate, [...(this.props?.pickUpOnlyDates || []), ...(this.props?.oneDayAvailableDates || [])]?.map((d) => new Date(d))?.filter(d => !isBefore(d, maxRangeDate) && !isSameDay(d, maxRangeDate))))
-              const isAfterOnlyDropOff = !(!ranges?.[0]?.startDate || isBefore(day, ranges?.[0]?.startDate)) && isAfter(day, closestTo(maxRangeDate, [...(this.props?.dropOffOnlyDates || []), ...(this.props?.oneDayAvailableDates|| [])]?.map((d) => new Date(d))?.filter(d => !isBefore(d, maxRangeDate))))
-              const dropOffDay = this.props?.dropOffOnlyDates?.some((d) => isSameDay(new Date(d), day))
-              const isOnlyDropOff = ((!ranges?.[0]?.startDate) || isBefore(day, ranges?.[0]?.startDate) ) && dropOffDay
-              const isOneDayAvailable = this.props?.oneDayAvailableDates?.some((d) => isSameDay(new Date(d), ranges?.[0]?.startDate)) && isAfter(day, ranges?.[0]?.startDate)
+              const isOnlyPickup = isAfter(addDays(day, 1), closestTo(maxRangeDate, [...(pickUpOnlyDates || []), ...(oneDayAvailableDates || [])]?.map((d) => new Date(d))?.filter(d => !isBefore(d, maxRangeDate) && !isSameDay(d, maxRangeDate))))
+              const isAfterOnlyDropOff = !(!ranges?.[0]?.startDate || isBefore(day, startDate)) && isAfter(day, closestTo(maxRangeDate, [...(dropOffOnlyDates || []), ...(oneDayAvailableDates|| [])]?.map((d) => new Date(d))?.filter(d => !isBefore(d, maxRangeDate))))
+              const dropOffDay = dropOffOnlyDates?.some((d) => isSameDay(new Date(d), day))
+              const isOnlyDropOff = dropOffDay && (isBefore(day, startDate) || !startDate ||  (isSameDay(startDate, day) && focusedRange?.[0] === 0))
+              const isOneDayAvailable = oneDayAvailableDates?.some((d) => isSameDay(new Date(d), startDate)) && isAfter(day, startDate)
+
               return (
                 <DayCell
                   {...this.props}
