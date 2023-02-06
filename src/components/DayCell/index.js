@@ -208,7 +208,8 @@ DayCell.propTypes = {
   styles: PropTypes.object,
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
-  onMouseEnter: PropTypes.func
+  onMouseEnter: PropTypes.func,
+  dayContentRenderer: PropTypes.func,
 };
 
 export default DayCell;

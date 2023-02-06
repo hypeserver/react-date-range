@@ -2,9 +2,13 @@
 [![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/react-date-range)
 [![npm](https://img.shields.io/npm/l/react-date-range)]()
 [![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/react-date-range)
+[![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver)
 
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
+
+# Notice ⚠️
+This project is currently unmaintained because the original maintainers are busy with other things. It should be pretty stable in it's current state but we won't be updating it in the foreseeable future. **If you are willing to maintain it, please fork and open a pr adding your fork's link to this readme.**
 
 ### Why should you use `react-date-range`?
 
@@ -112,7 +116,8 @@ scroll                               | Object    | { enabled: false }| infinite 
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
 ranges                               | *Object[] | []               | Defines ranges. array of range object
-moveRangeOnFirstSelection(DateRange) | Boolean   | false            | move range on startDate selection. Otherwise endDate will replace with startDate.
+moveRangeOnFirstSelection(DateRange) | Boolean   | false            | move range on startDate selection. Otherwise endDate will replace with startDate unless `retainEndDateOnFirstSelection` is set to true.
+retainEndDateOnFirstSelection(DateRange) | Boolean   | false            | Retain end date when the start date is changed, unless start date is later than end date. Ignored if `moveRangeOnFirstSelection` is set to true.
 onChange(Calendar)                   | Func      |                  | callback function for date changes. fn(date: Date)
 onChange(DateRange)                  | Func      |                  | callback function for range changes. fn(changes). changes contains changed ranges with new `startDate`/`endDate` properties.
 color(Calendar)                      | String    | `#3d91ff`        | defines color for selected date in Calendar
@@ -126,6 +131,8 @@ preview(DateRange)                   | Object    |                  | displays a
 showPreview(DateRange)               | bool      | true             | visibility of preview
 editableDateInputs(Calendar)         | bool      | false            | whether dates can be edited in the Calendar's input fields
 dragSelectionEnabled(Calendar)       | bool      | true             | whether dates can be selected via drag n drop
+calendarFocus(Calendar)              | String    | 'forwards'       | Whether calendar focus month should be forward-driven or backwards-driven. can be 'forwards' or 'backwards'
+preventSnapRefocus(Calendar)  | bool      | false            | prevents unneceessary refocus of shown range on selection
 onPreviewChange(DateRange)           | Object    |                  | Callback function for preview changes
 dateDisplayFormat                    | String    | `MMM d, yyyy`    | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
 dayDisplayFormat                     | String    | `d`              | selected range preview formatter. Check out [date-fns's format option](https://date-fns.org/docs/format)
@@ -139,6 +146,7 @@ renderStaticRangeLabel(`DefinedRange`)| Function |                  | Callback f
 staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
 inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
 ariaLabels                           | Object    | {}               | inserts aria-label to inner elements
+dayContentRenderer                   | Function  | null             | Function to customize the rendering of Calendar Day. given a date is supposed to return what to render.
 
  *shape of range:
  ```js
@@ -172,7 +180,7 @@ ariaLabels                           | Object    | {}               | inserts ar
 #### Infinite Scrolled Mode
 
 To enable infinite scroll set `scroll={{enabled: true}}` basically. Infinite scroll feature is affected by `direction`(rendering direction for months) and `months`(for rendered months count) props directly.
-If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHeight` or each month's height/withs with `monthWidth`/`monthHeight`/`longMonthHeight` at `scroll` prop.
+If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHeight` or each month's height/width with `monthWidth`/`monthHeight`/`longMonthHeight` at `scroll` prop.
 
 ```js
   // shape of scroll prop
@@ -187,9 +195,17 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
 ```
 
 
-TODOs
+### Release workflow
+- Merge everything that needs to be in the release to master
+- Open a new release PR than:
+  - bumps version to appropriate one <new_version>
+  - Update CHANGELOG.md
+- Make sure the demo and important features are working as expected
+- After merging, tag the master commit with `release/<new_version>` and let Github Action handle publishing
+- = Profit 🙈
+
+### TODOs
 
 - Make mobile friendly (integrate tap and swipe actions)
-- Add complex booking customization example with exposed dayRenderer prop
 - Add tests
 - Improve documentation
