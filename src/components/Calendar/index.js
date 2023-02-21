@@ -354,11 +354,11 @@ class Calendar extends PureComponent {
   };
 
   onDragSelectionEnd = date => {
+    clearTimeout(this.state.timeout)
     const { dragSelectionEnabled, onChange, submitOnDragEnd } = this.props;
     const { drag } = this.state;
     if (!dragSelectionEnabled) return;
 
-    clearTimeout(this.state.timeout)
     const disabledInRange = this.props.disabledDates.some((d) => isSameDay(d, date))
     if (disabledInRange) return;
     if (submitOnDragEnd && drag.status) {

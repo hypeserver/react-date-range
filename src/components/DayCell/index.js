@@ -1,15 +1,15 @@
 /* eslint-disable no-fallthrough */
-import React, { useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 
-const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp,
+const DayCell = ({ day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp,
                               isPassive, isWeekend, isStartOfWeek, isEndOfWeek, isStartOfMonth, isEndOfMonth,
                               isToday, displayMode, styles, color, ranges, preview, dayDisplayFormat, isTooltip, isUnselectable, prices,
-                              tooltipContent,
+                              tooltipContent
 }) => {
-  const [hover, setHover] = useState(false)
+  const hover = useRef(false)
   const [active, setActive] = useState(false)
   const [isTooltipOpened, setIsTooltipOpened] = useState(false)
 
@@ -19,6 +19,7 @@ const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMo
       else onMouseUp(day);
     }
   };
+
   const handleMouseEvent = event => {
     if (isTooltip) {
       setIsTooltipOpened(['mousedown', 'mouseup'].includes(event.type))
@@ -27,16 +28,15 @@ const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMo
       onPreviewChange();
       return;
     }
-
     switch (event.type) {
       case 'mouseenter':
         onMouseEnter(day);
         onPreviewChange(day);
-        setHover(true)
+        hover.current = true
         break;
       case 'blur':
       case 'mouseleave':
-        setHover(false)
+        hover.current = false
         break;
       case 'mousedown':
         setActive(true)
@@ -63,7 +63,7 @@ const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMo
       [styles.dayEndOfWeek]: isEndOfWeek,
       [styles.dayStartOfMonth]: isStartOfMonth,
       [styles.dayEndOfMonth]: isEndOfMonth,
-      [styles.dayHovered]: hover,
+      [styles.dayHovered]: hover.current,
       [styles.dayActive]: active
     });
   };
@@ -170,7 +170,7 @@ const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMo
 
       </button>
     );
-})
+}
 
 export const rangeShape = PropTypes.shape({
   startDate: PropTypes.object,
