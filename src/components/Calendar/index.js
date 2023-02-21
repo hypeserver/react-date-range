@@ -345,7 +345,7 @@ class Calendar extends PureComponent {
               disablePreview: true,
             },
           });
-        },100)
+        },200)
         this.setState({
           timeout
         })

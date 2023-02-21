@@ -13,7 +13,7 @@ import {
   isAfter,
   isWeekend,
   isWithinInterval,
-  eachDayOfInterval, closestTo, addDays,
+  eachDayOfInterval, closestTo, addDays, isSameMonth,
 } from 'date-fns';
 import { getMonthDisplayRange } from '../../utils';
 
@@ -64,6 +64,7 @@ class Month extends PureComponent {
         };
       });
     }
+
     const showPreview = this.props.showPreview && !drag.disablePreview;
     return (
       <div className={styles.month} style={this.props.style}>
@@ -79,6 +80,7 @@ class Month extends PureComponent {
             (day, index) => {
               const {oneDayAvailableDates,dropOffOnlyDates,pickUpOnlyDates } = this.props
               const isStartOfMonth = isSameDay(day, monthDisplay.startDateOfMonth);
+              const isInCurrentMonth = isSameMonth(day, this.props.month)
               const isEndOfMonth = isSameDay(day, monthDisplay.endDateOfMonth);
               const isOutsideMinMax =
                 (minDate && isBefore(day, minDate)) || (maxDate && isAfter(day, maxDate));
@@ -112,10 +114,10 @@ class Month extends PureComponent {
                   key={index}
                   disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
                   isPassive={
-                    !isWithinInterval(day, {
+                    !(isInCurrentMonth && isWithinInterval(day, {
                       start: monthDisplay.startDateOfMonth,
                       end: monthDisplay.endDateOfMonth,
-                    })
+                    }))
                     || isPastDay
                     || hasPastUnavailabilities
                     || isOnlyPickup

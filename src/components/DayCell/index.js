@@ -122,7 +122,7 @@ const DayCell = React.memo(({ day, disabled, onPreviewChange, onMouseEnter, onMo
         className={classnames({
           [styles.startEdge]: range.isStartEdge,
           [styles.endEdge]: range.isEndEdge,
-          [styles.inRange]: range.isInRange
+          ...(!isPassive ? {[styles.inRange]: range.isInRange} : {})
         })}
         style={{ color: range.color || color }}
       />
