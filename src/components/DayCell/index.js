@@ -135,9 +135,7 @@ const DayCell = ({ day, disabled, onPreviewChange, onMouseEnter, onMouseDown, on
     </div>
   }
   const getPriceForDay = () => {
-    const pricesArr = prices;
-
-    const found = pricesArr.find(element => isSameDay(day, element.day));
+    const found = prices?.find(element => isSameDay(day, element.day));
 
     return found?.price || '';
   };
