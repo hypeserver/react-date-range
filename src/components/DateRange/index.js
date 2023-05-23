@@ -17,6 +17,8 @@ class DateRange extends Component {
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
   calcNewSelection = (value, isSingleValue = true) => {
+    console.log(`calcNewSelection: ${JSON.stringify(value)}`);
+    console.log(`isSingleValue: ${isSingleValue}`);
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const {
       ranges,

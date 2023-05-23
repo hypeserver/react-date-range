@@ -11,6 +11,7 @@ class DayCell extends Component {
     this.state = {
       hover: false,
       active: false,
+      targetElement: null,
     };
   }
 
@@ -29,26 +30,72 @@ class DayCell extends Component {
       return;
     }
 
+    let targetElement = event.type.startsWith('touchmove')
+      ? document.elementsFromPoint(event.touches[0].clientX, event.touches[0].clientY)
+      : null;
+
+    // console.log(`targetElements: ${targetElement.length}`);
     switch (event.type) {
+      case 'touchmove':
+        console.log(`touchmove event on ${day}`);
+        // console.log(`Event: ${JSON.stringify(event)}`);
+        if (targetElement && targetElement[2].className === 'rdrDay') {
+          if (targetElement[2] !== this.state.targetElement) {
+            console.log(`New targetElement, dispatching mouseenter: ${targetElement[2].day}`);
+            console.log(`targetElement Day: ${targetElement[0].innerText}`);
+            const enterEvent = new MouseEvent('mouseover');
+            const focusEvent = new FocusEvent('focus');
+
+            targetElement[2].dispatchEvent(enterEvent);
+            targetElement[2].dispatchEvent(focusEvent);
+
+            const leaveEvent = new MouseEvent('mouseleave');
+            if (this.state.targetElement) {
+              console.log(`dispatching mouseleave: ${this.state.targetElement}`);
+              this.state.targetElement.dispatchEvent(leaveEvent);
+            }
+            this.setState({ targetElement: targetElement[2] });
+          }
+        }
+        break;
+      case 'touchend':
+        {
+          console.log(`touchend event on ${day}`);
+          const upEvent = new MouseEvent('mouseup', {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+          });
+          this.state.targetElement.dispatchEvent(upEvent);
+          this.setState({ targetElement: null });
+        }
+        break;
       case 'mouseenter':
+      case 'mouseover':
+        console.log(`mouseenter event on ${day}`);
         onMouseEnter(day);
         onPreviewChange(day);
         stateChanges.hover = true;
         break;
       case 'blur':
       case 'mouseleave':
+        console.log(`mouseleave event on ${day}`);
         stateChanges.hover = false;
         break;
       case 'mousedown':
+      case 'touchstart':
+        console.log(`mousedown event on ${day}`);
         stateChanges.active = true;
         onMouseDown(day);
         break;
       case 'mouseup':
+        console.log(`mouseup event on ${day}`);
         event.stopPropagation();
         stateChanges.active = false;
         onMouseUp(day);
         break;
       case 'focus':
+        console.log(`focus event on ${day}`);
         onPreviewChange(day);
         break;
     }
@@ -156,7 +203,11 @@ class DayCell extends Component {
       <button
         type="button"
         onMouseEnter={this.handleMouseEvent}
+        onMouseOver={this.handleMouseEvent}
         onMouseLeave={this.handleMouseEvent}
+        onTouchStart={this.handleMouseEvent}
+        onTouchMove={this.handleMouseEvent}
+        onTouchEnd={this.handleMouseEvent}
         onFocus={this.handleMouseEvent}
         onMouseDown={this.handleMouseEvent}
         onMouseUp={this.handleMouseEvent}
@@ -169,11 +220,10 @@ class DayCell extends Component {
         style={{ color: this.props.color }}>
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
-        <span className={this.props.styles.dayNumber}>
-          {
-            dayContentRenderer?.(this.props.day) ||
+        <span aria-label="test" className={this.props.styles.dayNumber}>
+          {dayContentRenderer?.(this.props.day) || (
             <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
-          }
+          )}
         </span>
       </button>
     );
