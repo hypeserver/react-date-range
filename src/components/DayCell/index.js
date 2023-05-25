@@ -11,7 +11,7 @@ class DayCell extends Component {
     this.state = {
       hover: false,
       active: false,
-      touchOverDay: null,
+      touchOverDay: props.day.toISOString(),
     };
   }
 
@@ -24,6 +24,7 @@ class DayCell extends Component {
   };
 
   handleTouchEvent = event => {
+    console.log('handleTouchEvent: ', event.type);
     const { day, disabled, onMouseDown, onMouseUp, onMouseEnter, onPreviewChange } = this.props;
     const stateChanges = {};
     if (disabled) {
@@ -31,28 +32,35 @@ class DayCell extends Component {
       return;
     }
 
+    const isNewDay = targetElements => {
+      if (targetElements && targetElements[2].className === 'rdrDay') {
+        const newDay = targetElements[2].getAttribute('data-day');
+        if (newDay !== this.state.touchOverDay) {
+          return newDay;
+        }
+      }
+      return null;
+    };
+
     switch (event.type) {
       case 'touchmove':
         {
-          const targetElement = document.elementsFromPoint(
+          const targetElements = document.elementsFromPoint(
             event.touches[0].clientX,
             event.touches[0].clientY
           );
-          if (targetElement && targetElement[2].className === 'rdrDay') {
-            const newDay = targetElement[2].getAttribute('data-day');
-            if (newDay !== this.state.touchOverDay) {
-              onMouseEnter(new Date(newDay));
-              onPreviewChange(new Date(newDay));
-              this.setState({ touchOverDay: newDay });
-            }
+          const newDay = isNewDay(targetElements);
+          if (newDay) {
+            console.log('New day: ', newDay);
+            onMouseEnter(new Date(newDay));
+            onPreviewChange(new Date(newDay));
+            this.setState({ touchOverDay: newDay });
           }
         }
         break;
       case 'touchend':
-        {
-          onMouseUp(new Date(this.state.touchOverDay));
-          this.setState({ touchOverDay: null });
-        }
+        onMouseUp(new Date(this.state.touchOverDay));
+        this.setState({ touchOverDay: null });
         break;
       case 'touchstart':
         stateChanges.active = true;
@@ -62,6 +70,7 @@ class DayCell extends Component {
   };
 
   handleMouseEvent = event => {
+    console.log('handleMouseEvent: ', event.type);
     const { day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp } = this.props;
     const stateChanges = {};
     if (disabled) {

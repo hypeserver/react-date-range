@@ -335,6 +335,7 @@ class Calendar extends PureComponent {
     );
   };
   onDragSelectionStart = date => {
+    console.log(`onDragSelectionStart: ${date}`);
     const { onChange, dragSelectionEnabled } = this.props;
 
     if (dragSelectionEnabled) {
@@ -351,6 +352,7 @@ class Calendar extends PureComponent {
   };
 
   onDragSelectionEnd = date => {
+    console.log(`onDragSelectionEnd: ${date}`);
     const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
 
     if (!dragSelectionEnabled) return;
@@ -372,6 +374,7 @@ class Calendar extends PureComponent {
     }
   };
   onDragSelectionMove = date => {
+    console.log(`onDragSelectionMove: ${date}`);
     const { drag } = this.state;
     if (!drag.status || !this.props.dragSelectionEnabled) return;
     this.setState({
