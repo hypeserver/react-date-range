@@ -71,7 +71,6 @@ class DayCell extends Component {
 
     switch (event.type) {
       case 'mouseenter':
-      case 'mouseover':
         onMouseEnter(day);
         onPreviewChange(day);
         stateChanges.hover = true;
@@ -198,7 +197,6 @@ class DayCell extends Component {
         type="button"
         data-day={this.props.day.toISOString()}
         onMouseEnter={this.handleMouseEvent}
-        onMouseOver={this.handleMouseEvent}
         onMouseLeave={this.handleMouseEvent}
         onTouchStart={this.handleTouchEvent}
         onTouchMove={this.handleTouchEvent}
@@ -215,7 +213,7 @@ class DayCell extends Component {
         style={{ color: this.props.color }}>
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
-        <span aria-label="test" className={this.props.styles.dayNumber}>
+        <span className={this.props.styles.dayNumber}>
           {dayContentRenderer?.(this.props.day) || (
             <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
           )}
