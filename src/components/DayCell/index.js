@@ -41,19 +41,7 @@ class DayCell extends Component {
         // console.log(`Event: ${JSON.stringify(event)}`);
         if (targetElement && targetElement[2].className === 'rdrDay') {
           if (targetElement[2] !== this.state.targetElement) {
-            console.log(`New targetElement, dispatching mouseenter: ${targetElement[2].day}`);
             console.log(`targetElement Day: ${targetElement[0].innerText}`);
-            const enterEvent = new MouseEvent('mouseover');
-            const focusEvent = new FocusEvent('focus');
-
-            targetElement[2].dispatchEvent(enterEvent);
-            targetElement[2].dispatchEvent(focusEvent);
-
-            const leaveEvent = new MouseEvent('mouseleave');
-            if (this.state.targetElement) {
-              console.log(`dispatching mouseleave: ${this.state.targetElement}`);
-              this.state.targetElement.dispatchEvent(leaveEvent);
-            }
             this.setState({ targetElement: targetElement[2] });
           }
         }

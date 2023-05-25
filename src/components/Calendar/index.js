@@ -427,6 +427,7 @@ class Calendar extends PureComponent {
       <div
         className={classnames(this.styles.calendarWrapper, className)}
         onMouseUp={() => this.setState({ drag: { status: false, range: {} } })}
+        onTouchEnd={() => this.setState({ drag: { status: false, range: {} } })}
         onMouseLeave={() => {
           this.setState({ drag: { status: false, range: {} } });
         }}>
