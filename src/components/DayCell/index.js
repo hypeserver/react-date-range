@@ -23,8 +23,11 @@ class DayCell extends Component {
     }
   };
 
+  findButtonElem(elems) {
+    return elems.find(elem => elem.nodeName === 'BUTTON');
+  }
+
   handleTouchEvent = event => {
-    console.log('handleTouchEvent: ', event.type);
     const { day, disabled, onMouseDown, onMouseUp, onMouseEnter, onPreviewChange } = this.props;
     const stateChanges = {};
     if (disabled) {
@@ -33,9 +36,10 @@ class DayCell extends Component {
     }
 
     const isNewDay = targetElements => {
-      if (targetElements && targetElements[2].className === 'rdrDay') {
-        const newDay = targetElements[2].getAttribute('data-day');
-        if (newDay !== this.state.touchOverDay) {
+      const buttonElem = this.findButtonElem(targetElements);
+      if (targetElements && buttonElem && buttonElem.classList.contains('rdrDay')) {
+        const newDay = buttonElem.getAttribute('data-day');
+        if (newDay && newDay !== this.state.touchOverDay) {
           return newDay;
         }
       }
@@ -49,9 +53,9 @@ class DayCell extends Component {
             event.touches[0].clientX,
             event.touches[0].clientY
           );
+          if (targetElements.length === 0) return;
           const newDay = isNewDay(targetElements);
           if (newDay) {
-            console.log('New day: ', newDay);
             onMouseEnter(new Date(newDay));
             onPreviewChange(new Date(newDay));
             this.setState({ touchOverDay: newDay });
@@ -59,8 +63,11 @@ class DayCell extends Component {
         }
         break;
       case 'touchend':
-        onMouseUp(new Date(this.state.touchOverDay));
-        this.setState({ touchOverDay: null });
+        {
+          const endDate = new Date(this.state.touchOverDay);
+          onMouseUp(endDate);
+          this.setState({ touchOverDay: null });
+        }
         break;
       case 'touchstart':
         stateChanges.active = true;
@@ -68,9 +75,7 @@ class DayCell extends Component {
         break;
     }
   };
-
   handleMouseEvent = event => {
-    console.log('handleMouseEvent: ', event.type);
     const { day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp } = this.props;
     const stateChanges = {};
     if (disabled) {
