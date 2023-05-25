@@ -11,7 +11,7 @@ class DayCell extends Component {
     this.state = {
       hover: false,
       active: false,
-      targetElement: null,
+      touchOverDay: null,
     };
   }
 
@@ -22,6 +22,45 @@ class DayCell extends Component {
       else onMouseUp(day);
     }
   };
+
+  handleTouchEvent = event => {
+    const { day, disabled, onMouseDown, onMouseUp, onMouseEnter, onPreviewChange } = this.props;
+    const stateChanges = {};
+    if (disabled) {
+      onPreviewChange();
+      return;
+    }
+
+    switch (event.type) {
+      case 'touchmove':
+        {
+          const targetElement = document.elementsFromPoint(
+            event.touches[0].clientX,
+            event.touches[0].clientY
+          );
+          if (targetElement && targetElement[2].className === 'rdrDay') {
+            const newDay = targetElement[2].getAttribute('data-day');
+            if (newDay !== this.state.touchOverDay) {
+              onMouseEnter(new Date(newDay));
+              onPreviewChange(new Date(newDay));
+              this.setState({ touchOverDay: newDay });
+            }
+          }
+        }
+        break;
+      case 'touchend':
+        {
+          onMouseUp(new Date(this.state.touchOverDay));
+          this.setState({ touchOverDay: null });
+        }
+        break;
+      case 'touchstart':
+        stateChanges.active = true;
+        onMouseDown(day);
+        break;
+    }
+  };
+
   handleMouseEvent = event => {
     const { day, disabled, onPreviewChange, onMouseEnter, onMouseDown, onMouseUp } = this.props;
     const stateChanges = {};
@@ -30,61 +69,27 @@ class DayCell extends Component {
       return;
     }
 
-    let targetElement = event.type.startsWith('touchmove')
-      ? document.elementsFromPoint(event.touches[0].clientX, event.touches[0].clientY)
-      : null;
-
     switch (event.type) {
-      case 'touchmove':
-        console.log(`touchmove event on ${day}`);
-        if (targetElement && targetElement[2].className === 'rdrDay') {
-          if (targetElement[2] !== this.state.targetElement) {
-            console.log(`targetElement Day: ${targetElement[0].innerText}`);
-            const targetDayString = targetElement[2].getAttribute('data-day');
-            onMouseEnter(new Date(targetDayString));
-            onPreviewChange(new Date(targetDayString));
-            this.setState({ targetElement: targetElement[2] });
-          }
-        }
-        break;
-      case 'touchend':
-        {
-          console.log(`touchend event on ${day}`);
-          const upEvent = new MouseEvent('mouseup', {
-            view: window,
-            bubbles: true,
-            cancelable: true,
-          });
-          this.state.targetElement.dispatchEvent(upEvent);
-          this.setState({ targetElement: null });
-        }
-        break;
       case 'mouseenter':
       case 'mouseover':
-        console.log(`mouseenter event on ${day}`);
         onMouseEnter(day);
         onPreviewChange(day);
         stateChanges.hover = true;
         break;
       case 'blur':
       case 'mouseleave':
-        console.log(`mouseleave event on ${day}`);
         stateChanges.hover = false;
         break;
       case 'mousedown':
-      case 'touchstart':
-        console.log(`mousedown event on ${day}`);
         stateChanges.active = true;
         onMouseDown(day);
         break;
       case 'mouseup':
-        console.log(`mouseup event on ${day}`);
         event.stopPropagation();
         stateChanges.active = false;
         onMouseUp(day);
         break;
       case 'focus':
-        console.log(`focus event on ${day}`);
         onPreviewChange(day);
         break;
     }
@@ -195,9 +200,9 @@ class DayCell extends Component {
         onMouseEnter={this.handleMouseEvent}
         onMouseOver={this.handleMouseEvent}
         onMouseLeave={this.handleMouseEvent}
-        onTouchStart={this.handleMouseEvent}
-        onTouchMove={this.handleMouseEvent}
-        onTouchEnd={this.handleMouseEvent}
+        onTouchStart={this.handleTouchEvent}
+        onTouchMove={this.handleTouchEvent}
+        onTouchEnd={this.handleTouchEvent}
         onFocus={this.handleMouseEvent}
         onMouseDown={this.handleMouseEvent}
         onMouseUp={this.handleMouseEvent}
