@@ -23,10 +23,6 @@ class DayCell extends Component {
     }
   };
 
-  findButtonElem(elems) {
-    return elems.find(elem => elem.nodeName === 'BUTTON');
-  }
-
   handleTouchEvent = event => {
     const { day, disabled, onMouseDown, onMouseUp, onMouseEnter, onPreviewChange } = this.props;
     const stateChanges = {};
@@ -35,8 +31,12 @@ class DayCell extends Component {
       return;
     }
 
+    const findButtonElem = elems => {
+      return elems.find(elem => elem.nodeName === 'BUTTON');
+    };
+
     const isNewDay = targetElements => {
-      const buttonElem = this.findButtonElem(targetElements);
+      const buttonElem = findButtonElem(targetElements);
       if (targetElements && buttonElem && buttonElem.classList.contains('rdrDay')) {
         const newDay = buttonElem.getAttribute('data-day');
         if (newDay && newDay !== this.state.touchOverDay) {
