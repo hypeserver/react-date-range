@@ -34,14 +34,15 @@ class DayCell extends Component {
       ? document.elementsFromPoint(event.touches[0].clientX, event.touches[0].clientY)
       : null;
 
-    // console.log(`targetElements: ${targetElement.length}`);
     switch (event.type) {
       case 'touchmove':
         console.log(`touchmove event on ${day}`);
-        // console.log(`Event: ${JSON.stringify(event)}`);
         if (targetElement && targetElement[2].className === 'rdrDay') {
           if (targetElement[2] !== this.state.targetElement) {
             console.log(`targetElement Day: ${targetElement[0].innerText}`);
+            const targetDayString = targetElement[2].getAttribute('data-day');
+            onMouseEnter(new Date(targetDayString));
+            onPreviewChange(new Date(targetDayString));
             this.setState({ targetElement: targetElement[2] });
           }
         }
@@ -190,6 +191,7 @@ class DayCell extends Component {
     return (
       <button
         type="button"
+        data-day={this.props.day.toISOString()}
         onMouseEnter={this.handleMouseEvent}
         onMouseOver={this.handleMouseEvent}
         onMouseLeave={this.handleMouseEvent}
