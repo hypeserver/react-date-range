@@ -129,6 +129,7 @@ class DateRange extends Component {
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
         preview={this.state.preview}
+        showTime
         onPreviewChange={value => {
           this.updatePreview(value ? this.calcNewSelection(value) : null);
         }}

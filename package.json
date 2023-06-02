@@ -1,6 +1,6 @@
 {
-  "name": "react-date-range",
-  "version": "1.4.0",
+  "name": "@leonard-morina/react-datetime-range",
+  "version": "1.0.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "date",
     "range",
     "datepicker",
-    "rangepicker"
+    "rangepicker",
+    "timepicker",
+    "datetimepicker"
   ],
   "contributors": [
     "Burak Can <neoberg@gmail.com> (https://github.com/burakcan)",
@@ -29,10 +31,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/hypeserver/react-date-range"
+    "url": "http://github.com/leonard-morina/react-date-range"
   },
   "bugs": {
-    "url": "http://github.com/hypeserver/react-date-range/issues"
+    "url": "http://github.com/leonard-morina/react-date-range/issues"
   },
   "browserslist": [
     "defaults"
@@ -40,7 +42,9 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
+    "react-icons": "^4.9.0",
     "react-list": "^0.8.13",
+    "rc-time-picker": "^3.7.3",
     "shallow-equal": "^1.2.1"
   },
   "peerDependencies": {

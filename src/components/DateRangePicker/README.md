@@ -246,3 +246,33 @@ const [state, setState] = useState({
   ranges={[state.selection, state.compare]}
 />;
 ```
+
+#### Example: DatePicker with Time Input
+```jsx inside Markdown
+import { addDays } from 'date-fns';
+import { useState } from 'react';
+
+const [state, setState] = useState({
+  selection: {
+    startDate: new Date(),
+    endDate: null,
+    key: 'selection'
+  },
+  compare: {
+    startDate: new Date(),
+    endDate: addDays(new Date(), 3),
+    key: 'compare'
+  }
+});
+
+<DateRangePicker
+  months={1}
+  onChange={item => setState({ ...state, ...item })}
+  direction='horizontal'
+  moveRangeOnFirstSelection={false}
+  retainEndDateOnFirstSelection={false}
+  minDate={addDays(new Date(), -30)}
+  maxDate={addDays(new Date(), 30)}
+  ranges={[state.selection, state.compare]}
+/>
+```

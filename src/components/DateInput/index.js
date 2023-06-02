@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { format, parse, isValid, isEqual } from 'date-fns';
+import TimePicker from 'rc-time-picker';
+import { Fa500Px, FaClock } from 'react-icons/fa';
 
 class DateInput extends PureComponent {
   constructor(props, context) {
@@ -64,11 +66,21 @@ class DateInput extends PureComponent {
   };
 
   render() {
-    const { className, readOnly, placeholder, ariaLabel, disabled, onFocus } = this.props;
+    const {
+      className,
+      readOnly,
+      placeholder,
+      ariaLabel,
+      disabled,
+      onFocus,
+      timeContainerClassName,
+      timePickerClassName,
+      showTime,
+    } = this.props;
     const { value, invalid } = this.state;
 
     return (
-      <span className={classnames('rdrDateInput', className)}>
+      <span className={classnames('rdrDateInput', className, showTime && 'rdrDateInputTime')}>
         <input
           readOnly={readOnly}
           disabled={disabled}
@@ -80,6 +92,23 @@ class DateInput extends PureComponent {
           onBlur={this.onBlur}
           onFocus={onFocus}
         />
+        {showTime ? (
+          <span className={timeContainerClassName}>
+            <TimePicker
+              allowEmpty={true}
+              showSecond={false}
+              onChange={value => {
+                console.log('here onChange', value);
+                // updateRange && updateRange()
+              }}
+              // todo add a clear icon
+              // clearIcon={<Fa500Px size={2} />}
+            />
+            <span className={timePickerClassName}>
+              <FaClock />
+            </span>
+          </span>
+        ) : null}
         {invalid && <span className="rdrWarning">&#9888;</span>}
       </span>
     );
@@ -97,6 +126,9 @@ DateInput.propTypes = {
   className: PropTypes.string,
   onFocus: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  showTime: PropTypes.bool,
+  timeContainerClassName: PropTypes.string,
+  timePickerClassName: PropTypes.string,
 };
 
 DateInput.defaultProps = {
