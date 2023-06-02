@@ -277,6 +277,7 @@ class Calendar extends PureComponent {
       startDatePlaceholder,
       endDatePlaceholder,
       ariaLabels,
+      showTime,
     } = this.props;
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
@@ -309,6 +310,12 @@ class Calendar extends PureComponent {
                 }
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 0)}
+                showTime={showTime}
+                timeContainerClassName={classnames(styles.timePickerContainer, {
+                  [styles.timePickerContainerActive]:
+                    focusedRange[0] === i && focusedRange[1] === 0,
+                })}
+                timePickerClassName={styles.timePickerIcon}
               />
               <DateInput
                 className={classnames(styles.dateDisplayItem, {
@@ -327,6 +334,12 @@ class Calendar extends PureComponent {
                 }
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 1)}
+                showTime={showTime}
+                timeContainerClassName={classnames(styles.timePickerContainer, {
+                  [styles.timePickerContainerActive]:
+                    focusedRange[0] === i && focusedRange[1] === 0,
+                })}
+                timePickerClassName={styles.timePickerIcon}
               />
             </div>
           );
@@ -493,7 +506,7 @@ class Calendar extends PureComponent {
               isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
-              let monthStep = addMonths(this.state.focusedDate, i);;
+              let monthStep = addMonths(this.state.focusedDate, i);
               if (this.props.calendarFocus === 'backwards') {
                 monthStep = subMonths(this.state.focusedDate, this.props.months - 1 - i);
               }
@@ -559,6 +572,7 @@ Calendar.defaultProps = {
   calendarFocus: 'forwards',
   preventSnapRefocus: false,
   ariaLabels: {},
+  showTime: false,
 };
 
 Calendar.propTypes = {
@@ -615,6 +629,7 @@ Calendar.propTypes = {
   calendarFocus: PropTypes.string,
   preventSnapRefocus: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
+  showTime: PropTypes.bool,
 };
 
 export default Calendar;
