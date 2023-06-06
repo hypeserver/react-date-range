@@ -1,6 +1,6 @@
 {
   "name": "@leonard-morina/react-datetime-range",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -42,9 +42,9 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
+    "rc-time-picker": "^3.7.3",
     "react-icons": "^4.9.0",
     "react-list": "^0.8.13",
-    "rc-time-picker": "^3.7.3",
     "shallow-equal": "^1.2.1"
   },
   "peerDependencies": {
