@@ -14,9 +14,8 @@ jobs:
     - name: Publish new version to NPM
       uses: actions/setup-node@v1
       with:
-        node-version: node:16.3.0-alpine
+        node-version: 16.13.0
         registry-url: 'https://registry.npmjs.org'
-        always-auth: true
     - run: yarn install
     - run: yarn build
     - run: yarn publish
