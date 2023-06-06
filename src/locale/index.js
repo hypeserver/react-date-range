@@ -1,4 +1,5 @@
 export { default as af } from 'date-fns/locale/af';
+export { default as sq } from 'date-fns/locale/sq';
 export { default as arDZ } from 'date-fns/locale/ar-DZ';
 export { default as arSA } from 'date-fns/locale/ar-SA';
 export { default as be } from 'date-fns/locale/be';
