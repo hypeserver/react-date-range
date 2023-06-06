@@ -14,8 +14,9 @@ jobs:
     - name: Publish new version to NPM
       uses: actions/setup-node@v1
       with:
-        node-version: 16.x
-        # registry-url: 'https://registry.npmjs.org'
+        node-version: 17.x
+        registry-url: 'https://registry.npmjs.org'
+        always-auth: true
     - run: yarn install
     - run: yarn build
     - run: yarn publish
