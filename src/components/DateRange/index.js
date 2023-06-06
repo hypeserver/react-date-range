@@ -129,7 +129,6 @@ class DateRange extends Component {
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
         preview={this.state.preview}
-        showTime
         onPreviewChange={value => {
           this.updatePreview(value ? this.calcNewSelection(value) : null);
         }}
@@ -153,6 +152,7 @@ DateRange.defaultProps = {
   retainEndDateOnFirstSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: [],
+  showTime: false,
 };
 
 DateRange.propTypes = {
@@ -163,6 +163,7 @@ DateRange.propTypes = {
   ranges: PropTypes.arrayOf(rangeShape),
   moveRangeOnFirstSelection: PropTypes.bool,
   retainEndDateOnFirstSelection: PropTypes.bool,
+  showTime: PropTypes.bool,
 };
 
 export default DateRange;

@@ -31,6 +31,7 @@
     "Onur Kerimov <onurkerimov@gmail.com> (https://github.com/onurkerimov)"
   ],
   "license": "MIT",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "http://github.com/leonard-morina/react-date-range"
@@ -42,6 +43,7 @@
     "defaults"
   ],
   "dependencies": {
+    "@types/react": "^18.2.8",
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
     "rc-time-picker": "^3.7.3",
