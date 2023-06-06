@@ -13,6 +13,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 19.x
+        scope: '@leonard-morina'
         registry-url: https://registry.npmjs.org
     - run: yarn install
     - run: yarn build
