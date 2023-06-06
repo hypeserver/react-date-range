@@ -8,8 +8,6 @@ jobs:
     name: NPM Package
     runs-on: ubuntu-latest
     steps:
-    - name: Set NODE_OPTIONS
-      run: export NODE_OPTIONS=--openssl-legacy-provider
     - uses: actions/checkout@v2
     - name: Publish new version to NPM
       uses: actions/setup-node@v1

@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "19.x"
+
+if: tag =~ /^release\//
+
+jobs:
+  include:
+    - stage: Build and Publish
+      name: NPM Package
+      os: linux
+      dist: xenial
+      script:
+        - yarn install
+        - yarn build
+        - yarn publish
+      env:
+        - NODE_AUTH_TOKEN=${NPM_AUTH_TOKEN}
