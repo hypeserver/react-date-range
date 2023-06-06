@@ -1,6 +1,6 @@
 {
-  "name": "@leonard-morina/react-datetime-range",
-  "version": "1.2.3",
+  "name": "@leonardmorina/react-datetime-range",
+  "version": "1.0.0",
   "description": "A React component for choosing dates/datetimes and date/datetime ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -13,10 +13,6 @@
     "lint": "eslint 'src/**/*.js'",
     "test": "jest",
     "preversion": "yarn clear & yarn build"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org",
-    "access": "public"
   },
   "keywords": [
     "react",
