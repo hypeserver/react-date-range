@@ -6,15 +6,14 @@ if: tag =~ /^release\//
 
 jobs:
   include:
-    - stage: Build
-      name: NPM Package
-      script:
-        - yarn install
-        - yarn build
-    - stage: Deploy
-      script: yarn build
+    - stage: Build and Deploy
+      script: 
+      - yarn install
+      - yarn build
       deploy:
         provider: npm
         email: '$NPM_EMAIL'
         api_key: '$NPM_AUTH_TOKEN'
         skip_cleanup: true
+        on:
+          branch: master
