@@ -15,7 +15,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 16.x
-        registry-url: 'https://registry.npmjs.org'
+        # registry-url: 'https://registry.npmjs.org'
     - run: yarn install
     - run: yarn build
     - run: yarn publish
