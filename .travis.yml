@@ -15,4 +15,5 @@ jobs:
         email: '$NPM_EMAIL'
         api_key: '$NPM_AUTH_TOKEN'
         skip_cleanup: true
-        all_branches: true
+        on:
+          all_branches: true
