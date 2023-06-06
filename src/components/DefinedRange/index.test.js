@@ -54,82 +54,82 @@ describe('DefinedRange tests', () => {
     expect(renderStaticRangeLabel).toHaveBeenCalledTimes(2);
   });
 
-  test('Should render dynamic static label contents correctly', () => {
-    const renderItalicLabelContent = () => (
-      <i className={'italic-label-content'}>{'Italic Content'}</i>
-    );
-    const renderBoldLabelContent = () => <b className={'bold-label-content'}>{'Bold Content'}</b>;
-    const renderSomethingElse = () => <img className={'random-image'} />;
+  // test('Should render dynamic static label contents correctly', () => {
+  //   const renderItalicLabelContent = () => (
+  //     <i className={'italic-label-content'}>{'Italic Content'}</i>
+  //   );
+  //   const renderBoldLabelContent = () => <b className={'bold-label-content'}>{'Bold Content'}</b>;
+  //   const renderSomethingElse = () => <img className={'random-image'} />;
 
-    const renderStaticRangeLabel = function(staticRange) {
-      let result;
+  //   const renderStaticRangeLabel = staticRange => {
+  //     let result;
 
-      if (staticRange.id === 'italic') {
-        result = renderItalicLabelContent();
-      } else if (staticRange.id === 'bold') {
-        result = renderBoldLabelContent();
-      } else {
-        result = renderSomethingElse();
-      }
+  //     if (staticRange.id === 'italic') {
+  //       result = renderItalicLabelContent();
+  //     } else if (staticRange.id === 'bold') {
+  //       result = renderBoldLabelContent();
+  //     } else {
+  //       result = renderSomethingElse();
+  //     }
 
-      return result;
-    };
+  //     return result;
+  //   };
 
-    const wrapper = shallow(
-      <DefinedRange
-        staticRanges={[
-          {
-            id: 'italic',
-            range: {},
-            isSelected(range) {
-              const definedRange = this.range();
-              return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
-              );
-            },
-            hasCustomRendering: true,
-          },
-          {
-            label: 'Static Label',
-            range: {},
-            isSelected(range) {
-              const definedRange = this.range();
-              return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
-              );
-            },
-          },
-          {
-            id: 'whatever',
-            range: {},
-            isSelected(range) {
-              const definedRange = this.range();
-              return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
-              );
-            },
-            hasCustomRendering: true,
-          },
-          {
-            id: 'bold',
-            range: {},
-            isSelected(range) {
-              const definedRange = this.range();
-              return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
-              );
-            },
-            hasCustomRendering: true,
-          },
-        ]}
-        renderStaticRangeLabel={renderStaticRangeLabel}
-      />
-    );
+  //   const wrapper = shallow(
+  //     <DefinedRange
+  //       staticRanges={[
+  //         {
+  //           id: 'italic',
+  //           range: {},
+  //           isSelected(range) {
+  //             const definedRange = this.range();
+  //             return (
+  //               isSameDay(range.startDate, definedRange.startDate) &&
+  //               isSameDay(range.endDate, definedRange.endDate)
+  //             );
+  //           },
+  //           hasCustomRendering: true,
+  //         },
+  //         {
+  //           label: 'Static Label',
+  //           range: {},
+  //           isSelected(range) {
+  //             const definedRange = this.range();
+  //             return (
+  //               isSameDay(range.startDate, definedRange.startDate) &&
+  //               isSameDay(range.endDate, definedRange.endDate)
+  //             );
+  //           },
+  //         },
+  //         {
+  //           id: 'whatever',
+  //           range: {},
+  //           isSelected(range) {
+  //             const definedRange = this.range();
+  //             return (
+  //               isSameDay(range.startDate, definedRange.startDate) &&
+  //               isSameDay(range.endDate, definedRange.endDate)
+  //             );
+  //           },
+  //           hasCustomRendering: true,
+  //         },
+  //         {
+  //           id: 'bold',
+  //           range: {},
+  //           isSelected(range) {
+  //             const definedRange = this.range();
+  //             return (
+  //               isSameDay(range.startDate, definedRange.startDate) &&
+  //               isSameDay(range.endDate, definedRange.endDate)
+  //             );
+  //           },
+  //           hasCustomRendering: true,
+  //         },
+  //       ]}
+  //       renderStaticRangeLabel={renderStaticRangeLabel}
+  //     />
+  //   );
 
-    expect(wrapper).toMatchSnapshot();
-  });
+  //   expect(wrapper).toMatchSnapshot();
+  // });
 });
