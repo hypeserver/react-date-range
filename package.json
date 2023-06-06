@@ -4,8 +4,8 @@
   "description": "A React component for choosing dates/datetimes and date/datetime ranges.",
   "main": "dist/index.js",
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider yarn build:css & styleguidist server",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider yarn build:css & yarn build:js & styleguidist build",
+    "start": "yarn build:css & styleguidist server",
+    "build": "yarn build:css & yarn build:js & styleguidist build",
     "build:css": "postcss 'src/styles.scss' -d dist --ext css & postcss 'src/theme/*.scss' -d 'dist/theme' --ext css",
     "build:js": "babel ./src --out-dir ./dist --ignore test.js",
     "lint": "eslint 'src/**/*.js'",
