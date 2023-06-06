@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "17.x"
+  - 19
 
 if: tag =~ /^release\//
 
