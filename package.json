@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "yarn build:css & styleguidist server",
-    "build": "yarn build:css & yarn build:js & styleguidist build",
+    "build": "yarn build:css & yarn build:js",
     "build:css": "postcss 'src/styles.scss' -d dist --ext css & postcss 'src/theme/*.scss' -d 'dist/theme' --ext css",
     "build:js": "babel ./src --out-dir ./dist --ignore test.js",
     "lint": "eslint 'src/**/*.js'",
