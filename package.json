@@ -1,6 +1,6 @@
 {
   "name": "@leonard-morina/react-datetime-range",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A React component for choosing dates/datetimes and date/datetime ranges.",
   "main": "dist/index.js",
   "scripts": {
