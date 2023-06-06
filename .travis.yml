@@ -12,6 +12,7 @@ jobs:
       - yarn build
       deploy:
         provider: npm
+        registry: https://registry.npmjs.org/@leonard-morina/react-datetime-range
         email: '$NPM_EMAIL'
         api_key: '$NPM_AUTH_TOKEN'
         skip_cleanup: true
