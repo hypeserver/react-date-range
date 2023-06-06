@@ -6,13 +6,15 @@ if: tag =~ /^release\//
 
 jobs:
   include:
-    - stage: Build and Publish
+    - stage: Build
       name: NPM Package
-      os: linux
-      dist: xenial
       script:
         - yarn install
         - yarn build
-        - yarn publish
-      env:
-        - NODE_AUTH_TOKEN=${NPM_AUTH_TOKEN}
+    - stage: Deploy
+      script: yarn build
+      deploy:
+        provider: NPM
+        email: '$NPM_EMAIL'
+        api_key: '$NPM_AUTH_TOKEN'
+        skip_cleanup: true
