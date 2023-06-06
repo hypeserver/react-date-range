@@ -14,7 +14,7 @@ jobs:
       - name: Install
         run: yarn install
       - name: Build
-        run: yarn build
+        run: yarn build:all
       - run: cp -R dist styleguide/
       - run: cp -R demo styleguide/
       - name: Deploy 🚀
