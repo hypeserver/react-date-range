@@ -13,12 +13,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 19.x
-        registry-url: https://registry.npmjs.org
+        scope: ${{ github.repository_owner }}
+        registry-url: https://npm.pkg.github.com/
     - name: Publish
       run: |
         yarn install
         yarn build
         yarn publish --access public
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
