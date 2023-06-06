@@ -4,20 +4,21 @@ on:
         tags:
             - release/*
 jobs:
-  build:
+  publish:
     name: NPM Package
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Publish new version to NPM
+    - name: Installing Node
       uses: actions/setup-node@v3
       with:
         node-version: 19.x
-        scope: '@leonard-morina'
         registry-url: https://registry.npmjs.org
-    - run: yarn install
-    - run: yarn build
-    - run: yarn publish --access public
+    - name: Publish
+      run: |
+        yarn install
+        yarn build
+        yarn publish --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
