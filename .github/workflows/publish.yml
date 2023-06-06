@@ -8,12 +8,12 @@ jobs:
     name: NPM Package
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Publish new version to NPM
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: 19.x
-        registry-url: 'https://registry.npmjs.org/@leonard-morina'
+        registry-url: 'https://registry.npmjs.org'
     - run: yarn install
     - run: yarn build
     - run: yarn publish --access public
