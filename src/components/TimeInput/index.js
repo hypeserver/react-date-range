@@ -332,7 +332,7 @@ class TimeInput extends Component {
             readOnly={!!inputReadOnly}
             id={id}
           />
-          {inputIcon || <span className={`${prefixCls}-icon`} />}
+          {inputIcon || <span className={`${prefixCls}-icon`} onClick={() => this.setOpen(true)} />}
           {this.renderClearButton()}
         </span>
       </Trigger>
