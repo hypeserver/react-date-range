@@ -248,7 +248,13 @@ export interface CalendarProps {
     weekdayDisplayFormat?: string | undefined;
     /** default: none */
     weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
-    showTime?: boolean | undefined;
+    timeOptions?: TimeOptions;
+}
+
+export interface TimeOptions {
+    showTime: boolean;
+    use12Hours: boolean;
+    showSeconds: boolean;
 }
 
 export class Calendar extends React.Component<CalendarProps> {}

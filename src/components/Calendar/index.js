@@ -130,6 +130,7 @@ class Calendar extends PureComponent {
       dateRange: 'ranges',
       date: 'date',
     };
+
     const targetProp = propMapper[this.props.displayMode];
     if (this.props[targetProp] !== prevProps[targetProp]) {
       this.updateShownDate(this.props);
@@ -166,9 +167,11 @@ class Calendar extends PureComponent {
     this.focusToDate(newDate, this.props, false);
     onShownDateChange && onShownDateChange(newDate);
   };
+
   handleRangeFocusChange = (rangesIndex, rangeItemIndex) => {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange([rangesIndex, rangeItemIndex]);
   };
+
   handleScroll = () => {
     const { onShownDateChange, minDate } = this.props;
     const { focusedDate } = this.state;
@@ -277,7 +280,7 @@ class Calendar extends PureComponent {
       startDatePlaceholder,
       endDatePlaceholder,
       ariaLabels,
-      showTime,
+      timeOptions,
     } = this.props;
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
@@ -310,7 +313,7 @@ class Calendar extends PureComponent {
                 }
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 0)}
-                showTime={showTime}
+                timeOptions={timeOptions}
                 timeContainerClassName={classnames(styles.timePickerContainer, {
                   [styles.timePickerContainerActive]:
                     focusedRange[0] === i && focusedRange[1] === 0,
@@ -334,7 +337,7 @@ class Calendar extends PureComponent {
                 }
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 1)}
-                showTime={showTime}
+                timeOptions={timeOptions}
                 timeContainerClassName={classnames(styles.timePickerContainer, {
                   [styles.timePickerContainerActive]:
                     focusedRange[0] === i && focusedRange[1] === 0,
@@ -347,6 +350,7 @@ class Calendar extends PureComponent {
       </div>
     );
   };
+
   onDragSelectionStart = date => {
     const { onChange, dragSelectionEnabled } = this.props;
 
@@ -363,19 +367,21 @@ class Calendar extends PureComponent {
     }
   };
 
-  onDragSelectionEnd = date => {
+  onDragSelectionEnd = (date, timeChanged = false) => {
     const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
 
     if (!dragSelectionEnabled) return;
 
     if (displayMode === 'date' || !this.state.drag.status) {
-      onChange && onChange(date);
+      onChange && onChange(date, undefined, timeChanged);
       return;
     }
+
     const newRange = {
       startDate: this.state.drag.range.startDate,
       endDate: date,
     };
+
     if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
       this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
     } else {
@@ -573,6 +579,11 @@ Calendar.defaultProps = {
   preventSnapRefocus: false,
   ariaLabels: {},
   showTime: false,
+  timeOptions: {
+    showTime: false,
+    use12Hours: false,
+    showSeconds: false,
+  },
 };
 
 Calendar.propTypes = {
@@ -629,7 +640,11 @@ Calendar.propTypes = {
   calendarFocus: PropTypes.string,
   preventSnapRefocus: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
-  showTime: PropTypes.bool,
+  timeOptions: PropTypes.shape({
+    showTime: PropTypes.bool,
+    use12Hours: PropTypes.bool,
+    showSeconds: PropTypes.bool,
+  }),
 };
 
 export default Calendar;

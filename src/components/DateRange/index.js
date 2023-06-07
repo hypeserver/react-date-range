@@ -90,9 +90,28 @@ class DateRange extends Component {
       nextFocusRange: nextFocusRange,
     };
   };
-  setSelection = (value, isSingleValue) => {
+  setSelection = (value, isSingleValue, timeChanged = false) => {
     const { onChange, ranges, onRangeFocusChange } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
+    if (timeChanged) {
+      let nextFocusRange = focusedRange;
+      if (focusedRange[1] === 0) {
+        nextFocusRange = [0, 1];
+      } else {
+        nextFocusRange = [0, 0];
+      }
+
+      onChange({ selection: { ...ranges[0] } });
+
+      this.setState({
+        focusedRange: nextFocusRange,
+        preview: null,
+      });
+
+      onRangeFocusChange && onRangeFocusChange(nextFocusRange);
+      return;
+    }
+
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
     if (!selectedRange) return;
@@ -103,12 +122,14 @@ class DateRange extends Component {
         ...newSelection.range,
       },
     });
+
     this.setState({
       focusedRange: newSelection.nextFocusRange,
       preview: null,
     });
     onRangeFocusChange && onRangeFocusChange(newSelection.nextFocusRange);
   };
+
   handleRangeFocusChange = focusedRange => {
     this.setState({ focusedRange });
     this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
