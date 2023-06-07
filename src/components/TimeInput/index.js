@@ -224,6 +224,7 @@ class TimeInput extends Component {
   }
 
   setOpen(open) {
+    console.log('here');
     const { onOpen, onClose } = this.props;
     const { open: currentOpen } = this.state;
     if (currentOpen !== open) {
@@ -294,11 +295,12 @@ class TimeInput extends Component {
       onBlur,
       autoFocus,
       inputReadOnly,
-      inputIcon,
       popupStyle,
+      inputIcon,
     } = this.props;
     const { open, value } = this.state;
     const popupClassName = this.getPopupClassName();
+
     return (
       <Trigger
         prefixCls={`${prefixCls}-panel`}
@@ -332,7 +334,7 @@ class TimeInput extends Component {
             readOnly={!!inputReadOnly}
             id={id}
           />
-          {inputIcon || <span className={`${prefixCls}-icon`} onClick={() => this.setOpen(true)} />}
+          {inputIcon || <span className={`${prefixCls}-icon`} />}
           {this.renderClearButton()}
         </span>
       </Trigger>

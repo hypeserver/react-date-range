@@ -140,6 +140,7 @@ class DateInput extends PureComponent {
               onClose={() => {
                 this.props.onChange(this.props.value, true);
               }}
+              inputIcon={<span className={timePickerClassName}>{<FaClock />}</span>}
               onChange={value => {
                 const dateValue = this.props.value;
 
@@ -163,9 +164,6 @@ class DateInput extends PureComponent {
                 this.setState({ value: dateValue, hour: hour, minutes, seconds });
               }}
             />
-            <span className={timePickerClassName}>
-              <FaClock />
-            </span>
           </span>
         ) : null}
         {invalid && <span className="rdrWarning">&#9888;</span>}

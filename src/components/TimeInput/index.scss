@@ -1,6 +1,7 @@
 .rc-time-picker {
-  display: inline-block;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 
   * {
@@ -121,7 +122,7 @@
 
     &-clear {
       position: absolute;
-      right: 6px;
+      right: 20px;
       cursor: pointer;
       overflow: hidden;
       width: 20px;

@@ -420,7 +420,9 @@
 }
 
 .rc-time-picker {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   box-sizing: border-box;
 }
@@ -431,7 +433,7 @@
 
 .rc-time-picker-clear {
   position: absolute;
-  right: 6px;
+  right: 25px;
   cursor: pointer;
   overflow: hidden;
   width: 20px;
