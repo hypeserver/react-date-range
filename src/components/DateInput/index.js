@@ -2,25 +2,40 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { format, parse, isValid, isEqual } from 'date-fns';
-import TimePicker from 'rc-time-picker';
-import { Fa500Px, FaClock } from 'react-icons/fa';
+import TimeInput from '../TimeInput';
+import { FaClock } from 'react-icons/fa';
 
 class DateInput extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
+    const formattedDate = this.formatDate(props);
     this.state = {
       invalid: false,
       changed: false,
-      value: this.formatDate(props),
+      value: formattedDate,
+      displayDateValue: formattedDate,
     };
   }
 
   componentDidUpdate(prevProps) {
-    const { value } = prevProps;
+    const { value, timeOptions } = prevProps;
+    const { hour, minutes, seconds } = this.state;
 
     if (!isEqual(value, this.props.value)) {
-      this.setState({ value: this.formatDate(this.props) });
+      let newDate = this.props.value;
+      if (hour) {
+        newDate.setHours(hour);
+      }
+      if (minutes) {
+        newDate.setMinutes(minutes);
+      }
+
+      if (timeOptions.showSeconds && seconds) {
+        newDate.setSeconds(seconds);
+      }
+
+      this.setState({ value: newDate, displayDateValue: this.formatDate(this.props) });
     }
   }
 
@@ -57,7 +72,27 @@ class DateInput extends PureComponent {
   };
 
   onChange = e => {
-    this.setState({ value: e.target.value, changed: true, invalid: false });
+    const { hour, minutes, seconds } = this.state;
+    const { timeOptions } = this.props;
+
+    let newDate = e.target.value;
+    if (hour) {
+      newDate.hour(hour);
+    }
+    if (minutes) {
+      newDate.setMinutes(minutes);
+    }
+
+    if (timeOptions.showSeconds && seconds) {
+      newDate.setSeconds(seconds);
+    }
+
+    this.setState({
+      value: newDate,
+      displayDateValue: e.target.value,
+      changed: true,
+      invalid: false,
+    });
   };
 
   onBlur = () => {
@@ -75,16 +110,18 @@ class DateInput extends PureComponent {
       onFocus,
       timeContainerClassName,
       timePickerClassName,
-      showTime,
+      timeOptions,
     } = this.props;
-    const { value, invalid } = this.state;
 
+    const { invalid, displayDateValue } = this.state;
+
+    const { showTime, showSeconds, use12Hours } = timeOptions || {};
     return (
-      <span className={classnames('rdrDateInput', className, showTime && 'rdrDateInputTime')}>
+      <span className={classnames('rdrDateInput', showTime && 'rdrTimeInput', className)}>
         <input
           readOnly={readOnly}
           disabled={disabled}
-          value={value}
+          value={displayDateValue}
           placeholder={placeholder}
           aria-label={ariaLabel}
           onKeyDown={this.onKeyDown}
@@ -94,15 +131,37 @@ class DateInput extends PureComponent {
         />
         {showTime ? (
           <span className={timeContainerClassName}>
-            <TimePicker
+            <TimeInput
               allowEmpty={true}
-              showSecond={false}
-              onChange={value => {
-                console.log('here onChange', value);
-                // updateRange && updateRange()
+              showSecond={showSeconds}
+              use12Hours={use12Hours}
+              onFocus={onFocus}
+              closeOnMinuteSelect
+              onClose={() => {
+                this.props.onChange(this.props.value, true);
               }}
-              // todo add a clear icon
-              // clearIcon={<Fa500Px size={2} />}
+              onChange={value => {
+                const dateValue = this.props.value;
+
+                let hour = 0;
+                let minutes = 0;
+                let seconds = 0;
+
+                if (value) {
+                  hour = value.hour();
+                  minutes = value.minutes();
+
+                  if (timeOptions.showSeconds) {
+                    seconds = value.seconds();
+                    dateValue.setSeconds(seconds);
+                  }
+                }
+
+                dateValue.setHours(hour);
+                dateValue.setMinutes(minutes);
+
+                this.setState({ value: dateValue, hour: hour, minutes, seconds });
+              }}
             />
             <span className={timePickerClassName}>
               <FaClock />
@@ -129,6 +188,11 @@ DateInput.propTypes = {
   showTime: PropTypes.bool,
   timeContainerClassName: PropTypes.string,
   timePickerClassName: PropTypes.string,
+  timeOptions: PropTypes.shape({
+    showTime: PropTypes.bool,
+    use12Hours: PropTypes.bool,
+    showSeconds: PropTypes.bool,
+  }),
 };
 
 DateInput.defaultProps = {
