@@ -1,8 +1,9 @@
 name: Publish
+
 on:
-    push:
-        branches:
-            - master
+  push:
+    branches: [master]
+    
 jobs:
   build:
     name: NPM Package
