@@ -91,6 +91,7 @@ class TimeInput extends Component {
     event.stopPropagation();
     this.setValue(null);
     this.setOpen(false);
+    if (this.props.onClear && typeof this.props.onClear === 'function') this.props.onClear();
   };
 
   onVisibleChange = open => {

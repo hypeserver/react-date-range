@@ -140,6 +140,9 @@ class DateInput extends PureComponent {
               defaultValue={defaultTimeValue}
               closeOnMinuteSelect
               panelClassName={panelClassName}
+              onClear={() => {
+                this.props.onChange(this.props.value, true);
+              }}
               onClose={() => {
                 this.props.onChange(this.props.value, true);
               }}
@@ -157,12 +160,12 @@ class DateInput extends PureComponent {
 
                   if (timeOptions.showSeconds) {
                     seconds = value.seconds();
-                    dateValue.setSeconds(seconds);
                   }
                 }
 
                 dateValue.setHours(hour);
                 dateValue.setMinutes(minutes);
+                dateValue.setSeconds(seconds);
 
                 this.setState({ value: dateValue, hour: hour, minutes, seconds });
               }}

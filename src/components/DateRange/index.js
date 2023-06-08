@@ -91,7 +91,7 @@ class DateRange extends Component {
     };
   };
   setSelection = (value, isSingleValue, timeChanged = false) => {
-    const { onChange, ranges, onRangeFocusChange, disableEndDateInput } = this.props;
+    const { onChange, ranges, onRangeFocusChange } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     if (timeChanged) {
       let nextFocusRange = focusedRange;
@@ -123,13 +123,11 @@ class DateRange extends Component {
       },
     });
 
-    if (!disableEndDateInput) {
-      this.setState({
-        focusedRange: newSelection.nextFocusRange,
-        preview: null,
-      });
-      onRangeFocusChange && onRangeFocusChange(newSelection.nextFocusRange);
-    }
+    this.setState({
+      focusedRange: newSelection.nextFocusRange,
+      preview: null,
+    });
+    onRangeFocusChange && onRangeFocusChange(newSelection.nextFocusRange);
   };
 
   handleRangeFocusChange = focusedRange => {
