@@ -167,7 +167,7 @@ class DateInput extends PureComponent {
                 dateValue.setMinutes(minutes);
                 dateValue.setSeconds(seconds);
 
-                this.setState({ value: dateValue, hour: hour, minutes, seconds });
+                this.setState({ value: dateValue, hour, minutes, seconds });
               }}
             />
           </span>

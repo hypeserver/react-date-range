@@ -101,7 +101,9 @@ class DateRange extends Component {
         nextFocusRange = [0, 0];
       }
 
-      onChange({ selection: { ...ranges[0] } });
+      onChange({
+        selection: { ...ranges[0], fromTime: ranges[0].startDate, toTime: ranges[0].endDate },
+      });
 
       this.setState({
         focusedRange: nextFocusRange,
@@ -115,7 +117,17 @@ class DateRange extends Component {
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
     if (!selectedRange) return;
-    const newSelection = this.calcNewSelection(value, isSingleValue);
+    let newSelection = this.calcNewSelection(value, isSingleValue);
+    if (selectedRange?.fromTime) {
+      newSelection.range.startDate.setHours(selectedRange.fromTime.getHours());
+      newSelection.range.startDate.setMinutes(selectedRange.fromTime.getMinutes());
+      newSelection.range.startDate.setSeconds(selectedRange.fromTime.getSeconds());
+    }
+    if (selectedRange?.endTime) {
+      newSelection.range.endDate.setHours(selectedRange.endTime.getHours());
+      newSelection.range.endDate.setMinutes(selectedRange.endTime.getMinutes());
+      newSelection.range.endDate.setSeconds(selectedRange.endTime.getSeconds());
+    }
     onChange({
       [selectedRange.key || `range${focusedRangeIndex + 1}`]: {
         ...selectedRange,
