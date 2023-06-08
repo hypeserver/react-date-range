@@ -161,6 +161,7 @@ class TimeInput extends Component {
       clearIcon,
       closeOnHourSelect,
       closeOnMinuteSelect,
+      panelClassName,
     } = this.props;
     const { value } = this.state;
     return (
@@ -171,6 +172,7 @@ class TimeInput extends Component {
         value={value}
         inputReadOnly={inputReadOnly}
         onChange={this.onPanelChange}
+        className={panelClassName}
         onAmPmChange={this.onAmPmChange}
         defaultOpenValue={defaultOpenValue}
         showHour={showHour}
@@ -401,5 +403,6 @@ TimeInput.propTypes = {
   defaultValue: PropTypes.any,
   closeOnMinuteSelect: PropTypes.bool,
   closeOnHourSelect: PropTypes.bool,
+  panelClassName: PropTypes.string,
 };
 export default TimeInput;
