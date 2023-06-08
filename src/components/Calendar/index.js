@@ -314,6 +314,11 @@ class Calendar extends PureComponent {
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 0)}
                 timeOptions={timeOptions}
+                defaultTimeValue={
+                  timeOptions && timeOptions.defaultValues && timeOptions.defaultValues.startTime
+                    ? timeOptions.defaultValues.startTime
+                    : undefined
+                }
                 timeContainerClassName={classnames(styles.timePickerContainer, {
                   [styles.timePickerContainerActive]:
                     focusedRange[0] === i && focusedRange[1] === 0,
@@ -338,6 +343,11 @@ class Calendar extends PureComponent {
                 onChange={this.onDragSelectionEnd}
                 onFocus={() => this.handleRangeFocusChange(i, 1)}
                 timeOptions={timeOptions}
+                defaultTimeValue={
+                  timeOptions && timeOptions.defaultValues && timeOptions.defaultValues.endTime
+                    ? timeOptions.defaultValues.endTime
+                    : undefined
+                }
                 timeContainerClassName={classnames(styles.timePickerContainer, {
                   [styles.timePickerContainerActive]:
                     focusedRange[0] === i && focusedRange[1] === 0,
@@ -583,6 +593,7 @@ Calendar.defaultProps = {
     showTime: false,
     use12Hours: false,
     showSeconds: false,
+    defaultValues: undefined,
   },
 };
 
@@ -644,6 +655,10 @@ Calendar.propTypes = {
     showTime: PropTypes.bool,
     use12Hours: PropTypes.bool,
     showSeconds: PropTypes.bool,
+    defaultValues: PropTypes.shape({
+      startTime: PropTypes.string,
+      endTime: PropTypes.string,
+    }),
   }),
 };
 

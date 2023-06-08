@@ -255,6 +255,10 @@ export interface TimeOptions {
     showTime: boolean;
     use12Hours: boolean;
     showSeconds: boolean;
+    defaultValues?: {
+        startTime?: string;
+        endTime?: string;
+    }
 }
 
 export class Calendar extends React.Component<CalendarProps> {}

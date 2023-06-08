@@ -39,16 +39,13 @@ const [state, setState] = useState([
   }
 ]);
 
-React.useEffect(() => {
-  console.log('here', state);
-}, [state]);
 
 <DateRangePicker
   onChange={item => setState([item.selection])}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
-  timeOptions={{ showTime: true, use12Hours: false, showSeconds: false}}
+  timeOptions={{ showTime: true, use12Hours: false, showSeconds: false, defaultValues: { startTime: '12:00' }}}
   ranges={state}
   direction="horizontal"
 />;
