@@ -229,7 +229,6 @@ class TimeInput extends Component {
   }
 
   setOpen(open) {
-    console.log('here');
     const { onOpen, onClose } = this.props;
     const { open: currentOpen } = this.state;
     if (currentOpen !== open) {

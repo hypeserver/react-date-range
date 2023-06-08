@@ -104,8 +104,9 @@ class DayCell extends Component {
   };
   renderSelectionPlaceholders = () => {
     const { styles, ranges, day } = this.props;
-    if (this.props.displayMode === 'date') {
-      let isSelected = isSameDay(this.props.day, this.props.date);
+    if (this.props.displayMode === 'date' && ranges?.length) {
+      let isSelected = isSameDay(ranges[0].startDate, this.props.day);
+
       return isSelected ? (
         <span className={styles.selected} style={{ color: this.props.color }} />
       ) : null;
@@ -170,10 +171,9 @@ class DayCell extends Component {
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
-          {
-            dayContentRenderer?.(this.props.day) ||
+          {dayContentRenderer?.(this.props.day) || (
             <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
-          }
+          )}
         </span>
       </button>
     );

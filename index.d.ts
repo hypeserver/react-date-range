@@ -349,6 +349,7 @@ export interface DateRangePickerProps extends DateRangeProps, DefinedRangeProps 
      */
     /** default: none */
     onPreviewChange?: ((preview?: Date | Preview) => void) | undefined;
+    disableEndDateInput?: boolean;
 }
 
 export class DateRangePicker extends React.Component<DateRangePickerProps> {}

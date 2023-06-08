@@ -281,6 +281,7 @@ class Calendar extends PureComponent {
       endDatePlaceholder,
       ariaLabels,
       timeOptions,
+      disableEndDateInput,
     } = this.props;
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
@@ -325,35 +326,37 @@ class Calendar extends PureComponent {
                 })}
                 timePickerClassName={styles.timePickerIcon}
               />
-              <DateInput
-                className={classnames(styles.dateDisplayItem, {
-                  [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 1,
-                })}
-                readOnly={!editableDateInputs}
-                disabled={range.disabled}
-                value={range.endDate}
-                placeholder={endDatePlaceholder}
-                dateOptions={this.dateOptions}
-                dateDisplayFormat={dateDisplayFormat}
-                ariaLabel={
-                  ariaLabels.dateInput &&
-                  ariaLabels.dateInput[range.key] &&
-                  ariaLabels.dateInput[range.key].endDate
-                }
-                onChange={this.onDragSelectionEnd}
-                onFocus={() => this.handleRangeFocusChange(i, 1)}
-                timeOptions={timeOptions}
-                defaultTimeValue={
-                  timeOptions && timeOptions.defaultValues && timeOptions.defaultValues.endTime
-                    ? timeOptions.defaultValues.endTime
-                    : undefined
-                }
-                timeContainerClassName={classnames(styles.timePickerContainer, {
-                  [styles.timePickerContainerActive]:
-                    focusedRange[0] === i && focusedRange[1] === 0,
-                })}
-                timePickerClassName={styles.timePickerIcon}
-              />
+              {disableEndDateInput ? null : (
+                <DateInput
+                  className={classnames(styles.dateDisplayItem, {
+                    [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 1,
+                  })}
+                  readOnly={!editableDateInputs}
+                  disabled={range.disabled}
+                  value={range.endDate}
+                  placeholder={endDatePlaceholder}
+                  dateOptions={this.dateOptions}
+                  dateDisplayFormat={dateDisplayFormat}
+                  ariaLabel={
+                    ariaLabels.dateInput &&
+                    ariaLabels.dateInput[range.key] &&
+                    ariaLabels.dateInput[range.key].endDate
+                  }
+                  onChange={this.onDragSelectionEnd}
+                  onFocus={() => this.handleRangeFocusChange(i, 1)}
+                  timeOptions={timeOptions}
+                  defaultTimeValue={
+                    timeOptions && timeOptions.defaultValues && timeOptions.defaultValues.endTime
+                      ? timeOptions.defaultValues.endTime
+                      : undefined
+                  }
+                  timeContainerClassName={classnames(styles.timePickerContainer, {
+                    [styles.timePickerContainerActive]:
+                      focusedRange[0] === i && focusedRange[1] === 0,
+                  })}
+                  timePickerClassName={styles.timePickerIcon}
+                />
+              )}
             </div>
           );
         })}
@@ -557,6 +560,7 @@ class Calendar extends PureComponent {
 
 Calendar.defaultProps = {
   showMonthArrow: true,
+  disableEndDateInput: false,
   showMonthAndYearPickers: true,
   disabledDates: [],
   disabledDay: () => {},
@@ -600,6 +604,7 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   showMonthArrow: PropTypes.bool,
   showMonthAndYearPickers: PropTypes.bool,
+  disableEndDateInput: PropTypes.bool,
   disabledDates: PropTypes.array,
   disabledDay: PropTypes.func,
   minDate: PropTypes.object,

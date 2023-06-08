@@ -16,9 +16,13 @@ const [state, setState] = useState([
 
 <DateRangePicker
   onChange={item => setState([item.selection])}
-  showSelectionPreview={true}
+  displayMode='date'
+  dragSelectionEnabled={false}
+  showSelectionPreview={false}
+  disableEndDateInput={true}
   moveRangeOnFirstSelection={false}
-  months={2}
+  months={1}
+  timeOptions={{ showTime: true, use12Hours: false, showSeconds: false}}
   ranges={state}
   direction="horizontal"
 />;
@@ -44,6 +48,7 @@ const [state, setState] = useState([
   onChange={item => setState([item.selection])}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
+  displayMode='range'
   months={2}
   timeOptions={{ showTime: true, use12Hours: false, showSeconds: false}}
   ranges={state}
