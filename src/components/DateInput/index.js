@@ -111,6 +111,7 @@ class DateInput extends PureComponent {
       timeContainerClassName,
       timePickerClassName,
       timeOptions,
+      defaultTimeValue,
     } = this.props;
 
     const { invalid, displayDateValue } = this.state;
@@ -136,6 +137,7 @@ class DateInput extends PureComponent {
               showSecond={showSeconds}
               use12Hours={use12Hours}
               onFocus={onFocus}
+              defaultValue={defaultTimeValue}
               closeOnMinuteSelect
               onClose={() => {
                 this.props.onChange(this.props.value, true);
@@ -186,6 +188,7 @@ DateInput.propTypes = {
   showTime: PropTypes.bool,
   timeContainerClassName: PropTypes.string,
   timePickerClassName: PropTypes.string,
+  defaultTimeValue: PropTypes.string,
   timeOptions: PropTypes.shape({
     showTime: PropTypes.bool,
     use12Hours: PropTypes.bool,

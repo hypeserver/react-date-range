@@ -50,7 +50,12 @@ class TimeInput extends Component {
     super(props);
     this.saveInputRef = refFn.bind(this, 'picker');
     this.savePanelRef = refFn.bind(this, 'panelInstance');
-    const { defaultOpen, defaultValue, open = defaultOpen, value = defaultValue } = props;
+    let { value, defaultOpen, defaultValue, open = defaultOpen } = props;
+    if (!value && defaultValue) {
+      //convert 12:00 to moment object
+      value = moment(defaultValue, this.getFormat());
+    }
+
     this.state = {
       open,
       value,

@@ -39,9 +39,6 @@ const [state, setState] = useState([
   }
 ]);
 
-React.useEffect(() => {
-  console.log('here', state);
-}, [state]);
 
 <DateRangePicker
   onChange={item => setState([item.selection])}
@@ -49,6 +46,33 @@ React.useEffect(() => {
   moveRangeOnFirstSelection={false}
   months={2}
   timeOptions={{ showTime: true, use12Hours: false, showSeconds: false}}
+  ranges={state}
+  direction="horizontal"
+/>;
+```
+
+
+#### Example: 2 Month View with default time
+
+```jsx inside Markdown
+import { addDays } from 'date-fns';
+import { useState } from 'react';
+
+const [state, setState] = useState([
+  {
+    startDate: new Date(),
+    endDate: addDays(new Date(), 7),
+    key: 'selection'
+  }
+]);
+
+
+<DateRangePicker
+  onChange={item => setState([item.selection])}
+  showSelectionPreview={true}
+  moveRangeOnFirstSelection={false}
+  months={2}
+  timeOptions={{ showTime: true, use12Hours: false, showSeconds: false, defaultValues: { startTime: '12:00', endTime: '15:00'}}}
   ranges={state}
   direction="horizontal"
 />;
