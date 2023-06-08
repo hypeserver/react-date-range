@@ -299,7 +299,8 @@ class Calendar extends PureComponent {
               style={{ color: range.color || defaultColor }}>
               <DateInput
                 className={classnames(styles.dateDisplayItem, {
-                  [styles.dateDisplayItemActive]: focusedRange[0] === i && focusedRange[1] === 0,
+                  [styles.dateDisplayItemActive]:
+                    (focusedRange[0] === i && focusedRange[1] === 0) || disableEndDateInput,
                 })}
                 readOnly={!editableDateInputs}
                 disabled={range.disabled}
@@ -322,7 +323,7 @@ class Calendar extends PureComponent {
                 }
                 timeContainerClassName={classnames(styles.timePickerContainer, {
                   [styles.timePickerContainerActive]:
-                    focusedRange[0] === i && focusedRange[1] === 0,
+                    (focusedRange[0] === i && focusedRange[1] === 0) || disableEndDateInput,
                 })}
                 timePickerClassName={styles.timePickerIcon}
               />
@@ -383,12 +384,11 @@ class Calendar extends PureComponent {
   onDragSelectionEnd = (date, timeChanged = false) => {
     const { updateRange, displayMode, onChange, dragSelectionEnabled } = this.props;
 
-    if (!dragSelectionEnabled) return;
-
     if (displayMode === 'date' || !this.state.drag.status) {
       onChange && onChange(date, undefined, timeChanged);
       return;
     }
+    if (!dragSelectionEnabled) return;
 
     const newRange = {
       startDate: this.state.drag.range.startDate,

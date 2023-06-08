@@ -3,3 +3,4 @@ export { default as Calendar } from './components/Calendar';
 export { default as DateRangePicker } from './components/DateRangePicker';
 export { default as DefinedRange } from './components/DefinedRange';
 export { defaultInputRanges, defaultStaticRanges, createStaticRanges } from './defaultRanges';
+export { default as locales } from './locale';
