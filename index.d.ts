@@ -334,6 +334,7 @@ export class DefinedRange extends React.Component<DefinedRangeProps> {}
 
 export const defaultStaticRanges: StaticRange[];
 export const defaultInputRanges: InputRange[];
+export const locales: Locale[];
 
 export function createStaticRanges(ranges: StaticRange[]): StaticRange[];
 
