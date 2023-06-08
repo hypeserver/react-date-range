@@ -28,6 +28,8 @@ export interface Range {
     autoFocus?: boolean | undefined;
     disabled?: boolean | undefined;
     showDateDisplay?: boolean | undefined;
+    fromTime?: Date | undefined;
+    toTime?: Date | undefined;
 }
 
 export interface RangeKeyDict {
