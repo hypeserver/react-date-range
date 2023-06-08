@@ -35,13 +35,16 @@ class DateRangePicker extends Component {
           {...this.props}
           ref={t => (this.dateRange = t)}
           className={undefined}
+          disableEndDateInput={this.props.disableEndDateInput}
         />
       </div>
     );
   }
 }
 
-DateRangePicker.defaultProps = {};
+DateRangePicker.defaultProps = {
+  disableEndDateInput: false,
+};
 
 DateRangePicker.propTypes = {
   ...DateRange.propTypes,
