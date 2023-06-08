@@ -255,6 +255,7 @@ export interface TimeOptions {
     showTime: boolean;
     use12Hours: boolean;
     showSeconds: boolean;
+    panelClassName?: string;
     defaultValues?: {
         startTime?: string;
         endTime?: string;

@@ -598,6 +598,7 @@ Calendar.defaultProps = {
     use12Hours: false,
     showSeconds: false,
     defaultValues: undefined,
+    panelClassName: undefined,
   },
 };
 
@@ -660,6 +661,7 @@ Calendar.propTypes = {
     showTime: PropTypes.bool,
     use12Hours: PropTypes.bool,
     showSeconds: PropTypes.bool,
+    panelClassName: PropTypes.string,
     defaultValues: PropTypes.shape({
       startTime: PropTypes.string,
       endTime: PropTypes.string,

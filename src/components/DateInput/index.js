@@ -116,7 +116,7 @@ class DateInput extends PureComponent {
 
     const { invalid, displayDateValue } = this.state;
 
-    const { showTime, showSeconds, use12Hours } = timeOptions || {};
+    const { showTime, showSeconds, use12Hours, panelClassName } = timeOptions || {};
     return (
       <span className={classnames('rdrDateInput', showTime && 'rdrTimeInput', className)}>
         <input
@@ -139,6 +139,7 @@ class DateInput extends PureComponent {
               onFocus={onFocus}
               defaultValue={defaultTimeValue}
               closeOnMinuteSelect
+              panelClassName={panelClassName}
               onClose={() => {
                 this.props.onChange(this.props.value, true);
               }}
