@@ -1,6 +1,6 @@
 {
   "name": "@leonardmorina/react-datetime-range",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "A React component for choosing dates/datetimes and date/datetime ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -45,6 +45,7 @@
   "dependencies": {
     "@types/react": "^18.2.8",
     "classnames": "^2.2.6",
+    "date-fns": "2.0.0-alpha.7 || >=2.0.0",
     "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "raf": "^3.4.1",
@@ -54,7 +55,6 @@
     "shallow-equal": "^1.2.1"
   },
   "peerDependencies": {
-    "date-fns": "2.0.0-alpha.7 || >=2.0.0",
     "react": "^0.14 || ^15.0.0-rc || >=15.0"
   },
   "devDependencies": {
