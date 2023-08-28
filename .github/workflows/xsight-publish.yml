@@ -1,0 +1,48 @@
+name: Publish package to GitHub Packages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: [self-hosted, cip]
+
+    steps:
+      - name: Import Secrets
+        id: vault-secrets
+        uses: hashicorp/vault-action@v2.3.1
+        with:
+          url: https://vault.cicd-cip.xsight.me
+          method: kubernetes
+          path: kubernetes-cicd-cip/
+          role: github-runners-cicd-cip
+          secrets: |
+            secret/data/devops/github-runners/cicd-cip/config PAT | PAT
+
+      - uses: actions/checkout@v3
+
+      # Setup .npmrc file to publish to GitHub Packages
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          always-auth: 'true'
+          registry-url: 'https://npm.pkg.github.com'
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@XSIGHTME'
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Set Git config
+        run: |
+          git config --local user.email "xsight-me@maf.ae"
+          git config --local user.name "XSight me"
+
+      - run: npm version patch
+
+      - run: git push --follow-tags
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ steps.vault-secrets.outputs.PAT }}
