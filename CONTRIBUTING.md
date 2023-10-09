@@ -10,7 +10,7 @@ Make sure your issue or feature doesn't have any related issue at [react-date-ra
 
 3. Run `yarn` to install the dependencies.
 
-4. Run `yarn run dev` to start development server.
+4. Run `yarn start` to start development server.
 
 ## Building
 
