@@ -103,8 +103,8 @@ class Calendar extends PureComponent {
           months: this.list.getVisibleRange().length,
         }
       : props;
-    const newFocus = calcFocusDate(this.state.focusedDate, newProps);
-    this.focusToDate(newFocus, newProps);
+        const newFocus = calcFocusDate(this.state.focusedDate, newProps);
+        this.focusToDate(newFocus, newProps);    
   };
   updatePreview = val => {
     if (!val) {
@@ -122,6 +122,9 @@ class Calendar extends PureComponent {
     if (this.props.scroll.enabled) {
       // prevent react-list's initial render focus problem
       setTimeout(() => this.focusToDate(this.state.focusedDate));
+    }
+    if (this.props.setShownDate) {
+      this.props.setShownDate(this.handleChangeShowDateFromParent)
     }
   }
 
@@ -152,6 +155,10 @@ class Calendar extends PureComponent {
     }
   }
 
+  // value => Date object
+  handleChangeShowDateFromParent = (value) => {
+    this.changeShownDate(value)
+  }
   changeShownDate = (value, mode = 'set') => {
     const { focusedDate } = this.state;
     const { onShownDateChange, minDate, maxDate } = this.props;
@@ -576,6 +583,7 @@ Calendar.propTypes = {
   locale: PropTypes.object,
   shownDate: PropTypes.object,
   onShownDateChange: PropTypes.func,
+  setShownDate: PropTypes.func,
   ranges: PropTypes.arrayOf(rangeShape),
   preview: PropTypes.shape({
     startDate: PropTypes.object,
