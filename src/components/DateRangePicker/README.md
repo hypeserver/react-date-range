@@ -1,5 +1,6 @@
 This component wraps **[DefinedRange](#definedrange)** and **[Calendar](#calendar)** components together, and extends all the props of them.
 
+
 #### Example: 2 Month View
 
 ```jsx inside Markdown
@@ -52,8 +53,11 @@ const [state, setState] = useState([
   onChange={item => setState([item.selection])}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
-  displayMode='range'
-  months={2}
+  displayMode='datetime'
+  disableEndDateInput={true}
+  dragSelectionEnabled={false}
+  moveRangeOnFirstSelection={true}
+  months={1}
   timeOptions={{ showTime: true, use12Hours: false, showSeconds: false}}
   ranges={state}
   direction="horizontal"

@@ -282,6 +282,7 @@ class Calendar extends PureComponent {
       ariaLabels,
       timeOptions,
       disableEndDateInput,
+      date,
     } = this.props;
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
@@ -361,6 +362,31 @@ class Calendar extends PureComponent {
             </div>
           );
         })}
+        {ranges.length == 0 && (
+          <div className={styles.dateDisplay} style={{ color: defaultColor }}>
+            <DateInput
+              className={classnames(styles.dateDisplayItem, {
+                [styles.dateDisplayItemActive]: true,
+              })}
+              readOnly={!editableDateInputs}
+              value={date}
+              placeholder={startDatePlaceholder}
+              dateOptions={this.dateOptions}
+              dateDisplayFormat={dateDisplayFormat}
+              onChange={this.onDragSelectionEnd}
+              timeOptions={timeOptions}
+              defaultTimeValue={
+                timeOptions && timeOptions.defaultValues && timeOptions.defaultValues.startTime
+                  ? timeOptions.defaultValues.startTime
+                  : undefined
+              }
+              timeContainerClassName={classnames(styles.timePickerContainer, {
+                [styles.timePickerContainerActive]: true,
+              })}
+              timePickerClassName={styles.timePickerIcon}
+            />
+          </div>
+        )}
       </div>
     );
   };

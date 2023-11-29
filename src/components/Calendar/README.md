@@ -80,3 +80,37 @@ const [date, setDate] = useState(null);
  locale={locales[locale]} date={date} />
 </div>;
 ```
+
+
+#### Example: Date Time picker
+
+```jsx inside Markdown
+import { addDays } from 'date-fns';
+import { useState } from 'react';
+
+const [date, setDate] = useState(new Date());
+
+// const [state, setState] = useState([
+//   {
+//     startDate: new Date(),
+//     endDate: addDays(new Date(), 7),
+//     key: 'selection'
+//   }
+// ]);
+
+<Calendar
+  //onChange={changedDate => setDate(changedDate)}
+  //date={date}
+  date={date}
+  onChange={item =>  {
+    setDate(item);
+  }}
+  //displayMode='date'
+  // dragSelectionEnabled={false}
+  // showSelectionPreview={false}
+  // disableEndDateInput={true}
+  // moveRangeOnFirstSelection={false}
+  timeOptions={{ showTime: true, use12Hours: false, showSeconds: false}}
+  // direction="horizontal"
+/>;
+```

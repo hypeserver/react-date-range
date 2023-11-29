@@ -39,11 +39,9 @@ class DayCell extends Component {
 
     switch (event.type) {
       case 'mouseenter':
-        if (displayMode !== 'date') {
-          onMouseEnter(day);
-          onPreviewChange(day);
-          stateChanges.hover = true;
-        }
+        onMouseEnter(day);
+        onPreviewChange(day);
+        stateChanges.hover = true;
         break;
       case 'blur':
       case 'mouseleave':
@@ -114,8 +112,8 @@ class DayCell extends Component {
   };
   renderSelectionPlaceholders = () => {
     const { styles, ranges, day } = this.props;
-    if (this.props.displayMode === 'date' && ranges?.length) {
-      let isSelected = isSameDay(ranges[0].startDate, this.props.day);
+    if (this.props.displayMode === 'date') {
+      let isSelected = isSameDay(this.props.day, this.props.date);
 
       return isSelected ? (
         <span className={styles.selected} style={{ color: this.props.color }} />
