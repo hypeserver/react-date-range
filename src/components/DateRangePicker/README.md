@@ -15,10 +15,6 @@ const [state, setState] = useState([
   }
 ]);
 
-React.useEffect(() => {
-  console.log('here state', state);
-}, [state]);
-
 <DateRangePicker
   onChange={item => setState([item.selection])}
   displayMode='dateRange'
