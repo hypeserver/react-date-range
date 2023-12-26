@@ -4,8 +4,8 @@
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
 
-# Notice ⚠️
-This project is currently unmaintained because the original maintainers are busy with other things. It should be pretty stable in it's current state but we won't be updating it in the foreseeable future. **If you are willing to maintain it, please fork and open a pr adding your fork's link to this readme.**
+# Notice
+This project is forked from [hypeserver/react-date-range](https://github.com/hypeserver/react-date-range),  which was unmaintained because the original maintainers are busy with other things. I forked this for my own use. In case it helps anyone, I'm keeping it here open for all. The sponsors link above goes to the original authors since they spent 99% of their time on this code.
 
 ### Why should you use `@umakantp/react-date-range`?
 
