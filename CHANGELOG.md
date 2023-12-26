@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 2.0.0
+
+### Changed
+- Upgrade dependencies: date-fns 3.0.6, react 18.2.0, react-dom 18.2.0, webpack 5.89.0, react-styleguidist 13.1.1, css-loader 3.6.0, style-loader 1.3.0
+
+### Added
+- @testing-library/react 14.1.2 - To migrate tests in future, just a placeholder.
+
+### Changed
+- BREAKING: New version only supports React 18 version and upwards.
+- Changed repo name to scoped @umakantp since we cannot use original one.
+- Use npm instead of yarn
+
 ## 1.4.0
 
 ### Added

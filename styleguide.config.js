@@ -4,8 +4,9 @@ const moduleSource = isDEV ? 'src' : 'src';
 
 module.exports = {
   //ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
-  title: 'react-date-range',
+  title: '@umakantp/react-date-range',
   showSidebar: false,
+  assetsDir: ['./'],
   template: {
     head: {
       links: [
@@ -42,7 +43,7 @@ module.exports = {
   getComponentPathLine(componentPath) {
     const arr = componentPath.split('/');
     const name = arr[arr.length - 2];
-    return `import { ${name} } from 'react-date-range';`;
+    return `import { ${name} } from '@umakantp/react-date-range';`;
   },
 
   styles: function styles(theme) {
@@ -75,20 +76,22 @@ module.exports = {
     'react-date-range': path.resolve(__dirname, moduleSource),
   },
   webpackConfig: {
+    mode: isDEV ? 'development' : 'production',
+    devtool: isDEV ? 'eval' : 'source-map',
     module: {
       rules: [
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loader: 'babel-loader',
+          use: 'babel-loader',
         },
         {
           test: /\.css$/,
-          loader: 'style-loader!css-loader?modules',
+          use: ['style-loader', 'css-loader?modules'],
         },
         {
           test: /\.svg$/,
-          loader: 'url-loader',
+          use: 'url-loader',
         },
       ],
     },
