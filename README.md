@@ -1,7 +1,4 @@
-# react-date-range
-[![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![npm](https://img.shields.io/npm/l/react-date-range)]()
-[![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/react-date-range)
+# @umakantp/react-date-range
 [![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver)
 
 
@@ -10,7 +7,7 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 # Notice ⚠️
 This project is currently unmaintained because the original maintainers are busy with other things. It should be pretty stable in it's current state but we won't be updating it in the foreseeable future. **If you are willing to maintain it, please fork and open a pr adding your fork's link to this readme.**
 
-### Why should you use `react-date-range`?
+### Why should you use `@umakantp/react-date-range`?
 
 - Stateless date operations
 - Highly configurable
@@ -19,16 +16,16 @@ This project is currently unmaintained because the original maintainers are busy
 - Drag n Drop selection
 - Keyboard friendly
 
-**Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
+**Live Demo :** [http://umakantp.github.io/react-date-range](http://umakantp.github.io/react-date-range)
 
-![](https://raw.githubusercontent.com/hypeserver/react-date-range/master/demo/ss.png)
+![](https://raw.githubusercontent.com/umakantp/react-date-range/master/demo/ss.png)
 
 
 ## Getting Started
 ### Installation
 
 ```
-npm install --save react-date-range
+npm install --save @umakantp/react-date-range
 ```
 This plugin expects `react` and `date-fns` as peerDependencies, It means that you need to install them in your project folder.
 
@@ -41,13 +38,13 @@ npm install --save react date-fns
 You need to import skeleton and theme styles first.
 
 ```javascript
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import '@umakantp/react-date-range/dist/styles.css'; // main style file
+import '@umakantp/react-date-range/dist/theme/default.css'; // theme css file
 ```
 
 ### `DatePicker`
 ```javascript
-import { Calendar } from 'react-date-range';
+import { Calendar } from '@umakantp/react-date-range';
 
 class MyComponent extends Component {
   handleSelect(date){
@@ -67,7 +64,7 @@ class MyComponent extends Component {
 
 ### `DateRangePicker / DateRange`
 ```javascript
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker } from '@umakantp/react-date-range';
 
 class MyComponent extends Component {
   handleSelect(ranges){
@@ -100,7 +97,7 @@ class MyComponent extends Component {
 
 Property                             | type      | Default Value    | Description
 -------------------------------------|-----------|------------------|-----------------------------------------------------------------
-locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/hypeserver/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/docs/I18n#supported-languages).
+locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/umakantp/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/docs/I18n#supported-languages).
 className                            | String    |                  | wrapper classname
 months                               | Number    | 1                | rendered month count
 showSelectionPreview                 | Boolean   | true             | show preview on focused/hovered dates
@@ -143,8 +140,8 @@ startDatePlaceholder                 | String    | `Early`          | Start Date
 endDatePlaceholder                   | String    | `Continuous`     | End Date Placeholder
 fixedHeight                          | Boolean   | false            | Since some months require less than 6 lines to show, by setting this prop, you can force 6 lines for all months.
 renderStaticRangeLabel(`DefinedRange`)| Function |                  | Callback function to be triggered for the static range configurations that have `hasCustomRendering: true` on them. Instead of rendering `staticRange.label`, return value of this callback will be rendered.
-staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
-inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
+staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/umakantp/react-date-range/blob/master/src/defaultRanges.js)             | -
+inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/umakantp/react-date-range/blob/master/src/defaultRanges.js)             | -
 ariaLabels                           | Object    | {}               | inserts aria-label to inner elements
 dayContentRenderer                   | Function  | null             | Function to customize the rendering of Calendar Day. given a date is supposed to return what to render.
 

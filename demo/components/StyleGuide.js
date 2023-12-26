@@ -74,7 +74,7 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children }) {
               </a>
             </Logo>
             <nav className={classes.nav}>
-              <a className={classes.headerLink} href="https://github.com/hypeserver/react-date-range">
+              <a className={classes.headerLink} href="https://github.com/umakantp/react-date-range">
                 GitHub
               </a>
             </nav>

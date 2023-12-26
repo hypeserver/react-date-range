@@ -12,11 +12,11 @@ jobs:
     - name: Publish new version to NPM
       uses: actions/setup-node@v1
       with:
-        node-version: 13.x
+        node-version: 18.x
         registry-url: 'https://registry.npmjs.org'
-    - run: yarn install
-    - run: yarn build
-    - run: yarn publish
+    - run: npm run install
+    - run: npm run build
+    - run: npm run publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
