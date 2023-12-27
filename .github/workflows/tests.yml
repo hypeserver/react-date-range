@@ -10,7 +10,7 @@ jobs:
         with:
           node-version: 18.x
           registry-url: 'https://registry.npmjs.org'
-      - run: npm run install
+      - run: npm install
       - uses: actions/setup-node@v1
         with:
           node-version: 18.x
