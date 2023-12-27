@@ -7,6 +7,11 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 # Notice
 This project is forked from [hypeserver/react-date-range](https://github.com/hypeserver/react-date-range),  which was unmaintained because the original maintainers are busy with other things. I forked this for my own use. In case it helps anyone, I'm keeping it here open for all. The sponsors link above goes to the original authors since they spent 99% of their time on this code.
 
+The types are taken from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-date-range which I believe is community sourced or may be original authors created them.
+
+# Versions
+2.0.0 version was more of experimental, have errors and typescript types missing. Refer to version 2.1.0 onwards
+
 ### Why should you use `@umakantp/react-date-range`?
 
 - Stateless date operations
