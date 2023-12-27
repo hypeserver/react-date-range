@@ -1,88 +1,96 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InputRangeField tests Should parse input value to number 1`] = `
-<InputRangeField
-  label="Input label"
-  onBlur={[MockFunction]}
-  onChange={
-    [MockFunction] {
-      "calls": Array [
-        Array [
-          3,
-        ],
-        Array [
-          12,
-        ],
-        Array [
-          0,
-        ],
-        Array [
-          0,
-        ],
-        Array [
-          0,
-        ],
-        Array [
-          99999,
-        ],
-      ],
-      "results": Array [
-        Object {
-          "type": "return",
-          "value": undefined,
-        },
-        Object {
-          "type": "return",
-          "value": undefined,
-        },
-        Object {
-          "type": "return",
-          "value": undefined,
-        },
-        Object {
-          "type": "return",
-          "value": undefined,
-        },
-        Object {
-          "type": "return",
-          "value": undefined,
-        },
-        Object {
-          "type": "return",
-          "value": undefined,
-        },
-      ],
-    }
-  }
-  onFocus={[MockFunction]}
-  placeholder="-"
-  styles={
-    Object {
-      "inputRange": "range",
-      "inputRangeInput": "input",
-      "inputRangeLabel": "label",
-    }
-  }
-  value=""
->
-  <div
-    className="range"
-  >
-    <input
-      className="input"
-      max={99999}
-      min={0}
-      onBlur={[MockFunction]}
-      onChange={[Function]}
-      onFocus={[MockFunction]}
-      placeholder="-"
-      value=""
-    />
-    <span
-      className="label"
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="range"
+      >
+        <input
+          class="input"
+          max="99999"
+          min="0"
+          placeholder="Placeholder"
+          value=""
+        />
+        <span
+          class="label"
+        >
+          Input label
+        </span>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="range"
     >
-      Input label
-    </span>
-  </div>
-</InputRangeField>
+      <input
+        class="input"
+        max="99999"
+        min="0"
+        placeholder="Placeholder"
+        value=""
+      />
+      <span
+        class="label"
+      >
+        Input label
+      </span>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

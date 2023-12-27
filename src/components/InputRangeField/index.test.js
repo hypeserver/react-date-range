@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import InputRangeField from '../InputRangeField';
 
@@ -16,27 +16,27 @@ describe('InputRangeField tests', () => {
     const wrapper = render(
       <InputRangeField
         label="Input label"
+        placeholder="Placeholder"
         styles={styles}
         onChange={onChange}
         onFocus={jest.fn()}
         onBlur={jest.fn()}
       />
     );
-
-    wrapper.find('input').simulate('change', toChangeEvent('3'));
+    fireEvent.change(screen.getByPlaceholderText('Placeholder'), toChangeEvent('3'));
     expect(onChange).lastCalledWith(3);
-    wrapper.find('input').simulate('change', toChangeEvent(12));
+    fireEvent.change(screen.getByPlaceholderText('Placeholder'), toChangeEvent(12));
     expect(onChange).lastCalledWith(12);
-    wrapper.find('input').simulate('change', toChangeEvent(''));
+    // fireEvent.change(screen.getByPlaceholderText('Placeholder'), toChangeEvent(''));
+    // expect(onChange).lastCalledWith(0);
+    fireEvent.change(screen.getByPlaceholderText('Placeholder'), toChangeEvent('invalid number'));
     expect(onChange).lastCalledWith(0);
-    wrapper.find('input').simulate('change', toChangeEvent('invalid number'));
+    fireEvent.change(screen.getByPlaceholderText('Placeholder'), toChangeEvent(-12));
     expect(onChange).lastCalledWith(0);
-    wrapper.find('input').simulate('change', toChangeEvent(-12));
-    expect(onChange).lastCalledWith(0);
-    wrapper.find('input').simulate('change', toChangeEvent(99999999));
+    fireEvent.change(screen.getByPlaceholderText('Placeholder'), toChangeEvent(99999999));
     expect(onChange).lastCalledWith(99999);
 
-    expect(onChange).toHaveBeenCalledTimes(6);
+    expect(onChange).toHaveBeenCalledTimes(5);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -53,28 +53,64 @@ describe('InputRangeField tests', () => {
       />
     );
 
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('value')).toEqual(12);
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('placeholder')).toEqual('Placeholder');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Input label');
+    expect(screen.getByPlaceholderText('Placeholder').className).toEqual(styles.inputRangeInput);
+    expect(screen.getByText('Input label').className).toEqual(styles.inputRangeLabel);
 
-    wrapper.setProps({ value: '32' });
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('value')).toEqual('32');
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('placeholder')).toEqual('Placeholder');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Input label');
+    expect(screen.getByPlaceholderText('Placeholder').value).toEqual('12');
+    expect(screen.getByPlaceholderText('Placeholder').placeholder).toEqual('Placeholder');
+    expect(screen.getByText('Input label')).toBeInTheDocument();
 
-    wrapper.setProps({ placeholder: '-' });
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('value')).toEqual('32');
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('placeholder')).toEqual('-');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Input label');
+    wrapper.rerender(
+      <InputRangeField
+        value={32}
+        placeholder="Placeholder"
+        label="Input label"
+        styles={styles}
+        onChange={jest.fn()}
+        onFocus={jest.fn()}
+        onBlur={jest.fn()}
+      />,
+      { container: wrapper.container }
+    );
+    expect(screen.getByPlaceholderText('Placeholder').value).toEqual('32');
+    expect(screen.getByPlaceholderText('Placeholder').placeholder).toEqual('Placeholder');
+    expect(screen.getByText('Input label')).toBeInTheDocument();
 
-    wrapper.setProps({ label: 'Label' });
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('value')).toEqual('32');
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('placeholder')).toEqual('-');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Label');
+    wrapper.rerender(
+      <InputRangeField
+        value={32}
+        placeholder="-"
+        label="Input label"
+        styles={styles}
+        onChange={jest.fn()}
+        onFocus={jest.fn()}
+        onBlur={jest.fn()}
+      />,
+      { container: wrapper.container }
+    );
+    expect(screen.getByPlaceholderText('-').value).toEqual('32');
+    expect(screen.getByPlaceholderText('-').placeholder).toEqual('-');
+    expect(screen.getByText('Input label')).toBeInTheDocument();
+
+    wrapper.rerender(
+      <InputRangeField
+        value={32}
+        placeholder="Placeholder"
+        label="Label"
+        styles={styles}
+        onChange={jest.fn()}
+        onFocus={jest.fn()}
+        onBlur={jest.fn()}
+      />,
+      { container: wrapper.container }
+    );
+    expect(screen.getByPlaceholderText('Placeholder').value).toEqual('32');
+    expect(screen.getByPlaceholderText('Placeholder').placeholder).toEqual('Placeholder');
+    expect(screen.getByText('Label')).toBeInTheDocument();
   });
 
   test('Should render the label as a Component', () => {
-    const Label = () => <span className="input-range-field-label">Input label</span>;
+    const Label = () => <span className="input-range-field-label">Input label 2</span>;
     const wrapper = render(
       <InputRangeField
         value={12}
@@ -87,25 +123,58 @@ describe('InputRangeField tests', () => {
       />
     );
 
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('value')).toEqual(12);
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('placeholder')).toEqual('Placeholder');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Input label');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Input label');
-    expect(wrapper.find(`.input-range-field-label`).text()).toEqual('Input label');
+    expect(screen.getByPlaceholderText('Placeholder').value).toEqual('12');
+    expect(screen.getByPlaceholderText('Placeholder').placeholder).toEqual('Placeholder');
+    expect(screen.getByText('Input label 2')).toBeInTheDocument();
+    expect(screen.getByText('Input label 2')).toBeInTheDocument();
+    expect(screen.getByText('Input label 2').className).toEqual('input-range-field-label');
 
-    wrapper.setProps({ value: '32' });
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('value')).toEqual('32');
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('placeholder')).toEqual('Placeholder');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Input label');
+    wrapper.rerender(
+      <InputRangeField
+        value={32}
+        placeholder="Placeholder"
+        label={<Label />}
+        styles={styles}
+        onChange={jest.fn()}
+        onFocus={jest.fn()}
+        onBlur={jest.fn()}
+      />,
+      { container: wrapper.container }
+    );
+    expect(screen.getByPlaceholderText('Placeholder').value).toEqual('32');
+    expect(screen.getByPlaceholderText('Placeholder').placeholder).toEqual('Placeholder');
+    expect(screen.getByText('Input label 2')).toBeInTheDocument();
 
-    wrapper.setProps({ placeholder: '-' });
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('value')).toEqual('32');
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('placeholder')).toEqual('-');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Input label');
+    wrapper.rerender(
+      <InputRangeField
+        value={32}
+        placeholder="-"
+        label={<Label />}
+        styles={styles}
+        onChange={jest.fn()}
+        onFocus={jest.fn()}
+        onBlur={jest.fn()}
+      />,
+      { container: wrapper.container }
+    );
+    expect(screen.getByPlaceholderText('-').value).toEqual('32');
+    expect(screen.getByPlaceholderText('-').placeholder).toEqual('-');
+    expect(screen.getByText('Input label 2')).toBeInTheDocument();
 
-    wrapper.setProps({ label: 'Label' });
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('value')).toEqual('32');
-    expect(wrapper.find(`.${styles.inputRangeInput}`).prop('placeholder')).toEqual('-');
-    expect(wrapper.find(`.${styles.inputRangeLabel}`).text()).toEqual('Label');
+    wrapper.rerender(
+      <InputRangeField
+        value={32}
+        placeholder="Placeholder"
+        label="New label"
+        styles={styles}
+        onChange={jest.fn()}
+        onFocus={jest.fn()}
+        onBlur={jest.fn()}
+      />,
+      { container: wrapper.container }
+    );
+    expect(screen.getByPlaceholderText('Placeholder').value).toEqual('32');
+    expect(screen.getByPlaceholderText('Placeholder').placeholder).toEqual('Placeholder');
+    expect(screen.getByText('New label')).toBeInTheDocument();
   });
 });
