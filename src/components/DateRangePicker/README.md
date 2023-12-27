@@ -3,7 +3,7 @@ This component wraps **[DefinedRange](#definedrange)** and **[Calendar](#calenda
 #### Example: 2 Month View
 
 ```jsx inside Markdown
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState([
@@ -53,7 +53,7 @@ const [state, setState] = useState([
 #### Example: Vertical Infinite
 
 ```jsx inside Markdown
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
@@ -72,8 +72,8 @@ const [state, setState] = useState({
 <DateRangePicker
   onChange={item => setState({ ...state, ...item })}
   months={1}
-  minDate={addDays(new Date(), -300)}
-  maxDate={addDays(new Date(), 900)}
+  minDate={dateFns.addDays(new Date(), -300)}
+  maxDate={dateFns.addDays(new Date(), 900)}
   direction="vertical"
   scroll={{ enabled: true }}
   ranges={[state.selection, state.compare]}
@@ -83,7 +83,7 @@ const [state, setState] = useState({
 #### Example: Multiple Range
 
 ```jsx inside Markdown
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
@@ -98,8 +98,8 @@ const [state, setState] = useState({
     key: 'selection2'
   },
   selection3: {
-    startDate: addDays(new Date(), 8),
-    endDate: addDays(new Date(), 10),
+    startDate: dateFns.addDays(new Date(), 8),
+    endDate: dateFns.addDays(new Date(), 10),
     key: 'selection3',
     autoFocus: false
   }
@@ -114,7 +114,7 @@ const [state, setState] = useState({
 #### Example: Insert Aria-label
 
 ```jsx inside Markdown
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
@@ -124,8 +124,8 @@ const [state, setState] = useState({
     key: 'selection1'
   },
   selection2: {
-    startDate: addDays(new Date(), 1),
-    endDate: addDays(new Date(), 7),
+    startDate: dateFns.addDays(new Date(), 1),
+    endDate: dateFns.addDays(new Date(), 7),
     key: 'selection2'
   }
 });
@@ -154,7 +154,7 @@ const [state, setState] = useState({
 Show orange dot only for weekend
 
 ```jsx inside Markdown
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
@@ -220,7 +220,7 @@ function customDayContent(day) {
 #### Example: Restrict Date Selection
 Restricts access for range selection to (-30, +30) days of current date.
 ```jsx inside Markdown
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({

@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import DayCell, { rangeShape } from '../DayCell';
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import { getMonthDisplayRange } from '../../utils';
 
 function renderWeekdays(styles, dateOptions, weekdayDisplayFormat) {

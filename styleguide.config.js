@@ -3,10 +3,11 @@ const isDEV = process.env.NODE_ENV === 'development';
 const moduleSource = isDEV ? 'src' : 'src';
 
 module.exports = {
-  //ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
+  // ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
   title: '@umakantp/react-date-range',
   showSidebar: false,
   assetsDir: ['./'],
+  minimize: false,
   template: {
     head: {
       links: [
@@ -72,8 +73,8 @@ module.exports = {
     SectionsRenderer: path.join(__dirname, 'demo/components/SectionsRenderer'),
   },
   moduleAliases: {
-    'react-date-range/dist': path.resolve(__dirname, moduleSource),
-    'react-date-range': path.resolve(__dirname, moduleSource),
+    '@umakantp/react-date-range/dist': path.resolve(__dirname, moduleSource),
+    '@umakantp/react-date-range': path.resolve(__dirname, moduleSource),
   },
   webpackConfig: {
     mode: isDEV ? 'development' : 'production',
@@ -82,7 +83,6 @@ module.exports = {
       rules: [
         {
           test: /\.jsx?$/,
-          exclude: /node_modules/,
           use: 'babel-loader',
         },
         {

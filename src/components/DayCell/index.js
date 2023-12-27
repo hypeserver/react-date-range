@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 
 class DayCell extends Component {
   constructor(props, context) {

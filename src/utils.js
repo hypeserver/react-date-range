@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;

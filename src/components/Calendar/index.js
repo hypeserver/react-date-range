@@ -7,7 +7,7 @@ import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../../utils
 import classnames from 'classnames';
 import ReactList from 'react-list';
 import { shallowEqualObjects } from 'shallow-equal';
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles from '../../styles';
 import { ariaLabelsShape } from '../../accessibility';

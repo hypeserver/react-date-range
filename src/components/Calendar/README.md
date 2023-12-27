@@ -1,7 +1,7 @@
 #### Example: Internationalization
 
 ```jsx inside Markdown
-import * as locales from 'react-date-range/dist/locale';
+import * as locales from '@umakantp/react-date-range/dist/locale';
 import {useState} from 'react'
 
 const nameMapper = {

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 
 class DateInput extends PureComponent {
   constructor(props, context) {

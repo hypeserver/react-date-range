@@ -1,4 +1,4 @@
-**react-date-range** can be installed with **npm**, by the following command:
+**@umakantp/react-date-range** can be installed with **npm**, by the following command:
 
 ```bash static 
 npm install @umakantp/react-date-range

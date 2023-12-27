@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import DefinedRange from '../DefinedRange';
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 
 describe('DefinedRange tests', () => {
   test('Should call "renderStaticRangeLabel" callback correct amount of times according to the "hasCustomRendering" option', () => {

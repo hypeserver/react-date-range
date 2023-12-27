@@ -20,7 +20,7 @@ module.exports = {
         "no-debugger": 0,
         "no-console": 0,
     },
-    parser: "babel-eslint",
+    parser: "@babel/eslint-parser",
     env: {
         "es6": true,
         "node": true,
