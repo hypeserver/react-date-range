@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+      - name: Install
+        run: npm install
       - name: Build
         run: npm run build
       - run: cp -R dist styleguide/
