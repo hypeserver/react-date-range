@@ -1,1 +1,0 @@
-exclude: ['./README.md', './src/components/Calendar/README.md', './src/components/DateRange/README.md', './src/components/DateRangePicker/README.md', './src/components/DefinedRange/README.md', './demo/README.md']
