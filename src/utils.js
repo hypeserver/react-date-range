@@ -1,13 +1,5 @@
 import classnames from 'classnames';
-import {
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-  differenceInCalendarDays,
-  differenceInCalendarMonths,
-  addDays,
-} from 'date-fns';
+import dateFns from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
@@ -25,8 +17,8 @@ export function calcFocusDate(currentFocusedDate, props) {
       end: date,
     };
   }
-  targetInterval.start = startOfMonth(targetInterval.start || new Date());
-  targetInterval.end = endOfMonth(targetInterval.end || targetInterval.start);
+  targetInterval.start = dateFns.startOfMonth(targetInterval.start || new Date());
+  targetInterval.end = dateFns.endOfMonth(targetInterval.end || targetInterval.start);
   const targetDate = targetInterval.start || targetInterval.end || shownDate || new Date();
 
   // initial focus
@@ -34,7 +26,7 @@ export function calcFocusDate(currentFocusedDate, props) {
 
   // // just return targetDate for native scrolled calendars
   // if (props.scroll.enabled) return targetDate;
-  if (differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
+  if (dateFns.differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
     // don't change focused if new selection in view area
     return currentFocusedDate;
   }
@@ -50,12 +42,15 @@ export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
 }
 
 export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
-  const startDateOfMonth = startOfMonth(date, dateOptions);
-  const endDateOfMonth = endOfMonth(date, dateOptions);
-  const startDateOfCalendar = startOfWeek(startDateOfMonth, dateOptions);
-  let endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
-  if (fixedHeight && differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34) {
-    endDateOfCalendar = addDays(endDateOfCalendar, 7);
+  const startDateOfMonth = dateFns.startOfMonth(date, dateOptions);
+  const endDateOfMonth = dateFns.endOfMonth(date, dateOptions);
+  const startDateOfCalendar = dateFns.startOfWeek(startDateOfMonth, dateOptions);
+  let endDateOfCalendar = dateFns.endOfWeek(endDateOfMonth, dateOptions);
+  if (
+    fixedHeight &&
+    dateFns.differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34
+  ) {
+    endDateOfCalendar = dateFns.addDays(endDateOfCalendar, 7);
   }
   return {
     start: startDateOfCalendar,
@@ -76,4 +71,81 @@ export function generateStyles(sources) {
       return styles;
     }, {});
   return generatedStyles;
+}
+
+export function calcNewSelection(
+  value,
+  isSingleValue,
+  focusedRange,
+  ranges,
+  onChange,
+  maxDate,
+  moveRangeOnFirstSelection,
+  retainEndDateOnFirstSelection,
+  disabledDates
+) {
+  const focusedRangeIndex = focusedRange[0];
+  const selectedRange = ranges[focusedRangeIndex];
+  if (!selectedRange || !onChange) return {};
+
+  let { startDate, endDate } = selectedRange;
+  const now = new Date();
+  let nextFocusRange;
+  if (!isSingleValue) {
+    startDate = value.startDate;
+    endDate = value.endDate;
+  } else if (focusedRange[1] === 0) {
+    // startDate selection
+    const dayOffset = dateFns.differenceInCalendarDays(endDate || now, startDate);
+    const calculateEndDate = () => {
+      if (moveRangeOnFirstSelection) {
+        return dateFns.addDays(value, dayOffset);
+      }
+      if (retainEndDateOnFirstSelection) {
+        if (!endDate || dateFns.isBefore(value, endDate)) {
+          return endDate;
+        }
+        return value;
+      }
+      return value || now;
+    };
+    startDate = value;
+    endDate = calculateEndDate();
+    if (maxDate) endDate = dateFns.min([endDate, maxDate]);
+    nextFocusRange = [focusedRange[0], 1];
+  } else {
+    endDate = value;
+  }
+
+  // reverse dates if startDate before endDate
+  let isStartDateSelected = focusedRange[1] === 0;
+  if (dateFns.isBefore(endDate, startDate)) {
+    isStartDateSelected = !isStartDateSelected;
+    [startDate, endDate] = [endDate, startDate];
+  }
+
+  const inValidDatesWithinRange = disabledDates.filter(disabledDate =>
+    dateFns.isWithinInterval(disabledDate, {
+      start: startDate,
+      end: endDate,
+    })
+  );
+
+  if (inValidDatesWithinRange.length > 0) {
+    if (isStartDateSelected) {
+      startDate = dateFns.addDays(dateFns.max(inValidDatesWithinRange), 1);
+    } else {
+      endDate = dateFns.addDays(dateFns.min(inValidDatesWithinRange), -1);
+    }
+  }
+
+  if (!nextFocusRange) {
+    const nextFocusRangeIndex = findNextRangeIndex(ranges, focusedRange[0]);
+    nextFocusRange = [nextFocusRangeIndex, 0];
+  }
+  return {
+    wasValid: !(inValidDatesWithinRange.length > 0),
+    range: { startDate, endDate },
+    nextFocusRange: nextFocusRange,
+  };
 }

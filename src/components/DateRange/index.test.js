@@ -1,10 +1,7 @@
-import React from 'react';
 import dateFns from 'date-fns';
 import DateRange from '../DateRange';
-import renderer from 'react-test-renderer';
+import { calcNewSelection, findNextRangeIndex } from '../../utils';
 
-let testRenderer = null;
-let instance = null;
 const endDate = new Date();
 const startDate = dateFns.subDays(endDate, 7);
 
@@ -12,6 +9,8 @@ const commonProps = {
   ranges: [{ startDate, endDate, key: 'selection' }],
   onChange: () => {},
   moveRangeOnFirstSelection: false,
+  focusedRange: [findNextRangeIndex([{ startDate, endDate, key: 'selection' }]), 0],
+  disabledDates: [],
 };
 
 const compareRanges = (newRange, assertionRange) => {
@@ -23,18 +22,23 @@ const compareRanges = (newRange, assertionRange) => {
   });
 };
 
-beforeEach(() => {
-  testRenderer = renderer.create(<DateRange {...commonProps} />);
-  instance = testRenderer.getInstance();
-});
-
 describe('DateRange', () => {
   test('Should resolve', () => {
     expect(DateRange).toEqual(expect.anything());
   });
 
   test('calculate new selection by resetting end date', () => {
-    const methodResult = instance.calcNewSelection(dateFns.subDays(endDate, 10), true);
+    const methodResult = calcNewSelection(
+      dateFns.subDays(endDate, 10),
+      true,
+      commonProps.focusedRange,
+      commonProps.ranges,
+      commonProps.onChange,
+      undefined,
+      commonProps.moveRangeOnFirstSelection,
+      false,
+      commonProps.disabledDates
+    );
     compareRanges(methodResult.range, {
       startDate: dateFns.subDays(endDate, 10),
       endDate: dateFns.subDays(endDate, 10),
@@ -42,7 +46,17 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection by resetting end date if start date is not before', () => {
-    const methodResult = instance.calcNewSelection(dateFns.addDays(endDate, 2), true);
+    const methodResult = calcNewSelection(
+      dateFns.addDays(endDate, 2),
+      true,
+      commonProps.focusedRange,
+      commonProps.ranges,
+      commonProps.onChange,
+      undefined,
+      commonProps.moveRangeOnFirstSelection,
+      false,
+      commonProps.disabledDates
+    );
     compareRanges(methodResult.range, {
       startDate: dateFns.addDays(endDate, 2),
       endDate: dateFns.addDays(endDate, 2),
@@ -50,8 +64,17 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection based on moveRangeOnFirstSelection prop', () => {
-    testRenderer.update(<DateRange {...commonProps} moveRangeOnFirstSelection />);
-    const methodResult = instance.calcNewSelection(dateFns.subDays(endDate, 10), true);
+    const methodResult = calcNewSelection(
+      dateFns.subDays(endDate, 10),
+      true,
+      commonProps.focusedRange,
+      commonProps.ranges,
+      commonProps.onChange,
+      undefined,
+      true,
+      false,
+      commonProps.disabledDates
+    );
     compareRanges(methodResult.range, {
       startDate: dateFns.subDays(endDate, 10),
       endDate: dateFns.subDays(endDate, 3),
@@ -59,8 +82,17 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection by retaining end date, based on retainEndDateOnFirstSelection prop', () => {
-    testRenderer.update(<DateRange {...commonProps} retainEndDateOnFirstSelection />);
-    const methodResult = instance.calcNewSelection(dateFns.subDays(endDate, 10), true);
+    const methodResult = calcNewSelection(
+      dateFns.subDays(endDate, 10),
+      true,
+      commonProps.focusedRange,
+      commonProps.ranges,
+      commonProps.onChange,
+      undefined,
+      commonProps.moveRangeOnFirstSelection,
+      true,
+      commonProps.disabledDates
+    );
     compareRanges(methodResult.range, {
       startDate: dateFns.subDays(endDate, 10),
       endDate,
@@ -68,14 +100,17 @@ describe('DateRange', () => {
   });
 
   test('calculate new selection by retaining the unset end date, based on retainEndDateOnFirstSelection prop', () => {
-    testRenderer.update(
-      <DateRange
-        {...commonProps}
-        ranges={[{ ...commonProps.ranges[0], endDate: null }]}
-        retainEndDateOnFirstSelection
-      />
+    const methodResult = calcNewSelection(
+      dateFns.subDays(endDate, 10),
+      true,
+      [findNextRangeIndex([{ ...commonProps.ranges[0], endDate: null }]), 0],
+      [{ ...commonProps.ranges[0], endDate: null }],
+      commonProps.onChange,
+      undefined,
+      commonProps.moveRangeOnFirstSelection,
+      true,
+      commonProps.disabledDates
     );
-    const methodResult = instance.calcNewSelection(dateFns.subDays(endDate, 10), true);
     compareRanges(methodResult.range, {
       startDate: dateFns.subDays(endDate, 10),
       endDate: null,

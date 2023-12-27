@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from '../Calendar';
 import { rangeShape } from '../DayCell';
-import { findNextRangeIndex, generateStyles } from '../../utils';
-import dateFns from 'date-fns';
+import { calcNewSelection, findNextRangeIndex, generateStyles } from '../../utils';
 import classnames from 'classnames';
 import coreStyles from '../../styles';
 
@@ -26,69 +25,17 @@ class DateRange extends Component {
       retainEndDateOnFirstSelection,
       disabledDates,
     } = this.props;
-    const focusedRangeIndex = focusedRange[0];
-    const selectedRange = ranges[focusedRangeIndex];
-    if (!selectedRange || !onChange) return {};
-    let { startDate, endDate } = selectedRange;
-    const now = new Date();
-    let nextFocusRange;
-    if (!isSingleValue) {
-      startDate = value.startDate;
-      endDate = value.endDate;
-    } else if (focusedRange[1] === 0) {
-      // startDate selection
-      const dayOffset = dateFns.differenceInCalendarDays(endDate || now, startDate);
-      const calculateEndDate = () => {
-        if (moveRangeOnFirstSelection) {
-          return dateFns.addDays(value, dayOffset);
-        }
-        if (retainEndDateOnFirstSelection) {
-          if (!endDate || dateFns.isBefore(value, endDate)) {
-            return endDate;
-          }
-          return value;
-        }
-        return value || now;
-      };
-      startDate = value;
-      endDate = calculateEndDate();
-      if (maxDate) endDate = dateFns.min([endDate, maxDate]);
-      nextFocusRange = [focusedRange[0], 1];
-    } else {
-      endDate = value;
-    }
-
-    // reverse dates if startDate before endDate
-    let isStartDateSelected = focusedRange[1] === 0;
-    if (dateFns.isBefore(endDate, startDate)) {
-      isStartDateSelected = !isStartDateSelected;
-      [startDate, endDate] = [endDate, startDate];
-    }
-
-    const inValidDatesWithinRange = disabledDates.filter(disabledDate =>
-      dateFns.isWithinInterval(disabledDate, {
-        start: startDate,
-        end: endDate,
-      })
+    return calcNewSelection(
+      value,
+      isSingleValue,
+      focusedRange,
+      ranges,
+      onChange,
+      maxDate,
+      moveRangeOnFirstSelection,
+      retainEndDateOnFirstSelection,
+      disabledDates
     );
-
-    if (inValidDatesWithinRange.length > 0) {
-      if (isStartDateSelected) {
-        startDate = dateFns.addDays(dateFns.max(inValidDatesWithinRange), 1);
-      } else {
-        endDate = dateFns.addDays(dateFns.min(inValidDatesWithinRange), -1);
-      }
-    }
-
-    if (!nextFocusRange) {
-      const nextFocusRangeIndex = findNextRangeIndex(this.props.ranges, focusedRange[0]);
-      nextFocusRange = [nextFocusRangeIndex, 0];
-    }
-    return {
-      wasValid: !(inValidDatesWithinRange.length > 0),
-      range: { startDate, endDate },
-      nextFocusRange: nextFocusRange,
-    };
   };
   setSelection = (value, isSingleValue) => {
     const { onChange, ranges, onRangeFocusChange } = this.props;
