@@ -8,11 +8,11 @@ jobs:
     name: NPM Package
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Publish new version to NPM
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v4
       with:
-        node-version: 18.x
+        node-version: 18
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
     - run: npm run build
