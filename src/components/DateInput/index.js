@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { format, parse, isValid, isEqual } from 'date-fns';
+import dateFns from 'date-fns';
 
 class DateInput extends PureComponent {
   constructor(props, context) {
@@ -17,14 +17,14 @@ class DateInput extends PureComponent {
   componentDidUpdate(prevProps) {
     const { value } = prevProps;
 
-    if (!isEqual(value, this.props.value)) {
+    if (!dateFns.isEqual(value, this.props.value)) {
       this.setState({ value: this.formatDate(this.props) });
     }
   }
 
   formatDate({ value, dateDisplayFormat, dateOptions }) {
-    if (value && isValid(value)) {
-      return format(value, dateDisplayFormat, dateOptions);
+    if (value && dateFns.isValid(value)) {
+      return dateFns.format(value, dateDisplayFormat, dateOptions);
     }
     return '';
   }
@@ -37,9 +37,9 @@ class DateInput extends PureComponent {
     }
 
     const { onChange, dateDisplayFormat, dateOptions } = this.props;
-    const parsed = parse(value, dateDisplayFormat, new Date(), dateOptions);
+    const parsed = dateFns.parse(value, dateDisplayFormat, new Date(), dateOptions);
 
-    if (isValid(parsed)) {
+    if (dateFns.isValid(parsed)) {
       this.setState({ changed: false }, () => onChange(parsed));
     } else {
       this.setState({ invalid: true });

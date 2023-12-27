@@ -1,29 +1,18 @@
-import {
-  addDays,
-  endOfDay,
-  startOfDay,
-  startOfMonth,
-  endOfMonth,
-  addMonths,
-  startOfWeek,
-  endOfWeek,
-  isSameDay,
-  differenceInCalendarDays,
-} from 'date-fns';
+import dateFns from 'date-fns';
 
 const defineds = {
-  startOfWeek: startOfWeek(new Date()),
-  endOfWeek: endOfWeek(new Date()),
-  startOfLastWeek: startOfWeek(addDays(new Date(), -7)),
-  endOfLastWeek: endOfWeek(addDays(new Date(), -7)),
-  startOfToday: startOfDay(new Date()),
-  endOfToday: endOfDay(new Date()),
-  startOfYesterday: startOfDay(addDays(new Date(), -1)),
-  endOfYesterday: endOfDay(addDays(new Date(), -1)),
-  startOfMonth: startOfMonth(new Date()),
-  endOfMonth: endOfMonth(new Date()),
-  startOfLastMonth: startOfMonth(addMonths(new Date(), -1)),
-  endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
+  startOfWeek: dateFns.startOfWeek(new Date()),
+  endOfWeek: dateFns.endOfWeek(new Date()),
+  startOfLastWeek: dateFns.startOfWeek(dateFns.addDays(new Date(), -7)),
+  endOfLastWeek: dateFns.endOfWeek(dateFns.addDays(new Date(), -7)),
+  startOfToday: dateFns.startOfDay(new Date()),
+  endOfToday: dateFns.endOfDay(new Date()),
+  startOfYesterday: dateFns.startOfDay(dateFns.addDays(new Date(), -1)),
+  endOfYesterday: dateFns.endOfDay(dateFns.addDays(new Date(), -1)),
+  startOfMonth: dateFns.startOfMonth(new Date()),
+  endOfMonth: dateFns.endOfMonth(new Date()),
+  startOfLastMonth: dateFns.startOfMonth(dateFns.addMonths(new Date(), -1)),
+  endOfLastMonth: dateFns.endOfMonth(dateFns.addMonths(new Date(), -1)),
 };
 
 const staticRangeHandler = {
@@ -31,8 +20,8 @@ const staticRangeHandler = {
   isSelected(range) {
     const definedRange = this.range();
     return (
-      isSameDay(range.startDate, definedRange.startDate) &&
-      isSameDay(range.endDate, definedRange.endDate)
+      dateFns.isSameDay(range.startDate, definedRange.startDate) &&
+      dateFns.isSameDay(range.endDate, definedRange.endDate)
     );
   },
 };
@@ -92,14 +81,14 @@ export const defaultInputRanges = [
     label: 'days up to today',
     range(value) {
       return {
-        startDate: addDays(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
+        startDate: dateFns.addDays(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
         endDate: defineds.endOfToday,
       };
     },
     getCurrentValue(range) {
-      if (!isSameDay(range.endDate, defineds.endOfToday)) return '-';
+      if (!dateFns.isSameDay(range.endDate, defineds.endOfToday)) return '-';
       if (!range.startDate) return '∞';
-      return differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
+      return dateFns.differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
     },
   },
   {
@@ -108,13 +97,13 @@ export const defaultInputRanges = [
       const today = new Date();
       return {
         startDate: today,
-        endDate: addDays(today, Math.max(Number(value), 1) - 1),
+        endDate: dateFns.addDays(today, Math.max(Number(value), 1) - 1),
       };
     },
     getCurrentValue(range) {
-      if (!isSameDay(range.startDate, defineds.startOfToday)) return '-';
+      if (!dateFns.isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.endDate) return '∞';
-      return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
+      return dateFns.differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
     },
   },
 ];

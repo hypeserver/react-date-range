@@ -1,14 +1,14 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import DefinedRange from '../DefinedRange';
-import { isSameDay } from 'date-fns';
+import dateFns from 'date-fns';
 
 describe('DefinedRange tests', () => {
   test('Should call "renderStaticRangeLabel" callback correct amount of times according to the "hasCustomRendering" option', () => {
     const renderStaticRangeLabel = jest.fn();
 
-    mount(
+    render(
       <DefinedRange
         staticRanges={[
           {
@@ -17,8 +17,8 @@ describe('DefinedRange tests', () => {
             isSelected(range) {
               const definedRange = this.range();
               return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
+                dateFns.isSameDay(range.startDate, definedRange.startDate) &&
+                dateFns.isSameDay(range.endDate, definedRange.endDate)
               );
             },
             hasCustomRendering: true,
@@ -29,8 +29,8 @@ describe('DefinedRange tests', () => {
             isSelected(range) {
               const definedRange = this.range();
               return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
+                dateFns.isSameDay(range.startDate, definedRange.startDate) &&
+                dateFns.isSameDay(range.endDate, definedRange.endDate)
               );
             },
           },
@@ -40,8 +40,8 @@ describe('DefinedRange tests', () => {
             isSelected(range) {
               const definedRange = this.range();
               return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
+                dateFns.isSameDay(range.startDate, definedRange.startDate) &&
+                dateFns.isSameDay(range.endDate, definedRange.endDate)
               );
             },
             hasCustomRendering: true,
@@ -75,7 +75,7 @@ describe('DefinedRange tests', () => {
       return result;
     };
 
-    const wrapper = shallow(
+    const wrapper = render(
       <DefinedRange
         staticRanges={[
           {
@@ -84,8 +84,8 @@ describe('DefinedRange tests', () => {
             isSelected(range) {
               const definedRange = this.range();
               return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
+                dateFns.isSameDay(range.startDate, definedRange.startDate) &&
+                dateFns.isSameDay(range.endDate, definedRange.endDate)
               );
             },
             hasCustomRendering: true,
@@ -96,8 +96,8 @@ describe('DefinedRange tests', () => {
             isSelected(range) {
               const definedRange = this.range();
               return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
+                dateFns.isSameDay(range.startDate, definedRange.startDate) &&
+                dateFns.isSameDay(range.endDate, definedRange.endDate)
               );
             },
           },
@@ -107,8 +107,8 @@ describe('DefinedRange tests', () => {
             isSelected(range) {
               const definedRange = this.range();
               return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
+                dateFns.isSameDay(range.startDate, definedRange.startDate) &&
+                dateFns.isSameDay(range.endDate, definedRange.endDate)
               );
             },
             hasCustomRendering: true,
@@ -119,8 +119,8 @@ describe('DefinedRange tests', () => {
             isSelected(range) {
               const definedRange = this.range();
               return (
-                isSameDay(range.startDate, definedRange.startDate) &&
-                isSameDay(range.endDate, definedRange.endDate)
+                dateFns.isSameDay(range.startDate, definedRange.startDate) &&
+                dateFns.isSameDay(range.endDate, definedRange.endDate)
               );
             },
             hasCustomRendering: true,

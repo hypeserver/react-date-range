@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
+import dateFns from 'date-fns';
 
 class DayCell extends Component {
   constructor(props, context) {
@@ -85,12 +85,13 @@ class DayCell extends Component {
   renderPreviewPlaceholder = () => {
     const { preview, day, styles } = this.props;
     if (!preview) return null;
-    const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
-    const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
+    const startDate = preview.startDate ? dateFns.endOfDay(preview.startDate) : null;
+    const endDate = preview.endDate ? dateFns.startOfDay(preview.endDate) : null;
     const isInRange =
-      (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
-    const isStartEdge = !isInRange && isSameDay(day, startDate);
-    const isEndEdge = !isInRange && isSameDay(day, endDate);
+      (!startDate || dateFns.isAfter(day, startDate)) &&
+      (!endDate || dateFns.isBefore(day, endDate));
+    const isStartEdge = !isInRange && dateFns.isSameDay(day, startDate);
+    const isEndEdge = !isInRange && dateFns.isSameDay(day, endDate);
     return (
       <span
         className={classnames({
@@ -105,7 +106,7 @@ class DayCell extends Component {
   renderSelectionPlaceholders = () => {
     const { styles, ranges, day } = this.props;
     if (this.props.displayMode === 'date') {
-      let isSelected = isSameDay(this.props.day, this.props.date);
+      let isSelected = dateFns.isSameDay(this.props.day, this.props.date);
       return isSelected ? (
         <span className={styles.selected} style={{ color: this.props.color }} />
       ) : null;
@@ -114,15 +115,16 @@ class DayCell extends Component {
     const inRanges = ranges.reduce((result, range) => {
       let startDate = range.startDate;
       let endDate = range.endDate;
-      if (startDate && endDate && isBefore(endDate, startDate)) {
+      if (startDate && endDate && dateFns.isBefore(endDate, startDate)) {
         [startDate, endDate] = [endDate, startDate];
       }
-      startDate = startDate ? endOfDay(startDate) : null;
-      endDate = endDate ? startOfDay(endDate) : null;
+      startDate = startDate ? dateFns.endOfDay(startDate) : null;
+      endDate = endDate ? dateFns.startOfDay(endDate) : null;
       const isInRange =
-        (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
-      const isStartEdge = !isInRange && isSameDay(day, startDate);
-      const isEndEdge = !isInRange && isSameDay(day, endDate);
+        (!startDate || dateFns.isAfter(day, startDate)) &&
+        (!endDate || dateFns.isBefore(day, endDate));
+      const isStartEdge = !isInRange && dateFns.isSameDay(day, startDate);
+      const isEndEdge = !isInRange && dateFns.isSameDay(day, endDate);
       if (isInRange || isStartEdge || isEndEdge) {
         return [
           ...result,
@@ -170,10 +172,9 @@ class DayCell extends Component {
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
-          {
-            dayContentRenderer?.(this.props.day) ||
-            <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
-          }
+          {dayContentRenderer?.(this.props.day) || (
+            <span>{dateFns.format(this.props.day, this.props.dayDisplayFormat)}</span>
+          )}
         </span>
       </button>
     );

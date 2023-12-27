@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Calendar from '../Calendar';
 import { rangeShape } from '../DayCell';
 import { findNextRangeIndex, generateStyles } from '../../utils';
-import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
+import dateFns from 'date-fns';
 import classnames from 'classnames';
 import coreStyles from '../../styles';
 
@@ -37,13 +37,13 @@ class DateRange extends Component {
       endDate = value.endDate;
     } else if (focusedRange[1] === 0) {
       // startDate selection
-      const dayOffset = differenceInCalendarDays(endDate || now, startDate);
+      const dayOffset = dateFns.differenceInCalendarDays(endDate || now, startDate);
       const calculateEndDate = () => {
         if (moveRangeOnFirstSelection) {
-          return addDays(value, dayOffset);
+          return dateFns.addDays(value, dayOffset);
         }
         if (retainEndDateOnFirstSelection) {
-          if (!endDate || isBefore(value, endDate)) {
+          if (!endDate || dateFns.isBefore(value, endDate)) {
             return endDate;
           }
           return value;
@@ -52,7 +52,7 @@ class DateRange extends Component {
       };
       startDate = value;
       endDate = calculateEndDate();
-      if (maxDate) endDate = min([endDate, maxDate]);
+      if (maxDate) endDate = dateFns.min([endDate, maxDate]);
       nextFocusRange = [focusedRange[0], 1];
     } else {
       endDate = value;
@@ -60,13 +60,13 @@ class DateRange extends Component {
 
     // reverse dates if startDate before endDate
     let isStartDateSelected = focusedRange[1] === 0;
-    if (isBefore(endDate, startDate)) {
+    if (dateFns.isBefore(endDate, startDate)) {
       isStartDateSelected = !isStartDateSelected;
       [startDate, endDate] = [endDate, startDate];
     }
 
     const inValidDatesWithinRange = disabledDates.filter(disabledDate =>
-      isWithinInterval(disabledDate, {
+      dateFns.isWithinInterval(disabledDate, {
         start: startDate,
         end: endDate,
       })
@@ -74,9 +74,9 @@ class DateRange extends Component {
 
     if (inValidDatesWithinRange.length > 0) {
       if (isStartDateSelected) {
-        startDate = addDays(max(inValidDatesWithinRange), 1);
+        startDate = dateFns.addDays(dateFns.max(inValidDatesWithinRange), 1);
       } else {
-        endDate = addDays(min(inValidDatesWithinRange), -1);
+        endDate = dateFns.addDays(dateFns.min(inValidDatesWithinRange), -1);
       }
     }
 

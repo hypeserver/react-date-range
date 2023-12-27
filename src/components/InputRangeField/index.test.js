@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import InputRangeField from '../InputRangeField';
 
@@ -13,7 +13,7 @@ const toChangeEvent = value => ({ target: { value } });
 describe('InputRangeField tests', () => {
   test('Should parse input value to number', () => {
     const onChange = jest.fn();
-    const wrapper = mount(
+    const wrapper = render(
       <InputRangeField
         label="Input label"
         styles={styles}
@@ -41,7 +41,7 @@ describe('InputRangeField tests', () => {
   });
 
   test('Should rerender when props change', () => {
-    const wrapper = mount(
+    const wrapper = render(
       <InputRangeField
         value={12}
         placeholder="Placeholder"
@@ -75,7 +75,7 @@ describe('InputRangeField tests', () => {
 
   test('Should render the label as a Component', () => {
     const Label = () => <span className="input-range-field-label">Input label</span>;
-    const wrapper = mount(
+    const wrapper = render(
       <InputRangeField
         value={12}
         placeholder="Placeholder"
