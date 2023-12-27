@@ -3,13 +3,13 @@ This component wraps **[DefinedRange](#definedrange)** and **[Calendar](#calenda
 #### Example: 2 Month View
 
 ```jsx inside Markdown
-import { addDays } from 'date-fns';
+import dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState([
   {
     startDate: new Date(),
-    endDate: addDays(new Date(), 7),
+    endDate: dateFns.addDays(new Date(), 7),
     key: 'selection'
   }
 ]);
@@ -27,13 +27,13 @@ const [state, setState] = useState([
 #### Example: Backwards 2 Month View with preventSnapRefocus
 
 ```jsx inside Markdown
-import { addDays } from 'date-fns';
+import dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState([
   {
     startDate: new Date(),
-    endDate: addDays(new Date(), 7),
+    endDate: dateFns.addDays(new Date(), 7),
     key: 'selection'
   }
 ]);
@@ -53,7 +53,7 @@ const [state, setState] = useState([
 #### Example: Vertical Infinite
 
 ```jsx inside Markdown
-import { addDays } from 'date-fns';
+import dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
@@ -64,7 +64,7 @@ const [state, setState] = useState({
   },
   compare: {
     startDate: new Date(),
-    endDate: addDays(new Date(), 3),
+    endDate: dateFns.addDays(new Date(), 3),
     key: 'compare'
   }
 });
@@ -83,18 +83,18 @@ const [state, setState] = useState({
 #### Example: Multiple Range
 
 ```jsx inside Markdown
-import { addDays } from 'date-fns';
+import dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
   selection1: {
-    startDate: addDays(new Date(), 1),
+    startDate: dateFns.addDays(new Date(), 1),
     endDate: null,
     key: 'selection1'
   },
   selection2: {
-    startDate: addDays(new Date(), 4),
-    endDate: addDays(new Date(), 8),
+    startDate: dateFns.addDays(new Date(), 4),
+    endDate: dateFns.addDays(new Date(), 8),
     key: 'selection2'
   },
   selection3: {
@@ -114,12 +114,12 @@ const [state, setState] = useState({
 #### Example: Insert Aria-label
 
 ```jsx inside Markdown
-import { addDays } from 'date-fns';
+import dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
   selection1: {
-    startDate: addDays(new Date(), -6),
+    startDate: dateFns.addDays(new Date(), -6),
     endDate: new Date(),
     key: 'selection1'
   },
@@ -154,25 +154,25 @@ const [state, setState] = useState({
 Show orange dot only for weekend
 
 ```jsx inside Markdown
-import { addDays, format, isWeekend } from 'date-fns';
+import dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
   selection1: {
-    startDate: addDays(new Date(), -6),
+    startDate: dateFns.addDays(new Date(), -6),
     endDate: new Date(),
     key: 'selection1'
   },
   selection2: {
-    startDate: addDays(new Date(), 1),
-    endDate: addDays(new Date(), 7),
+    startDate: dateFns.addDays(new Date(), 1),
+    endDate: dateFns.addDays(new Date(), 7),
     key: 'selection2'
   }
 });
 
 function customDayContent(day) {
   extraDot = null;
-  if (isWeekend(day)) {
+  if (dateFns.isWeekend(day)) {
     extraDot = (
       <div
         style={{
@@ -190,7 +190,7 @@ function customDayContent(day) {
   return (
     <div>
       {extraDot}
-      <span>{format(day, "d")}</span>
+      <span>{dateFns.format(day, "d")}</span>
     </div>
   )
 }
@@ -220,7 +220,7 @@ function customDayContent(day) {
 #### Example: Restrict Date Selection
 Restricts access for range selection to (-30, +30) days of current date.
 ```jsx inside Markdown
-import { addDays } from 'date-fns';
+import dateFns from 'date-fns';
 import { useState } from 'react';
 
 const [state, setState] = useState({
@@ -231,7 +231,7 @@ const [state, setState] = useState({
   },
   compare: {
     startDate: new Date(),
-    endDate: addDays(new Date(), 3),
+    endDate: dateFns.addDays(new Date(), 3),
     key: 'compare'
   }
 });
@@ -239,8 +239,8 @@ const [state, setState] = useState({
 <DateRangePicker
   onChange={item => setState({ ...state, ...item })}
   months={1}
-  minDate={addDays(new Date(), -30)}
-  maxDate={addDays(new Date(), 30)}
+  minDate={dateFns.addDays(new Date(), -30)}
+  maxDate={dateFns.addDays(new Date(), 30)}
   direction="vertical"
   scroll={{ enabled: true }}
   ranges={[state.selection, state.compare]}
