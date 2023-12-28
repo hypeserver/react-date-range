@@ -11,13 +11,13 @@ class DateRangePicker extends Component {
     super(props);
     const ranges = restrictMinMaxDate(props.ranges, props.minDate, props.maxDate);
     this.state = {
-      ranges,
       focusedRange: [findNextRangeIndex(ranges), 0],
     };
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
   render() {
     const { focusedRange } = this.state;
+    const ranges = restrictMinMaxDate(this.props.ranges, this.props.minDate, this.props.maxDate);
     return (
       <div className={classnames(this.styles.dateRangePickerWrapper, this.props.className)}>
         <DefinedRange
@@ -28,14 +28,14 @@ class DateRangePicker extends Component {
             )
           }
           {...this.props}
-          range={this.props.ranges[focusedRange[0]]}
+          range={ranges[focusedRange[0]]}
           className={undefined}
         />
         <DateRange
           onRangeFocusChange={focusedRange => this.setState({ focusedRange })}
           focusedRange={focusedRange}
           {...this.props}
-          ranges={this.state.ranges}
+          ranges={ranges}
           ref={t => (this.dateRange = t)}
           className={undefined}
         />

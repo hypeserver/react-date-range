@@ -22,9 +22,7 @@ class Calendar extends PureComponent {
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
     this.isFirstRender = true;
-    const ranges = restrictMinMaxDate(props.ranges, props.minDate, props.maxDate);
     this.state = {
-      ranges,
       monthNames: this.getMonthNames(),
       focusedDate: calcFocusDate(null, props),
       drag: {
@@ -262,10 +260,10 @@ class Calendar extends PureComponent {
       endDatePlaceholder,
       ariaLabels,
     } = this.props;
-    const { ranges } = this.state;
 
     const defaultColor = rangeColors[focusedRange[0]] || color;
     const styles = this.styles;
+    const ranges = restrictMinMaxDate(this.props.ranges, this.props.minDate, this.props.maxDate);
 
     return (
       <div className={styles.dateDisplayWrapper}>
@@ -397,7 +395,8 @@ class Calendar extends PureComponent {
     const isVertical = direction === 'vertical';
     const monthAndYearRenderer = navigatorRenderer || this.renderMonthAndYear;
 
-    const ranges = this.state.ranges.map((range, i) => ({
+    const oldRanges = restrictMinMaxDate(this.props.ranges, this.props.minDate, this.props.maxDate);
+    const ranges = oldRanges.map((range, i) => ({
       ...range,
       color: range.color || rangeColors[i] || color,
     }));

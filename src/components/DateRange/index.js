@@ -11,7 +11,6 @@ class DateRange extends Component {
     super(props, context);
     const ranges = restrictMinMaxDate(props.ranges, props.minDate, props.maxDate);
     this.state = {
-      ranges,
       focusedRange: props.initialFocusedRange || [findNextRangeIndex(ranges), 0],
       preview: null,
     };
@@ -19,15 +18,21 @@ class DateRange extends Component {
   }
   calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const { onChange, maxDate, moveRangeOnFirstSelection, retainEndDateOnFirstSelection, disabledDates } =
-      this.props;
-    const { ranges } = this.state;
+    const {
+      onChange,
+      maxDate,
+      moveRangeOnFirstSelection,
+      retainEndDateOnFirstSelection,
+      disabledDates,
+      ranges,
+    } = this.props;
+    const correctRanges = restrictMinMaxDate(ranges, this.props.minDate, this.props.maxDate);
 
     return calcNewSelection(
       value,
       isSingleValue,
       focusedRange,
-      ranges,
+      correctRanges,
       onChange,
       maxDate,
       moveRangeOnFirstSelection,
@@ -36,12 +41,14 @@ class DateRange extends Component {
     );
   };
   setSelection = (value, isSingleValue) => {
-    console.log('uma setSelection', value);
-    const { onChange, ranges, onRangeFocusChange } = this.props;
+    const ranges = restrictMinMaxDate(this.props.ranges, this.props.minDate, this.props.maxDate);
+    const { onChange, onRangeFocusChange } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
-    if (!selectedRange) return;
+    if (!selectedRange) {
+      return;
+    }
     const newSelection = this.calcNewSelection(value, isSingleValue);
     onChange({
       [selectedRange.key || `range${focusedRangeIndex + 1}`]: {
@@ -64,12 +71,14 @@ class DateRange extends Component {
       this.setState({ preview: null });
       return;
     }
-    const { rangeColors, ranges } = this.props;
+    const { rangeColors } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
+    const ranges = restrictMinMaxDate(this.props.ranges, this.props.minDate, this.props.maxDate);
     const color = ranges[focusedRange[0]]?.color || rangeColors[focusedRange[0]] || color;
     this.setState({ preview: { ...val.range, color } });
   };
   render() {
+    const ranges = restrictMinMaxDate(this.props.ranges, this.props.minDate, this.props.maxDate);
     return (
       <Calendar
         focusedRange={this.state.focusedRange}
@@ -79,6 +88,7 @@ class DateRange extends Component {
           this.updatePreview(value ? this.calcNewSelection(value) : null);
         }}
         {...this.props}
+        ranges={ranges}
         displayMode="dateRange"
         className={classnames(this.styles.dateRangeWrapper, this.props.className)}
         onChange={this.setSelection}
