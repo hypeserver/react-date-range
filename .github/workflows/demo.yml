@@ -14,10 +14,10 @@ jobs:
       - name: Install
         run: npm install
       - name: Build
-        run: npm run build
+        run: echo -e "node_modules/ \n.DS_Store \n*.log \n.idea \n*.orig \nlib/ \nNOTES.txt \nstyleguide/ \n" >> .gitignore
+      - run: npm run build
       - run: cp -R dist styleguide/
       - run: cp -R demo styleguide/
-      - run: rm -r .gitignore
       - run: rm -r styleguide/.gitignore
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
