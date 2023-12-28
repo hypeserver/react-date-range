@@ -17,6 +17,7 @@ jobs:
         run: npm run build
       - run: cp -R dist styleguide/
       - run: cp -R demo styleguide/
+      - run: rm -r styleguide/.gitignore
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
