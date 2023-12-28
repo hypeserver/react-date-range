@@ -1,7 +1,16 @@
 {
   "eslint.enable": true,
+  "eslint.format.enable": true,
   "editor.tabSize": 2,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+  "editor.formatOnSaveMode": "modifications",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": [
+    "source.organizeImports",
+    "source.fixAll.eslint",
+  ],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.vscode": true,
   }
 }
