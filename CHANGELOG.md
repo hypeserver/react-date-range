@@ -4,28 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 2.1.1
+
+### Removed
+- `showSelectionPreview` prop: Removed from docs. It is not supported already.
+
+### Changed
+- `maxDate` and `minDate` limits are followed for start/end date time given by user.
+
 ## 2.1.0
 
 ### Added
 - Typescript types.
 
 ### Changed
-- Fixed bug of default locale which let to errors.
-- Fixed workflow files
 - Updated docs
 
 ## 2.0.0
 
 ### Changed
-- Upgrade dependencies: date-fns 3.0.6, react 18.2.0, react-dom 18.2.0, webpack 5.89.0, react-styleguidist 13.1.1, css-loader 3.6.0, style-loader 1.3.0 and many other including postcss, eslint, babel, prettier...etc.
+- Upgraded dependencies: date-fns 3.0.6, react 18.2.0, react-dom 18.2.0, webpack 5.89.0, react-styleguidist 13.1.1, css-loader 3.6.0, style-loader 1.3.0 and many other including postcss, eslint, babel, prettier...etc.
 - BREAKING: New version only supports React 18 version and upwards.
 - Changed repo name to scoped @umakantp since we cannot use original one.
-- Use npm instead of yarn.
-- Migrated unit tests to React Testing Library.
-- Import all `date-fns` function since individual import not working.
-
-### Added
-- @testing-library/react 14.1.2 - To migrate tests.
 
 ## 1.4.0
 

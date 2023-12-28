@@ -1,6 +1,6 @@
 {
   "name": "@umakantp/react-date-range",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
