@@ -10,7 +10,7 @@
     "build:css": "postcss 'src/styles.scss' -d dist --ext css & postcss 'src/theme/*.scss' -d 'dist/theme' --ext css",
     "build:js": "babel ./src --out-dir ./dist --ignore test.js",
     "lint": "eslint 'src/**/*.js'",
-    "test": "jest",
+    "test": "jest --testPathIgnorePatterns=styleguide||node_modules",
     "preversion": "npm run clear & npm run build"
   },
   "keywords": [
