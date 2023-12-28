@@ -1,30 +1,28 @@
-import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import coreStyles from '../../styles';
+import { calcNewSelection, findNextRangeIndex, generateStyles, restrictMinMaxDate } from '../../utils';
 import Calendar from '../Calendar';
 import { rangeShape } from '../DayCell';
-import { calcNewSelection, findNextRangeIndex, generateStyles } from '../../utils';
-import classnames from 'classnames';
-import coreStyles from '../../styles';
 
 class DateRange extends Component {
   constructor(props, context) {
     super(props, context);
+    const ranges = restrictMinMaxDate(props.ranges, props.minDate, props.maxDate);
     this.state = {
-      focusedRange: props.initialFocusedRange || [findNextRangeIndex(props.ranges), 0],
+      ranges,
+      focusedRange: props.initialFocusedRange || [findNextRangeIndex(ranges), 0],
       preview: null,
     };
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
   calcNewSelection = (value, isSingleValue = true) => {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
-    const {
-      ranges,
-      onChange,
-      maxDate,
-      moveRangeOnFirstSelection,
-      retainEndDateOnFirstSelection,
-      disabledDates,
-    } = this.props;
+    const { onChange, maxDate, moveRangeOnFirstSelection, retainEndDateOnFirstSelection, disabledDates } =
+      this.props;
+    const { ranges } = this.state;
+
     return calcNewSelection(
       value,
       isSingleValue,
@@ -38,6 +36,7 @@ class DateRange extends Component {
     );
   };
   setSelection = (value, isSingleValue) => {
+    console.log('uma setSelection', value);
     const { onChange, ranges, onRangeFocusChange } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const focusedRangeIndex = focusedRange[0];

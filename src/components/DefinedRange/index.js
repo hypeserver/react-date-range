@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
-import styles from '../../styles';
+import React, { Component } from 'react';
 import { defaultInputRanges, defaultStaticRanges } from '../../defaultRanges';
+import styles from '../../styles';
 import { rangeShape } from '../DayCell';
 import InputRangeField from '../InputRangeField';
-import cx from 'classnames';
 
 class DefinedRange extends Component {
   constructor(props) {
@@ -78,19 +78,16 @@ class DefinedRange extends Component {
                   [styles.staticRangeSelected]: Boolean(selectedRange),
                 })}
                 style={{
-                  color: selectedRange
-                    ? selectedRange.color || rangeColors[focusedRangeIndex]
-                    : null,
+                  color: selectedRange ? selectedRange.color || rangeColors[focusedRangeIndex] : null,
                 }}
                 key={i}
                 onClick={() => this.handleRangeChange(staticRange.range(this.props))}
                 onFocus={() => onPreviewChange && onPreviewChange(staticRange.range(this.props))}
-                onMouseOver={() =>
-                  onPreviewChange && onPreviewChange(staticRange.range(this.props))
-                }
+                onMouseOver={() => onPreviewChange && onPreviewChange(staticRange.range(this.props))}
                 onMouseLeave={() => {
                   onPreviewChange && onPreviewChange();
-                }}>
+                }}
+              >
                 <span tabIndex={-1} className={styles.staticRangeLabel}>
                   {labelContent}
                 </span>

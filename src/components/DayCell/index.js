@@ -1,8 +1,8 @@
 /* eslint-disable no-fallthrough */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import * as dateFns from 'date-fns';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 class DayCell extends Component {
   constructor(props, context) {
@@ -88,8 +88,7 @@ class DayCell extends Component {
     const startDate = preview.startDate ? dateFns.endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? dateFns.startOfDay(preview.endDate) : null;
     const isInRange =
-      (!startDate || dateFns.isAfter(day, startDate)) &&
-      (!endDate || dateFns.isBefore(day, endDate));
+      (!startDate || dateFns.isAfter(day, startDate)) && (!endDate || dateFns.isBefore(day, endDate));
     const isStartEdge = !isInRange && dateFns.isSameDay(day, startDate);
     const isEndEdge = !isInRange && dateFns.isSameDay(day, endDate);
     return (
@@ -107,9 +106,7 @@ class DayCell extends Component {
     const { styles, ranges, day } = this.props;
     if (this.props.displayMode === 'date') {
       let isSelected = dateFns.isSameDay(this.props.day, this.props.date);
-      return isSelected ? (
-        <span className={styles.selected} style={{ color: this.props.color }} />
-      ) : null;
+      return isSelected ? <span className={styles.selected} style={{ color: this.props.color }} /> : null;
     }
 
     const inRanges = ranges.reduce((result, range) => {
@@ -121,8 +118,7 @@ class DayCell extends Component {
       startDate = startDate ? dateFns.endOfDay(startDate) : null;
       endDate = endDate ? dateFns.startOfDay(endDate) : null;
       const isInRange =
-        (!startDate || dateFns.isAfter(day, startDate)) &&
-        (!endDate || dateFns.isBefore(day, endDate));
+        (!startDate || dateFns.isAfter(day, startDate)) && (!endDate || dateFns.isBefore(day, endDate));
       const isStartEdge = !isInRange && dateFns.isSameDay(day, startDate);
       const isEndEdge = !isInRange && dateFns.isSameDay(day, endDate);
       if (isInRange || isStartEdge || isEndEdge) {
@@ -168,7 +164,8 @@ class DayCell extends Component {
         onKeyUp={this.handleKeyEvent}
         className={this.getClassNames(this.props.styles)}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
-        style={{ color: this.props.color }}>
+        style={{ color: this.props.color }}
+      >
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>

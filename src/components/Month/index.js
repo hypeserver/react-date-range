@@ -1,9 +1,9 @@
 /* eslint-disable no-fallthrough */
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import DayCell, { rangeShape } from '../DayCell';
 import * as dateFns from 'date-fns';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import { getMonthDisplayRange } from '../../utils';
+import DayCell, { rangeShape } from '../DayCell';
 
 function renderWeekdays(styles, dateOptions, weekdayDisplayFormat) {
   const now = new Date();
@@ -51,11 +51,7 @@ class Month extends PureComponent {
       <div className={styles.month} style={this.props.style}>
         {this.props.showMonthName ? (
           <div className={styles.monthName}>
-            {dateFns.format(
-              this.props.month,
-              this.props.monthDisplayFormat,
-              this.props.dateOptions
-            )}
+            {dateFns.format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
           </div>
         ) : null}
         {this.props.showWeekDays &&
@@ -67,8 +63,7 @@ class Month extends PureComponent {
               const isStartOfMonth = dateFns.isSameDay(day, monthDisplay.startDateOfMonth);
               const isEndOfMonth = dateFns.isSameDay(day, monthDisplay.endDateOfMonth);
               const isOutsideMinMax =
-                (minDate && dateFns.isBefore(day, minDate)) ||
-                (maxDate && dateFns.isAfter(day, maxDate));
+                (minDate && dateFns.isBefore(day, minDate)) || (maxDate && dateFns.isAfter(day, maxDate));
               const isDisabledSpecifically = disabledDates.some(disabledDate =>
                 dateFns.isSameDay(disabledDate, day)
               );
@@ -81,14 +76,8 @@ class Month extends PureComponent {
                   preview={showPreview ? this.props.preview : null}
                   isWeekend={dateFns.isWeekend(day, this.props.dateOptions)}
                   isToday={dateFns.isSameDay(day, now)}
-                  isStartOfWeek={dateFns.isSameDay(
-                    day,
-                    dateFns.startOfWeek(day, this.props.dateOptions)
-                  )}
-                  isEndOfWeek={dateFns.isSameDay(
-                    day,
-                    dateFns.endOfWeek(day, this.props.dateOptions)
-                  )}
+                  isStartOfWeek={dateFns.isSameDay(day, dateFns.startOfWeek(day, this.props.dateOptions))}
+                  isEndOfWeek={dateFns.isSameDay(day, dateFns.endOfWeek(day, this.props.dateOptions))}
                   isStartOfMonth={isStartOfMonth}
                   isEndOfMonth={isEndOfMonth}
                   key={index}

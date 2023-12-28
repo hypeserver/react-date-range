@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 const MIN = 0;
 const MAX = 99999;
@@ -12,11 +12,7 @@ class InputRangeField extends Component {
   shouldComponentUpdate(nextProps) {
     const { value, label, placeholder } = this.props;
 
-    return (
-      value !== nextProps.value ||
-      label !== nextProps.label ||
-      placeholder !== nextProps.placeholder
-    );
+    return value !== nextProps.value || label !== nextProps.label || placeholder !== nextProps.placeholder;
   }
 
   onChange = e => {

@@ -46,10 +46,7 @@ export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
   const endDateOfMonth = dateFns.endOfMonth(date, dateOptions);
   const startDateOfCalendar = dateFns.startOfWeek(startDateOfMonth, dateOptions);
   let endDateOfCalendar = dateFns.endOfWeek(endDateOfMonth, dateOptions);
-  if (
-    fixedHeight &&
-    dateFns.differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34
-  ) {
+  if (fixedHeight && dateFns.differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34) {
     endDateOfCalendar = dateFns.addDays(endDateOfCalendar, 7);
   }
   return {
@@ -73,6 +70,23 @@ export function generateStyles(sources) {
   return generatedStyles;
 }
 
+export function restrictMinMaxDate(ranges, minDate, maxDate) {
+  return ranges.map(r => {
+    if (!r) {
+      return r;
+    }
+    let endDate = r.endDate;
+    if (endDate && maxDate) {
+      endDate = dateFns.min([endDate, maxDate]);
+    }
+    let startDate = r.startDate;
+    if (startDate && minDate) {
+      startDate = dateFns.max([startDate, minDate]);
+    }
+    return { ...r, startDate, endDate };
+  });
+}
+
 export function calcNewSelection(
   value,
   isSingleValue,
@@ -86,7 +100,9 @@ export function calcNewSelection(
 ) {
   const focusedRangeIndex = focusedRange[0];
   const selectedRange = ranges[focusedRangeIndex];
-  if (!selectedRange || !onChange) return {};
+  if (!selectedRange || !onChange) {
+    return {};
+  }
 
   let { startDate, endDate } = selectedRange;
   const now = new Date();
@@ -111,7 +127,9 @@ export function calcNewSelection(
     };
     startDate = value;
     endDate = calculateEndDate();
-    if (maxDate) endDate = dateFns.min([endDate, maxDate]);
+    if (maxDate) {
+      endDate = dateFns.min([endDate, maxDate]);
+    }
     nextFocusRange = [focusedRange[0], 1];
   } else {
     endDate = value;

@@ -16,7 +16,6 @@ const [state, setState] = useState([
 
 <DateRangePicker
   onChange={item => setState([item.selection])}
-  showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
   ranges={state}
@@ -40,7 +39,6 @@ const [state, setState] = useState([
 
 <DateRangePicker
   onChange={item => setState([item.selection])}
-  showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
   ranges={state}
@@ -132,7 +130,6 @@ const [state, setState] = useState({
 
 <DateRangePicker
   onChange={item => setState({ ...state, ...item })}
-  showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
   ranges={[state.selection1, state.selection2]}
@@ -197,7 +194,6 @@ function customDayContent(day) {
 
 <DateRangePicker
   onChange={item => setState({ ...state, ...item })}
-  showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
   ranges={[state.selection1, state.selection2]}

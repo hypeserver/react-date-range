@@ -1,8 +1,8 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 
-import DefinedRange from '../DefinedRange';
 import * as dateFns from 'date-fns';
+import DefinedRange from '../DefinedRange';
 
 describe('DefinedRange tests', () => {
   test('Should call "renderStaticRangeLabel" callback correct amount of times according to the "hasCustomRendering" option', () => {
@@ -55,13 +55,11 @@ describe('DefinedRange tests', () => {
   });
 
   test('Should render dynamic static label contents correctly', () => {
-    const renderItalicLabelContent = () => (
-      <i className={'italic-label-content'}>{'Italic Content'}</i>
-    );
+    const renderItalicLabelContent = () => <i className={'italic-label-content'}>{'Italic Content'}</i>;
     const renderBoldLabelContent = () => <b className={'bold-label-content'}>{'Bold Content'}</b>;
     const renderSomethingElse = () => <img className={'random-image'} />;
 
-    const renderStaticRangeLabel = function(staticRange) {
+    const renderStaticRangeLabel = function (staticRange) {
       let result;
 
       if (staticRange.id === 'italic') {
