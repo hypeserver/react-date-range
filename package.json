@@ -4,6 +4,7 @@
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
+    "clear": "rm -r styleguide",
     "start": "npm run build:css & styleguidist server",
     "build": "npm run build:css & npm run build:js & styleguidist build",
     "build:css": "postcss 'src/styles.scss' -d dist --ext css & postcss 'src/theme/*.scss' -d 'dist/theme' --ext css",
