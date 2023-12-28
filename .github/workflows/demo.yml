@@ -14,7 +14,7 @@ jobs:
       - name: Install
         run: npm install
       - name: Build
-        run: echo -e "node_modules/ \n.DS_Store \n*.log \n.idea \n*.orig \nlib/ \nNOTES.txt \nstyleguide/ \n" >> .gitignore
+        run: rm -r .gitignore && echo -e "node_modules/ \n.DS_Store \n*.log \n.idea \n*.orig \nlib/ \nNOTES.txt \nstyleguide/ \n" >> .gitignore
       - run: npm run build
       - run: cp -R dist styleguide/
       - run: cp -R demo styleguide/
