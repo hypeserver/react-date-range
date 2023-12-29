@@ -13,7 +13,7 @@ describe('DefinedRange tests', () => {
         staticRanges={[
           {
             label: 'Dynamic Label',
-            range: {},
+            range: () => ({}),
             isSelected(range) {
               const definedRange = this.range();
               return (
@@ -25,7 +25,7 @@ describe('DefinedRange tests', () => {
           },
           {
             label: 'Static Label',
-            range: {},
+            range: () => ({}),
             isSelected(range) {
               const definedRange = this.range();
               return (
@@ -36,7 +36,7 @@ describe('DefinedRange tests', () => {
           },
           {
             label: 'Hede',
-            range: {},
+            range: () => ({}),
             isSelected(range) {
               const definedRange = this.range();
               return (
@@ -78,7 +78,7 @@ describe('DefinedRange tests', () => {
         staticRanges={[
           {
             id: 'italic',
-            range: {},
+            range: () => ({}),
             isSelected(range) {
               const definedRange = this.range();
               return (
@@ -90,7 +90,7 @@ describe('DefinedRange tests', () => {
           },
           {
             label: 'Static Label',
-            range: {},
+            range: () => ({}),
             isSelected(range) {
               const definedRange = this.range();
               return (
@@ -101,7 +101,7 @@ describe('DefinedRange tests', () => {
           },
           {
             id: 'whatever',
-            range: {},
+            range: () => ({}),
             isSelected(range) {
               const definedRange = this.range();
               return (
@@ -113,7 +113,7 @@ describe('DefinedRange tests', () => {
           },
           {
             id: 'bold',
-            range: {},
+            range: () => ({}),
             isSelected(range) {
               const definedRange = this.range();
               return (
