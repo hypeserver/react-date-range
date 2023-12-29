@@ -6,24 +6,17 @@ module.exports = {
   //ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
   title: 'react-date-range',
   showSidebar: false,
+  require: [
+    path.join(__dirname, 'dist/styles.css'),
+    path.join(__dirname, 'dist/theme/default.css'),
+    path.join(__dirname, 'demo/styles.css')
+  ],
   template: {
     head: {
       links: [
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css?family=Open+Sans:300,400',
-        },
-        {
-          rel: 'stylesheet',
-          href: './dist/styles.css',
-        },
-        {
-          rel: 'stylesheet',
-          href: './dist/theme/default.css',
-        },
-        {
-          rel: 'stylesheet',
-          href: './demo/styles.css',
         },
       ],
     },
@@ -75,20 +68,22 @@ module.exports = {
     'react-date-range': path.resolve(__dirname, moduleSource),
   },
   webpackConfig: {
+    mode: isDEV ? 'development' : 'production',
+    devtool: isDEV ? 'eval' : 'source-map',
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.(?:jsx|mjs|cjs|js)$/,
           exclude: /node_modules/,
-          loader: 'babel-loader',
+          use: 'babel-loader',
         },
         {
           test: /\.css$/,
-          loader: 'style-loader!css-loader?modules',
+          use: ["style-loader", "css-loader"],
         },
         {
           test: /\.svg$/,
-          loader: 'url-loader',
+          use: 'url-loader',
         },
       ],
     },
