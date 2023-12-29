@@ -64,11 +64,47 @@ class DefinedRange extends Component {
       maxDate,
     } = this.props;
 
+    const validStaticRanges = staticRanges.filter(staticRange => {
+      const rangeValue = staticRange.range(this.props);
+      if (rangeValue && maxDate && dateFns.isAfter(rangeValue.startDate, maxDate)) {
+        return false;
+      }
+      if (rangeValue && minDate && dateFns.isBefore(rangeValue.endDate, minDate)) {
+        return false;
+      }
+      return true;
+    });
+
+    const validInputRanges = inputRanges.filter(rangeOption => {
+      const value = this.getRangeOptionValue(rangeOption);
+      const rangeValue = rangeOption.range(value, this.props);
+      const isStartDateValid = dateFns.isValid(rangeValue.startDate);
+      const isEndDateValid = dateFns.isValid(rangeValue.endDate);
+
+      if (rangeValue && minDate && isStartDateValid && dateFns.isBefore(rangeValue.startDate, minDate)) {
+        return false;
+      }
+      if (rangeValue && maxDate && isStartDateValid && dateFns.isAfter(rangeValue.startDate, maxDate)) {
+        return false;
+      }
+      if (rangeValue && maxDate && isEndDateValid && dateFns.isAfter(rangeValue.endDate, maxDate)) {
+        return false;
+      }
+      if (rangeValue && minDate && isEndDateValid && dateFns.isBefore(rangeValue.endDate, minDate)) {
+        return false;
+      }
+      return true;
+    });
+
+    if (validInputRanges.length === 0 && validStaticRanges.length === 0) {
+      return null;
+    }
+
     return (
       <div className={cx(styles.definedRangesWrapper, className)}>
         {headerContent}
         <div className={styles.staticRanges}>
-          {staticRanges.map((staticRange, i) => {
+          {validStaticRanges.map((staticRange, i) => {
             const { selectedRange, focusedRangeIndex } = this.getSelectedRange(ranges, staticRange);
             let labelContent;
 
@@ -78,13 +114,6 @@ class DefinedRange extends Component {
               labelContent = staticRange.label;
             }
             const rangeValue = staticRange.range(this.props);
-            if (rangeValue && maxDate && dateFns.isAfter(rangeValue.startDate, maxDate)) {
-              return null;
-            }
-            if (rangeValue && minDate && dateFns.isBefore(rangeValue.endDate, minDate)) {
-              return null;
-            }
-
             return (
               <button
                 type="button"
@@ -110,14 +139,14 @@ class DefinedRange extends Component {
           })}
         </div>
         <div className={styles.inputRanges}>
-          {inputRanges.map((rangeOption, i) => (
+          {validInputRanges.map((rangeOption, i) => (
             <InputRangeField
               key={i}
               styles={styles}
               label={rangeOption.label}
               onFocus={() => this.setState({ focusedInput: i, rangeOffset: 0 })}
               onBlur={() => this.setState({ rangeOffset: 0 })}
-              onChange={value => this.handleRangeChange(rangeOption.range(value, this.props))}
+              onChange={newValue => this.handleRangeChange(rangeOption.range(newValue, this.props))}
               value={this.getRangeOptionValue(rangeOption)}
             />
           ))}
