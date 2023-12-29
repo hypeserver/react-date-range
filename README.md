@@ -51,18 +51,19 @@ import '@umakantp/react-date-range/dist/theme/default.css'; // theme css file
 ```javascript
 import { Calendar } from '@umakantp/react-date-range';
 
-class MyComponent extends Component {
-  handleSelect(date){
+function App() {
+  const handleSelect(date) {
     console.log(date); // native Date object
   }
-  render(){
-    return (
+
+  return (
+    <div>
       <Calendar
         date={new Date()}
-        onChange={this.handleSelect}
+        onChange={handleSelect}
       />
-    )
-  }
+    </div>
+  );
 }
 
 ```
@@ -71,8 +72,8 @@ class MyComponent extends Component {
 ```javascript
 import { DateRangePicker } from '@umakantp/react-date-range';
 
-class MyComponent extends Component {
-  handleSelect(ranges){
+function App() {
+  const handleSelect = (ranges) => {
     console.log(ranges);
     // {
     //   selection: {
@@ -80,20 +81,20 @@ class MyComponent extends Component {
     //     endDate: [native Date Object],
     //   }
     // }
-  }
-  render(){
-    const selectionRange = {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection',
-    }
-    return (
-      <DateRangePicker
-        ranges={[selectionRange]}
-        onChange={this.handleSelect}
-      />
-    )
-  }
+  };
+
+  const selectionRange = {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection'
+  };
+
+  return (
+    <DateRangePicker
+      ranges={[selectionRange]}
+      onChange={handleSelect}
+    />
+  );
 }
 
 ```
@@ -203,7 +204,7 @@ If you prefer, you can overwrite calendar sizes with `calendarWidth`/`calendarHe
   - Update CHANGELOG.md
 - Make sure the demo and important features are working as expected
 - After merging, tag the master commit with `release/<new_version>` and let Github Action handle publishing
-- = Profit 🙈
+- = Win 🙈
 
 ### TODOs
 

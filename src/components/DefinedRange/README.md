@@ -19,47 +19,36 @@ const [state, setState] = useState([
 #### Example: Custom range labels
 
 ```jsx inside Markdown
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+const CustomStaticRangeLabelContent = ({ text }) => {
+  const [currentDateString, setCurrentDateString] = useState(Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDateString(Date());
+    }, 1000);
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [setCurrentDateString]);
+
+  return (
+    <span>
+      <i>{text}</i>
+      <span className="random-date-string">
+        <b>{currentDateString}</b>
+      </span>
+    </span>
+  );
+}
 
 const renderStaticRangeLabel = () => (
   <CustomStaticRangeLabelContent text={'This is a custom label content: '} />
 );
-
-class CustomStaticRangeLabelContent extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentDateString: Date(),
-    };
-
-    this.intervalId = setInterval(() => {
-      this.setState({
-        currentDateString: Date(),
-      });
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
-
-  render() {
-    const { currentDateString } = this.state;
-    const { text } = this.props;
-
-    return (
-      <span>
-        <i>{text}</i>
-        <span className={'random-date-string'}>
-          <b>{currentDateString}</b>
-        </span>
-      </span>
-    );
-  }
-}
 
 const [state, setState] = useState([
   {

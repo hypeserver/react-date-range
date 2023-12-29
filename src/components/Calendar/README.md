@@ -2,7 +2,7 @@
 
 ```jsx inside Markdown
 import * as locales from '@umakantp/react-date-range/dist/locale';
-import {useState} from 'react'
+import { useState } from 'react';
 
 const nameMapper = {
   ar: 'Arabic',
@@ -60,7 +60,7 @@ const localeOptions = Object.keys(locales)
   }))
   .filter(item => nameMapper[item.value]);
 
-const [locale, setLocale] = React.useState('ja');
+const [locale, setLocale] = useState('ja');
 const [date, setDate] = useState(null);
 
 
