@@ -1,4 +1,7 @@
 # @umakantp/react-date-range
+[![npm](https://img.shields.io/npm/v/@umakantp/react-date-range)](https://www.npmjs.com/package/@umakantp/react-date-range)
+[![npm](https://img.shields.io/npm/l/@umakantp/react-date-range)]()
+[![npm](https://img.shields.io/npm/dw/@umakantp/react-date-range)](https://www.npmjs.com/package/@umakantp/react-date-range)
 [![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver)
 
 
