@@ -11,11 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - `maxDate` and `minDate` limits are followed for start/end date time given by user.
+- pre-defined ranges now show up basis `maxDate` and `minDate` props.
 
 ## 2.1.0
 
 ### Added
 - Typescript types.
+- Added en-IN locale
 
 ### Changed
 - Updated docs
