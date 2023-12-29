@@ -13,6 +13,7 @@ export { default as el } from 'date-fns/locale/el';
 export { default as enAU } from 'date-fns/locale/en-AU';
 export { default as enCA } from 'date-fns/locale/en-CA';
 export { default as enGB } from 'date-fns/locale/en-GB';
+export { default as enIN } from 'date-fns/locale/en-IN';
 export { default as enUS } from 'date-fns/locale/en-US';
 export { default as eo } from 'date-fns/locale/eo';
 export { default as es } from 'date-fns/locale/es';
