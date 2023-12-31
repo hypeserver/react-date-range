@@ -131,7 +131,7 @@ class Calendar extends PureComponent {
       date: 'date',
     };
     const targetProp = propMapper[this.props.displayMode];
-    if (this.props[targetProp] !== prevProps[targetProp]) {
+    if (this.props[targetProp] !== prevProps[targetProp] && this.props.updateShownDateFlag) {
       this.updateShownDate(this.props);
     }
 
