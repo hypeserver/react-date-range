@@ -114,13 +114,15 @@ class Calendar extends PureComponent {
       date: 'date',
     };
     const targetProp = propMapper[this.props.displayMode];
-    if (this.props[targetProp] !== prevProps[targetProp]) {
+    if (!shallowEqualObjects(this.props[targetProp], prevProps[targetProp])) {
       this.updateShownDate(this.props);
     }
 
     if (prevProps.locale !== this.props.locale || prevProps.weekStartsOn !== this.props.weekStartsOn) {
       this.dateOptions = { locale: this.props.locale };
-      if (this.props.weekStartsOn !== undefined) this.dateOptions.weekStartsOn = this.props.weekStartsOn;
+      if (this.props.weekStartsOn !== undefined) {
+        this.dateOptions.weekStartsOn = this.props.weekStartsOn;
+      }
       this.setState({
         monthNames: this.getMonthNames(),
       });
