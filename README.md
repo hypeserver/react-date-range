@@ -46,8 +46,8 @@ npm install react date-fns
 You need to import skeleton and theme styles first.
 
 ```javascript
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import '@iroomit/react-date-range/dist/styles.css'; // main style file
+import '@iroomit/react-date-range/dist/theme/default.css'; // theme css file
 ```
 
 ### `DatePicker`

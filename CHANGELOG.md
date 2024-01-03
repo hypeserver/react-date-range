@@ -92,13 +92,13 @@ NEW with moment (or any other date libraries)
   onChange={date => this.setState({ eventDate: moment(date) })} //
 />
 ```
-- BREAKING: Theming and style approach complately changed. `react-date-range` don't use inline styles any more. At the new version you should import **skeleton styles** and **theme styles**
+- BREAKING: Theming and style approach complately changed. `@iroomit/react-date-range` don't use inline styles any more. At the new version you should import **skeleton styles** and **theme styles**
 
 ```js
 // main style file
-import 'react-date-range/dist/styles.css';
+import '@iroomit/react-date-range/dist/styles.css';
 // theme css file
-import 'react-date-range/dist/theme/default.css';
+import '@iroomit/react-date-range/dist/theme/default.css';
 ```
 
 - BREAKING: `Calendar` and `DateRange` Components, no longer support string typed `lang` prop.
