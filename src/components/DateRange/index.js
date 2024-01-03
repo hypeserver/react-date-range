@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from '../Calendar';
-import { rangeShape } from '../DayCell';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import { isBefore, differenceInCalendarDays, addDays, min, isWithinInterval, max } from 'date-fns';
 import classnames from 'classnames';
@@ -159,7 +158,7 @@ DateRange.propTypes = {
   onChange: PropTypes.func,
   onRangeFocusChange: PropTypes.func,
   className: PropTypes.string,
-  ranges: PropTypes.arrayOf(rangeShape),
+  ranges: PropTypes.array,
   moveRangeOnFirstSelection: PropTypes.bool,
   retainEndDateOnFirstSelection: PropTypes.bool,
 };

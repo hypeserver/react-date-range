@@ -1,4 +1,58 @@
-export default {
+export type StylesType = {
+  dateRangeWrapper: string;
+  calendarWrapper: string;
+  dateDisplay: string;
+  dateDisplayItem: string;
+  dateDisplayItemActive: string;
+  monthAndYearWrapper: string;
+  monthAndYearPickers: string;
+  nextPrevButton: string;
+  month: string;
+  weekDays: string;
+  weekDay: string;
+  days: string;
+  day: string;
+  dayNumber: string;
+  dayPassive: string;
+  dayToday: string;
+  dayStartOfWeek: string;
+  dayEndOfWeek: string;
+  daySelected: string;
+  dayDisabled: string;
+  dayStartOfMonth: string;
+  dayEndOfMonth: string;
+  dayWeekend: string;
+  dayStartPreview: string;
+  dayInPreview: string;
+  dayEndPreview: string;
+  dayHovered: string;
+  dayActive: string;
+  inRange: string;
+  endEdge: string;
+  startEdge: string;
+  prevButton: string;
+  nextButton: string;
+  selected: string;
+  months: string;
+  monthPicker: string;
+  yearPicker: string;
+  dateDisplayWrapper: string;
+  definedRangesWrapper: string;
+  staticRanges: string;
+  staticRange: string;
+  inputRanges: string;
+  inputRange: string;
+  inputRangeInput: string;
+  dateRangePickerWrapper: string;
+  staticRangeLabel: string;
+  staticRangeSelected: string;
+  monthName: string;
+  infiniteMonths: string;
+  monthsVertical: string;
+  monthsHorizontal: string;
+};
+
+const Styles = {
   dateRangeWrapper: 'rdrDateRangeWrapper',
   calendarWrapper: 'rdrCalendarWrapper',
   dateDisplay: 'rdrDateDisplay',
@@ -51,3 +105,5 @@ export default {
   monthsVertical: 'rdrMonthsVertical',
   monthsHorizontal: 'rdrMonthsHorizontal',
 };
+
+export default Styles;

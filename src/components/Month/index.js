@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import DayCell, { rangeShape } from '../DayCell';
+import DayCell from '../DayCell';
 import {
   format,
   startOfDay,
@@ -131,7 +131,7 @@ Month.propTypes = {
   displayMode: PropTypes.oneOf(['dateRange', 'date']),
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
-  ranges: PropTypes.arrayOf(rangeShape),
+  ranges: PropTypes.array,
   focusedRange: PropTypes.arrayOf(PropTypes.number),
   onDragSelectionStart: PropTypes.func,
   onDragSelectionEnd: PropTypes.func,

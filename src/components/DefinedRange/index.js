@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../styles';
 import { defaultInputRanges, defaultStaticRanges } from '../../defaultRanges';
-import { rangeShape } from '../DayCell';
 import InputRangeField from '../InputRangeField';
 import cx from 'classnames';
 
@@ -120,7 +119,7 @@ class DefinedRange extends Component {
 DefinedRange.propTypes = {
   inputRanges: PropTypes.array,
   staticRanges: PropTypes.array,
-  ranges: PropTypes.arrayOf(rangeShape),
+  ranges: PropTypes.array,
   focusedRange: PropTypes.arrayOf(PropTypes.number),
   onPreviewChange: PropTypes.func,
   onChange: PropTypes.func,

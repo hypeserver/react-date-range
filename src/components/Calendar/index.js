@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { rangeShape } from '../DayCell';
 import Month from '../Month';
 import DateInput from '../DateInput';
 import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../../utils';
@@ -576,7 +575,7 @@ Calendar.propTypes = {
   locale: PropTypes.object,
   shownDate: PropTypes.object,
   onShownDateChange: PropTypes.func,
-  ranges: PropTypes.arrayOf(rangeShape),
+  ranges: PropTypes.array,
   preview: PropTypes.shape({
     startDate: PropTypes.object,
     endDate: PropTypes.object,
