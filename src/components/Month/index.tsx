@@ -1,14 +1,18 @@
 import React, { CSSProperties, MouseEvent, memo } from 'react';
 import { getMonthDisplayRange } from '../../utils';
 import { StylesType } from '../../styles';
-import DayCell, { DayCellProps } from '../DayCell';
+import DayCell, { DayCellProps, RangeShape } from '../DayCell';
 import { FormatOptions, eachDayOfInterval, endOfDay, endOfWeek, format, getMonth, isAfter, isBefore, isSameDay, isWeekend, isWithinInterval, startOfDay, startOfWeek } from 'date-fns';
 
 type MonthProps = {
   style: CSSProperties,
   styles: StylesType,
   month: Date,
-  drag: any, // FIX
+  drag: {
+    range: RangeShape,
+    disablePreview: boolean,
+    status: boolean
+  },
   dateOptions: FormatOptions,
   disabledDates?: Date[],
   disabledDay?: (date: Date) => boolean,
@@ -95,11 +99,11 @@ export default memo(function Month({
         showMonthName ? <div className={styles.monthName}>{format(month, monthDisplayFormat, dateOptions)}</div> : null
       }
       {
-        showWeekDays ? <Weekdays styles={styles} dateOptions={dateOptions} weekdayDisplayFormat={weekdayDisplayFormat}/> : null
+        showWeekDays ? <Weekdays styles={styles} dateOptions={dateOptions} weekdayDisplayFormat={weekdayDisplayFormat} /> : null
       }
       <div className={styles.days} onMouseLeave={onMouseLeave}>
         {
-          eachDayOfInterval({start: monthDisplay.start, end: monthDisplay.end}).map((day: Date, index: number) => {
+          eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end }).map((day: Date, index: number) => {
             const isStartOfMonth = isSameDay(day, monthDisplay.startDateOfMonth);
             const isEndOfMonth = isSameDay(day, monthDisplay.endDateOfMonth);
             const isOutsideMinMax = (minDateInternal && isBefore(day, minDateInternal)) || (maxDateInternal && isAfter(day, maxDateInternal));
@@ -111,31 +115,31 @@ export default memo(function Month({
 
             return (
               <DayCell
-              key={index}
-              onPreviewChange={onPreviewChange}
-              displayMode={displayMode}
-              color={color}
-              dayDisplayFormat={dayDisplayFormat}
-                ranges={ranges}
+                key={index}
+                onPreviewChange={onPreviewChange}
+                displayMode={displayMode}
+                color={color}
+                dayDisplayFormat={dayDisplayFormat}
+                ranges={rangesInternal}
                 day={day}
                 preview={showPreviewInternal ? preview : null}
-                  isWeekend={isWeekend(day)}
-                  isToday={isSameDay(day, now)}
-                  isStartOfWeek={isSameDay(day, startOfWeek(day, dateOptions))}
-                  isEndOfWeek={isSameDay(day, endOfWeek(day, dateOptions))}
-                  isStartOfMonth={isStartOfMonth}
-                  isEndOfMonth={isEndOfMonth}
-                  disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
-                  isPassive={
-                    !isWithinInterval(day, {
-                      start: monthDisplay.startDateOfMonth,
-                      end: monthDisplay.endDateOfMonth,
-                    })
-                  }
-                  styles={styles}
-                  onMouseDown={onDragSelectionStart}
-                  onMouseUp={onDragSelectionEnd}
-                  onMouseEnter={onDragSelectionMove}
+                isWeekend={isWeekend(day)}
+                isToday={isSameDay(day, now)}
+                isStartOfWeek={isSameDay(day, startOfWeek(day, dateOptions))}
+                isEndOfWeek={isSameDay(day, endOfWeek(day, dateOptions))}
+                isStartOfMonth={isStartOfMonth}
+                isEndOfMonth={isEndOfMonth}
+                disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
+                isPassive={
+                  !isWithinInterval(day, {
+                    start: monthDisplay.startDateOfMonth,
+                    end: monthDisplay.endDateOfMonth,
+                  })
+                }
+                styles={styles}
+                onMouseDown={onDragSelectionStart}
+                onMouseUp={onDragSelectionEnd}
+                onMouseEnter={onDragSelectionMove}
               />
             )
           })

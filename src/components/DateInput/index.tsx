@@ -8,7 +8,7 @@ type DateInputProps = {
   disabled?: boolean,
   readOnly?: boolean,
   dateOptions?: Object,
-  dateDisplayFormat: string, // FIX
+  dateDisplayFormat: string,
   ariaLabel?: string,
   className?: string,
   onFocus: (event: FocusEvent<HTMLInputElement>) => void,

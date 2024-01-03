@@ -10,7 +10,8 @@ export type RangeShape = {
   key?: string,
   autoFocus?: boolean,
   disabled?: boolean,
-  showDateDisplay?: boolean
+  showDateDisplay?: boolean,
+  label?: string
 };
 
 export type DayCellProps = {
