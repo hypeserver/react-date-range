@@ -25,7 +25,6 @@ export type DayCellProps = {
     color?: string
   },
   onPreviewChange?: (date?: Date) => void,
-  previewColor?: string,
   disabled?: boolean,
   isPassive?: boolean,
   isToday?: boolean,
@@ -49,7 +48,6 @@ export default function DayCell({
   ranges,
   preview,
   onPreviewChange,
-  previewColor,
   disabled,
   isPassive,
   isToday,
