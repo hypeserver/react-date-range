@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { format, isValid, parse } from 'date-fns';
-import React, { ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
+import React, {memo, ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
 
 type DateInputProps = {
   value: Date,
@@ -15,7 +15,7 @@ type DateInputProps = {
   onChange: (date: Date) => void
 };
 
-export default function DateInput({
+export default memo(function DateInput({
   value,
   placeholder,
   disabled,
@@ -83,7 +83,7 @@ export default function DateInput({
         {state.invalid ? <span className="rdrWarning">&#9888;</span> : null}
     </span>
   )
-}
+});
 
 function formatDate(value: Date, dateDisplayFormat: string, dateOptions?: Object) {
   if (value && isValid(value)) {

@@ -3,7 +3,6 @@ const isDEV = process.env.NODE_ENV === 'development';
 const moduleSource = isDEV ? 'src' : 'src';
 
 module.exports = {
-  //ignore: ['**/*.test.js', '**/DateInput/*', '**/DayCell/*', '**/Month/*', '**/InputRangeField/*'],
   title: '@iroomit/react-date-range',
   showSidebar: false,
   template: {

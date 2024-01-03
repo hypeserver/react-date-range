@@ -15,13 +15,14 @@ This fork aims at keeping this project alive. Dependencies have been upgraded, c
 
 ### Why should you use `@iroomit/react-date-range`?
 
+- Fully maintained as of 2024!
 - Stateless date operations
 - Highly configurable
 - Multiple range selection
 - Based on native js dates
 - Drag n Drop selection
 - Keyboard friendly
-- TypeScript-Native
+- TypeScript support
 
 **Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
 
@@ -32,12 +33,12 @@ This fork aims at keeping this project alive. Dependencies have been upgraded, c
 ### Installation
 
 ```
-npm install --save react-date-range
+npm install react-date-range
 ```
 This plugin expects `react` and `date-fns` as peerDependencies, It means that you need to install them in your project folder.
 
 ```
-npm install --save react date-fns
+npm install react date-fns
 ```
 
 ## Usage
@@ -51,7 +52,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 
 ### `DatePicker`
 ```javascript
-import { Calendar } from 'react-date-range';
+import { Calendar } from '@iroomit/react-date-range';
 
 class MyComponent extends Component {
   handleSelect(date){
@@ -71,7 +72,7 @@ class MyComponent extends Component {
 
 ### `DateRangePicker / DateRange`
 ```javascript
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker } from '@iroomit/react-date-range';
 
 class MyComponent extends Component {
   handleSelect(ranges){

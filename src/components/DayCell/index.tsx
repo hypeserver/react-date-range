@@ -16,7 +16,7 @@ export type RangeShape = {
 export type DayCellProps = {
   day: Date,
   dayDisplayFormat: string,
-  date: Date,
+  date?: Date,
   ranges: RangeShape[]
   displayMode: "dateRange" | "date",
   preview?: {
