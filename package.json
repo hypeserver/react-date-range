@@ -3,11 +3,13 @@
   "version": "2.0.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "start": "yarn build:css & styleguidist server",
-    "build": "yarn build:css & yarn build:js & styleguidist build",
+    "start": "yarn build:types && yarn build:css & styleguidist server",
+    "build": "yarn build:types && yarn build:css & yarn build:js & styleguidist build",
     "build:css": "postcss 'src/styles.scss' -d dist --ext css & postcss 'src/theme/*.scss' -d 'dist/theme' --ext css",
-    "build:js": "babel ./src --out-dir ./dist --ignore test.js",
+    "build:js": "babel ./src --out-dir ./dist --ignore test.js  --source-maps inline",
+    "build:types": "tsc --emitDeclarationOnly",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest",
     "preversion": "yarn clear & yarn build"
@@ -83,6 +85,7 @@
     "react-dom": "^18.2.0",
     "react-styleguidist": "^13.1.1",
     "style-loader": "^3.3.3",
+    "typescript": "^5.3.3",
     "webpack": "^5.89.0"
   }
 }
