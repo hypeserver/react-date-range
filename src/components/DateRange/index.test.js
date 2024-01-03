@@ -15,7 +15,7 @@ const commonProps = {
 };
 
 const compareRanges = (newRange, assertionRange) => {
-  ['startDate', 'endDate'].forEach(key => {
+  ['startDate', 'endDate'].forEach((key) => {
     if (!newRange[key] || !assertionRange[key]) {
       return expect(newRange[key]).toEqual(assertionRange[key]);
     }
