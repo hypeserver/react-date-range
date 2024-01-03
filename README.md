@@ -1,4 +1,4 @@
-# react-date-range
+# @iroomit/react-date-range
 [![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/react-date-range)
 [![npm](https://img.shields.io/npm/l/react-date-range)]()
 [![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/react-date-range)
@@ -8,9 +8,12 @@
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
 
 # Notice ⚠️
-This project is currently unmaintained because the original maintainers are busy with other things. It should be pretty stable in it's current state but we won't be updating it in the foreseeable future. **If you are willing to maintain it, please fork and open a pr adding your fork's link to this readme.**
 
-### Why should you use `react-date-range`?
+This awesome project is a fork of the original [react-date-range](https://github.com/hypeserver/react-date-range) by hypeserver.
+
+This fork aims at keeping this project alive. Dependencies have been upgraded, class components updated to function components and the entire project has been rewritten in TypeScript. Some of the code has also been optimized further with newer React features.
+
+### Why should you use `@iroomit/react-date-range`?
 
 - Stateless date operations
 - Highly configurable
@@ -18,6 +21,7 @@ This project is currently unmaintained because the original maintainers are busy
 - Based on native js dates
 - Drag n Drop selection
 - Keyboard friendly
+- TypeScript-Native
 
 **Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
 
