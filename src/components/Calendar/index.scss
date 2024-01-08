@@ -16,14 +16,25 @@
   width: 0;
   text-align: center;
   color: inherit;
-  & + &{
-    margin-left: 0.833em;
-  }
+
   input{
     text-align: inherit;
+
     &:disabled{
       cursor: default;
     }
+  }
+}
+
+[dir="ltr"] .rdrDateDisplayItem{
+  & + &{
+    margin-left: 0.833em;
+  }
+}
+
+[dir="rtl"] .rdrDateDisplayItem{
+  & + &{
+    margin-right: 0.833em;
   }
 }
 
