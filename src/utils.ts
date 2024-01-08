@@ -9,16 +9,17 @@ import {
   addDays,
   WeekOptions,
 } from 'date-fns';
+import { StylesType } from './styles';
+import { RangeShape } from './components/DayCell';
 
-export function calcFocusDate(currentFocusedDate, props) {
-  const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
+export function calcFocusDate(currentFocusedDate: Date, shownDate?: Date, date?: Date, months?: number, ranges?: RangeShape[], focusedRange?: number[], displayMode?: "dateRange" | "date") {
   // find primary date according the props
   let targetInterval;
   if (displayMode === 'dateRange') {
-    const range = ranges[focusedRange[0]] || {};
+    const range = ranges[focusedRange[0]];
     targetInterval = {
-      start: range.startDate,
-      end: range.endDate,
+      start: range?.startDate,
+      end: range?.endDate,
     };
   } else {
     targetInterval = {
@@ -34,7 +35,7 @@ export function calcFocusDate(currentFocusedDate, props) {
   if (!currentFocusedDate) return shownDate || targetDate;
 
   // // just return targetDate for native scrolled calendars
-  // if (props.scroll.enabled) return targetDate;
+  // if (scroll.enabled) return targetDate;
   if (differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
     // don't change focused if new selection in view area
     return currentFocusedDate;
@@ -66,7 +67,7 @@ export function getMonthDisplayRange(date: Date, dateOptions?: WeekOptions, fixe
   };
 }
 
-export function generateStyles(sources) {
+export function generateStyles(sources: Partial<StylesType>[]) {
   if (!sources.length) return {};
   const generatedStyles = sources
     .filter(source => Boolean(source))

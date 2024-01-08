@@ -32,12 +32,13 @@ type MonthProps = {
   onDragSelectionEnd?: (date: Date) => void,
   onDragSelectionMove?: (date: Date) => void,
   onMouseLeave?: (event: MouseEvent<HTMLDivElement>) => void,
-  monthDisplayFormat?: string,
-  weekdayDisplayFormat?: string,
-  dayDisplayFormat?: string,
+  monthDisplayFormat: string,
+  weekdayDisplayFormat: string,
+  dayDisplayFormat: string,
   showWeekDays?: boolean,
   showMonthName?: boolean,
-  fixedHeight?: boolean
+  fixedHeight?: boolean,
+  dayContentRenderer?: (date: Date) => React.ReactElement
 };
 
 export default memo(function Month({
@@ -66,7 +67,8 @@ export default memo(function Month({
   dayDisplayFormat,
   showWeekDays,
   showMonthName,
-  fixedHeight
+  fixedHeight,
+  dayContentRenderer
 }: MonthProps) {
 
   const now = new Date();
@@ -115,6 +117,7 @@ export default memo(function Month({
 
             return (
               <DayCell
+                dayContentRenderer={dayContentRenderer}
                 key={index}
                 onPreviewChange={onPreviewChange}
                 displayMode={displayMode}

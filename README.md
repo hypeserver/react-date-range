@@ -33,8 +33,22 @@ This fork aims at keeping this project alive. Dependencies have been upgraded, c
 ### Installation
 
 ```
-npm install react-date-range
+npm install @iroomit/react-date-range
 ```
+
+or
+
+```
+yarn add @iroomit/react-date-range
+```
+
+then, styles and theme file must be imported:
+
+```
+import '@iroomit/react-date-range/dist/styles.css'; // main css file
+import '@iroomit/react-date-range/dist/theme/default.css'; // theme css file
+```
+
 This plugin expects `react` and `date-fns` as peerDependencies, It means that you need to install them in your project folder.
 
 ```

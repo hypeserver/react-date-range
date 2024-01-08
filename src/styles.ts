@@ -1,4 +1,5 @@
 export type StylesType = {
+  monthAndYearDivider: string;
   dateRangeWrapper: string;
   calendarWrapper: string;
   dateDisplay: string;

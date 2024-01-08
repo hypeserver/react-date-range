@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { format, isValid, parse } from 'date-fns';
+import { ParseOptions, format, isValid, parse } from 'date-fns';
 import React, {memo, ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
 
 type DateInputProps = {
@@ -7,7 +7,7 @@ type DateInputProps = {
   placeholder: string,
   disabled?: boolean,
   readOnly?: boolean,
-  dateOptions?: Object,
+  dateOptions?: ParseOptions,
   dateDisplayFormat: string,
   ariaLabel?: string,
   className?: string,
