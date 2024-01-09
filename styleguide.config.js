@@ -111,6 +111,10 @@ module.exports = {
     }
   },
   pagePerSection: false,
+  resolver: require('react-docgen').resolver.findAllComponentDefinitions,
+  propsParser: require('react-docgen-typescript').withCustomConfig(
+    './tsconfig.json'
+  ).parse,
   sections: [
     {
       name: 'Getting Started',
@@ -121,18 +125,18 @@ module.exports = {
       name: 'Components',
       sections: [
         {
-          components: () => ['src/components/DateRangePicker/index.js'],
+          components: () => ['src/components/DateRangePicker/index.tsx'],
           usageMode: 'hide',
         },
         {
-          components: () => ['src/components/DateRange/index.js'],
+          components: () => ['src/components/DateRange/index.tsx'],
           usageMode: 'hide',
         },
         {
-          components: () => ['src/components/Calendar/index.js'],
+          components: () => ['src/components/Calendar/index.tsx'],
         },
         {
-          components: () => ['src/components/DefinedRange/index.js'],
+          components: () => ['src/components/DefinedRange/index.tsx'],
         },
       ],
       sectionDepth: 0,

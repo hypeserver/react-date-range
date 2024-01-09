@@ -2,7 +2,7 @@ import React from 'react';
 import { StylesType } from '../../styles';
 import { AriasLabelsType } from '../../accessibility';
 import { Locale, WeekOptions, Month as FNSMonth, addDays, addMonths, addYears, differenceInCalendarMonths, differenceInDays, eachDayOfInterval, endOfMonth, endOfWeek, format, isSameDay, startOfMonth, startOfWeek, subMonths, isSameMonth, FormatOptions, ParseOptions, setMonth, setYear, min, max } from 'date-fns';
-import { RangeShape } from '../DayCell';
+import { DateRange } from '../DayCell';
 import { enUS } from 'date-fns/locale/en-US';
 import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../../utils';
 import coreStyles from '../../styles';
@@ -26,7 +26,7 @@ export type CalendarProps = {
   locale?: Locale,
   shownDate?: Date,
   onShownDateChange?: (date: Date) => void,
-  ranges?: RangeShape[],
+  ranges?: DateRange[],
   preview?: {
     startDate?: Date,
     endDate?: Date,
@@ -46,7 +46,7 @@ export type CalendarProps = {
   showPreview?: boolean,
   displayMode?: "dateRange" | "date",
   color?: string,
-  updateRange?: (range: RangeShape) => void,
+  updateRange?: (range: DateRange) => void,
   scroll?: {
     enabled?: boolean,
     monthHeight?: number,
@@ -157,6 +157,7 @@ export default function Calendar({
 
     if (JSON.stringify(refs.current.scroll) != JSON.stringify(scroll)) {
       refs.current.scroll = scroll;
+      
 
       setState(s => ({...s, scrollArea: calcScrollArea(direction, months, scroll)}));
     }
@@ -260,6 +261,10 @@ export default function Calendar({
   }
 
   const focusToDate = (date: Date, preventUnnecessary = true) => {
+    if (date.getTime() == state.focusedDate?.getTime?.()) {
+      return;
+    }
+
     if (!scroll.enabled) {
       if (preventUnnecessary && preventSnapRefocus) {
         const focusedDateDiff = differenceInCalendarMonths(date, state.focusedDate);
@@ -269,11 +274,8 @@ export default function Calendar({
         if ((isAllowedForward || isAllowedBackward) && Math.abs(focusedDateDiff) < months) {
           return;
         }
-
-
-
       }
-
+      
       setState(s => ({ ...s, focusedDate: date }));
       return;
     }
@@ -557,7 +559,7 @@ function Weekdays({
 type DateDisplayProps = {
   focusedRange: number[],
   color: string,
-  ranges: RangeShape[],
+  ranges: DateRange[],
   rangeColors: string[],
   dateOptions: ParseOptions,
   dateDisplayFormat: string,

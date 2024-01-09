@@ -11,7 +11,7 @@ import {
   differenceInCalendarDays,
 } from 'date-fns';
 
-import { RangeShape } from './components/DayCell';
+import { DateRange } from './components/DayCell';
 
 const defineds = {
   startOfWeek: startOfWeek(new Date()),
@@ -30,7 +30,7 @@ const defineds = {
 
 const staticRangeHandler = {
   range: {},
-  isSelected(range: RangeShape) {
+  isSelected(range: DateRange) {
     const definedRange = this.range();
     return (
       isSameDay(range.startDate, definedRange.startDate) &&
@@ -39,7 +39,7 @@ const staticRangeHandler = {
   },
 };
 
-export function createStaticRanges(ranges: {label: string, range: () => RangeShape}[]) {
+export function createStaticRanges(ranges: {label: string, range: () => DateRange}[]) {
   return ranges.map(range => ({ ...staticRangeHandler, ...range }));
 }
 
@@ -98,7 +98,7 @@ export const defaultInputRanges = [
         endDate: defineds.endOfToday,
       };
     },
-    getCurrentValue(range: RangeShape) {
+    getCurrentValue(range: DateRange) {
       if (!isSameDay(range.endDate, defineds.endOfToday)) return '-';
       if (!range.startDate) return '∞';
       return differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
@@ -113,7 +113,7 @@ export const defaultInputRanges = [
         endDate: addDays(today, Math.max(Number(value), 1) - 1),
       };
     },
-    getCurrentValue(range: RangeShape) {
+    getCurrentValue(range: DateRange) {
       if (!isSameDay(range.startDate, defineds.startOfToday)) return '-';
       if (!range.endDate) return '∞';
       return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;

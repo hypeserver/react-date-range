@@ -1,7 +1,7 @@
 import React, { CSSProperties, MouseEvent, memo } from 'react';
 import { getMonthDisplayRange } from '../../utils';
 import { StylesType } from '../../styles';
-import DayCell, { DayCellProps, RangeShape } from '../DayCell';
+import DayCell, { DayCellProps, DateRange } from '../DayCell';
 import { FormatOptions, eachDayOfInterval, endOfDay, endOfWeek, format, getMonth, isAfter, isBefore, isSameDay, isWeekend, isWithinInterval, startOfDay, startOfWeek } from 'date-fns';
 
 type MonthProps = {
@@ -9,7 +9,7 @@ type MonthProps = {
   styles: StylesType,
   month: Date,
   drag: {
-    range: RangeShape,
+    range: DateRange,
     disablePreview: boolean,
     status: boolean
   },

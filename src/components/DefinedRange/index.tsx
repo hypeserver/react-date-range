@@ -2,20 +2,20 @@ import React, { ReactElement } from 'react';
 import classnames from 'classnames';
 import styles from '../../styles';
 import { defaultInputRanges, defaultStaticRanges } from '../../defaultRanges';
-import { RangeShape } from '../DayCell';
+import { DateRange } from '../DayCell';
 import InputRangeField from '../InputRangeField';
 
 export type DefinedRangeProps = {
-  inputRanges?: {label: string, range: (value: number) => RangeShape, getCurrentValue: (range: RangeShape) => number | "-" | "∞"}[],
-  staticRanges?: {label: string, range: () => RangeShape, isSelected: (value: RangeShape) => boolean, hasCustomRendering?: boolean}[],
-  ranges?: RangeShape[],
+  inputRanges?: {label: string, range: (value: number) => DateRange, getCurrentValue: (range: DateRange) => number | "-" | "∞"}[],
+  staticRanges?: {label: string, range: () => DateRange, isSelected: (value: DateRange) => boolean, hasCustomRendering?: boolean}[],
+  ranges?: DateRange[],
   className?: string,
   headerContent?: ReactElement,
   footerContent?: ReactElement,
   focusedRange?: number[],
   rangeColors?: string[],
-  onPreviewChange?: (value?: RangeShape) => void,
-  onChange?: (value: {[x: string]: RangeShape}) => void,
+  onPreviewChange?: (value?: DateRange) => void,
+  onChange?: (value: {[x: string]: DateRange}) => void,
   renderStaticRangeLabel?: (staticRange: DefinedRangeProps["staticRanges"][number]) => ReactElement
 };
 
@@ -26,8 +26,8 @@ export default function DefinedRange({
   inputRanges = defaultInputRanges,
   staticRanges = defaultStaticRanges,
   rangeColors = ['#3d91ff', '#3ecf8e', '#fed14c'],
-  ranges,
-  focusedRange,
+  ranges = [],
+  focusedRange = [0, 0],
   onChange,
   onPreviewChange,
   renderStaticRangeLabel
@@ -35,7 +35,7 @@ export default function DefinedRange({
 
   const [state, setState] = React.useState({rangeOffset: 0, focusedInput: -1});
 
-  const getSelectedRange = (ranges: RangeShape[], staticRange: DefinedRangeProps["staticRanges"][number]) => {
+  const getSelectedRange = (ranges: DateRange[], staticRange: DefinedRangeProps["staticRanges"][number]) => {
     const focusedRangeIndex = ranges.findIndex(range => {
       if (!range.startDate || !range.endDate || range.disabled) {
         return false;
@@ -49,7 +49,7 @@ export default function DefinedRange({
 
   }
 
-  const handleRangeChange = (range: RangeShape) => {
+  const handleRangeChange = (range: DateRange) => {
     const selectedRange = ranges[focusedRange[0]];
 
     if (!onChange || !selectedRange) {

@@ -43,8 +43,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
-    "react-list": "^0.8.17",
-    "shallow-equal": "^1.2.1"
+    "react-list": "^0.8.17"
   },
   "peerDependencies": {
     "date-fns": "^3.0.0",
@@ -83,6 +82,7 @@
     "postcss-loader": "^7.3.4",
     "prettier": "^3.1.1",
     "react": "^18.2.0",
+    "react-docgen-typescript": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-styleguidist": "^13.1.1",
     "style-loader": "^3.3.3",

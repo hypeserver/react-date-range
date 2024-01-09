@@ -10,9 +10,9 @@ import {
   WeekOptions,
 } from 'date-fns';
 import { StylesType } from './styles';
-import { RangeShape } from './components/DayCell';
+import { DateRange } from './components/DayCell';
 
-export function calcFocusDate(currentFocusedDate: Date, shownDate?: Date, date?: Date, months?: number, ranges?: RangeShape[], focusedRange?: number[], displayMode?: "dateRange" | "date") {
+export function calcFocusDate(currentFocusedDate: Date, shownDate?: Date, date?: Date, months?: number, ranges?: DateRange[], focusedRange?: number[], displayMode?: "dateRange" | "date") {
   // find primary date according the props
   let targetInterval;
   if (displayMode === 'dateRange') {
@@ -43,7 +43,7 @@ export function calcFocusDate(currentFocusedDate: Date, shownDate?: Date, date?:
   return targetDate;
 }
 
-export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
+export function findNextRangeIndex(ranges: DateRange[], currentRangeIndex = -1) {
   const nextIndex = ranges.findIndex(
     (range, i) => i > currentRangeIndex && range.autoFocus !== false && !range.disabled
   );

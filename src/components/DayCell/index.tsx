@@ -3,7 +3,7 @@ import React, { FocusEvent, KeyboardEvent, MouseEvent, ReactElement } from 'reac
 import { StylesType } from '../../styles';
 import classnames from 'classnames';
 
-export type RangeShape = {
+export type DateRange = {
   startDate: Date,
   endDate: Date,
   color?: string,
@@ -18,7 +18,7 @@ export type DayCellProps = {
   day: Date,
   dayDisplayFormat: string,
   date?: Date,
-  ranges: RangeShape[]
+  ranges: DateRange[]
   displayMode: "dateRange" | "date",
   preview?: {
     startDate?: Date,
@@ -159,7 +159,7 @@ export default function DayCell({
 
 type SelectionPlaceholdersProps = {
   styles: StylesType,
-  ranges: RangeShape[],
+  ranges: DateRange[],
   day: Date,
   date: Date,
   displayMode: DayCellProps["displayMode"],
@@ -184,7 +184,7 @@ function SelectionPlaceholders({
     );
   }
 
-  const inRanges = ranges.reduce((result: Array<RangeShape & { isStartEdge: boolean, isEndEdge: boolean, isInRange: boolean }>, range: RangeShape) => {
+  const inRanges = ranges.reduce((result: Array<DateRange & { isStartEdge: boolean, isEndEdge: boolean, isInRange: boolean }>, range: DateRange) => {
     let startDate: Date | null = range.startDate;
     let endDate: Date | null = range.endDate;
     if (startDate && endDate && isBefore(endDate, startDate)) {
