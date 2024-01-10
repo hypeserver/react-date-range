@@ -11,6 +11,7 @@ class DayCell extends Component {
     this.state = {
       hover: false,
       active: false,
+      touchOverDay: props.day.toISOString(),
     };
   }
 
@@ -19,6 +20,59 @@ class DayCell extends Component {
     if ([13 /* space */, 32 /* enter */].includes(event.keyCode)) {
       if (event.type === 'keydown') onMouseDown(day);
       else onMouseUp(day);
+    }
+  };
+
+  handleTouchEvent = event => {
+    const { day, disabled, onMouseDown, onMouseUp, onMouseEnter, onPreviewChange } = this.props;
+    const stateChanges = {};
+    if (disabled) {
+      onPreviewChange();
+      return;
+    }
+
+    const findButtonElem = elems => {
+      return elems.find(elem => elem.nodeName === 'BUTTON');
+    };
+
+    const isNewDay = targetElements => {
+      const buttonElem = findButtonElem(targetElements);
+      if (targetElements && buttonElem && buttonElem.classList.contains('rdrDay')) {
+        const newDay = buttonElem.getAttribute('data-day');
+        if (newDay && newDay !== this.state.touchOverDay) {
+          return newDay;
+        }
+      }
+      return null;
+    };
+
+    switch (event.type) {
+      case 'touchmove':
+        {
+          const targetElements = document.elementsFromPoint(
+            event.touches[0].clientX,
+            event.touches[0].clientY
+          );
+          if (targetElements.length === 0) return;
+          const newDay = isNewDay(targetElements);
+          if (newDay) {
+            onMouseEnter(new Date(newDay));
+            onPreviewChange(new Date(newDay));
+            this.setState({ touchOverDay: newDay });
+          }
+        }
+        break;
+      case 'touchend':
+        {
+          const endDate = new Date(this.state.touchOverDay);
+          onMouseUp(endDate);
+          this.setState({ touchOverDay: null });
+        }
+        break;
+      case 'touchstart':
+        stateChanges.active = true;
+        onMouseDown(day);
+        break;
     }
   };
   handleMouseEvent = event => {
@@ -155,8 +209,12 @@ class DayCell extends Component {
     return (
       <button
         type="button"
+        data-day={this.props.day.toISOString()}
         onMouseEnter={this.handleMouseEvent}
         onMouseLeave={this.handleMouseEvent}
+        onTouchStart={this.handleTouchEvent}
+        onTouchMove={this.handleTouchEvent}
+        onTouchEnd={this.handleTouchEvent}
         onFocus={this.handleMouseEvent}
         onMouseDown={this.handleMouseEvent}
         onMouseUp={this.handleMouseEvent}
@@ -170,10 +228,9 @@ class DayCell extends Component {
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
-          {
-            dayContentRenderer?.(this.props.day) ||
+          {dayContentRenderer?.(this.props.day) || (
             <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
-          }
+          )}
         </span>
       </button>
     );
