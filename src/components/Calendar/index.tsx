@@ -123,7 +123,9 @@ export default function Calendar({
     listSizeCache: {},
     list: null,
     scroll,
-    isFirstRender: true
+    isFirstRender: true,
+    date: date,
+    ranges: ranges
   });
 
   const [state, setState] = React.useState({
@@ -146,23 +148,34 @@ export default function Calendar({
 
   React.useEffect(() => {
 
-    updateShownDate();
+    if (JSON.stringify(ranges) != JSON.stringify(refs.current.ranges) || date?.getTime?.() != refs.current.date?.getTime?.()) {
+      refs.current.ranges = ranges;
+      refs.current.date = date;
+
+      updateShownDate();
+    }
 
     if (refs.current.dateOptions.locale != locale) {
       refs.current.dateOptions.locale = locale;
-      setState(s => ({...s, monthNames: getMonthNames(locale)}));
+      setState(s => ({ ...s, monthNames: getMonthNames(locale) }));
     }
-   
+
     refs.current.dateOptions.weekStartsOn = weekStartsOn;
 
     if (JSON.stringify(refs.current.scroll) != JSON.stringify(scroll)) {
       refs.current.scroll = scroll;
-      
 
-      setState(s => ({...s, scrollArea: calcScrollArea(direction, months, scroll)}));
+
+      setState(s => ({ ...s, scrollArea: calcScrollArea(direction, months, scroll) }));
     }
 
-  }, [ranges, date, locale, weekStartsOn]);
+  }, [ranges, date, scroll, direction, months, locale, weekStartsOn]);
+
+  React.useEffect(() => {
+    if (scroll.enabled) {
+      focusToDate(state.focusedDate);
+    }
+  }, [scroll.enabled]);
 
   const isVertical = direction === 'vertical';
 
@@ -211,6 +224,7 @@ export default function Calendar({
   }
 
   const estimateMonthSize = (index: number, cache?: any) => {
+    
     if (cache) {
       refs.current.listSizeCache = cache;
 
@@ -261,9 +275,6 @@ export default function Calendar({
   }
 
   const focusToDate = (date: Date, preventUnnecessary = true) => {
-    if (date.getTime() == state.focusedDate?.getTime?.()) {
-      return;
-    }
 
     if (!scroll.enabled) {
       if (preventUnnecessary && preventSnapRefocus) {
@@ -275,7 +286,7 @@ export default function Calendar({
           return;
         }
       }
-      
+
       setState(s => ({ ...s, focusedDate: date }));
       return;
     }
@@ -338,7 +349,6 @@ export default function Calendar({
                 endOfMonth(maxDate),
                 addDays(startOfMonth(minDate), -1)
               )}
-              threshold={500}
               type="variable"
               ref={target => {
                 refs.current.list = target;
@@ -381,6 +391,7 @@ export default function Calendar({
                     color={color}
                     maxDate={maxDate}
                     minDate={minDate}
+                    date={date}
                   />
                 );
               }}
@@ -428,6 +439,7 @@ export default function Calendar({
                 color={color}
                 maxDate={maxDate}
                 minDate={minDate}
+                date={date}
               />
             );
           })}
@@ -650,6 +662,7 @@ function calcScrollArea(direction: 'vertical' | 'horizontal', months: number, sc
   if (!scroll.enabled) return { enabled: false };
 
   const longMonthHeight = scroll.longMonthHeight || scroll.monthHeight;
+
   if (direction === 'vertical') {
     return {
       enabled: true,

@@ -62,7 +62,7 @@ export default function DateRangePicker({
   });
 
   const [state, setState] = React.useState({
-    focusedRange: [findNextRangeIndex(ranges, 0)],
+    focusedRange: [findNextRangeIndex(ranges), 0],
     rangePreview: undefined
   });
 
@@ -78,7 +78,7 @@ export default function DateRangePicker({
       />
       <DateRange
         onRangeFocusChange={focusedRange => setState(s => ({...s, focusedRange}))}
-        focusedRange={focusedRange}
+        focusedRange={focusedRange || state.focusedRange}
         weekStartsOn={weekStartsOn}
         weekdayDisplayFormat={weekdayDisplayFormat}
         editableDateInputs={editableDateInputs}

@@ -15,6 +15,7 @@ type MonthProps = {
   },
   dateOptions: FormatOptions,
   disabledDates?: Date[],
+  date?: Date,
   disabledDay?: (date: Date) => boolean,
   preview?: {
     startDate: Date,
@@ -51,6 +52,7 @@ export default memo(function Month({
   disabledDay,
   preview,
   showPreview,
+  date,
   displayMode,
   minDate,
   maxDate,
@@ -117,6 +119,7 @@ export default memo(function Month({
 
             return (
               <DayCell
+                date={date}
                 dayContentRenderer={dayContentRenderer}
                 key={index}
                 onPreviewChange={onPreviewChange}

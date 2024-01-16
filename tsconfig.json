@@ -8,7 +8,7 @@
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "declaration": true,
+    "declaration": true
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"]
