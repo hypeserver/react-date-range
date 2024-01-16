@@ -29,6 +29,7 @@ Dependencies have been upgraded, class components updated to function components
 
 ![](https://raw.githubusercontent.com/iroomitapp/react-date-range/master/demo/ss.png)
 
+`@iroomit/react-date-range` is also used in production on [iROOMit Roommates & Rooms Finder website](https://www.iroomit.com/).
 
 ## Getting Started
 ### Installation

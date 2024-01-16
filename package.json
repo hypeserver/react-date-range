@@ -1,6 +1,6 @@
 {
   "name": "@iroomit/react-date-range",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
