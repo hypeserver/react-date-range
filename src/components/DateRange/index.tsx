@@ -3,7 +3,7 @@ import Calendar, { CalendarProps } from '../Calendar';
 import { type DateRange } from '../DayCell';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import Styles from '../../styles';
-import { addDays, differenceInCalendarDays, endOfSecond, isBefore, isWithinInterval, max, min } from 'date-fns';
+import { addDays, differenceInCalendarDays, isBefore, isWithinInterval, max, min } from 'date-fns';
 import classnames from 'classnames';
 
 export type DateRangeProps = {
@@ -23,7 +23,6 @@ export default function DateRange({
   editableDateInputs,
   endDatePlaceholder,
   showMonthAndYearPickers,
-  updateRange,
   onShownDateChange,
   preventSnapRefocus,
   preview,
@@ -72,7 +71,7 @@ export default function DateRange({
   });
 
   React.useEffect(() => {
-    updatePreview(previewRange ? calcNewSelection(previewRange, !!!previewRange.endDate) : null)
+    updatePreview(previewRange ? calcNewSelection(previewRange, !previewRange.endDate) : null)
   }, [previewRange]);
 
   const calcNewSelection = (value: DateRange | Date, isSingleValue = true) => {
@@ -100,7 +99,7 @@ export default function DateRange({
         }
 
         if (retainEndDateOnFirstSelection) {
-          if (!!!endDate || isBefore(value as Date, endDate)) {
+          if (!endDate || isBefore(value as Date, endDate)) {
             return endDate;
           }
           return value as Date;

@@ -2,7 +2,7 @@ import React, { CSSProperties, MouseEvent, memo } from 'react';
 import { getMonthDisplayRange } from '../../utils';
 import { StylesType } from '../../styles';
 import DayCell, { DayCellProps, DateRange } from '../DayCell';
-import { FormatOptions, eachDayOfInterval, endOfDay, endOfWeek, format, getMonth, isAfter, isBefore, isSameDay, isWeekend, isWithinInterval, startOfDay, startOfWeek } from 'date-fns';
+import { FormatOptions, eachDayOfInterval, endOfDay, endOfWeek, format, isAfter, isBefore, isSameDay, isWeekend, isWithinInterval, startOfDay, startOfWeek } from 'date-fns';
 
 type MonthProps = {
   style: CSSProperties,

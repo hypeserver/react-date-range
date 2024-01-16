@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { ParseOptions, format, isValid, parse } from 'date-fns';
+import { FormatOptions, ParseOptions, format, isValid, parse } from 'date-fns';
 import React, {memo, ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
 
 type DateInputProps = {
@@ -28,10 +28,10 @@ export default memo(function DateInput({
   onChange
 }: DateInputProps) {
 
-  const [state, setState] = React.useState({invalid: false, changed: false, value: formatDate(value, dateDisplayFormat, dateOptions)});
+  const [state, setState] = React.useState({invalid: false, changed: false, value: formatDate(value, dateDisplayFormat, dateOptions as FormatOptions)});
 
   React.useEffect(() => {
-    setState(s => ({...s, value: formatDate(value, dateDisplayFormat, dateOptions)}));
+    setState(s => ({...s, value: formatDate(value, dateDisplayFormat, dateOptions as FormatOptions)}));
   }, [value, dateDisplayFormat, dateOptions]);
 
   const update = (value: string) => {
@@ -63,7 +63,7 @@ export default memo(function DateInput({
     }
   }
 
-  const onBlur = (event: FocusEvent<HTMLInputElement>) => {
+  const onBlur = () => {
     update(state.value);
   }
 
@@ -85,7 +85,7 @@ export default memo(function DateInput({
   )
 });
 
-function formatDate(value: Date, dateDisplayFormat: string, dateOptions?: Object) {
+function formatDate(value: Date, dateDisplayFormat: string, dateOptions?: FormatOptions) {
   if (value && isValid(value)) {
     return format(value, dateDisplayFormat, dateOptions);
   }

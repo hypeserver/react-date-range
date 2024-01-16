@@ -6,8 +6,7 @@ import Styles from '../../styles';
 import classnames from 'classnames';
 import DateRange from '../DateRange';
 
-export type DateRangePickerProps = {
-} & DateRangeProps & DefinedRangeProps;
+export type DateRangePickerProps = DateRangeProps & DefinedRangeProps;
 
 
 export default function DateRangePicker({
@@ -22,7 +21,6 @@ export default function DateRangePicker({
   showMonthAndYearPickers,
   updateRange,
   initialFocusedRange,
-  inputRanges,
   ariaLabels,
   scroll,
   showDateDisplay,
@@ -30,7 +28,6 @@ export default function DateRangePicker({
   showPreview,
   shownDate,
   startDatePlaceholder,
-  staticRanges,
   date,
   dateDisplayFormat,
   dayContentRenderer,
@@ -75,6 +72,8 @@ export default function DateRangePicker({
         onChange={onChange}
         ranges={ranges}
         renderStaticRangeLabel={renderStaticRangeLabel}
+        headerContent={headerContent}
+        footerContent={footerContent}
       />
       <DateRange
         onRangeFocusChange={focusedRange => setState(s => ({...s, focusedRange}))}

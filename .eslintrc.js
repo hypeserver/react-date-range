@@ -3,28 +3,29 @@ module.exports = {
         "eslint:recommended",
         "plugin:react/recommended",
         "prettier",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     plugins: [
         "react",
-        "prettier",
+        "@typescript-eslint",
+        "prettier"
     ],
-    rules: {
-        "prettier/prettier": ["error", {
-            "singleQuote": true,
-            "trailingComma": "es5",
-            "bracketSpacing": true,
-            "jsxBracketSameLine": true,
-            "printWidth": 100,
-            "parser": "babel",
-        }],
-        "no-debugger": 0,
-        "no-console": 0,
-    },
-    parser: "@babel/eslint-parser",
+    parserOptions: {
+        ecmaVersion: 12,
+        parser: '@babel/eslint-parser',
+        requireConfigFile: false,
+        sourceType: 'module',
+      },
     env: {
         "es6": true,
         "node": true,
         "browser": true,
         "jest": true,
       },
+      settings: {
+        react: {
+            version: "detect"
+        }
+      }
 };

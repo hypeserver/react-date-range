@@ -1,5 +1,5 @@
 import React from 'react';
-import { subDays, addDays, isSameDay } from 'date-fns';
+import { addDays, isSameDay, subDays } from 'date-fns';
 import DateRange from '../DateRange';
 import renderer from 'react-test-renderer';
 

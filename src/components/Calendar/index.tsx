@@ -71,7 +71,7 @@ export default function Calendar({
   showMonthArrow = true,
   showMonthAndYearPickers = true,
   disabledDates = [],
-  disabledDay = (date: Date) => false,
+  disabledDay = () => false,
   minDate = addYears(new Date(), -100),
   maxDate = addYears(new Date(), 20),
   date,
@@ -90,7 +90,6 @@ export default function Calendar({
   weekStartsOn,
   dayDisplayFormat = 'd',
   focusedRange = [0, 0],
-  initialFocusedRange,
   dayContentRenderer,
   months = 1,
   className,
@@ -223,7 +222,7 @@ export default function Calendar({
     onRangeFocusChange?.([rangesIndex, rangeItemIndex]);
   }
 
-  const estimateMonthSize = (index: number, cache?: any) => {
+  const estimateMonthSize = (index: number, cache?: {[x: string]: number}) => {
     
     if (cache) {
       refs.current.listSizeCache = cache;
