@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 3.0.0
+
+### Changed
+
+- Project development taken over by iROOMit Inc!
+- All components rewritten in TypeScript
+- Class components converted to functional components
+- Rewrote all PropTypes declarations as TypeScript type definitions
+- `date-fns` dependency upgraded to v3
+- `Webpack` upgraded to v5
+- Upgraded `Babel`, `Jest`, `React` dependencies to latest versions
+- Removed `shallow-equal` dependency in favour of built-in `JSON.stringify()`
+
+### To Do
+
+- Convert demo project to TypeScript
+- Convert tests to TypeScript
+
+Going forward, any changes should reference cooresponding commit IDs. Because this version marks a takeover and entire rewrite of the project, commit IDs have been omitted due to various changes taking place over several commits.
+
+**This should not be a breaking release. All previous props and components from this library are still valid after the TypeScript rewrite.**
+
 ## 1.4.0
 
 ### Added

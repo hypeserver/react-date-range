@@ -14,29 +14,29 @@ import { DateRange } from './components/DayCell';
 
 export function calcFocusDate(currentFocusedDate: Date, shownDate?: Date, date?: Date, months?: number, ranges?: DateRange[], focusedRange?: number[], displayMode?: "dateRange" | "date") {
   // find primary date according the props
-  let targetInterval;
+  let targetInterval: DateRange;
   if (displayMode === 'dateRange') {
     const range = ranges[focusedRange[0]];
     targetInterval = {
-      start: range?.startDate,
-      end: range?.endDate,
+      startDate: range?.startDate,
+      endDate: range?.endDate,
     };
   } else {
     targetInterval = {
-      start: date,
-      end: date,
+      startDate: date,
+      endDate: date,
     };
   }
-  targetInterval.start = startOfMonth(targetInterval.start || new Date());
-  targetInterval.end = endOfMonth(targetInterval.end || targetInterval.start);
-  const targetDate = targetInterval.start || targetInterval.end || shownDate || new Date();
+  targetInterval.startDate = startOfMonth(targetInterval.startDate || new Date());
+  targetInterval.endDate = endOfMonth(targetInterval.endDate || targetInterval.startDate);
+  const targetDate = targetInterval.startDate || targetInterval.endDate || shownDate || new Date();
 
   // initial focus
   if (!currentFocusedDate) return shownDate || targetDate;
 
   // // just return targetDate for native scrolled calendars
   // if (scroll.enabled) return targetDate;
-  if (differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
+  if (differenceInCalendarMonths(targetInterval.startDate, targetInterval.endDate) > months) {
     // don't change focused if new selection in view area
     return currentFocusedDate;
   }

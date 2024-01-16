@@ -1,8 +1,7 @@
 # @iroomit/react-date-range
-[![npm](https://img.shields.io/npm/v/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![npm](https://img.shields.io/npm/l/react-date-range)]()
-[![npm](https://img.shields.io/npm/dw/react-date-range)](https://www.npmjs.com/package/react-date-range)
-[![sponsors](https://img.shields.io/github/sponsors/hypeserver)](https://github.com/sponsors/hypeserver)
+[![npm](https://img.shields.io/npm/v/@iroomit/react-date-range)](https://www.npmjs.com/package/@iroomit/react-date-range)
+[![npm](https://img.shields.io/npm/l/@iroomit/react-date-range)]()
+[![npm](https://img.shields.io/npm/dw/@iroomit/react-date-range)](https://www.npmjs.com/package/react-date-range)
 
 
 A date library agnostic React component for choosing dates and date ranges. Uses [date-fns](http://date-fns.org/) for date operations.
@@ -11,7 +10,9 @@ A date library agnostic React component for choosing dates and date ranges. Uses
 
 This awesome project is a fork of the original [react-date-range](https://github.com/hypeserver/react-date-range) by hypeserver.
 
-This fork aims at keeping this project alive. Dependencies have been upgraded, class components updated to function components and the entire project has been rewritten in TypeScript. Some of the code has also been optimized further with newer React features.
+This fork aims at keeping this project alive!
+
+Dependencies have been upgraded, class components updated to function components and the entire project has been rewritten in TypeScript. Some of the code has also been optimized further with newer React features.
 
 ### Why should you use `@iroomit/react-date-range`?
 
@@ -22,11 +23,11 @@ This fork aims at keeping this project alive. Dependencies have been upgraded, c
 - Based on native js dates
 - Drag n Drop selection
 - Keyboard friendly
-- TypeScript support
+- Built-in TypeScript support
 
-**Live Demo :** [http://hypeserver.github.io/react-date-range](http://hypeserver.github.io/react-date-range)
+**Live Demo :** [http://iroomitapp.github.io/react-date-range](http://iroomitapp.github.io/react-date-range)
 
-![](https://raw.githubusercontent.com/hypeserver/react-date-range/master/demo/ss.png)
+![](https://raw.githubusercontent.com/iroomitapp/react-date-range/master/demo/ss.png)
 
 
 ## Getting Started
@@ -53,6 +54,12 @@ This plugin expects `react` and `date-fns` as peerDependencies, It means that yo
 
 ```
 npm install react date-fns
+```
+
+or
+
+```
+yarn add react date-fns
 ```
 
 ## Usage
@@ -162,8 +169,8 @@ startDatePlaceholder                 | String    | `Early`          | Start Date
 endDatePlaceholder                   | String    | `Continuous`     | End Date Placeholder
 fixedHeight                          | Boolean   | false            | Since some months require less than 6 lines to show, by setting this prop, you can force 6 lines for all months.
 renderStaticRangeLabel(`DefinedRange`)| Function |                  | Callback function to be triggered for the static range configurations that have `hasCustomRendering: true` on them. Instead of rendering `staticRange.label`, return value of this callback will be rendered.
-staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
-inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
+staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default preDefined ranges](https://github.com/iroomitapp/react-date-range/blob/master/src/defaultRanges.ts)             | -
+inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/iroomitapp/react-date-range/blob/master/src/defaultRanges.ts)             | -
 ariaLabels                           | Object    | {}               | inserts aria-label to inner elements
 dayContentRenderer                   | Function  | null             | Function to customize the rendering of Calendar Day. given a date is supposed to return what to render.
 
