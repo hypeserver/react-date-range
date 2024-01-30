@@ -74,51 +74,51 @@ import '@iroomit/react-date-range/dist/theme/default.css'; // theme css file
 
 ### `DatePicker`
 ```javascript
+import React from 'react';
 import { Calendar } from '@iroomit/react-date-range';
 
-class MyComponent extends Component {
-  handleSelect(date){
-    console.log(date); // native Date object
-  }
-  render(){
-    return (
-      <Calendar
-        date={new Date()}
-        onChange={this.handleSelect}
-      />
-    )
-  }
+function MyComponent() {
+
+  const [date, setDate] = React.useState(new Date());
+
+  return (
+    // onChange returns native Date Object
+    <Calendar date={date} onChange={date => setDate(date)}/>
+  )
 }
 
 ```
 
 ### `DateRangePicker / DateRange`
 ```javascript
+import React from 'react';
 import { DateRangePicker } from '@iroomit/react-date-range';
 
-class MyComponent extends Component {
-  handleSelect(ranges){
-    console.log(ranges);
-    // {
-    //   selection: {
-    //     startDate: [native Date Object],
-    //     endDate: [native Date Object],
-    //   }
-    // }
-  }
-  render(){
-    const selectionRange = {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection',
-    }
-    return (
-      <DateRangePicker
-        ranges={[selectionRange]}
-        onChange={this.handleSelect}
-      />
-    )
-  }
+function MyComponent() {
+
+  const [range, setRange] = React.useState({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection' // used as key for range returned from onChange
+  });
+
+  return (
+    <DateRangePicker ranges={[range]} onChange={(range) => {
+      // range returned from onChange will have the structure
+      // {
+      //   selection: {
+      //    startDate: [native Date Object],
+      //    endDate: [native Date Object],
+      //   }
+      // }
+
+      setRange({
+        startDate: range.startDate,
+        endDate: range.endDate,
+        key: Object.keys(range)[0]
+      });
+    }}/>
+  );
 }
 
 ```
