@@ -51,7 +51,8 @@ export default function DateRangePicker({
   minDate,
   monthDisplayFormat,
   months,
-  moveRangeOnFirstSelection
+  moveRangeOnFirstSelection,
+  preventScrollToFocusedMonth
 }: DateRangePickerProps) {
 
   const refs = React.useRef({
@@ -116,6 +117,7 @@ export default function DateRangePicker({
         monthDisplayFormat={monthDisplayFormat}
         months={months}
         moveRangeOnFirstSelection={moveRangeOnFirstSelection}
+        preventScrollToFocusedMonth={preventScrollToFocusedMonth}
       />
     </div>
   )
