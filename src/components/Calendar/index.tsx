@@ -64,7 +64,8 @@ export type CalendarProps = {
   fixedHeight?: boolean,
   calendarFocus?: "forwards" | "backwards",
   preventSnapRefocus?: boolean,
-  ariaLabels?: AriasLabelsType
+  ariaLabels?: AriasLabelsType,
+  preventScrollToFocusedMonth?: boolean
 };
 
 export default function Calendar({
@@ -111,6 +112,7 @@ export default function Calendar({
   calendarFocus = 'forwards',
   preventSnapRefocus = false,
   ariaLabels = {},
+  preventScrollToFocusedMonth = false
 }: CalendarProps) {
 
   const refs = React.useRef({
@@ -151,7 +153,9 @@ export default function Calendar({
       refs.current.ranges = ranges;
       refs.current.date = date;
 
-      updateShownDate();
+      if(!preventScrollToFocusedMonth) {
+        updateShownDate();
+      }
     }
 
     if (refs.current.dateOptions.locale != locale) {

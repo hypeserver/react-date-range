@@ -174,6 +174,7 @@ staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default p
 inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/iroomitapp/react-date-range/blob/master/src/defaultRanges.ts)             | -
 ariaLabels                           | Object    | {}               | inserts aria-label to inner elements
 dayContentRenderer                   | Function  | null             | Function to customize the rendering of Calendar Day. given a date is supposed to return what to render.
+preventScrollToFocusedMonth          | Boolean   | false            | When two or more months are open, prevent the shift of the focused month to the left.
 
  *shape of range:
  ```js

@@ -58,7 +58,8 @@ export default function DateRange({
   minDate,
   onRangeFocusChange,
   color,
-  previewRange
+  previewRange,
+  preventScrollToFocusedMonth
 }: DateRangeProps) {
 
   const refs = React.useRef({
@@ -242,6 +243,7 @@ export default function DateRange({
       maxDate={maxDate}
       minDate={minDate}
       color={color}
+      preventScrollToFocusedMonth={preventScrollToFocusedMonth}
     />
   )
 } 
