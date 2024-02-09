@@ -1,4 +1,4 @@
-export type AriasLabelsType = {
+export type AriaLabelsType = {
   dateInput?: {
     startDate?: string,
     endDate?: string

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StylesType } from '../../styles';
-import { AriasLabelsType } from '../../accessibility';
+import { AriaLabelsType } from '../../accessibility';
 import { Locale, WeekOptions, Month as FNSMonth, addDays, addMonths, addYears, differenceInCalendarMonths, differenceInDays, eachDayOfInterval, endOfMonth, endOfWeek, format, isSameDay, startOfMonth, startOfWeek, subMonths, isSameMonth, FormatOptions, ParseOptions, setMonth, setYear, min, max } from 'date-fns';
 import { DateRange } from '../DayCell';
 import { enUS } from 'date-fns/locale/en-US';
@@ -64,7 +64,7 @@ export type CalendarProps = {
   fixedHeight?: boolean,
   calendarFocus?: "forwards" | "backwards",
   preventSnapRefocus?: boolean,
-  ariaLabels?: AriasLabelsType,
+  ariaLabels?: AriaLabelsType,
   preventScrollToFocusedMonth?: boolean
 };
 
@@ -457,7 +457,7 @@ type MonthAndYearProps = {
   showMonthArrow: boolean,
   minDate: Date,
   maxDate: Date,
-  ariaLabels: AriasLabelsType,
+  ariaLabels: AriaLabelsType,
   focusedDate: Date,
   showMonthAndYearPickers: boolean,
   monthNames: string[],
@@ -581,7 +581,7 @@ type DateDisplayProps = {
   editableDateInputs: boolean,
   startDatePlaceholder: string,
   endDatePlaceholder: string,
-  ariaLabels: AriasLabelsType,
+  ariaLabels: AriaLabelsType,
   styles: Partial<StylesType>,
   onDragSelectionEnd: (date: Date) => void,
   handleRangeFocusChange: (rangesIndex: number, rangeItemIndex: number) => void
