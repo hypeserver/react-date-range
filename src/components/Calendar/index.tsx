@@ -219,7 +219,7 @@ export default function Calendar({
       return;
     }
 
-    setState({ ...state, drag: { status: state.drag.status, range: { startDate: state.drag.range.startDate, endDate: date }, disablePreview: true } });
+    setState({ ...state, drag: { status: state.drag.status, range: { startDate: state.drag.range.startDate, endDate: date }, disablePreview: state.drag.disablePreview } });
   }
 
   const handleRangeFocusChange = (rangesIndex: number, rangeItemIndex: number) => {
