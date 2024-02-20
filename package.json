@@ -1,6 +1,6 @@
 {
   "name": "@iroomit/react-date-range",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,7 +27,8 @@
     "Kamyar Ghasemlou <github@kamy.me> (https://github.com/kamyar)",
     "Engin Semih Basmaci <semih.basmaci@gmail.com> (https://github.com/mortargrind)",
     "Onur Kerimov <onurkerimov@gmail.com> (https://github.com/onurkerimov)",
-    "David Goguen <davidgoguen@iroomit.com> (https://github.com/goguda)"
+    "David Goguen <davidgoguen@iroomit.com> (https://github.com/goguda)",
+    "Mike Delez <mdelez.ch@gmail.com> (https://github.com/mdelez)"
   ],
   "license": "MIT",
   "repository": {
@@ -61,8 +62,8 @@
     "@cfaester/enzyme-adapter-react-18": "^0.7.1",
     "@types/postcss-import": "^14.0.3",
     "@types/react-list": "^0.8.11",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "autoprefixer": "^10.4.16",
     "babel-loader": "^9.1.3",
     "babel-plugin-date-fns": "^2.0.0",
