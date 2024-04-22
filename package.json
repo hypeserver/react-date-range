@@ -1,6 +1,6 @@
 {
   "name": "react-date-range",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.1",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -71,7 +71,7 @@
     "jest": "^24.9.0",
     "normalize.css": "^8.0.1",
     "postcss": "^8.2.13",
-    "postcss-cli": "^6.1.3",
+    "postcss-cli": "^10.1.0",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "precss": "^4.0.0",
