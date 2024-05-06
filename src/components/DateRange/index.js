@@ -140,6 +140,7 @@ class DateRange extends Component {
         ref={target => {
           this.calendar = target;
         }}
+        updateShownDateFlag={this.props.updateShownDateFlag}
       />
     );
   }
@@ -152,6 +153,7 @@ DateRange.defaultProps = {
   retainEndDateOnFirstSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   disabledDates: [],
+  updateShownDateFlag: false
 };
 
 DateRange.propTypes = {
@@ -162,6 +164,7 @@ DateRange.propTypes = {
   ranges: PropTypes.arrayOf(rangeShape),
   moveRangeOnFirstSelection: PropTypes.bool,
   retainEndDateOnFirstSelection: PropTypes.bool,
+  updateShownDateFlag: PropTypes.bool
 };
 
 export default DateRange;
