@@ -1,14 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { format, parse, isValid, isEqual } from 'date-fns';
+import { format, parse, isValid as isValidDateFns, isEqual } from 'date-fns';
 
 class DateInput extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      invalid: false,
+      invalid: {
+        invalidFormat: false,
+        outOfRange: false,
+      },
       changed: false,
       value: this.formatDate(props),
     };
@@ -22,27 +25,43 @@ class DateInput extends PureComponent {
     }
   }
 
+  isValid = value => {
+    return { isValidFormat: isValidDateFns(value), isInRange: this.props.isDateInRange(value) };
+  };
+
   formatDate({ value, dateDisplayFormat, dateOptions }) {
-    if (value && isValid(value)) {
-      return format(value, dateDisplayFormat, dateOptions);
+    if (value) {
+      const { isInRange, isValidFormat } = this.isValid(value);
+      if (isInRange && isValidFormat) {
+        return format(value, dateDisplayFormat, dateOptions);
+      }
     }
+
     return '';
   }
 
   update(value) {
-    const { invalid, changed } = this.state;
+    const {
+      invalid: { invalidFormat, outOfRange },
+      changed,
+    } = this.state;
 
-    if (invalid || !changed || !value) {
+    if (invalidFormat || outOfRange || !changed || !value) {
       return;
     }
 
     const { onChange, dateDisplayFormat, dateOptions } = this.props;
     const parsed = parse(value, dateDisplayFormat, new Date(), dateOptions);
-
-    if (isValid(parsed)) {
+    const { isInRange, isValidFormat } = this.isValid(parsed);
+    if (isInRange && isValidFormat) {
       this.setState({ changed: false }, () => onChange(parsed));
     } else {
-      this.setState({ invalid: true });
+      this.setState({
+        invalid: {
+          invalidFormat: !isValidFormat,
+          outOfRange: !isInRange,
+        },
+      });
     }
   }
 
@@ -55,7 +74,14 @@ class DateInput extends PureComponent {
   };
 
   onChange = e => {
-    this.setState({ value: e.target.value, changed: true, invalid: false });
+    this.setState({
+      value: e.target.value,
+      changed: true,
+      invalid: {
+        invalidFormat: false,
+        outOfRange: false,
+      },
+    });
   };
 
   onBlur = () => {
@@ -65,10 +91,24 @@ class DateInput extends PureComponent {
 
   render() {
     const { className, readOnly, placeholder, ariaLabel, disabled, onFocus } = this.props;
-    const { value, invalid } = this.state;
+    const {
+      value,
+      invalid: { invalidFormat, outOfRange },
+    } = this.state;
+
+    const tooltipWarningMessage = invalidFormat
+      ? 'The date format is invalid'
+      : outOfRange
+      ? 'The date is out of range'
+      : '';
 
     return (
-      <span className={classnames('rdrDateInput', className)}>
+      <span
+        className={classnames(
+          { rdrInvalidDateInput: invalidFormat || outOfRange },
+          'rdrDateInput',
+          className
+        )}>
         <input
           readOnly={readOnly}
           disabled={disabled}
@@ -80,7 +120,10 @@ class DateInput extends PureComponent {
           onBlur={this.onBlur}
           onFocus={onFocus}
         />
-        {invalid && <span className="rdrWarning">&#9888;</span>}
+        {(invalidFormat || outOfRange) && <span className="rdrWarning">&#9888;</span>}
+        {tooltipWarningMessage && (
+          <span className="rdrTooltipWarning">{tooltipWarningMessage}</span>
+        )}
       </span>
     );
   }
@@ -97,6 +140,7 @@ DateInput.propTypes = {
   className: PropTypes.string,
   onFocus: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  isDateInRange: PropTypes.func.isRequired,
 };
 
 DateInput.defaultProps = {
