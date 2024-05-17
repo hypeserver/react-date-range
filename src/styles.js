@@ -30,7 +30,7 @@ export default {
   inRange: 'rdrInRange',
   endEdge: 'rdrEndEdge',
   startEdge: 'rdrStartEdge',
-  prevButton: 'rdrPprevButton',
+  prevButton: 'rdrPrevButton',
   nextButton: 'rdrNextButton',
   selected: 'rdrSelected',
   months: 'rdrMonths',
