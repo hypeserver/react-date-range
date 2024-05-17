@@ -559,6 +559,7 @@ Calendar.defaultProps = {
   calendarFocus: 'forwards',
   preventSnapRefocus: false,
   ariaLabels: {},
+  selectablePassive: false,
 };
 
 Calendar.propTypes = {
@@ -615,6 +616,7 @@ Calendar.propTypes = {
   calendarFocus: PropTypes.string,
   preventSnapRefocus: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
+  selectablePassive: PropTypes.bool,
 };
 
 export default Calendar;

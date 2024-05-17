@@ -76,8 +76,8 @@ class DayCell extends Component {
       [styles.dayWeekend]: isWeekend,
       [styles.dayStartOfWeek]: isStartOfWeek,
       [styles.dayEndOfWeek]: isEndOfWeek,
-      [styles.dayStartOfMonth]: isStartOfMonth,
-      [styles.dayEndOfMonth]: isEndOfMonth,
+      [styles.dayStartOfMonth]: !this.props.selectablePassive && isStartOfMonth,
+      [styles.dayEndOfMonth]: !this.props.selectablePassive && isEndOfMonth,
       [styles.dayHovered]: this.state.hover,
       [styles.dayActive]: this.state.active,
     });
@@ -190,6 +190,7 @@ export const rangeShape = PropTypes.shape({
   autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
   showDateDisplay: PropTypes.bool,
+  selectablePassive: false,
 });
 
 DayCell.propTypes = {
@@ -219,6 +220,7 @@ DayCell.propTypes = {
   onMouseUp: PropTypes.func,
   onMouseEnter: PropTypes.func,
   dayContentRenderer: PropTypes.func,
+  selectablePassive: PropTypes.bool,
 };
 
 export default DayCell;
